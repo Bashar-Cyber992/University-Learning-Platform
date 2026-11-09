@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التعلم الجامعي التفاعلية | تخصص الأمن السيبراني</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --accent-color: #ed8936;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --hover-shadow: 0 10px 25px rgba(43, 108, 176, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* إضافة نمط خلفية تقني للمنصة */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 90%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        header h1, header p {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -2rem auto 3rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--secondary-color);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-top-color: var(--accent-color);
+        }
+
+        .course-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .course-title-en {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-family: monospace;
+            background-color: #edf2f7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .course-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+
+        .course-btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .course-btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .course-btn:active {
+            transform: scale(0.98);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 4rem;
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 3rem 1rem; }
+            header h1 { font-size: 2rem; }
+            .container { margin-top: 0; padding-top: 2rem; }
+            .courses-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>مكتبة التعلم الجامعي التفاعلية</h1>
+        <p>منصة رقمية مخصصة لمقررات الأمن السيبراني وهندسة الشبكات. تحويل المحاضرات الأكاديمية إلى تجارب تعليمية تفاعلية وعميقة.</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">المقررات الدراسية (الفصل الحالي)</h2>
+        
+        <div class="courses-grid">
+            
+            <!-- 1. تحليل وتصميم نظم -->
+            <div class="course-card">
+                <div class="course-icon">📊</div>
+                <h3 class="course-title">تحليل وتصميم نظم</h3>
+                <div class="course-title-en">Systems Analysis & Design</div>
+                <p class="course-desc">دراسة شاملة لدورة حياة تطوير الأنظمة البرمجية (SDLC)، هندسة المتطلبات، نمذجة العمليات والبيانات، وتصميم الحلول التقنية لتلبية احتياجات المؤسسات.</p>
+                <a href="Systems-Analysis-and-Design/index.html" class="course-btn">استعراض المحاضرات</a>
+            </div>
+
+            <!-- 2. أساسيات تطوير البرمجيات -->
+            <div class="course-card">
+                <div class="course-icon">💻</div>
+                <h3 class="course-title">أساسيات تطوير البرمجيات</h3>
+                <div class="course-title-en">Fundamentals of Software Development</div>
+                <p class="course-desc">المفاهيم التأسيسية لهندسة البرمجيات، منهجيات التطوير (Agile, Waterfall)، إدارة الإصدارات، ومبادئ كتابة كود نظيف وقابل للصيانة.</p>
+                <a href="Software-Development-Fundamentals/index.html" class="course-btn">استعراض المحاضرات</a>
+            </div>
+
+            <!-- 3. تصميم البرمجيات الأمنة -->
+            <div class="course-card">
+                <div class="course-icon">🛡️</div>
+                <h3 class="course-title">تصميم البرمجيات الأمنة</h3>
+                <div class="course-title-en">Security Software Design</div>
+                <p class="course-desc">مبادئ الأمن بالاستناد إلى التصميم (Security by Design)، نمذجة التهديدات، حماية التطبيقات من الثغرات (OWASP)، ومعمارية الأنظمة المنيعة.</p>
+                <a href="Security-Software-Design/index.html" class="course-btn">استعراض المحاضرات</a>
+            </div>
+
+            <!-- 4. الحوسبة السحابية -->
+            <div class="course-card">
+                <div class="course-icon">☁️</div>
+                <h3 class="course-title">الحوسبة السحابية</h3>
+                <div class="course-title-en">Cloud Computing</div>
+                <p class="course-desc">نماذج الخدمة السحابية (IaaS, PaaS, SaaS)، تقنيات المحاكاة الافتراضية (Virtualization & Containers)، وبناء وتأمين البنية التحتية السحابية.</p>
+                <a href="Cloud-Computing/index.html" class="course-btn">استعراض المحاضرات</a>
+            </div>
+
+            <!-- 5. التحقيق الجنائي الرقمي -->
+            <div class="course-card">
+                <div class="course-icon">🔎</div>
+                <h3 class="course-title">التحقيق الجنائي الرقمي</h3>
+                <div class="course-title-en">Digital Forensics</div>
+                <p class="course-desc">منهجيات جمع وحفظ الأدلة الرقمية، تحليل البيانات والأنظمة والشبكات، وأدوات استخراج الأدلة من الأجهزة المحمولة وأنظمة التشغيل.</p>
+                <a href="Digital-Forensics/index.html" class="course-btn">استعراض المحاضرات</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>تم الإنشاء بواسطة محرك الهندسة التعليمية © 2026. مصمم لدعم التميز في علوم الأمن السيبراني.</p>
+    </footer>
+
+</body>
+</html>
