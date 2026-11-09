@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحاضرة الأولى: أساسيات تحليل وتصميم النظم</title>
+    <title>المحاضرة الأولى: أساسيات تحليل وتصميم النظم ونظم المعلومات | تحليل وتصميم النظم</title>
     <style>
         :root {
             --primary: #1a365d;
+            --primary-dark: #102a43;
             --secondary: #2b6cb0;
             --accent: #ed8936;
+            --accent-light: #feebc8;
             --bg-light: #f7fafc;
             --text-dark: #2d3748;
             --text-muted: #718096;
-            --success: #48bb78;
-            --danger: #f56565;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --success: #38a169;
+            --success-bg: #f0fff4;
+            --danger: #e53e3e;
+            --danger-bg: #fff5f5;
+            --warning: #dd6b20;
+            --warning-bg: #fffaf0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --hover-shadow: 0 10px 20px rgba(26, 54, 93, 0.12);
         }
 
         * {
@@ -24,59 +31,174 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-light);
             color: var(--text-dark);
-            line-height: 1.8;
+            line-height: 1.85;
             font-size: 16px;
+        }
+
+        /* Top Navigation & Progress Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .breadcrumb-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.92rem;
+        }
+
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .breadcrumb-links span {
+            color: var(--text-muted);
+        }
+
+        .lecture-nav-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-pill {
+            background: #edf2f7;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .reading-progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            width: 0%;
+            transition: width 0.15s ease-out;
         }
 
         /* Header Styles */
         .lecture-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 3rem 2rem;
+            padding: 3.5rem 2rem;
             text-align: center;
             border-bottom: 5px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         .lecture-header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.3rem;
+            margin-bottom: 0.6rem;
+            font-weight: 800;
         }
 
         .lecture-header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 780px;
+            margin: 0 auto;
         }
 
         /* Layout */
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             display: grid;
-            grid-template-columns: 1fr 3fr;
+            grid-template-columns: 280px 1fr;
             gap: 2rem;
+            align-items: start;
         }
 
         /* Sidebar / TOC */
         .sidebar {
             background: white;
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--card-shadow);
             position: sticky;
-            top: 2rem;
-            height: fit-content;
+            top: 4.8rem;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+            border-top: 4px solid var(--primary);
         }
 
         .sidebar h3 {
             color: var(--primary);
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             border-bottom: 2px solid var(--bg-light);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .sidebar ul {
@@ -84,131 +206,450 @@
         }
 
         .sidebar li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.4rem;
         }
 
         .sidebar a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
+            transition: all 0.25s;
+            font-size: 0.92rem;
             display: block;
+            padding: 0.45rem 0.7rem;
+            border-radius: 6px;
+            border-right: 3px solid transparent;
         }
 
         .sidebar a:hover, .sidebar a.active {
-            color: var(--secondary);
-            font-weight: bold;
+            color: var(--primary);
+            background-color: #ebf8ff;
+            border-right-color: var(--secondary);
+            font-weight: 700;
         }
 
         /* Content Area */
         .content-area section {
             background: white;
             padding: 2.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
-            scroll-margin-top: 2rem;
+            margin-bottom: 2.2rem;
+            scroll-margin-top: 5.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #ebf8ff;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
         }
 
         h2 {
             color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
+            font-size: 1.75rem;
+            margin-bottom: 1.4rem;
+            padding-bottom: 0.6rem;
             border-bottom: 2px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
 
         h3 {
             color: var(--secondary);
-            font-size: 1.4rem;
-            margin: 1.5rem 0 1rem;
+            font-size: 1.35rem;
+            margin: 1.8rem 0 0.9rem;
+        }
+
+        h4 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
         }
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.1rem;
+            text-align: justify;
         }
 
-        ul.content-list {
-            margin: 1rem 2rem 1.5rem 0;
-            list-style-type: square;
+        ul.content-list, ol.content-list {
+            margin: 0.8rem 2rem 1.5rem 0;
         }
 
-        ul.content-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Info Boxes / Educational Deep Dives */
-        .info-box {
-            background-color: #ebf8ff;
-            border-right: 4px solid var(--secondary);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px 8px 8px 4px;
-        }
-
-        .info-box h4 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        ul.content-list li, ol.content-list li {
+            margin-bottom: 0.65rem;
         }
 
         /* Highlight terms */
         .term {
             color: var(--primary);
-            font-weight: bold;
+            font-weight: 700;
             background: #edf2f7;
-            padding: 0 0.4rem;
+            padding: 0.1rem 0.45rem;
             border-radius: 4px;
+            font-size: 0.95em;
         }
 
-        /* Diagrams / Visuals Placeholder */
-        .diagram-container {
+        .term-en {
+            font-family: monospace;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        .quote-en {
+            font-family: Georgia, serif;
+            font-style: italic;
+            direction: ltr;
+            text-align: left;
             background: #f8fafc;
-            border: 1px dashed #cbd5e0;
-            padding: 2rem;
-            text-align: center;
-            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            padding: 0.9rem 1.2rem;
+            margin: 0.8rem 0;
+            border-radius: 0 8px 8px 0;
+            color: #2d3748;
+        }
+
+        /* Callout / Info Boxes */
+        .info-box {
+            background-color: #ebf8ff;
+            border-right: 4px solid var(--secondary);
+            padding: 1.4rem 1.6rem;
+            margin: 1.5rem 0;
+            border-radius: 6px 10px 10px 6px;
+        }
+
+        .info-box.academic-plus {
+            background-color: #faf5ff;
+            border-right-color: #805ad5;
+        }
+
+        .info-box.academic-plus h4 {
+            color: #553c9a;
+        }
+
+        .info-box.warning-box {
+            background-color: var(--warning-bg);
+            border-right-color: var(--warning);
+        }
+
+        .info-box.warning-box h4 {
+            color: #9c4221;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            margin-top: 0;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Grid Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
             margin: 1.5rem 0;
         }
 
-        .system-model {
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.4rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+            border-top-color: var(--accent);
+        }
+
+        .card-badge-num {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Diagrams & Figures Box */
+        .figure-box {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+
+        .figure-caption {
+            margin-top: 1rem;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: #edf2f7;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+
+        /* Interactive University System Explorer */
+        .uni-explorer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .uni-item-btn {
+            background: white;
+            border: 2px solid #cbd5e0;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: right;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .uni-item-btn:hover, .uni-item-btn.active {
+            border-color: var(--secondary);
+            background: #ebf8ff;
+            transform: translateY(-2px);
+        }
+
+        .uni-detail-panel {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Interactive Tabs (System Types) */
+        .tabs-Wrapper {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .tabs-header {
+            display: flex;
+            flex-wrap: wrap;
+            background: #edf2f7;
+            border-bottom: 1px solid #cbd5e0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.95rem 0.7rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            font-size: 0.92rem;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: white;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table.academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        table.academic-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        table.academic-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        table.academic-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        table.academic-table tr:hover {
+            background: #ebf8ff;
+        }
+
+        /* Five Components Hub */
+        .is-hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .is-comp-card {
+            padding: 1.3rem;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+        }
+
+        .is-comp-card:hover {
+            transform: scale(1.03);
+        }
+
+        /* Expandable Accordions */
+        .accordion-item {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: right;
+            padding: 1.1rem 1.4rem;
+            background: #f8fafc;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.02rem;
+            color: var(--primary);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            transition: background 0.2s;
         }
 
-        .model-box {
+        .accordion-header:hover {
+            background: #edf2f7;
+        }
+
+        .accordion-body {
+            display: none;
+            padding: 1.4rem;
+            border-top: 1px solid #e2e8f0;
             background: white;
-            border: 2px solid var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-weight: bold;
-            text-align: center;
-            flex: 1;
-            min-width: 150px;
         }
 
-        .arrow {
-            font-size: 1.5rem;
-            color: var(--secondary);
+        .accordion-item.open .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-icon {
+            transition: transform 0.25s;
+        }
+
+        /* Interactive Scenario Simulator */
+        .simulator-box {
+            background: linear-gradient(135deg, #f8fafc, #edf2f7);
+            border: 2px solid #cbd5e0;
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .sim-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+
+        .sim-btn {
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
             font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .sim-btn:hover {
+            background: var(--secondary);
+            color: white;
         }
 
         /* Flashcards */
         .flashcards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
 
         .flashcard {
             perspective: 1000px;
-            height: 150px;
+            height: 175px;
             cursor: pointer;
         }
 
@@ -232,336 +673,1228 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.2rem;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
         }
 
         .flashcard-front {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
+        }
+
+        .flashcard-front small {
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.8rem;
+            font-weight: normal;
         }
 
         .flashcard-back {
             background-color: white;
             color: var(--text-dark);
             transform: rotateY(180deg);
-            border: 2px solid var(--primary);
-            font-size: 0.95rem;
+            border: 2px solid var(--secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
         }
 
-        /* Quiz Section */
+        /* Quiz Styles */
         .quiz-container {
             background: #fff;
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: var(--card-shadow);
-            margin-top: 2rem;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
             border-top: 5px solid var(--success);
         }
 
-        .question {
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-
-        .question.active {
-            display: block;
+        .quiz-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #edf2f7;
+            font-weight: bold;
+            color: var(--text-muted);
         }
 
         .options {
             list-style: none;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
         }
 
         .options li {
-            background: #edf2f7;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.7rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            font-weight: 500;
         }
 
         .options li:hover {
-            background: #e2e8f0;
+            background: #edf2f7;
+            border-color: var(--secondary);
         }
 
-        .options li.selected {
-            background: var(--secondary);
-            color: white;
+        .options li.correct-ans {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: #22543d;
+            font-weight: bold;
+        }
+
+        .options li.wrong-ans {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: #742a2a;
         }
 
         .quiz-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
+            font-weight: bold;
             margin-top: 1rem;
+            transition: background 0.2s;
         }
-        
+
+        .quiz-btn:hover {
+            background: var(--secondary);
+        }
+
         .quiz-feedback {
             margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 6px;
+            padding: 1.2rem;
+            border-radius: 8px;
             display: none;
+            line-height: 1.6;
+        }
+
+        /* Footer Navigation */
+        .lecture-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
+                padding: 1rem;
             }
             .sidebar {
                 position: static;
+                max-height: none;
                 margin-bottom: 1rem;
+            }
+            .lecture-header h1 {
+                font-size: 1.8rem;
+            }
+            .content-area section {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Top Navigation & Reading Progress -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">📚 فهرس تحليل وتصميم النظم</a>
+                <span>/</span>
+                <span>المحاضرة الأولى</span>
+            </div>
+            <div class="lecture-nav-btns">
+                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
+                <a href="Lecture-02.html" class="nav-pill">المحاضرة التالية (2) ←</a>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Lecture Header -->
     <header class="lecture-header">
-        <p>مقرر: تحليل وتصميم النظم (Systems Analysis & Design)</p>
+        <div class="header-badge">مقرر: أساسيات تحليل وتصميم النظم (Systems Analysis & Design)</div>
         <h1>المحاضرة الأولى: أساسيات ونظم المعلومات</h1>
-        <p>مفاهيم الأنظمة، مكوناتها، وأنواعها في سياق تقنية المعلومات</p>
+        <p>مدخل تأسيسي شامل لمفهوم النظام، عناصره وحدوده وبيئته، النموذج العام للأنظمة، النظم الفرعية، تصنيفات النظم، ومكونات وغايات نظم المعلومات المحوسبة.</p>
     </header>
 
     <div class="container">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar Table of Contents -->
         <aside class="sidebar">
-            <h3>فهرس المحاضرة</h3>
-            <ul>
-                <li><a href="#objectives">أهداف ومفردات المقرر</a></li>
-                <li><a href="#concept">مفهوم وماهية النظام</a></li>
-                <li><a href="#elements">عناصر وبيئة النظام</a></li>
-                <li><a href="#model">النموذج العام للأنظمة</a></li>
-                <li><a href="#types">أنواع النظم</a></li>
-                <li><a href="#is">نظم المعلومات المحوسبة</a></li>
-                <li><a href="#goals">أهداف وغايات التحليل والتصميم</a></li>
-                <li><a href="#flashcards">بطاقات الاستذكار (مراجعة)</a></li>
-                <li><a href="#quiz">الاختبار التقييمي الذاتي</a></li>
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#syllabus-objectives">1. مفردات وأهداف المقرر</a></li>
+                <li><a href="#system-concept">2. مفهوم وماهية النظام</a></li>
+                <li><a href="#elements-boundary">3. عناصر وحدود وبيئة النظام</a></li>
+                <li><a href="#general-model">4. النموذج العام للنظام وتفصيلاته</a></li>
+                <li><a href="#university-example">5. دراسة حالة: مثال نظام الجامعة</a></li>
+                <li><a href="#subsystems">6. النظم الفرعية (Sub-Systems)</a></li>
+                <li><a href="#system-types">7. التصنيفات الأربعة لأنواع النظم</a></li>
+                <li><a href="#info-systems">8. نظم المعلومات والمحوسبة</a></li>
+                <li><a href="#sad-goals">9. أهداف وغايات تحليل وتصميم النظم</a></li>
+                <li><a href="#interactive-lab">10. المختبر التطبيقي التفاعلي</a></li>
+                <li><a href="#flashcards">11. بطاقات الاستذكار</a></li>
+                <li><a href="#review-questions">12. أسئلة المراجعة الشاملة</a></li>
+                <li><a href="#quiz">13. الاختبار التقييمي النهائي</a></li>
             </ul>
         </aside>
 
-        <!-- Main Content -->
+        <!-- Main Educational Content -->
         <main class="content-area">
-            
-            <section id="objectives">
-                <h2>أهداف ومفردات المقرر</h2>
-                <p>يهدف هذا المقرر إلى تأسيس الفهم العميق لكيفية بناء أنظمة المعلومات انطلاقاً من مرحلة التخطيط وحتى التنفيذ. بنهاية هذا المقرر ستكون قادراً على:</p>
-                <ul class="content-list">
-                    <li>التعرف على تحليل وتصميم نظم المعلومات وأهدافها.</li>
-                    <li>تعدد وإدراك دورة حياة النظام (System Life Cycle) والتي تشمل: التخطيط، التحليل، التصميم، والتنفيذ.</li>
-                    <li>تصميم النظم المرتبطة بنظم المعلومات (تصميم المدخلات، المخرجات، الإجراءات، والنماذج).</li>
-                    <li>اكتساب المهارات العملية اللازمة لدراسة وتحليل وتصميم نظام معلومات متكامل (من خلال دراسة حالة).</li>
-                </ul>
+
+            <!-- 1. مفردات وأهداف المقرر -->
+            <section id="syllabus-objectives">
+                <span class="section-tag">خارطة طريق المقرر</span>
+                <h2>🎯 مفردات وأهداف مقرر تحليل وتصميم النظم</h2>
+                <p>يمثل هذا المقرر حجر الزاوية لكل مهندس برمجيات ومختص في نظم المعلومات والأمن السيبراني؛ إذ يعلمنا كيف نحول احتياجات المؤسسات المعقدة إلى أنظمة حاسوبية متكاملة، فعالة، وآمنة.</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>📚 أولاً: مفردات المقرر الدراسية</h4>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li><strong>مفاهيم أساسية</strong> في تحليل وتصميم النظم.</li>
+                            <li><strong>محلل النظم</strong> وتطوير النظام.</li>
+                            <li><strong>دورة حياة النظام (SDLC):</strong>
+                                <ul>
+                                    <li>التخطيط (Planning).</li>
+                                    <li>تحليل الأنظمة (Systems Analysis).</li>
+                                    <li>تصميم الأنظمة (Systems Design): ويشمل <em>تصميم المدخلات والمخرجات، تصميم الإجراءات، وتصميم النماذج</em>.</li>
+                                    <li>التنفيذ (Implementation).</li>
+                                </ul>
+                            </li>
+                            <li><strong>تنفيذ دراسة الحالة (Case Study):</strong> تطبيق عملي شامل لما تم تعلمه.</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>🏆 ثانياً: أهداف المقرر (مخرجات التعلم)</h4>
+                        <p style="margin-bottom:0.5rem;">بعد فراغك من هذا المقرر ينبغي أن تكون قادراً على أن:</p>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>تتعرف على تحليل وتصميم نظم المعلومات.</li>
+                            <li>تبين أهداف دراسة تحليل وتصميم النظم.</li>
+                            <li>تعدد مراحل تحليل وتصميم النظم.</li>
+                            <li>تصمم النظم المرتبطة بنظم المعلومات.</li>
+                            <li>تعكس المهارات العملية اللازمة لدراسة وتحليل نظام المعلومات.</li>
+                            <li>تمتلك القدرة الكاملة على تحليل وتصميم نظام المعلومات.</li>
+                        </ol>
+                    </div>
+                </div>
             </section>
 
-            <section id="concept">
-                <h2>مفهوم وماهية النظام (System Concept)</h2>
-                <p>مفهوم النظام هو مفهوم علمي ثابت لا يتغير باختلاف المجالات (سواء كان في الطب، الهندسة، الإدارة، أو الحاسب). الذي يختلف هو التطبيق، ولكن الجوهر واحد.</p>
+            <!-- 2. مفهوم وماهية النظام -->
+            <section id="system-concept">
+                <span class="section-tag">القسم (1-1) و (1-2)</span>
+                <h2>🌐 مفهوم النظام وماهيته (System Concept & Nature)</h2>
                 
+                <h3>1-1 مفهوم النظام:</h3>
+                <p>مفهوم النظام هو <strong>مفهوم علمي لا يختلف من مجال إلى آخر</strong>؛ بمعنى أن النظام نفسه (كتطبيق ومكونات ملموسة) يختلف باختلاف المجال الذي ينتمي إليه (النظام الشمسي، النظام البيولوجي، النظام الاقتصادي، النظام الحاسوبي)، أما <strong>مفهومه العلمي الجوهري فواحد لا يتغير</strong>.</p>
+
+                <h3>1-2 ماهية النظام (تعريف النظام):</h3>
                 <div class="info-box">
-                    <h4>💡 التعريف الأكاديمي للنظام (System Definition)</h4>
-                    <p>النظام هو: "مجموعة من النظم المترابطة أو الأجزاء المتفاعلة (Interrelated Elements) والتي تعمل معاً من أجل تحقيق غايات مشتركة وأهداف محددة (Objectives)."</p>
-                </div>
-            </section>
-
-            <section id="elements">
-                <h2>عناصر وبيئة النظام</h2>
-                <p>لكي نطلق على أي كيان اسم "نظام"، يجب أن يتكون من الأبعاد التالية:</p>
-                <ul class="content-list">
-                    <li><strong>العناصر (Elements):</strong> الأجزاء المكونة للنظام (Sub-systems).</li>
-                    <li><strong>العلاقات (Relationships):</strong> التفاعلات التبادلية بين العناصر، وهي التي تحدد سلوك النظام (System Behavior).</li>
-                    <li><strong>حدود النظام (System Boundary):</strong> الإطار الذي يجمع العناصر والعلاقات في كيان واحد. الفواصل التي تميز النظام عن محيطه، وقد تكون مادية (ملموسة كجدران المؤسسة) أو غير مادية (مثل الصلاحيات والسياسات).</li>
-                    <li><strong>بيئة النظام (System Environment):</strong> أي شيء يقع <em>خارج</em> حدود النظام ويؤثر فيه دون إمكانية السيطرة عليه من داخل النظام (مثل القوانين الحكومية، أو المنافسين في السوق).</li>
-                </ul>
-
-                <div class="diagram-container">
-                    <p><strong>تخيل النظام كدائرة مغلقة:</strong> ما بداخل الدائرة هو العناصر، خط الدائرة هو الحدود، وما يحيط بها هو البيئة الخارجية.</p>
-                </div>
-            </section>
-
-            <section id="model">
-                <h2>النموذج العام للنظام (General System Model)</h2>
-                <p>يمكن إعادة تعريف النظام بدقة على أنه: "كيان يستقبل مدخلات من البيئة، يعالجها، لإنتاج مخرجات تعود لتلك البيئة".</p>
-                
-                <div class="system-model">
-                    <div class="model-box" style="border-color: var(--primary);">مدخلات (Input)<br><small>بيانات</small></div>
-                    <div class="arrow">←</div>
-                    <div class="model-box" style="border-color: var(--accent);">معالجة (Processing)<br><small>العمليات</small></div>
-                    <div class="arrow">←</div>
-                    <div class="model-box" style="border-color: var(--success);">مخرجات (Output)<br><small>معلومات</small></div>
+                    <h4>📌 التعريف الأول للنظام (من زاوية الترابط والهدف)</h4>
+                    <p>يمكن تعريف النظام <span class="term-en">System</span> على أنه: <strong>«مجموعة من النظم المترابطة أو الأجزاء المتفاعلة والتي تعمل معاً من أجل تحقيق غايات مشتركة وأهداف محددة»</strong>.</p>
+                    <div class="quote-en">
+                        "A set of interrelated elements which operate together to achieve some objectives"
+                    </div>
                 </div>
 
-                <div class="info-box">
-                    <h4>🔍 تعمق أكاديمي: الفرق بين البيانات والمعلومات</h4>
-                    <p><strong>البيانات (Data):</strong> هي المادة الخام (مدخلات) مثل الأرقام والحقائق المجردة. <br>
-                    <strong>المعلومات (Information):</strong> هي بيانات تمت معالجتها (مخرجات) لتصبح ذات معنى وقيمة لاتخاذ القرار.</p>
-                </div>
-
-                <h3>تفصيل عمليات النموذج:</h3>
-                <ul class="content-list">
-                    <li><strong>التغذية العكسية (Feedback):</strong> معلومات تعود كمدخلات للنظام لتصحيح الانحرافات والأخطاء (أشبه بالرقابة الذاتية).</li>
-                    <li><strong>أنواع المدخلات:</strong>
-                        <ul>
-                            <li><em>أساسية:</em> لازمة لاستمرار النظام (مثل الطلاب في الجامعة).</li>
-                            <li><em>استبدالية:</em> تتعرض للتلف وتحتاج تغيير ولا تخضع لعمليات النظام بل تصبح من مكوناته (مثل الأفراد والمعدات).</li>
-                            <li><em>بيئية:</em> مؤثرات خارجية لا تخضع للنظام (كالعوامل الاقتصادية).</li>
-                        </ul>
-                    </li>
-                    <li><strong>أنواع المخرجات:</strong>
-                        <ul>
-                            <li><em>نهائية:</em> تؤثر في البيئة وتمثل هدف النظام (مثل الخريجين).</li>
-                            <li><em>ارتدادية:</em> تعود كمدخلات للنظام (مثل تعيين الخريجين كمعيدين في نفس الجامعة).</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-
-            <section id="types">
-                <h2>أنواع النظم (System Types)</h2>
-                <p>تُصنف الأنظمة بناءً على معايير متعددة، من أهمها:</p>
-                
-                <ul class="content-list">
-                    <li><strong>حسب العلاقة بالبيئة:</strong>
-                        <ul>
-                            <li><span class="term">مفتوح (Open)</span>: يتفاعل مع البيئة، يأخذ منها ويعطيها (مثل: الإنسان، الحاسب، البنك). <em>الأكثر انتشاراً.</em></li>
-                            <li><span class="term">مغلق (Closed)</span>: لا يتفاعل مع البيئة نهائياً. (يندر أو يستحيل وجوده واقعياً بشكل مطلق).</li>
-                            <li><span class="term">مغلق نسبياً (Relatively Closed)</span>: يعمل دون تدخل خارجي لفترة حتى ينفد مورده (مثل: ساعة البطارية).</li>
-                        </ul>
-                    </li>
-                    <li><strong>حسب الأصل والطبيعة:</strong>
-                        <ul>
-                            <li><span class="term">طبيعي (Natural)</span> vs <span class="term">صنعي (Man-Made)</span>: الأرض مقابل السيارة.</li>
-                            <li><span class="term">محسوس (Physical)</span> vs <span class="term">منطقي/مفاهيمي (Logical)</span>: الأجهزة مقابل البرمجيات والهياكل التنظيمية.</li>
-                        </ul>
-                    </li>
-                    <li><strong>حسب درجة التعقيد:</strong>
-                        <ul>
-                            <li><span class="term">بسيط (Simple)</span>: علاقات محددة وواضحة.</li>
-                            <li><span class="term">معقد (Intricate)</span>: عناصر متعددة ومستويات متداخلة من النظم الفرعية.</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
-
-            <section id="is">
-                <h2>نظم المعلومات المحوسبة (CIS)</h2>
-                <p>نظام المعلومات ليس مجرد جهاز حاسب، بل هو منظومة متكاملة تتكون من 5 عناصر أساسية:</p>
-                <div class="system-model" style="justify-content: center; gap: 0.5rem; flex-wrap: wrap;">
-                    <span class="term">1. الأجهزة (Hardware)</span> + 
-                    <span class="term">2. البرمجيات (Software)</span> + 
-                    <span class="term">3. البيانات (Data)</span> + 
-                    <span class="term">4. الأشخاص (People)</span> + 
-                    <span class="term">5. العمليات (Processes)</span>
-                </div>
-                
-                <p style="margin-top: 1.5rem;"><strong>نظام المعلومات المحوسب:</strong> هو تجسيد لنظام المعلومات داخل المنظمات. يهدف إلى دعم العاملين بتوفير المعلومات بالشكل والحجم والوقت المناسبين. <br> 
-                هو نظام <em>مفاهيمي (ليس مادي فقط)</em>، <em>صنعي</em>، و<em>مفتوح</em> على بيئته (المنظمة).</p>
-            </section>
-
-            <section id="goals">
-                <h2>أهداف وغايات تحليل وتصميم النظم</h2>
-                <p>لماذا نقوم بتحليل وتصميم الأنظمة؟ الهدف هو توفير إمكانيات أفضل (Better Capabilities) تشمل:</p>
-                <ul class="content-list">
-                    <li>إنجاز العمليات بسرعة عالية.</li>
-                    <li>معالجة كميات ضخمة من البيانات واسترجاعها سريعاً.</li>
-                    <li>توفير تحكم رقابي أفضل (Better Control) والالتزام بإجراءات الأمن.</li>
-                </ul>
-
-                <div class="info-box">
-                    <h4>🎯 الغاية الأساسية (خصائص النظام الناجح):</h4>
-                    <ul>
-                        <li><strong>الفعالية (Effectiveness):</strong> تلبية احتياجات المستخدمين بشكل صحيح (القيام بالعمل الصحيح).</li>
-                        <li><strong>الكفاءة (Efficiency):</strong> الاستخدام الأمثل للموارد (القيام بالعمل بطريقة صحيحة).</li>
-                        <li><strong>سهولة الاستخدام (Usability/Visibility):</strong> واجهات وإمكانيات مرنة ومفهومة.</li>
-                        <li><strong>الوثوقية (Reliability):</strong> القدرة على العمل في مختلف الظروف دون أعطال.</li>
-                        <li><strong>سهولة الصيانة (Maintainability):</strong> إمكانية إجراء التعديلات والتحديثات بأقل تكلفة وجهد.</li>
+                <div class="info-box academic-plus">
+                    <h4>🧠 تعمق أكاديمي: شروط تحقق صفة "النظام"</h4>
+                    <p>نستنتج من التعريف الأكاديمي أعلاه أنه لا يمكن تسمية أي تجمع عشوائي من الأشياء بأنه "نظام" إلا إذا تحققت فيه ثلاثة شروط جوهرية:</p>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>تعدد الأجزاء أو العناصر:</strong> وجود أكثر من جزء أو نظام فرعي.</li>
+                        <li><strong>الترابط والتفاعل (Interrelation & Interaction):</strong> عمل هذه الأجزاء معاً بتناغم وتأثير متبادل، وليس بمعزل عن بعضها.</li>
+                        <li><strong>وحدة الغاية والهدف (Common Objectives):</strong> اتجاه جميع العناصر نحو تحقيق هدف مشترك محدد مسبقاً.</li>
                     </ul>
                 </div>
             </section>
 
-            <section id="flashcards">
-                <h2>بطاقات الاستذكار (Flashcards)</h2>
-                <p>انقر على البطاقة لقلبها ومراجعة المفهوم.</p>
-                <div class="flashcards-grid">
-                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">بيئة النظام (Environment)</div>
-                            <div class="flashcard-back">أي شيء يقع خارج حدود النظام ويؤثر فيه دون إمكانية السيطرة عليه من الداخل.</div>
+            <!-- 3. عناصر وحدود وبيئة النظام -->
+            <section id="elements-boundary">
+                <span class="section-tag">الأقسام (1-3) و (1-4) و (1-5)</span>
+                <h2>🧱 عناصر النظام، حدوده، وبيئته</h2>
+
+                <h3>1-3 عناصر (مكونات) النظام (System Elements):</h3>
+                <p>يتألف أي نظام من ثلاثة أركان بنيوية متكاملة هي:</p>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">أ</div>
+                        <h4>الأجزاء (العناصر)</h4>
+                        <p>مجموعة من الأجزاء التي تشكل عناصر النظام (أو مكوناته الداخلية).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">ب</div>
+                        <h4>العلاقات التبادلية</h4>
+                        <p>مجموعة من العلاقات التبادلية بين هذه العناصر، وهذه العلاقات هي التي تحدد <strong>سلوك النظام <span class="term-en">System Behavior</span></strong>.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">ج</div>
+                        <h4>الإطار (حدود النظام)</h4>
+                        <p>إطار يجمع هذه العناصر وتلك العلاقات في كيان واحد، ويسمى <span class="term">حدود النظام (System Boundary)</span>، وهي التي تحدد ملامح النظام وتميزه عن بيئته.</p>
+                    </div>
+                </div>
+
+                <!-- الشكل 1: حدود النظام وبيئته -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 550 220" style="max-width: 500px; width: 100%; height: auto; background: white; border: 2px solid #2d3748; border-radius: 8px;">
+                        <!-- البيئة -->
+                        <text x="460" y="170" font-size="22" font-weight="bold" fill="#2d3748">البيئة</text>
+                        <text x="440" y="195" font-size="13" fill="#718096">(Environment)</text>
+                        
+                        <!-- دائرة النظام -->
+                        <circle cx="230" cy="110" r="80" fill="#ebf8ff" stroke="#1a365d" stroke-width="3.5" />
+                        <text x="230" y="95" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a365d">النظام</text>
+                        <text x="230" y="130" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b6cb0">System</text>
+
+                        <!-- سهم حدود النظام -->
+                        <defs>
+                            <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#ed8936" />
+                            </marker>
+                        </defs>
+                        <line x1="420" y1="125" x2="318" y2="115" stroke="#ed8936" stroke-width="3" marker-end="url(#arrow1)" />
+                        <text x="430" y="110" font-size="18" font-weight="bold" fill="#c05621">حدود النظام</text>
+                        <text x="415" y="88" font-size="12" fill="#718096">(System Boundary)</text>
+                    </svg>
+                    <div><span class="figure-caption">الشكل (1): يوضح حدود النظام وبيئته المحيطة</span></div>
+                </div>
+
+                <h3>1-4 حدود النظام (System Boundary):</h3>
+                <p>هي <strong>الفواصل عن المحيط الخارجي للنظام</strong> وتختلف في درجة الوضوح من نظام لآخر. وقد تكون هذه الحدود:</p>
+                <ul class="content-list">
+                    <li><strong>حدوداً مادية ملموسة:</strong> مثل سور الجامعة، أو الغلاف المعدني لجهاز الحاسوب، أو جدران المصنع.</li>
+                    <li><strong>أو حدوداً غير مادية (منطقية/مفاهيمية):</strong> مثل الصلاحيات البرمجية في نظام المعلومات، أو نطاق الاختصاص الإداري والقانوني لقسم الموارد البشرية.</li>
+                </ul>
+
+                <h3>1-5 بيئة النظام (System Environment):</h3>
+                <p>هي <strong>أي شيء يقع خارج حدود النظام ويؤثر فيه دون إمكانية السيطرة عليه من داخل النظام</strong> (مثل: التشريعات الحكومية، تقلبات الأسعار العالمية، أو سلوك المنافسين).</p>
+
+                <!-- الشكل 2: عناصر النظام والعلاقات التي بينها -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 450 250" style="max-width: 420px; width: 100%; height: auto; background: white; border: 2px solid #2d3748; border-radius: 8px;">
+                        <defs>
+                            <marker id="arrow2" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#1a365d" />
+                            </marker>
+                        </defs>
+                        <!-- المربعات A, B, C, D -->
+                        <!-- A (Top Left) -->
+                        <rect x="60" y="30" width="90" height="70" fill="#edf2f7" stroke="#1a365d" stroke-width="2.5" rx="4"/>
+                        <text x="105" y="73" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a365d">A</text>
+                        
+                        <!-- B (Top Right) -->
+                        <rect x="290" y="30" width="90" height="70" fill="#edf2f7" stroke="#1a365d" stroke-width="2.5" rx="4"/>
+                        <text x="335" y="73" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a365d">B</text>
+
+                        <!-- D (Bottom Left) -->
+                        <rect x="60" y="150" width="90" height="70" fill="#edf2f7" stroke="#1a365d" stroke-width="2.5" rx="4"/>
+                        <text x="105" y="193" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a365d">D</text>
+
+                        <!-- C (Bottom Right) -->
+                        <rect x="290" y="150" width="90" height="70" fill="#edf2f7" stroke="#1a365d" stroke-width="2.5" rx="4"/>
+                        <text x="335" y="193" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a365d">C</text>
+
+                        <!-- الأسهم (العلاقات التبادلية) -->
+                        <!-- A to B -->
+                        <line x1="150" y1="65" x2="285" y2="65" stroke="#1a365d" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                        <!-- A to D -->
+                        <line x1="105" y1="100" x2="105" y2="145" stroke="#1a365d" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                        <!-- B to C -->
+                        <line x1="335" y1="100" x2="335" y2="145" stroke="#1a365d" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                        <!-- D to C -->
+                        <line x1="150" y1="185" x2="285" y2="185" stroke="#1a365d" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                        <!-- A to C (Diagonal) -->
+                        <line x1="150" y1="95" x2="285" y2="152" stroke="#2b6cb0" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                        <!-- B to D (Diagonal) -->
+                        <line x1="290" y1="95" x2="155" y2="152" stroke="#2b6cb0" stroke-width="2.2" marker-end="url(#arrow2)"/>
+                    </svg>
+                    <div><span class="figure-caption">الشكل (2): يوضح عناصر النظام (A, B, C, D) والعلاقات التي بينها</span></div>
+                </div>
+            </section>
+
+            <!-- 4. النموذج العام للنظام وتفصيلاته -->
+            <section id="general-model">
+                <span class="section-tag">القسم (1-6)</span>
+                <h2>⚙️ النموذج العام للنظام (General System Model)</h2>
+                <p>يمكن إعادة تعريف النظام بشكل أدق بتحديد عناصره من وجهة نظر حركية التشغيل (المدخلات والمعالجة والمخرجات):</p>
+
+                <div class="info-box">
+                    <h4>📌 التعريف الثاني الأوسع للنظام (من زاوية التفاعل مع البيئة)</h4>
+                    <p><strong>«النظام هو ذلك الكيان ذو العناصر المترابطة الذي يستقبل مدخلات معينة من بيئته حيث يعالجها من أجل إنتاج مخرجات محددة لتلك البيئة»</strong>.</p>
+                    <div class="quote-en">
+                        "A collection of interrelated elements which receive certain inputs from its environment, processing it and produce certain output to this environment"
+                    </div>
+                </div>
+
+                <h3>مكونات النموذج العام للنظام:</h3>
+                <p>يتكون النموذج العام لأي نظام من ثلاثة أركان أساسية تكتمل بالركن الرابع (التغذية العكسية):</p>
+                <ol class="content-list">
+                    <li><strong>المدخلات <span class="term-en">Input</span>:</strong> وهي <strong>البيانات (Data)</strong> الخام التي تدخل للنظام.</li>
+                    <li><strong>عمليات المعالجة <span class="term-en">Processing</span>:</strong> وهي العمليات التحويلية التي تُجرى على البيانات.</li>
+                    <li><strong>المخرجات <span class="term-en">Output</span>:</strong> وهي <strong>المعلومات (Information)</strong>، أي أنها <em>بيانات أُدخلت وتمت معالجتها</em> لتصبح ذات معنى وفائدة.</li>
+                </ol>
+
+                <!-- الشكل 3: النموذج العام للنظام -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 600 210" style="max-width: 580px; width: 100%; height: auto; background: white; border: 2px solid #cbd5e0; border-radius: 8px;">
+                        <defs>
+                            <marker id="arrow3" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#1a365d" />
+                            </marker>
+                            <marker id="arrowFeedback" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#ed8936" />
+                            </marker>
+                        </defs>
+                        <!-- مدخلات (يمين) -->
+                        <rect x="430" y="30" width="130" height="80" fill="#ebf8ff" stroke="#1a365d" stroke-width="2.5" rx="6"/>
+                        <text x="495" y="65" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a365d">مدخلات (Input)</text>
+                        <text x="495" y="90" text-anchor="middle" font-size="13" fill="#4a5568">[البيانات Data]</text>
+
+                        <!-- معالجة (وسط) -->
+                        <rect x="225" y="30" width="150" height="80" fill="#feebc8" stroke="#c05621" stroke-width="2.5" rx="6"/>
+                        <text x="300" y="62" text-anchor="middle" font-size="17" font-weight="bold" fill="#7b341e">عمليات معالجة</text>
+                        <text x="300" y="90" text-anchor="middle" font-size="16" font-weight="bold" fill="#c05621">Processing</text>
+
+                        <!-- مخرجات (يسار) -->
+                        <rect x="35" y="30" width="130" height="80" fill="#f0fff4" stroke="#2f855a" stroke-width="2.5" rx="6"/>
+                        <text x="100" y="65" text-anchor="middle" font-size="18" font-weight="bold" fill="#22543d">مخرجات (Output)</text>
+                        <text x="100" y="90" text-anchor="middle" font-size="13" fill="#276749">[المعلومات Info]</text>
+
+                        <!-- سهم من المدخلات للمعالجة -->
+                        <line x1="430" y1="60" x2="380" y2="60" stroke="#1a365d" stroke-width="2.5" marker-end="url(#arrow3)"/>
+                        <!-- سهم من المعالجة للمخرجات -->
+                        <line x1="225" y1="60" x2="170" y2="60" stroke="#1a365d" stroke-width="2.5" marker-end="url(#arrow3)"/>
+
+                        <!-- خط التغذية العكسية (Feedback) -->
+                        <polyline points="100,110 100,175 405,175 405,85 380,85" fill="none" stroke="#ed8936" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arrowFeedback)"/>
+                        <text x="255" y="165" text-anchor="middle" font-size="14" font-weight="bold" fill="#c05621">تغذية عكسية / راجعة (Feedback)</text>
+                    </svg>
+                    <div><span class="figure-caption">الشكل (3): يوضح النموذج العام للنظام ومسار التغذية العكسية</span></div>
+                </div>
+
+                <h3>تفصيل عناصر النموذج العام للنظام:</h3>
+
+                <h4>1. التغذية العكسية (Feedback):</h4>
+                <p>يمكن للمعلومة الناتجة أن تدخل مرة أخرى للنظام، وهذا ما يُعرف بـ <span class="term">التغذية العكسية (Feedback)</span>. وعادةً ما تُستخدم لتصحيح الانحرافات أو الأخطاء التي تعتري عمل النظام، فهي تعمل <strong>أشبه بالرقابة الذاتية</strong> للنظام.</p>
+
+                <h4>2. مدخلات النظام (System Input) وأنواعها الثلاثة:</h4>
+                <p>المدخلات هي جميع المتغيرات التي تؤثر في النظام وهي مستمدة من البيئة، ويمكن التمييز بدقة بين <strong>ثلاثة أنواع من هذه المدخلات</strong>:</p>
+                
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>نوع المدخلات</th>
+                                <th>التعريف والخصائص الأكاديمية</th>
+                                <th>علاقتها بعمليات وعناصر النظام</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. مدخلات أساسية</strong></td>
+                                <td>هي المدخلات اللازمة لاستمرار النظام وبقائه، وهي المادة الأساسية التي يعمل عليها النظام.</td>
+                                <td><strong>تخضع مباشرةً لنشاط وعمليات المعالجة</strong> لتتحول إلى مخرجات.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. مدخلات استبدالية</strong></td>
+                                <td>هي المدخلات التي قد تتعرض للتلف أو النفاذ بمرور الوقت مما يستلزم تغييرها أو إحلالها.</td>
+                                <td><strong>لا تخضع لنشاط وعمليات النظام، وإنما تصبح إحدى عناصره ومكوناته</strong> التي تؤدي المعالجة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. مدخلات بيئية</strong></td>
+                                <td>تشمل كافة المؤثرات البيئية الخارجية المحيطة بالنظام، وقد تكون <strong>مساعدة (محفزة)</strong> أو <strong>معوقة (مثبطة)</strong> للنظام.</td>
+                                <td><strong>لا تخضع لعمليات النظام ولا تصبح ضمن مكوناته</strong>، بل تؤثر عليه من الخارج.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>3. عمليات النظام (System Processes):</h4>
+                <p>نشاط النظام هو التفاعل الذي يتم <strong>بين عناصره المختلفة من ناحية</strong>، و<strong>بينها وبين المدخلات من ناحية أخرى</strong>، وذلك بنية تحويل المدخلات الأساسية إلى مخرجات.</p>
+
+                <h4>4. مخرجات النظام (System Output) ونوعاها:</h4>
+                <p>هي ما ينتج عن النظام، وترتبط مخرجات النظام ارتباطاً وثيقاً بـ <strong>أهداف النظام</strong> حتى إن البعض لا يفرق بينهما. ويمكن التمييز بين نوعين من المخرجات هما:</p>
+                <ul class="content-list">
+                    <li><strong>(أ) المخرجات النهائية:</strong> وهي تلك التي ينتجها النظام وتؤثر في بيئة النظام، أي أن <em>المخرجات النهائية لنظام هي مدخلات لبيئته</em>.</li>
+                    <li><strong>(ب) المخرجات الارتدادية:</strong> وهي المخرجات التي تُستخدم كمدخلات للنظام نفسه، وهذه العملية تعرف بـ <span class="term">التغذية الراجعة (Feedback)</span>. وهكذا نجد قاعدة ذهبية: <strong>«إن مخرجات أي نظام هي مدخلات للنظام نفسه أو للبيئة»</strong>.</li>
+                </ul>
+            </section>
+
+            <!-- 5. دراسة حالة: مثال نظام الجامعة -->
+            <section id="university-example">
+                <span class="section-tag">تطبيق عملي من المحاضرة</span>
+                <h2>🏛️ مثال تطبيقي متكامل: تحليل «نظام الجامعة»</h2>
+                <p>لتثبيت الفرق الدقيق بين أنواع المدخلات الثلاثة ونوعي المخرجات، طرحت المحاضرة <strong>نظام الجامعة</strong> كمثال تطبيقي. انقر على أي عنصر في المستكشف التفاعلي أدناه لترى دوره الدقيق في نظام الجامعة:</p>
+
+                <!-- الشكل التوضيحي لنظام الجامعة -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 600 250" style="max-width: 580px; width: 100%; height: auto; background: white; border: 2px solid #cbd5e0; border-radius: 8px;">
+                        <defs>
+                            <marker id="arrowUni" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#1a365d" />
+                            </marker>
+                        </defs>
+                        <!-- صندوق نظام الجامعة -->
+                        <rect x="220" y="25" width="150" height="145" fill="#ebf8ff" stroke="#1a365d" stroke-width="3" rx="8"/>
+                        <text x="295" y="85" text-anchor="middle" font-size="26" font-weight="bold" fill="#1a365d">نظام</text>
+                        <text x="295" y="130" text-anchor="middle" font-size="26" font-weight="bold" fill="#2b6cb0">الجامعة</text>
+
+                        <!-- المدخلات الثلاثة (من اليمين) -->
+                        <text x="530" y="50" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a365d">طلبة (طلاب)</text>
+                        <line x1="470" y1="45" x2="375" y2="45" stroke="#1a365d" stroke-width="2.5" marker-end="url(#arrowUni)"/>
+
+                        <text x="530" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b6cb0">أفراد ومعدات</text>
+                        <line x1="470" y1="90" x2="375" y2="90" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrowUni)"/>
+
+                        <text x="530" y="140" text-anchor="middle" font-size="15" font-weight="bold" fill="#718096">عوامل اجتماعية واقتصادية</text>
+                        <line x1="445" y1="135" x2="375" y2="135" stroke="#718096" stroke-width="2.5" marker-end="url(#arrowUni)"/>
+
+                        <!-- المخرجات النهائية (إلى اليسار) -->
+                        <line x1="220" y1="55" x2="105" y2="55" stroke="#38a169" stroke-width="3" marker-end="url(#arrowUni)"/>
+                        <text x="60" y="60" text-anchor="middle" font-size="18" font-weight="bold" fill="#22543d">خريجين</text>
+
+                        <!-- المخرجات الارتدادية (المعيدين - تغذية عكسية) -->
+                        <polyline points="220,115 140,115 140,215 430,215 430,158 375,158" fill="none" stroke="#ed8936" stroke-width="2.5" marker-end="url(#arrowUni)"/>
+                        <text x="285" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#c05621">معيدين (مخرجات ارتدادية / تغذية عكسية Feedback)</text>
+                    </svg>
+                    <div><span class="figure-caption">الشكل (4): تطبيق النموذج العام للنظام على «نظام الجامعة»</span></div>
+                </div>
+
+                <div class="uni-explorer">
+                    <button class="uni-item-btn active" onclick="showUniDetail(0, this)"><strong>أ- الطلاب</strong><br><small>اضغط للتفصيل</small></button>
+                    <button class="uni-item-btn" onclick="showUniDetail(1, this)"><strong>ب- الأفراد والمعدات</strong><br><small>اضغط للتفصيل</small></button>
+                    <button class="uni-item-btn" onclick="showUniDetail(2, this)"><strong>ج- العوامل الاجتماعية والاقتصادية</strong><br><small>اضغط للتفصيل</small></button>
+                    <button class="uni-item-btn" onclick="showUniDetail(3, this)"><strong>د- الخريجون</strong><br><small>اضغط للتفصيل</small></button>
+                    <button class="uni-item-btn" onclick="showUniDetail(4, this)"><strong>هـ- المعيدون</strong><br><small>اضغط للتفصيل</small></button>
+                </div>
+
+                <div class="uni-detail-panel" id="uni-detail-box">
+                    <!-- Injected via JS -->
+                </div>
+            </section>
+
+            <!-- 6. النظم الفرعية Sub Systems -->
+            <section id="subsystems">
+                <span class="section-tag">القسم (1-7)</span>
+                <h2>🧩 النظم الفرعية (Sub Systems)</h2>
+                <p>إن <strong>كل عنصر من عناصر النظام هو في حد ذاته نظام فرعي <span class="term-en">Sub System</span></strong>. وبالتالي فإن النظام الكلي هو مجموعة من النظم الفرعية، ومدخلاتها ومخرجاتها وتأثيرها المتبادل على بعضها البعض.</p>
+
+                <div class="info-box academic-plus">
+                    <h4>🔍 مثال توضيحي لفهم النظم الفرعية</h4>
+                    <p>إذا اعتبرنا <strong>الجامعة</strong> هي النظام الكلي <span class="term-en">System</span>، فإن (كلية الحاسوب، كلية الهندسة، عمادة القبول والتسجيل، والمكتبة المركزية) هي <strong>نظم فرعية <span class="term-en">Sub Systems</span></strong> تتبادل المدخلات والمخرجات فيما بينها؛ فمخرجات عمادة القبول (كشوف الطلاب المقبولين) تصبح مدخلات لكلية الحاسوب!</p>
+                </div>
+
+                <!-- الشكل 5: النظم الفرعية -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 520 270" style="max-width: 480px; width: 100%; height: auto; background: white; border: 2.5px solid #1a365d; border-radius: 8px;">
+                        <defs>
+                            <marker id="arrowEnd" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#1a365d" />
+                            </marker>
+                            <marker id="arrowStart" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto">
+                                <path d="M8,0 L8,6 L0,3 z" fill="#1a365d" />
+                            </marker>
+                        </defs>
+                        <text x="260" y="32" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a365d">System (النظام الكلي)</text>
+
+                        <!-- Sub System A -->
+                        <rect x="45" y="55" width="155" height="65" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2" rx="6"/>
+                        <text x="122" y="93" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a365d">Sub System A</text>
+
+                        <!-- Sub System B -->
+                        <rect x="320" y="55" width="155" height="65" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2" rx="6"/>
+                        <text x="397" y="93" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a365d">Sub System B</text>
+
+                        <!-- Sub System C -->
+                        <rect x="45" y="175" width="155" height="65" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2" rx="6"/>
+                        <text x="122" y="213" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a365d">Sub System C</text>
+
+                        <!-- Sub System D -->
+                        <rect x="320" y="175" width="155" height="65" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2" rx="6"/>
+                        <text x="397" y="213" text-anchor="middle" font-size="17" font-weight="bold" fill="#1a365d">Sub System D</text>
+
+                        <!-- أسهم ثنائية الاتجاه -->
+                        <!-- A <-> B -->
+                        <line x1="205" y1="87" x2="315" y2="87" stroke="#1a365d" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                        <!-- C <-> D -->
+                        <line x1="205" y1="207" x2="315" y2="207" stroke="#1a365d" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                        <!-- A <-> C -->
+                        <line x1="122" y1="125" x2="122" y2="170" stroke="#1a365d" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                        <!-- B <-> D -->
+                        <line x1="397" y1="125" x2="397" y2="170" stroke="#1a365d" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                        <!-- A <-> D -->
+                        <line x1="195" y1="115" x2="325" y2="180" stroke="#ed8936" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                        <!-- B <-> C -->
+                        <line x1="325" y1="115" x2="195" y2="180" stroke="#ed8936" stroke-width="2" marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+                    </svg>
+                    <div><span class="figure-caption">الشكل (5): تفاعل النظم الفرعية (Sub Systems) داخل النظام الكلي</span></div>
+                </div>
+            </section>
+
+            <!-- 7. التصنيفات الأربعة لأنواع النظم -->
+            <section id="system-types">
+                <span class="section-tag">القسم (1-8)</span>
+                <h2>🗂️ أنواع النظم (Common Types of the System)</h2>
+                <p>يمكن التعرف على الأنواع الرئيسية للنظم من خلال تصنيفها حسب <strong>أربعة معايير مختلفة</strong>. تنقل بين المعايير الأربعة في التبويبات التفاعلية أدناه لدراسة كل تصنيف وأمثلته:</p>
+
+                <div class="tabs-Wrapper">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTypeTab(event, 'type-env')">أولاً: حسب علاقته بالبيئة</button>
+                        <button class="tab-btn" onclick="openTypeTab(event, 'type-origin')">ثانياً: حسب الأصل</button>
+                        <button class="tab-btn" onclick="openTypeTab(event, 'type-nature')">ثالثاً: حسب الطبيعة الأساسية</button>
+                        <button class="tab-btn" onclick="openTypeTab(event, 'type-complex')">رابعاً: حسب درجة التعقيد</button>
+                    </div>
+
+                    <!-- أولاً: حسب علاقة النظام بالبيئة -->
+                    <div id="type-env" class="tab-content active">
+                        <h3 style="margin-top:0;">أولاً: تصنيف النظم حسب علاقة النظام بالبيئة (3 أنواع)</h3>
+                        <div class="cards-grid">
+                            <div class="feature-card" style="border-top-color: var(--success);">
+                                <h4>1. النظام المفتوح <span class="term-en">Open System</span></h4>
+                                <p>هو النظام الذي <strong>يتفاعل مع بيئته فيؤثر فيها ويتأثر بها تأثيراً فاعلاً</strong>؛ فهو يستمد من البيئة مدخلاته الأساسية اللازمة لاستمراره وقيامه بتأدية وظائفه، ومن ناحية أخرى فإن مخرجاته تؤثر على البيئة التي تحتويه (فمخرجات النظام تمثل مدخلات لبيئته).</p>
+                                <p style="margin-bottom:0;"><strong>الانتشار والأمثلة:</strong> هذا النوع هو <strong>الأكثر انتشاراً</strong>. ومن أمثلته: <span class="term">الإنسان</span>، <span class="term">الحاسب الإلكتروني</span>، <span class="term">البنك</span>.</p>
+                            </div>
+
+                            <div class="feature-card" style="border-top-color: var(--danger);">
+                                <h4>2. النظام المغلق <span class="term-en">Closed System</span></h4>
+                                <p>وهو النظام الذي <strong>لا يتفاعل مع البيئة، فلا يؤثر فيها ولا يتأثر بها</strong>، ومن ثم فليس له مخرجات إليها أو مدخلات منها.</p>
+                                <p style="margin-bottom:0;"><strong>الانتشار:</strong> مثل هذا النظام المطلق الإغلاق <strong>يندر وجوده</strong> في الواقع العملي.</p>
+                            </div>
+
+                            <div class="feature-card" style="border-top-color: var(--accent);">
+                                <h4>3. النظام المغلق نسبياً <span class="term-en">Relatively Closed System</span></h4>
+                                <p>وهي نظم مغلقة قدر الإمكان عن المؤثرات الخارجية وأصبحت منتشرة بشكل واسع.</p>
+                                <p style="margin-bottom:0;"><strong>المثال الكلاسيكي:</strong> <span class="term">الساعة التي تعمل بالبطارية</span>؛ فهي تستطيع الاستمرار كنظام في أداء وظيفتها دون أي تدخل خارجي إلى أن تنفد البطارية.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">التغذية العكسية (Feedback)</div>
-                            <div class="flashcard-back">مخرجات تعود كمدخلات للنظام بهدف الرقابة الذاتية وتصحيح الانحرافات.</div>
+
+                    <!-- ثانياً: حسب الأصل -->
+                    <div id="type-origin" class="tab-content">
+                        <h3 style="margin-top:0;">ثانياً: تصنيف النظم حسب الأصل (نوعان)</h3>
+                        <div class="cards-grid">
+                            <div class="feature-card">
+                                <h4>1. نظام طبيعي <span class="term-en">Natural System</span></h4>
+                                <p>وهو نظام موجود في الكون <strong>لم يصنعه الإنسان</strong>.</p>
+                                <p style="margin-bottom:0;"><strong>أمثلة:</strong> الأرض، البحار، والطبيعة (النظام البيئي، المجموعة الشمسية).</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>2. نظام من صنع الإنسان (صنعي) <span class="term-en">Man-Made System</span></h4>
+                                <p>وهو نظام قام الإنسان بتصميمه أو تشييده أو تنظيمه لخدمة أغراضه.</p>
+                                <p style="margin-bottom:0;"><strong>أمثلة:</strong> السيارة، الدولة، أنظمة الحاسوب والمعلومات.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">النظام المفتوح (Open System)</div>
-                            <div class="flashcard-back">نظام يتفاعل مع بيئته، يستمد منها المدخلات ويصدر لها المخرجات (مثل البنك).</div>
+
+                    <!-- ثالثاً: حسب الطبيعة الأساسية -->
+                    <div id="type-nature" class="tab-content">
+                        <h3 style="margin-top:0;">ثالثاً: تصنيف النظم حسب الطبيعة الأساسية (نوعان)</h3>
+                        <div class="cards-grid">
+                            <div class="feature-card">
+                                <h4>1. نظام محسوس (مادي) <span class="term-en">Physical System</span></h4>
+                                <p>هو النظام ذو الكيان المادي الملموس الذي يمكن رؤيته ولمسه باليد.</p>
+                                <p style="margin-bottom:0;"><strong>مثال:</strong> <span class="term">السيارة</span>، أو مكونات الحاسوب المادية (العتاد).</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>2. نظام منطقي (مفاهيمي) <span class="term-en">Logical System</span></h4>
+                                <p>وهو النظام الذي <strong>يمكن تصوره منطقياً أو نظرياً</strong> (فكرياً/مفاهيمياً) وليس ككتلة مادية صماء.</p>
+                                <p style="margin-bottom:0;"><strong>مثال:</strong> <span class="term">نظام المعلومات الإداري</span>، الخوارزميات، والأنظمة القانونية.</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">الوثوقية (Reliability)</div>
-                            <div class="flashcard-back">قدرة النظام المحوسب على العمل في مختلف الظروف وبدون أعطال مفاجئة.</div>
+
+                    <!-- رابعاً: حسب درجة التعقيد -->
+                    <div id="type-complex" class="tab-content">
+                        <h3 style="margin-top:0;">رابعاً: تصنيف النظم حسب درجة التعقيد (نوعان)</h3>
+                        <div class="cards-grid">
+                            <div class="feature-card">
+                                <h4>1. نظام بسيط <span class="term-en">Simple System</span></h4>
+                                <p>هو نظام <strong>ذو علاقات محددة يمكن التعرف عليها وفهمها بسهولة</strong> لقلة عناصره ووضوح تفاعلاتها.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h4>2. نظام معقد <span class="term-en">Intricate System</span></h4>
+                                <p>هو نظام <strong>يتضمن عناصر متعددة ومستويات مختلفة من النظم الفرعية، وعلاقات متشابكة</strong> تتطلب أدوات تحليلية متقدمة لفهمها وتفكيكها.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="quiz">
-                <h2>الاختبار التقييمي الذاتي</h2>
-                <div class="quiz-container" id="quiz-app">
-                    <!-- JS will inject questions here -->
+            <!-- 8. نظم المعلومات ونظم المعلومات المحوسبة -->
+            <section id="info-systems">
+                <span class="section-tag">جوهر التخصص</span>
+                <h2>💻 نظم المعلومات ونظم المعلومات المحوسبة (Information Systems)</h2>
+
+                <h3>أولاً: تعريف ومكونات نظام المعلومات:</h3>
+                <p>تُعرّف <strong>أنظمة المعلومات</strong> بأنها أنظمة تتكون من <strong>خمسة مكونات مترابطة</strong> تعمل معاً:</p>
+
+                <div class="is-hub-grid">
+                    <div class="is-comp-card" style="background: #718096;">
+                        <div style="font-size: 2rem;">📊</div>
+                        <h4 style="color:white; margin: 0.4rem 0;">1. البيانات</h4>
+                        <small>Data</small>
+                    </div>
+                    <div class="is-comp-card" style="background: #d69e2e;">
+                        <div style="font-size: 2rem;">💿</div>
+                        <h4 style="color:white; margin: 0.4rem 0;">2. البرمجيات أو التقنيات</h4>
+                        <small>Software / Tech</small>
+                    </div>
+                    <div class="is-comp-card" style="background: #dd6b20;">
+                        <div style="font-size: 2rem;">🖥️</div>
+                        <h4 style="color:white; margin: 0.4rem 0;">3. الأجهزة أو العتاد</h4>
+                        <small>Hardware</small>
+                    </div>
+                    <div class="is-comp-card" style="background: #38a169;">
+                        <div style="font-size: 2rem;">👥</div>
+                        <h4 style="color:white; margin: 0.4rem 0;">4. الأشخاص أو الأفراد</h4>
+                        <small>People</small>
+                    </div>
+                    <div class="is-comp-card" style="background: #3182ce;">
+                        <div style="font-size: 2rem;">⚙️</div>
+                        <h4 style="color:white; margin: 0.4rem 0;">5. المعالجة أو العمليات</h4>
+                        <small>Processes</small>
+                    </div>
+                </div>
+
+                <h3>ثانياً: نظم المعلومات المحوسبة أو الحاسوبية (Computerized Information Systems):</h3>
+                <ul class="content-list">
+                    <li><strong>الهدف الأساسي:</strong> يهدف نظام المعلومات المحوسب إلى <strong>دعم عمل الأفراد العاملين في المنظمة</strong> من خلال توفير المعلومات اللازمة لهم بـ:
+                        <span class="term">1. الحجم المناسب</span> و <span class="term">2. الشكل المناسب</span> وفي <span class="term">3. التوقيت المناسب</span>.
+                    </li>
+                    <li><strong>آلية العمل (الوظائف الأربع):</strong> تعمل نظم المعلومات على <strong>تجميع البيانات</strong> المتعلقة بسير العمل في المنظمة بهدف <strong>معالجتها، وتخزينها، واستخدامها</strong>.</li>
+                </ul>
+
+                <div class="info-box warning-box">
+                    <h4>🎯 تصنيف نظام المعلومات المحوسب (موضع سؤال امتحاني متكرر جداً!)</h4>
+                    <p>نظام المعلومات المحوسب هو تجسيد لنظام معلومات داخل المنظمات الإدارية، وعند إسقاط معايير تصنيف النظم عليه فإنه يتصف بثلاث خصائص قطعية:</p>
+                    <ol class="content-list" style="margin-bottom:0;">
+                        <li>إنه <strong>نظام مفاهيمي (منطقي) وليس مادياً</strong> (لأن جوهره هو تدفق المعلومات والمنطق الإداري وليس مجرد الحديد والأسلاك).</li>
+                        <li>إنه <strong>نظام صنعي (من صنع الإنسان) وليس طبيعياً</strong>.</li>
+                        <li>إنه <strong>نظام مفتوح على بيئته</strong> المتمثلة في المنظمة (النظام العام) <strong>وليس مغلقاً</strong>.</li>
+                    </ol>
                 </div>
             </section>
+
+            <!-- 9. أهداف وغايات تحليل وتصميم النظم -->
+            <section id="sad-goals">
+                <span class="section-tag">الأهداف والغايات</span>
+                <h2>🏆 أهداف والغاية الأساسية من تحليل وتصميم النظم</h2>
+
+                <h3>أولاً: أهداف تحليل وتصميم النظم (Better Capabilities):</h3>
+                <p>يهدف تحليل وتصميم النظم إلى <strong>توفير إمكانيات أفضل <span class="term-en">Better Capabilities</span></strong> لأداء العمليات المختلفة في المنظمة، وذلك يؤدي إلى تحقيق الفوائد الست التالية:</p>
+                <div class="cards-grid">
+                    <div class="feature-card"><strong>(1) إنجاز العمليات بطريقة أسرع:</strong> تقليص خطوات العمل الروتينية المعقدة.</div>
+                    <div class="feature-card"><strong>(2) معالجة كميات كبيرة من المعلومات:</strong> القدرة على التعامل مع آلاف أو ملايين السجلات دون إجهاد.</div>
+                    <div class="feature-card"><strong>(3) الاسترجاع السريع للمعلومات:</strong> الوصول لأي سجل أو تقرير في أجزاء من الثانية.</div>
+                    <div class="feature-card"><strong>(4) توفير تحكم أفضل <span class="term-en">Better Control</span>:</strong> إحكام الرقابة الإدارية والتدقيق على سير العمليات.</div>
+                    <div class="feature-card"><strong>(5) إنجاز العمليات بسرعة عالية:</strong> رفع معدل الأداء التشغيلي اللحظي للمؤسسة.</div>
+                    <div class="feature-card"><strong>(6) الالتزام بإجراءات الأمن:</strong> حماية بيانات المنظمة وتطبيق ضوابط الصلاحيات والسرية.</div>
+                </div>
+
+                <h3>ثانياً: الغاية الأساسية من تحليل وتصميم النظم (الخصائص الخمس للنظام المنشود):</h3>
+                <p>تتمثل الغاية النهائية من تحليل وتصميم النظم في <strong>تطوير نظام معلومات حاسوبي يتميز بالخصائص الخمس التالية</strong>:</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الخاصية</th>
+                                <th>المصطلح الإنجليزي</th>
+                                <th>التعريف الدقيق (كما ورد في المقرر)</th>
+                                <th>توضيح إضافي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. الفعالية</strong></td>
+                                <td><span class="term-en">Effectiveness</span></td>
+                                <td>يقصد بها <strong>تلبية احتياجات المستخدمين والمنظمة والجهات التي تتعامل معها</strong>.</td>
+                                <td>مدى تحقيق النظام لأهدافه المطلوبة ("عمل الشيء الصحيح").</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. الكفاءة</strong></td>
+                                <td><span class="term-en">Efficiency</span></td>
+                                <td>تعني <strong>الاستخدام الأمثل للموارد المتاحة</strong>.</td>
+                                <td>تحقيق النتائج بأقل هدر ممكن للوقت والجهد والمال والعتاد ("العمل بطريقة صحيحة").</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. سهولة الاستخدام</strong></td>
+                                <td><span class="term-en">Visibility / Usability</span></td>
+                                <td>أي <strong>توفر جميع الإمكانيات التي تجعلها سهلة الاستخدام</strong>.</td>
+                                <td>وضوح الواجهات ويسر التفاعل مع النظام دون تعقيد للمستخدم.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. الوثوقية (الاعتمادية)</strong></td>
+                                <td><span class="term-en">Reliability</span></td>
+                                <td>ويعنى بها <strong>القدرة على العمل في مختلف الظروف وبدون أعطال</strong>.</td>
+                                <td>استقرار النظام وصموده أثناء ساعات الذروة أو ظروف التشغيل المختلفة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. سهولة الصيانة</strong></td>
+                                <td><span class="term-en">Maintainability</span></td>
+                                <td>وتعني <strong>إمكانيات عمل التعديلات بأقل تكلفة ممكنة</strong>.</td>
+                                <td>مرونة النظام لقبول التحديثات وإصلاح الأخطاء مستقبلاً بتكلفة وجهد منخفضين.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 10. المختبر التطبيقي التفاعلي -->
+            <section id="interactive-lab">
+                <span class="section-tag">تطبيق عملي</span>
+                <h2>🧪 المختبر التطبيقي: اختبر قدرتك على تشخيص الأنظمة</h2>
+                <p>اقرأ الحالة العملية التالية وحدد التصنيف أو الخاصية الأكاديمية الصحيحة لها:</p>
+
+                <div class="simulator-box">
+                    <h4 id="sim-scenario-title" style="margin-top:0;">الحالة التطبيقية 1 من 4:</h4>
+                    <p id="sim-scenario-text" style="font-size:1.08rem; font-weight:600; color:var(--primary);"></p>
+                    <div class="sim-options" id="sim-options-container"></div>
+                    <div id="sim-feedback" style="margin-top:1rem; padding:1rem; border-radius:8px; display:none;"></div>
+                    <button class="quiz-btn" id="sim-next-btn" style="display:none; margin-top:0.8rem;" onclick="nextSimScenario()">الحالة التالية ←</button>
+                </div>
+            </section>
+
+            <!-- 11. بطاقات الاستذكار Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">مراجعة المصطلحات</span>
+                <h2>🗂️ بطاقات الاستذكار (Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها ومراجعة التعريف الأكاديمي الدقيق للمصطلح:</p>
+
+                <div class="flashcards-grid">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                النظام (System)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                مجموعة من النظم المترابطة أو الأجزاء المتفاعلة التي تعمل معاً من أجل تحقيق غايات مشتركة وأهداف محددة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                حدود النظام (System Boundary)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                الإطار والفواصل التي تجمع عناصر النظام وعلاقاته في كيان واحد وتميزه عن المحيط الخارجي (بيئته)، وقد تكون مادية أو غير مادية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                بيئة النظام (System Environment)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                أي شيء يقع خارج حدود النظام ويؤثر فيه دون إمكانية السيطرة عليه من داخل النظام.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                المدخلات الاستبدالية
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                مدخلات قد تتعرض للتلف أو النفاذ فتتطلب تغييرها، وهي لا تخضع لعمليات النظام بل تصبح إحدى عناصره (مثل الأفراد والمعدات).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                التغذية العكسية (Feedback)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                دخول المعلومة (المخرجات الارتدادية) مرة أخرى للنظام كمدخلات؛ لتصحيح الانحرافات والأخطاء كآلية رقابة ذاتية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                النظام المغلق نسبياً
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                نظام مغلق قدر الإمكان يستمر في أداء وظيفته دون تدخل خارجي حتى ينفد مورده الداخلي (مثل الساعة التي تعمل بالبطارية).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الفعالية vs الكفاءة
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                <strong>الفعالية (Effectiveness):</strong> تلبية احتياجات المستخدمين والمنظمة.<br>
+                                <strong>الكفاءة (Efficiency):</strong> الاستخدام الأمثل للموارد المتاحة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                سهولة الصيانة (Maintainability)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                إمكانية عمل التعديلات والتحديثات على نظام المعلومات الحاسوبي بأقل تكلفة ممكنة.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 12. أسئلة المراجعة الشاملة -->
+            <section id="review-questions">
+                <span class="section-tag">أسئلة مقالية ومراجعة</span>
+                <h2>📝 أسئلة المراجعة والتفكير الناقد (مع الإجابات النموذجية)</h2>
+                <p>انقر على السؤال لإظهار الإجابة النموذجية الكاملة ومقارنتها بفهمك:</p>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س1: قارن بدقة بين «المدخلات الأساسية»، «المدخلات الاستبدالية»، و«المدخلات البيئية» مع ضرب مثال لكل منها من نظام الجامعة.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li><strong>المدخلات الأساسية:</strong> لازمة لاستمرار النظام وتخضع لعمليات المعالجة لتتحول لمخرجات (مثال: <em>الطلاب</em> في الجامعة).</li>
+                            <li><strong>المدخلات الاستبدالية:</strong> تتعرض للتلف أو النفاذ وتستلزم التغيير، ولا تخضع لعمليات النظام بل تصبح جزءاً من عناصره ومكوناته (مثال: <em>الأفراد العاملون والمعدات</em>).</li>
+                            <li><strong>المدخلات البيئية:</strong> مؤثرات خارجية لا تخضع لعمليات النظام ولا تصبح من مكوناته، وقد تكون مساعدة أو معوقة (مثال: <em>العوامل الاجتماعية والاقتصادية</em>).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س2: لماذا يُصنف «نظام المعلومات المحوسب» بأنه نظام مفاهيمي، صنعي، ومفتوح؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li><strong>مفاهيمي (منطقي) وليس مادياً:</strong> لأنه تجسيد لنظام معلومات وإجراءات إدارية ومنطقية داخل المنظمة وليس مجرد قطع مادية جامدة.</li>
+                            <li><strong>صنعي وليس طبيعياً:</strong> لأن الإنسان (محلل النظم والمبرمج) هو من قام بتصميمه وبنائه لخدمة المنظمة.</li>
+                            <li><strong>مفتوح وليس مغلقاً:</strong> لأنه يتفاعل باستمرار مع بيئته المتمثلة في المنظمة، فيستقبل منها البيانات (مدخلات) ويزود الأفراد العاملين بالمعلومات اللازمة في الوقت والشكل والحجم المناسبين (مخرجات).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س3: ما الفرق الجوهري بين «المخرجات النهائية» و«المخرجات الارتدادية»؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>المخرجات النهائية:</strong> هي المخرجات التي ينتجها النظام وتخرج لتؤثر في بيئة النظام الخارجية، فتصبح مدخلات لتلك البيئة (مثل الخريجين الذين يلتحقون بسوق العمل).</p>
+                        <p style="margin-bottom:0;"><strong>المخرجات الارتدادية:</strong> هي مخرجات ينتجها النظام لكنها تعود لتُستخدم كمدخلات للنظام نفسه فيما يعرف بالتغذية الراجعة (مثل الخريجين الذين يتم تعيينهم كمعيدين داخل الجامعة نفسها).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13. الاختبار التقييمي النهائي -->
+            <section id="quiz">
+                <span class="section-tag">التقييم الذاتي الشامل</span>
+                <h2>✅ الاختبار التقييمي للمحاضرة الأولى</h2>
+                <p>اختبر مدى استيعابك لكافة تفاصيل المحاضرة الأولى من خلال هذا التقييم التفاعلي المكون من 8 أسئلة شاملة:</p>
+                
+                <div class="quiz-container" id="quiz-app">
+                    <!-- Injected via JS -->
+                </div>
+            </section>
+
+            <!-- Footer Navigation -->
+            <div class="lecture-footer-nav">
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">📚 العودة لفهرس المقرر</a>
+                <a href="Lecture-02.html" class="quiz-btn" style="text-decoration:none; margin:0;">الانتقال للمحاضرة الثانية: محلل النظام و SDLC ←</a>
+            </div>
 
         </main>
     </div>
 
     <script>
-        // Quiz Data
+        // 1. Reading Progress Bar & Active Sidebar Link
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('reading-progress').style.width = scrolled + '%';
+
+            let current = '';
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 180)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('#toc-list a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Interactive University System Explorer
+        const uniDetails = [
+            {
+                title: "أ- الطلاب (Students): مدخلات أساسية",
+                desc: "يُمثل الطلاب <strong>المدخلات الأساسية</strong> في نظام الجامعة؛ لأنهم العنصر اللازم لاستمرار نظام الجامعة، وهم الذين يخضعون لعمليات النظام التعليمية والأكاديمية ليتحولوا في النهاية إلى خريجين."
+            },
+            {
+                title: "ب- الأفراد والمعدات (Staff & Equipment): مدخلات استبدالية",
+                desc: "يُمثل الأفراد العاملون والمعدات <strong>مدخلات استبدالية</strong>؛ لأن المعدات قد تتعرض للتلف أو التقادم والأفراد قد يتقاعدون فيستلزم تغييرهم، وهم لا يخضعون لعمليات التحويل كالطلاب بل يصبحون أحد <strong>عناصر النظام</strong>."
+            },
+            {
+                title: "ج- العوامل الاجتماعية والاقتصادية: مدخلات بيئية",
+                desc: "تُمثل العوامل الاجتماعية والاقتصادية المحيطة بالجامعة <strong>مدخلات بيئية</strong>؛ فهي مؤثرات خارجية لا تخضع لعمليات الجامعة ولا تصبح ضمن مكوناتها، وقد تكون مساعدة أو معوقة لعمل الجامعة."
+            },
+            {
+                title: "د- الخريجون (Graduates): مخرجات نهائية",
+                desc: "يُمثل الخريجون المتجهون لسوق العمل <strong>مخرجات نهائية</strong>؛ لأن النظام أنتجهم ليخرجوا ويؤثروا في بيئة النظام الخارجية (المجتمع وسوق العمل)."
+            },
+            {
+                title: "هـ- المعيدون (Teaching Assistants): مخرجات ارتدادية (Feedback)",
+                desc: "عندما يتخرج الطالب المتفوق ويعود ليتعين كـ <strong>معيد</strong> في الجامعة نفسها، فإنه يمثل <strong>مخرجات ارتدادية (تغذية عكسية Feedback)</strong>؛ لأن مخرجات النظام عادت لتستخدم كمدخلات للنظام نفسه."
+            }
+        ];
+
+        function showUniDetail(index, btnEl) {
+            document.querySelectorAll('.uni-item-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            const item = uniDetails[index];
+            document.getElementById('uni-detail-box').innerHTML = `
+                <h4 style="margin-top:0; color:var(--primary); font-size:1.15rem;">🎓 ${item.title}</h4>
+                <p style="margin-bottom:0;">${item.desc}</p>
+            `;
+        }
+        showUniDetail(0, document.querySelector('.uni-item-btn'));
+
+        // 3. System Types Tabs Switching
+        function openTypeTab(evt, tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // 4. Accordion Toggle
+        function toggleAccordion(headerBtn) {
+            headerBtn.parentElement.classList.toggle('open');
+        }
+
+        // 5. Interactive Practical Lab Simulator
+        const simScenarios = [
+            {
+                text: "قامت شركة بشراء خوادم وأجهزة حاسوب جديدة لقسم تقنية المعلومات لأن الأجهزة القديمة تلفت، وأصبحت هذه الأجهزة جزءاً من البنية الداخلية للقسم. ماذا نسمي هذه الأجهزة في نموذج النظام؟",
+                options: ["مدخلات أساسية", "مدخلات استبدالية", "مدخلات بيئية", "مخرجات ارتدادية"],
+                correct: 1,
+                explanation: "الأجهزة والمعدات التي تتعرض للتلف أو النفاذ ويتم تغييرها لتصبح إحدى عناصر النظام دون أن تخضع لعملياته تُسمى (مدخلات استبدالية)."
+            },
+            {
+                text: "ساعة اليد التي تعمل بالبطارية تستمر في العمل لسنوات دون أن تأخذ مدخلات من الخارج إلى أن تنفد بطاريتها. كيف نصنف هذا النظام حسب علاقته بالبيئة؟",
+                options: ["نظام مفتوح (Open System)", "نظام مغلق مطلقاً (Closed System)", "نظام مغلق نسبياً (Relatively Closed System)"],
+                correct: 2,
+                explanation: "الساعة التي تعمل بالبطارية هي المثال النموذجي في المحاضرة على (النظام المغلق نسبياً)."
+            },
+            {
+                text: "طوّر فريق البرمجة نظاماً لمستشفى يلبي كافة متطلبات الأطباء والمرضى، لكنه يستهلك 99% من الذاكرة ويهدر أوقاتاً وموارد هائلة! هذا النظام حقق (الفعالية)، فما الخاصية التي افتقدها؟",
+                options: ["الفعالية (Effectiveness)", "الكفاءة (Efficiency)", "سهولة الصيانة (Maintainability)"],
+                correct: 1,
+                explanation: "الكفاءة (Efficiency) تعني الاستخدام الأمثل للموارد المتاحة دون هدر، بينما الفعالية هي تلبية الاحتياجات."
+            },
+            {
+                text: "بعد إطلاق نظام بنكي جديد، طرأت تعديلات في لوائح البنك المركزي، فتمكن المبرمجون من تعديل النظام بسرعة وبتكلفة منخفضة جداً. أي خاصية تميز بها هذا النظام؟",
+                options: ["سهولة الاستخدام (Visibility)", "الوثوقية (Reliability)", "سهولة الصيانة (Maintainability)"],
+                correct: 2,
+                explanation: "سهولة الصيانة (Maintainability) يُقصد بها إمكانية عمل التعديلات على النظام بأقل تكلفة ممكنة."
+            }
+        ];
+
+        let currentSim = 0;
+        let simAnswered = false;
+
+        function loadSimScenario() {
+            const s = simScenarios[currentSim];
+            document.getElementById('sim-scenario-title').innerText = `الحالة التطبيقية ${currentSim + 1} من ${simScenarios.length}:`;
+            document.getElementById('sim-scenario-text').innerText = s.text;
+            const optsContainer = document.getElementById('sim-options-container');
+            optsContainer.innerHTML = s.options.map((opt, idx) => 
+                `<button class="sim-btn" onclick="checkSimAnswer(${idx})">${opt}</button>`
+            ).join('');
+            document.getElementById('sim-feedback').style.display = 'none';
+            document.getElementById('sim-next-btn').style.display = 'none';
+            simAnswered = false;
+        }
+
+        function checkSimAnswer(idx) {
+            if (simAnswered) return;
+            simAnswered = true;
+            const s = simScenarios[currentSim];
+            const fb = document.getElementById('sim-feedback');
+            if (idx === s.correct) {
+                fb.style.background = 'var(--success-bg)';
+                fb.style.border = '1px solid var(--success)';
+                fb.style.color = '#22543d';
+                fb.innerHTML = `✅ <strong>إجابة ممتازة!</strong> ${s.explanation}`;
+            } else {
+                fb.style.background = 'var(--danger-bg)';
+                fb.style.border = '1px solid var(--danger)';
+                fb.style.color = '#742a2a';
+                fb.innerHTML = `❌ <strong>غير دقيق.</strong> ${s.explanation}`;
+            }
+            fb.style.display = 'block';
+            const btn = document.getElementById('sim-next-btn');
+            btn.innerText = currentSim < simScenarios.length - 1 ? 'الحالة التالية ←' : 'إعادة الحالات التطبيقية ↺';
+            btn.style.display = 'inline-block';
+        }
+
+        function nextSimScenario() {
+            currentSim = (currentSim < simScenarios.length - 1) ? currentSim + 1 : 0;
+            loadSimScenario();
+        }
+        loadSimScenario();
+
+        // 6. Comprehensive 8-Question Final Quiz
         const quizData = [
             {
-                question: "1. أي من التالي يُعتبر من المدخلات الأساسية في نظام الجامعة؟",
-                options: ["العوامل الاقتصادية للمجتمع", "الطلاب", "الخريجون كمعيدين", "الأجهزة والمعدات"],
+                question: "1. ما الذي يحدد «سلوك النظام (System Behavior)» وفقاً لمكونات النظام؟",
+                options: [
+                    "بيئة النظام الخارجية فقط",
+                    "مجموعة العلاقات التبادلية بين عناصر النظام",
+                    "المدخلات البيئية المعوقة",
+                    "حجم الأجهزة المادية في النظام"
+                ],
                 correct: 1,
-                explanation: "الطلاب يمثلون المدخلات الأساسية التي لا يمكن لنظام الجامعة أداء عملياته (التعليم) بدونها. العوامل الاقتصادية بيئية، والأجهزة استبدالية."
+                explanation: "نصت المحاضرة في القسم (1-3) على أن مجموعة العلاقات التبادلية بين عناصر النظام هي التي تحدد سلوك النظام (System Behavior)."
             },
             {
-                question: "2. النظام الذي لا يتفاعل مع البيئة الخارجية، ولا يمتلك مدخلات منها أو مخرجات إليها يُسمى:",
-                options: ["النظام المفتوح", "النظام المعقد", "النظام المغلق", "النظام المنطقي"],
+                question: "2. الإطار الذي يجمع عناصر النظام وعلاقاته في كيان واحد ويحدد ملامحه ويميزه عن بيئته يُسمى:",
+                options: [
+                    "التغذية العكسية (Feedback)",
+                    "النظام الفرعي (Sub-System)",
+                    "حدود النظام (System Boundary)",
+                    "عمليات المعالجة (Processing)"
+                ],
                 correct: 2,
-                explanation: "النظام المغلق هو النظام المعزول تماماً عن بيئته، وهو نظام نظري يندر وجوده في الواقع."
+                explanation: "حدود النظام (System Boundary) هي الفواصل والإطار الذي يجمع العناصر والعلاقات ويميز النظام عن المحيط الخارجي."
             },
             {
-                question: "3. معلومات تُعاد للنظام كمدخلات بهدف الرقابة الذاتية وتصحيح الأخطاء. يشير هذا المفهوم إلى:",
-                options: ["بيئة النظام", "التغذية العكسية (Feedback)", "المدخلات البيئية", "العلاقات التبادلية"],
+                question: "3. في النموذج العام للنظام، تمثل المدخلات (Input) البيانات، بينما تمثل المخرجات (Output):",
+                options: [
+                    "البيانات الخام غير المعالجة",
+                    "المعلومات (بيانات أُدخلت وتمت معالجتها)",
+                    "الأجهزة والعتاد فقط",
+                    "حدود النظام المادية"
+                ],
                 correct: 1,
-                explanation: "التغذية العكسية (Feedback) هي آلية الرقابة الذاتية للنظام لضمان بقائه على المسار الصحيح لتحقيق أهدافه."
+                explanation: "المخرجات (Output) في النموذج العام للنظام هي المعلومات، وهي عبارة عن بيانات أُدخلت للنظام وتمت معالجتها."
             },
             {
-                question: "4. واحدة من الخصائص التالية تعني قدرة النظام على العمل في مختلف الظروف بدون أعطال:",
-                options: ["سهولة الصيانة (Maintainability)", "الفعالية (Effectiveness)", "الكفاءة (Efficiency)", "الوثوقية (Reliability)"],
-                correct: 3,
-                explanation: "الوثوقية تعني الاعتمادية وعدم تعطل النظام تحت الضغط أو في الظروف المختلفة."
+                question: "4. في مثال نظام الجامعة، ماذا يمثل «تعيين الخريجين كمعيدين» في الجامعة؟",
+                options: [
+                    "مدخلات بيئية",
+                    "مخرجات نهائية للبيئة",
+                    "مخرجات ارتدادية (تغذية عكسية Feedback)",
+                    "مدخلات أساسية أولية"
+                ],
+                correct: 2,
+                explanation: "المعيدون هم خريجون أنتجهم نظام الجامعة ثم عادوا كمدخلات للنظام نفسه، ولذلك يمثلون مخرجات ارتدادية (تغذية عكسية)."
+            },
+            {
+                question: "5. أي من الأنظمة التالية يُعد مثالاً على «النظام المفتوح (Open System)» الأكثر انتشاراً؟",
+                options: [
+                    "الساعة التي تعمل بالبطارية",
+                    "الإنسان، الحاسب الإلكتروني، والبنك",
+                    "نظام معزول كلياً لا مدخلات له ولا مخرجات",
+                    "جميع الأنظمة المغلقة"
+                ],
+                correct: 1,
+                explanation: "النظام المفتوح يتفاعل مع بيئته فيؤثر فيها ويتأثر بها، ومن أبرز أمثلته المذكورة في المحاضرة: الإنسان، الحاسب الإلكتروني، والبنك."
+            },
+            {
+                question: "6. كيف يُصنف «نظام المعلومات المحوسب» داخل المنظمات الإدارية؟",
+                options: [
+                    "نظام مادي، طبيعي، ومغلق",
+                    "نظام مفاهيمي، صنعي (من صنع الإنسان)، ومفتوح على بيئته",
+                    "نظام منطقي، طبيعي، ومغلق نسبياً",
+                    "نظام مادي بحت لا علاقة له بالأفراد"
+                ],
+                correct: 1,
+                explanation: "أكدت المحاضرة (شريحة 17) أن نظام المعلومات المحوسب هو نظام مفاهيمي وليس مادياً، صنعي وليس طبيعياً، ومفتوح على بيئته (المنظمة) وليس مغلقاً."
+            },
+            {
+                question: "7. أي من الخصائص التالية يُقصد بها «تلبية احتياجات المستخدمين والمنظمة والجهات التي تتعامل معها»؟",
+                options: [
+                    "الكفاءة (Efficiency)",
+                    "الفعالية (Effectiveness)",
+                    "الوثوقية (Reliability)",
+                    "سهولة الصيانة (Maintainability)"
+                ],
+                correct: 1,
+                explanation: "الفعالية (Effectiveness) هي تلبية احتياجات المستخدمين والمنظمة، بينما الكفاءة (Efficiency) هي الاستخدام الأمثل للموارد المتاحة."
+            },
+            {
+                question: "8. قدرة نظام المعلومات الحاسوبي على العمل في مختلف الظروف وبدون أعطال تُعرف بـ:",
+                options: [
+                    "سهولة الاستخدام (Visibility)",
+                    "الوثوقية (Reliability)",
+                    "سهولة الصيانة (Maintainability)",
+                    "المدخلات الاستبدالية"
+                ],
+                correct: 1,
+                explanation: "الوثوقية (Reliability) تعني قدرة النظام على العمل في مختلف الظروف وبدون أعطال."
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
+        let answered = false;
         const quizApp = document.getElementById('quiz-app');
 
         function loadQuiz() {
@@ -571,45 +1904,47 @@
             }
 
             const q = quizData[currentQuestion];
-            let html = `
-                <div class="question active">
-                    <h3>${q.question}</h3>
-                    <ul class="options">
-                        ${q.options.map((opt, i) => `<li onclick="selectOption(${i}, this)">${opt}</li>`).join('')}
-                    </ul>
-                    <div class="quiz-feedback" id="feedback"></div>
-                    <button class="quiz-btn" id="next-btn" style="display:none;" onclick="nextQuestion()">السؤال التالي</button>
+            quizApp.innerHTML = `
+                <div class="quiz-header-bar">
+                    <span>السؤال ${currentQuestion + 1} من ${quizData.length}</span>
+                    <span>النتيجة الحالية: ${score} / ${quizData.length}</span>
                 </div>
+                <h3 style="margin-top:0; color:var(--primary);">${q.question}</h3>
+                <ul class="options" id="quiz-options">
+                    ${q.options.map((opt, i) => `<li onclick="selectOption(${i}, this)">${opt}</li>`).join('')}
+                </ul>
+                <div class="quiz-feedback" id="feedback"></div>
+                <button class="quiz-btn" id="next-btn" style="display:none;" onclick="nextQuestion()">
+                    ${currentQuestion === quizData.length - 1 ? 'عرض النتيجة النهائية 🏆' : 'السؤال التالي ←'}
+                </button>
             `;
-            quizApp.innerHTML = html;
         }
-
-        let answered = false;
 
         function selectOption(index, el) {
             if (answered) return;
             answered = true;
-            
+
             const q = quizData[currentQuestion];
             const feedback = document.getElementById('feedback');
             const nextBtn = document.getElementById('next-btn');
-            
-            // Highlight selected
-            el.classList.add('selected');
+            const allOptions = document.querySelectorAll('#quiz-options li');
 
             if (index === q.correct) {
                 score++;
+                el.classList.add('correct-ans');
                 feedback.innerHTML = `✅ <strong>إجابة صحيحة!</strong> ${q.explanation}`;
-                feedback.style.backgroundColor = '#e6fffa';
-                feedback.style.color = '#276749';
-                feedback.style.border = '1px solid #38a169';
+                feedback.style.backgroundColor = 'var(--success-bg)';
+                feedback.style.color = '#22543d';
+                feedback.style.border = '1px solid var(--success)';
             } else {
-                feedback.innerHTML = `❌ <strong>إجابة خاطئة.</strong> ${q.explanation}`;
-                feedback.style.backgroundColor = '#fff5f5';
-                feedback.style.color = '#c53030';
-                feedback.style.border = '1px solid #e53e3e';
+                el.classList.add('wrong-ans');
+                allOptions[q.correct].classList.add('correct-ans');
+                feedback.innerHTML = `❌ <strong>إجابة غير صحيحة.</strong> ${q.explanation}`;
+                feedback.style.backgroundColor = 'var(--danger-bg)';
+                feedback.style.color = '#742a2a';
+                feedback.style.border = '1px solid var(--danger)';
             }
-            
+
             feedback.style.display = 'block';
             nextBtn.style.display = 'inline-block';
         }
@@ -621,49 +1956,36 @@
         }
 
         function showResults() {
+            const percentage = Math.round((score / quizData.length) * 100);
+            let msg = '';
+            if (percentage === 100) {
+                msg = '🌟 ممتاز جداً! لقد أتقنت جميع مفاهيم المحاضرة الأولى بنسبة 100%.';
+            } else if (percentage >= 75) {
+                msg = '👏 أداء رائع! لديك استيعاب قوي لمفاهيم النظم ومكونات نظم المعلومات.';
+            } else {
+                msg = '📚 بداية جيدة! ننصح بمراجعة الرسوم التفاعلية وبطاقات الاستذكار ثم إعادة المحاولة.';
+            }
+
             quizApp.innerHTML = `
                 <div style="text-align: center; padding: 2rem;">
-                    <h3>انتهى التقييم!</h3>
-                    <p style="font-size: 1.2rem; margin: 1rem 0;">نتيجتك: <strong>${score} / ${quizData.length}</strong></p>
-                    ${score === quizData.length ? '<p style="color: green; font-weight: bold;">ممتاز! لقد استوعبت المفاهيم الأساسية للمحاضرة بالكامل.</p>' : '<p style="color: #ed8936;">جيد! ننصح بمراجعة المفاهيم التي أخطأت بها باستخدام البطاقات التعليمية.</p>'}
-                    <button class="quiz-btn" onclick="location.reload()">إعادة الاختبار</button>
+                    <h3 style="font-size:1.8rem; color:var(--primary);">انتهى التقييم النهائي!</h3>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--secondary); margin: 1rem 0;">
+                        ${score} / ${quizData.length} (${percentage}%)
+                    </div>
+                    <p style="font-size: 1.1rem; text-align:center; max-width:500px; margin:0 auto 1.5rem;">${msg}</p>
+                    <button class="quiz-btn" onclick="restartQuiz()">إعادة الاختبار من جديد ↺</button>
                 </div>
             `;
         }
 
-        // Initialize quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            loadQuiz();
+        }
+
         loadQuiz();
-
-        // Active state for sidebar navigation
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.sidebar a').forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
-        });
     </script>
 </body>
 </html>
-```
-
-### 📋 ملخص التحديثات التي تمت:
-1. **التحليل:** تم استخراج كافة الأهداف، المفاهيم، ودورة حياة النظم بدقة من ملف الـ PDF.
-2. **الشرح العميق:** تم إضافة "إضاءة أكاديمية" لتوضيح مفاهيم تقنية دقيقة لم تكن مفصلة بالكامل في النص الأصلي (مثل التفريق بين البيانات والمعلومات لربطها بمدخلات ومخرجات النظام).
-3. **التصميم المعتمد (Standalone HTML):** تم دمج محتوى الـ HTML، CSS، و JavaScript داخل ملف واحد يعمل بشكل مستقل بدون إنترنت، ويدعم الوضع المتجاوب للشاشات (Mobile/Desktop).
-4. **العناصر التفاعلية:** تم تضمين الفهرس الجانبي الذكي، بطاقات قلب (Flashcards) لحفظ المصطلحات الصعبة (التغذية العكسية، النظام المفتوح.. الخ)، واختبار ذاتي (Quiz) مبرمج يعطي تغذية راجعة فورية.
-
-يمكنك الآن رفع هذا الملف إلى مستودع GitHub الخاص بك في المسار المحدد. 
-أنا جاهز لاستلام **المحاضرة الثانية** لأي مقرر تختاره!
