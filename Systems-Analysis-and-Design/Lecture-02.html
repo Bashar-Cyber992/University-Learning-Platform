@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: محلل النظام وتطوير نظم المعلومات | تحليل وتصميم النظم</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #102a43;
+            --secondary: #2b6cb0;
+            --accent: #ed8936;
+            --accent-light: #feebc8;
+            --bg-light: #f7fafc;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --success: #38a169;
+            --success-bg: #f0fff4;
+            --danger: #e53e3e;
+            --danger-bg: #fff5f5;
+            --warning: #dd6b20;
+            --warning-bg: #fffaf0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --hover-shadow: 0 10px 20px rgba(26, 54, 93, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.85;
+            font-size: 16px;
+        }
+
+        /* Top Navigation & Progress Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .breadcrumb-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.92rem;
+        }
+
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .breadcrumb-links span {
+            color: var(--text-muted);
+        }
+
+        .lecture-nav-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-pill {
+            background: #edf2f7;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .reading-progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            width: 0%;
+            transition: width 0.15s ease-out;
+        }
+
+        /* Header Styles */
+        .lecture-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .lecture-header h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.6rem;
+            font-weight: 800;
+        }
+
+        .lecture-header p {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Sidebar / TOC */
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 4.8rem;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+            border-top: 4px solid var(--primary);
+        }
+
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.15rem;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.4rem;
+        }
+
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.25s;
+            font-size: 0.92rem;
+            display: block;
+            padding: 0.45rem 0.7rem;
+            border-radius: 6px;
+            border-right: 3px solid transparent;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            color: var(--primary);
+            background-color: #ebf8ff;
+            border-right-color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Content Area */
+        .content-area section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2.2rem;
+            scroll-margin-top: 5.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #ebf8ff;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.75rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.75rem;
+            margin-bottom: 1.4rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            font-size: 1.35rem;
+            margin: 1.8rem 0 0.9rem;
+        }
+
+        h4 {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.1rem;
+            text-align: justify;
+        }
+
+        ul.content-list, ol.content-list {
+            margin: 0.8rem 2rem 1.5rem 0;
+        }
+
+        ul.content-list li, ol.content-list li {
+            margin-bottom: 0.65rem;
+        }
+
+        /* Highlight terms */
+        .term {
+            color: var(--primary);
+            font-weight: 700;
+            background: #edf2f7;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .term-en {
+            font-family: monospace;
+            background: #e6fffa;
+            color: #234e52;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Callout / Info Boxes */
+        .info-box {
+            background-color: #ebf8ff;
+            border-right: 4px solid var(--secondary);
+            padding: 1.4rem 1.6rem;
+            margin: 1.5rem 0;
+            border-radius: 6px 10px 10px 6px;
+        }
+
+        .info-box.academic-plus {
+            background-color: #faf5ff;
+            border-right-color: #805ad5;
+        }
+
+        .info-box.academic-plus h4 {
+            color: #553c9a;
+        }
+
+        .info-box.warning-box {
+            background-color: var(--warning-bg);
+            border-right-color: var(--warning);
+        }
+
+        .info-box.warning-box h4 {
+            color: #9c4221;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            margin-top: 0;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Reasons Grid (4 Reasons) */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .reason-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.4rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+            border-top-color: var(--accent);
+        }
+
+        .reason-num {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Qualifications & Traits Pillars */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .pillar-box {
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+            border: 1px solid #cbd5e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Interactive Roles Explorer */
+        .roles-explorer {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .roles-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #edf2f7;
+            border-bottom: 1px solid #cbd5e0;
+        }
+
+        .role-tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.9rem 0.6rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            border-bottom: 3px solid transparent;
+        }
+
+        .role-tab-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .role-tab-btn.active {
+            background: white;
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+
+        .role-panel {
+            display: none;
+            padding: 2rem;
+            background: white;
+        }
+
+        .role-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed #cbd5e0;
+        }
+
+        .role-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .role-meta-item {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border-right: 3px solid var(--secondary);
+        }
+
+        /* Approaches Comparison (Top-Down vs Bottom-Up) */
+        .approaches-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .approach-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .approach-diagram {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            border: 1px dashed #cbd5e0;
+        }
+
+        .node-box {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.88rem;
+            margin: 0.2rem;
+        }
+
+        .node-main {
+            background: var(--primary);
+            color: white;
+        }
+
+        .node-sub {
+            background: #bee3f8;
+            color: var(--primary-dark);
+        }
+
+        /* Interactive SDLC Pipeline */
+        .sdlc-pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .sdlc-step-btn {
+            flex: 1;
+            min-width: 130px;
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1rem 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+        }
+
+        .sdlc-step-btn:hover, .sdlc-step-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .sdlc-step-btn .step-num {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.2rem;
+        }
+
+        .sdlc-step-btn .step-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            display: block;
+        }
+
+        .sdlc-arrow {
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .sdlc-detail-box {
+            background: #f8fafc;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table.academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        table.academic-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        table.academic-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        table.academic-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        table.academic-table tr:hover {
+            background: #ebf8ff;
+        }
+
+        /* Expandable Accordions */
+        .accordion-item {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: right;
+            padding: 1.1rem 1.4rem;
+            background: #f8fafc;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.02rem;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: #edf2f7;
+        }
+
+        .accordion-body {
+            display: none;
+            padding: 1.4rem;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+        }
+
+        .accordion-item.open .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-icon {
+            transition: transform 0.25s;
+        }
+
+        /* Interactive Scenario Simulator */
+        .simulator-box {
+            background: linear-gradient(135deg, #f8fafc, #edf2f7);
+            border: 2px solid #cbd5e0;
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .sim-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1rem;
+        }
+
+        .sim-btn {
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .sim-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Flashcards */
+        .flashcards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 175px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .flashcard-front small {
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .flashcard-back {
+            background-color: white;
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 2px solid var(--secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            border-top: 5px solid var(--success);
+        }
+
+        .quiz-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #edf2f7;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .options {
+            list-style: none;
+            margin-top: 1.2rem;
+        }
+
+        .options li {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .options li:hover {
+            background: #edf2f7;
+            border-color: var(--secondary);
+        }
+
+        .options li.correct-ans {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: #22543d;
+            font-weight: bold;
+        }
+
+        .options li.wrong-ans {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: #742a2a;
+        }
+
+        .quiz-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: var(--secondary);
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1.2rem;
+            border-radius: 8px;
+            display: none;
+            line-height: 1.6;
+        }
+
+        /* Footer Navigation */
+        .lecture-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+            .lecture-header h1 {
+                font-size: 1.8rem;
+            }
+            .content-area section {
+                padding: 1.5rem;
+            }
+            .sdlc-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation & Reading Progress -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">📚 فهرس تحليل وتصميم النظم</a>
+                <span>/</span>
+                <span>المحاضرة الثانية</span>
+            </div>
+            <div class="lecture-nav-btns">
+                <a href="Lecture-01.html" class="nav-pill">→ المحاضرة السابقة (1)</a>
+                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Lecture Header -->
+    <header class="lecture-header">
+        <div class="header-badge">مقرر: أساسيات تحليل وتصميم النظم (Systems Analysis & Design)</div>
+        <h1>المحاضرة الثانية: محلل النظام وتطوير نظم المعلومات</h1>
+        <p>دراسة شاملة لعملية تحليل النظم، الأدوار التخصصية لمحلل النظم، منهجيات التحليل (التصاعدي والتنازلي)، والمراحل الأربع لدورة حياة تطوير النظام (SDLC).</p>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar Table of Contents -->
+        <aside class="sidebar">
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro">1. أهداف ومواضيع المحاضرة</a></li>
+                <li><a href="#analysis-concept">2. ماهية عملية تحليل النظم ودوافعها</a></li>
+                <li><a href="#analyst-profile">3. محلل النظم: المؤهلات والصفات</a></li>
+                <li><a href="#analyst-roles">4. الأدوار الستة لمحلل النظم</a></li>
+                <li><a href="#challenges-approaches">5. المشاكل وأساليب التحليل</a></li>
+                <li><a href="#sdlc-overview">6. دورة حياة تطوير النظام (SDLC)</a></li>
+                <li><a href="#phase-planning">7. المرحلة الأولى: التخطيط</a></li>
+                <li><a href="#phase-analysis">8. المرحلة الثانية: التحليل</a></li>
+                <li><a href="#phase-design">9. المرحلة الثالثة: التصميم</a></li>
+                <li><a href="#phase-implementation">10. المرحلة الرابعة: التنفيذ</a></li>
+                <li><a href="#interactive-lab">11. المختبر التطبيقي التفاعلي</a></li>
+                <li><a href="#flashcards">12. بطاقات الاستذكار</a></li>
+                <li><a href="#review-questions">13. أسئلة المراجعة الشاملة</a></li>
+                <li><a href="#quiz">14. الاختبار التقييمي النهائي</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Educational Content -->
+        <main class="content-area">
+
+            <!-- 1. مواضيع المحاضرة -->
+            <section id="intro">
+                <span class="section-tag">مدخل المحاضرة</span>
+                <h2>🎯 مواضيع ومخرجات التعلم للمحاضرة الثانية</h2>
+                <p>تنتقل بنا هذه المحاضرة من المفهوم النظري العام للأنظمة (الذي درسناه في المحاضرة الأولى) إلى الجانب الهندسي والعملي: <strong>كيف نُحلل الأنظمة؟ ومن الذي يقوم بذلك؟ وما هي خارطة الطريق الرسمية لبناء نظام معلومات ناجح؟</strong></p>
+                <p>بنهاية دراستك المتعمقة لهذه المحاضرة، ستكون متمكناً من المحاور الأربعة الرئيسية التالية:</p>
+                <ul class="content-list">
+                    <li><strong>فهم كامل لعملية تحليل النظام والدواعي لها:</strong> لماذا ومتى تقرر المؤسسات تفكيك أنظمتها الحالية أو بناء أنظمة جديدة؟</li>
+                    <li><strong>تعريف محلل النظام <span class="term-en">System Analyst</span>:</strong> الصفات الشخصية والمؤهلات العلمية والعملية التي يجب أن يتمتع بها، والأدوار التخصصية الستة التي يقوم بها، والمشاكل التي قد تواجهه أثناء عمله.</li>
+                    <li><strong>معرفة الأساليب المتبعة في تحليل وتصميم النظم:</strong> المقارنة المنهجية بين التحليل التصاعدي، التنازلي، والتصميم من الداخل للخارج.</li>
+                    <li><strong>معرفة كافية بدورة حياة تطوير النظام <span class="term-en">SDLC</span>:</strong> دراسة تفصيلية لمراحلها الأربع (التخطيط، التحليل، التصميم، التنفيذ)، خطواتها الفرعية، ومخرجاتها الوثائقية.</li>
+                </ul>
+            </section>
+
+            <!-- 2. ماهية عملية تحليل النظم والأسباب الداعية لها -->
+            <section id="analysis-concept">
+                <span class="section-tag">المحور الأول</span>
+                <h2>🔍 ماهية عملية تحليل النظم والدوافع المؤدية إليها</h2>
+                
+                <div class="info-box">
+                    <h4>📌 التعريف الأكاديمي لعملية تحليل النظم (Systems Analysis)</h4>
+                    <p><strong>عملية تحليل النظم:</strong> هي عملية <strong>تفكيك النظام</strong> وإرجاعه لمكوناته من <strong>النظم الفرعية <span class="term-en">Sub-systems</span></strong>، ومعرفة المشاكل التي تعاني منها هذه الأنظمة الفرعية، وبالتالي السعي إلى حل هذه المشاكل في صورة إنتاج <strong>نظام معلومات متكامل</strong> خالٍ من هذه المشاكل.</p>
+                </div>
+
+                <div class="info-box academic-plus">
+                    <h4>🧠 تعمق أكاديمي: لماذا نلجأ إلى "التفكيك"؟ (مبدأ فرّق تَسُد Divide & Conquer)</h4>
+                    <p>في هندسة البرمجيات وأمن النظم، التعامل مع نظام المؤسسة ككتلة واحدة ضخمة يجعل اكتشاف موطن الخلل أمراً مستحيلاً. عندما يفكك المحلل نظام المستشفى مثلاً إلى أنظمة فرعية (نظام العيادات، نظام الصيدلية، نظام الفوترة، نظام المختبر)، يصبح قادراً على تشخيص سبب البطء أو التكلفة بدقة داخل النظام الفرعي المعني، ثم إعادة هندسته وربطه ببقية الأجزاء بسلاسة.</p>
+                </div>
+
+                <h3>الأسباب الأربعة التي تؤدي إلى تحليل النظام:</h3>
+                <p>لا تبدأ عملية تحليل النظام من فراغ، بل تنطلق استجابةً لواحد أو أكثر من الدوافع الاستراتيجية أو التشغيلية التالية داخل المنظمة:</p>
+
+                <div class="reasons-grid">
+                    <div class="reason-card">
+                        <div class="reason-num">1</div>
+                        <h4>وجود مشاكل في النظام الحالي</h4>
+                        <p>ظهور عيوب تجعل نظام المعلومات الحالي غير مناسب مثل: <strong>التكلفة العالية، الإجراءات البطيئة، أو نقص في المعلومات</strong> وغيرها، مما يتطلب إجراء تغييرات في النظام الحالي أو استبداله بشكل كامل.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-num">2</div>
+                        <h4>تحسين النظام وزيادة التنافسية</h4>
+                        <p>الرغبة في تطوير وتحسين النظام الحالي بهدف <strong>تحسين الأداء، زيادة الإنتاجية، أو تحقيق مزايا تنافسية <span class="term-en">Competitive Advantage</span></strong> للمنظمة في السوق.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-num">3</div>
+                        <h4>ظهور احتياجات جديدة في المنظمة</h4>
+                        <p>نشوء متطلبات عمل جديدة تتطلب تعديل نظام المعلومات الحالي ليتمكن من تلبيتها، <strong>بالرغم من عدم وجود أي قصور أو عيب في عمله الحالي</strong> (مثل افتتاح فرع إلكتروني جديد أو إضافة خدمة دفع رقمي).</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-num">4</div>
+                        <h4>ظهور تقنيات حديثة</h4>
+                        <p>بروز تكنولوجيا جديدة يمكن أن تسهم في تحديث أنظمة المعلومات الحالية، وتساعد في <strong>تقليل التكلفة، تحسين مخرجات هذه الأنظمة، أو توفير خدمات معلوماتية أفضل</strong> (كالانتقال للحوسبة السحابية أو الذكاء الاصطناعي).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. محلل النظم: التعريف، المؤهلات، والصفات -->
+            <section id="analyst-profile">
+                <span class="section-tag">المحور الثاني</span>
+                <h2>👨‍💼 محلل النظم (System Analyst): التعريف والمؤهلات</h2>
+                
+                <p><span class="term">محلل النظم (System Analyst)</span> هو الشخص الذي يقوم بعملية التحليل من حيث <strong>دراسة النظام القائم لتشخيص نقاط ضعفه ومشكلاته</strong>، ومن ثم <strong>تصميم نظام جديد وتنفيذه ومن ثم صيانته</strong>.</p>
+                <p>يمثل محلل النظم حلقة الوصل (الجسر) بين <strong>بيئة الأعمال والمستخدمين</strong> من جهة، وبين <strong>المبرمجين والتقنيين</strong> من جهة أخرى. وللنجاح في هذه المهمة، ينبغي توفر ثلاثة أركان أساسية في محلل النظم الجيد:</p>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box">
+                        <div class="pillar-icon">🎓</div>
+                        <h4>1. المؤهلات العلمية</h4>
+                        <p>تُعتبر <strong>الشهادة الجامعية في أحد مجالات الحاسوب</strong> حداً أدنى للمؤهلات العلمية التي يجب توفرها لدى محلل النظم؛ لضمان استيعابه للبنية البرمجية والعتادية.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-icon">💼</div>
+                        <h4>2. الخبرات والمعارف</h4>
+                        <p>يجب لمحلل النظم أن تكون له <strong>خبرة ودراية في المجال التطبيقي الذي يريد أن يعمل فيه</strong> (فمن يحلل نظاماً بنكياً يحتاج لفهم العمليات المصرفية والمحاسبية).</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-icon">🌟</div>
+                        <h4>3. الصفات الشخصية</h4>
+                        <p>مجموعة من المهارات الذهنية والتواصلية (Soft & Analytical Skills) التي تمكّنه من قيادة عملية التحليل والتعامل مع البشر والبيانات بكفاءة.</p>
+                    </div>
+                </div>
+
+                <h3>تفصيل الصفات الشخصية الخمس الواجب توفرها في محلل النظم:</h3>
+                <ol class="content-list">
+                    <li><strong>القدرة على التفكير المنطقي والتحليل المنظم:</strong> القدرة على ربط الأسباب بالنتائج وتفكيك المشكلات المعقدة بطريقة منهجية.</li>
+                    <li><strong>القدرة على التعامل الفعال مع كل أنواع الأفراد بلباقة ومرونة والتعبير الجيد عن الذات:</strong> لأن المحلل يحاور المدير التنفيذي، والمحاسب، والموظف البسيط، والمبرمج.</li>
+                    <li><strong>القدرة على التعامل مع البيانات تجميعاً وتصنيفاً وتحليلاً:</strong> تحويل ركام الاستمارات والملفات الخام إلى حقائق منظمة قابلة للدراسة.</li>
+                    <li><strong>القدرة على كتابة التقارير والملاحظات:</strong> صياغة الوثائق الفنية والإدارية (مثل وثيقة مقترح النظام) بلغة واضحة ودقيقة.</li>
+                    <li><strong>القدرة والقابلية والاستعداد للتعاون مع الآخرين:</strong> ذلك أن عملية تحليل النظم تعتمد كلياً على <strong>أسلوب عمل الفريق <span class="term-en">Teamwork</span></strong>، ويكون المحلل عضواً محورياً في هذا الفريق.</li>
+                </ol>
+            </section>
+
+            <!-- 4. الأدوار الستة لمحلل النظم -->
+            <section id="analyst-roles">
+                <span class="section-tag">الأدوار التخصصية</span>
+                <h2>🎭 الأدوار المختلفة التي يقوم بها محلل النظم</h2>
+                <p>مع كبر حجم المشاريع وتنوع قضايا المؤسسات، تتفرع مهام تحليل وتطوير النظم إلى <strong>ستة أدوار تخصصية</strong>. انقر على كل دور في المستكشف التفاعلي أدناه لدراسة مجال تركيزه، مهامه، والخبرات المطلوبة له:</p>
+
+                <div class="roles-explorer">
+                    <div class="roles-tabs">
+                        <button class="role-tab-btn active" onclick="openRoleTab(event, 'role-sa')">1. محلل النظم</button>
+                        <button class="role-tab-btn" onclick="openRoleTab(event, 'role-ba')">2. محلل الأعمال</button>
+                        <button class="role-tab-btn" onclick="openRoleTab(event, 'role-ra')">3. محلل المتطلبات</button>
+                        <button class="role-tab-btn" onclick="openRoleTab(event, 'role-ia')">4. محلل البنية التحتية</button>
+                        <button class="role-tab-btn" onclick="openRoleTab(event, 'role-cm')">5. محلل إدارة التغيير</button>
+                        <button class="role-tab-btn" onclick="openRoleTab(event, 'role-pm')">6. مدير المشروع</button>
+                    </div>
+
+                    <!-- Role 1: System Analyst -->
+                    <div id="role-sa" class="role-panel active">
+                        <div class="role-header">
+                            <h3>دور محلل النظم</h3>
+                            <span class="term-en">System Analyst Role</span>
+                        </div>
+                        <p>يركز دور محلل الأنظمة على <strong>قضايا نظم المعلومات المحيطة بالنظام</strong>.</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <ul class="content-list" style="margin-bottom:0;">
+                                    <li>تطوير الأفكار والاقتراحات للطرق التي يمكن بها تحسين إنتاجية المنظمة بدعم تكنولوجيا المعلومات.</li>
+                                    <li>المساعدة على تصميم عمليات تجارية جديدة تدعمها تكنولوجيا المعلومات.</li>
+                                    <li>تصميم نظام المعلومات الجديد للمنظمة مع <strong>ضمان الحفاظ على جميع معايير نظم المعلومات</strong>.</li>
+                                </ul>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ الخبرات المطلوبة:</strong>
+                                <p>يجب أن تكون لمحلل النظم خبرة قوية في: <strong>التحليل، والتصميم، والبرمجة</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role 2: Business Analyst -->
+                    <div id="role-ba" class="role-panel">
+                        <div class="role-header">
+                            <h3>دور محلل الأعمال</h3>
+                            <span class="term-en">Business Analyst Role</span>
+                        </div>
+                        <p>يركز دور محلل الأعمال على <strong>المسائل التجارية (Business Issues) المحيطة بالنظام</strong>.</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <ul class="content-list" style="margin-bottom:0;">
+                                    <li>المساعدة على <strong>تحديد قيمة الأعمال (Business Value)</strong> التي سيقوم النظام بإنشائها.</li>
+                                    <li>تطوير الأفكار لتحسين العمليات التجارية.</li>
+                                    <li>المساعدة في تصميم عمليات وسياسات تجارية جديدة.</li>
+                                </ul>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ الخبرات المطلوبة:</strong>
+                                <p>يجب أن تكون له <strong>خبرة في مجال الأعمال</strong>، بالإضافة إلى معرفة التحليل والتصميم.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role 3: Requirements Analyst -->
+                    <div id="role-ra" class="role-panel">
+                        <div class="role-header">
+                            <h3>دور محلل المتطلبات</h3>
+                            <span class="term-en">Requirements Analyst Role</span>
+                        </div>
+                        <p>يركز على <strong>تجميع المتطلبات من أصحاب المصلحة <span class="term-en">Stakeholders</span></strong> المرتبطة بالنظام الجديد. وتدرك المنظمات اليوم الدور الحاسم الذي تؤديه المتطلبات الكاملة والدقيقة في نجاح النظام في مرحلته النهائية.</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <p>استنباط وتوثيق وتحليل كافة احتياجات أصحاب المصلحة بدقة وشمولية لمنع فشل النظام لاحقاً.</p>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ الخبرات المطلوبة:</strong>
+                                <p>فهم جيد لأعمال المنظمة، و<strong>مهارات تواصل ممتازة</strong>، مع خبرة عالية في مجال جمع المتطلبات.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role 4: Infrastructure Analyst -->
+                    <div id="role-ia" class="role-panel">
+                        <div class="role-header">
+                            <h3>دور محلل البنية التحتية</h3>
+                            <span class="term-en">Infrastructure Analyst Role</span>
+                        </div>
+                        <p>يركز على <strong>القضايا التقنية المحيطة بالطرق التي سيتفاعل بها النظام مع البنية التحتية التقنية للمنظمة</strong> (الأجهزة، البرمجيات، الشبكات، وقواعد البيانات).</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <ul class="content-list" style="margin-bottom:0;">
+                                    <li>ضمان أن نظام المعلومات الجديد سيتوافق مع المعايير التنظيمية.</li>
+                                    <li>المساعدة على تحديد التغييرات التي يحتاجها النظام في البنية التحتية التقنية الحالية للمنظمة.</li>
+                                </ul>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ الخبرات المطلوبة:</strong>
+                                <p>خبرة في مجال <strong>الشبكات، وإدارة قواعد البيانات، وإلمام بالمنتجات البرمجية والأجهزة التقنية</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role 5: Change Management Analyst -->
+                    <div id="role-cm" class="role-panel">
+                        <div class="role-header">
+                            <h3>دور محلل إدارة التغيير</h3>
+                            <span class="term-en">Change Manager Analyst Role</span>
+                        </div>
+                        <p>يركز على <strong>القضايا الإدارية للمستخدمين أثناء عملية تثبيت النظام الجديد</strong>.</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <ul class="content-list" style="margin-bottom:0;">
+                                    <li>كفالة توفير الوثائق والدعم الفني اللازمين للمستخدمين.</li>
+                                    <li>تدريب المستخدمين على النظام الجديد.</li>
+                                    <li>وضع استراتيجيات للتغلب على <strong>مقاومة التغيير <span class="term-en">Resistance to Change</span></strong> الذي يحدثه النظام الجديد.</li>
+                                </ul>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ الخبرات المطلوبة:</strong>
+                                <p>خبرة في مجال <strong>السلوك التنظيمي (Organizational Behavior) وإدارة التغيير</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role 6: Project Manager -->
+                    <div id="role-pm" class="role-panel">
+                        <div class="role-header">
+                            <h3>دور مدير المشروع</h3>
+                            <span class="term-en">Project Manager Role</span>
+                        </div>
+                        <p>يركز على القيادة الإدارية الشاملة لضبط مسار المشروع وموارده.</p>
+                        <div class="role-meta-grid">
+                            <div class="role-meta-item">
+                                <strong>📌 المهام والمسؤوليات:</strong>
+                                <ul class="content-list" style="margin-bottom:0;">
+                                    <li>ضمان إنجاز المشروع <strong>في الوقت المحدد (On Time)</strong>.</li>
+                                    <li>ضمان إنجازه <strong>في حدود الميزانية الموضوعة (Within Budget)</strong>.</li>
+                                    <li>ضمان أن النظام يوفر <strong>القيمة المتوقعة للمنظمة</strong>.</li>
+                                </ul>
+                            </div>
+                            <div class="role-meta-item">
+                                <strong>🛠️ المثلث الذهبي للمدير:</strong>
+                                <p>الموازنة بين: الوقت، التكلفة (الميزانية)، والقيمة/الجودة المتوقعة للنظام.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 ملاحظة هامة حول المسار المهني (Career Path)</h4>
+                    <p>قد تختلف الأدوار والأسماء المستخدمة لوصفها من منظمة إلى أخرى. بالإضافة إلى ذلك، <strong>لا يوجد مسار وظيفي نموذجي موحد</strong>؛ فقد يدخل البعض في مجال تحليل وتصميم النظم كـ <em>مبرمج</em> أو كـ <em>محلل</em>، وبعضهم كـ <em>مختص في مجال الأعمال</em>، والآخر كـ <em>مختص في مجال إدارة المشاريع وحل المشاكل</em>. وهكذا فإن المهتمين بمجال تطوير نظم المعلومات قد يتبعون مجموعة متنوعة من المسارات خلال حياتهم المهنية.</p>
+                </div>
+            </section>
+
+            <!-- 5. المشاكل والأساليب المتبعة في تحليل وتصميم النظم -->
+            <section id="challenges-approaches">
+                <span class="section-tag">المنهجيات والتحديات</span>
+                <h2>⚠️ المشاكل التي تعترض محلل النظم والأساليب المتبعة في التحليل</h2>
+
+                <h3>أولاً: المشاكل الأربعة التي يمكن أن تعترض محلل النظم في عمله:</h3>
+                <ol class="content-list">
+                    <li><strong>تعدد بدائل الحلول الممكنة وصعوبة الاختيار:</strong> وجود عدة حلول لمشكلة من مشاكل النظام وصعوبة اختيار الحل الأمثل من بينها (من حيث التكلفة والأداء والوقت).</li>
+                    <li><strong>صعوبة اختيار أدوات وأساليب التحليل لتعددها:</strong> كثرة المنهجيات والنماذج والأدوات البرمجية المتاحة، مما يجعل انتقاء الأنسب للمشروع تحدياً.</li>
+                    <li><strong>صعوبة متابعة التطورات والإنجازات التقنية الحديثة:</strong> التسارع الهائل في تكنولوجيا المعلومات ضمن بيئة متغيرة باستمرار.</li>
+                    <li><strong>صعوبة متابعة التغيرات التي تطرأ في مجال الأعمال:</strong> التغير السريع في المنتجات، والتشريعات القانونية، وأساليب الإنتاج الجديدة.</li>
+                </ol>
+
+                <h3>ثانياً: الأساليب المتبعة في تحليل وتصميم النظم (Analysis & Design Approaches):</h3>
+                <p>عندما يواجه المحلل نظاماً معقداً، كيف يبدأ بتفكيكه أو بنائه؟ هناك ثلاثة أساليب ذكرتها المحاضرة:</p>
+
+                <div class="approaches-wrapper">
+                    <!-- الأسلوب الأول -->
+                    <div class="approach-card" style="border-top: 4px solid var(--secondary);">
+                        <h4>1. أسلوب التحليل التصاعدي</h4>
+                        <span class="term-en">Bottom-Up Approach (أو كما ورد في الشريحة: down-top)</span>
+                        <div class="approach-diagram">
+                            <div><span class="node-box node-main">الحل الكلي للنظام ⬆️</span></div>
+                            <div style="margin: 0.4rem 0; color: var(--secondary); font-weight:bold;">↑ تجميع الحلول الجزئية ↑</div>
+                            <div>
+                                <span class="node-box node-sub">حل جزئي 1</span>
+                                <span class="node-box node-sub">حل جزئي 2</span>
+                                <span class="node-box node-sub">حل جزئي 3</span>
+                            </div>
+                        </div>
+                        <p>يقضي هذا الأسلوب بـ <strong>وضع حلول للمسائل الجزئية البسيطة</strong> أولاً، والانتقال شيئاً فشيئاً نحو الأعلى بـ <strong>تجميع الحلول الجزئية</strong> للوصول إلى حل للمشكلة الكلية.</p>
+                    </div>
+
+                    <!-- الأسلوب الثاني -->
+                    <div class="approach-card" style="border-top: 4px solid var(--accent);">
+                        <h4>2. أسلوب التحليل التنازلي</h4>
+                        <span class="term-en">Top-Down Approach</span>
+                        <div class="approach-diagram">
+                            <div><span class="node-box node-main">الإطار العام للنظام الكلي ⬇️</span></div>
+                            <div style="margin: 0.4rem 0; color: var(--accent); font-weight:bold;">↓ تفكيك إلى أجزاء ↓</div>
+                            <div>
+                                <span class="node-box node-sub">مشكلة فرعية أ</span>
+                                <span class="node-box node-sub">مشكلة فرعية ب</span>
+                                <span class="node-box node-sub">مشكلة فرعية ج</span>
+                            </div>
+                        </div>
+                        <p>يقضي بـ <strong>وضع الأطر العامة لحلول المشاكل الكلية</strong> أولاً، ومن ثم الانتقال إلى أسفل لـ <strong>وضع حلول للمشاكل الجزئية</strong> التي تكوّن المسألة الكلية.</p>
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🚫 3. الأسلوب الثالث: التصميم من الداخل إلى الخارج والعكس (Inside-Out / Outside-In)</h4>
+                    <p>أشارت المحاضرة إلى وجود أسلوب ثالث وهو <strong>التصميم من الداخل إلى الخارج والعكس</strong>، إلا أنه <strong>أصبح غير مستخدم بسبب تكلفته العالية</strong>.</p>
+                </div>
+            </section>
+
+            <!-- 6. دورة حياة تطوير النظام SDLC -->
+            <section id="sdlc-overview">
+                <span class="section-tag">العمود الفقري للمقرر</span>
+                <h2>🔄 دورة حياة تطوير النظام (System Development Life Cycle - SDLC)</h2>
+                
+                <div class="info-box">
+                    <h4>📌 مفهوم دورة حياة تطوير النظام (SDLC)</h4>
+                    <p>تمر نظم المعلومات بكل أنواعها بسلسلة من المراحل، ويُقصد بـ <strong>دورة حياة النظام</strong>: تحديد مجموعة الخطوات التي يمر بها النظام <strong>بشكل منسق</strong>، تبدأ بـ <strong>تحديد المشكلة</strong> وتنتهي بـ <strong>تنفيذ النظام وصيانته</strong>.</p>
+                </div>
+
+                <p>تمر دورة حياة تطوير النظم <span class="term-en">SDLC</span> بـ <strong>أربع مراحل أساسية</strong>، حيث تتألف كل مرحلة من عدة خطوات تعتمد كل منها على مجموعة من التقنيات، وتُنتج <strong>وثائق مخصصة (Deliverables)</strong> تعطي في مجموعها فهماً كاملاً للنظام.</p>
+
+                <p style="font-weight: bold; color: var(--primary); margin-top: 1rem;">👇 انقر على أي مرحلة في المخطط التفاعلي أدناه لاستعراض ملخصها السريع ومخرجاتها:</p>
+
+                <!-- Interactive SDLC Diagram -->
+                <div class="sdlc-pipeline">
+                    <div class="sdlc-step-btn" onclick="selectSdlcOverview(0)" id="sdlc-btn-0">
+                        <span class="step-num">البداية</span>
+                        <span class="step-title">💡 فكرة (Idea)</span>
+                    </div>
+                    <span class="sdlc-arrow">←</span>
+                    <div class="sdlc-step-btn active" onclick="selectSdlcOverview(1)" id="sdlc-btn-1">
+                        <span class="step-num">المرحلة 1</span>
+                        <span class="step-title">📋 التخطيط (Planning)</span>
+                    </div>
+                    <span class="sdlc-arrow">←</span>
+                    <div class="sdlc-step-btn" onclick="selectSdlcOverview(2)" id="sdlc-btn-2">
+                        <span class="step-num">المرحلة 2</span>
+                        <span class="step-title">🔍 التحليل (Analysis)</span>
+                    </div>
+                    <span class="sdlc-arrow">←</span>
+                    <div class="sdlc-step-btn" onclick="selectSdlcOverview(3)" id="sdlc-btn-3">
+                        <span class="step-num">المرحلة 3</span>
+                        <span class="step-title">📐 التصميم (Design)</span>
+                    </div>
+                    <span class="sdlc-arrow">←</span>
+                    <div class="sdlc-step-btn" onclick="selectSdlcOverview(4)" id="sdlc-btn-4">
+                        <span class="step-num">المرحلة 4</span>
+                        <span class="step-title">🚀 التنفيذ (Implementation)</span>
+                    </div>
+                </div>
+
+                <div class="sdlc-detail-box" id="sdlc-overview-display">
+                    <!-- Injected via JS -->
+                </div>
+
+                <div class="info-box academic-plus">
+                    <h4>🔄 كيف تتنقل فرق العمل بين مراحل SDLC؟</h4>
+                    <p>تُطبق مراحل دورة حياة تطوير النظم وخطواتها تطبيقاً يعتمد على مسار منطقي يبدأ من بداية المراحل وينتهي بنهايتها. يكون هذا المسار مناسباً في بعض المشاريع البرمجية، غير أنه في العديد من المشاريع الأخرى، قد تقوم فرق العمل المختلفة بالتنقل بين المراحل بطرق مختلفة:</p>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>تتابعياً (Sequentially):</strong> مثل نموذج الشلال (Waterfall)، مرحلة تلو الأخرى.</li>
+                        <li><strong>تزايدياً (Incrementally):</strong> بناء النظام على دفعات وأجزاء متتالية.</li>
+                        <li><strong>تكرارياً (Iteratively):</strong> بناء نسخة أولية ثم تحسينها في دورات متكررة (كما في Agile/Spiral).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 7. المرحلة الأولى: التخطيط Planning -->
+            <section id="phase-planning">
+                <span class="section-tag">المرحلة الأولى من SDLC</span>
+                <h2>📋 المرحلة الأولى: التخطيط (Planning)</h2>
+                <p><strong>الهدف الأساسي:</strong> تهدف مرحلة التخطيط إلى <strong>فهم المبررات التي تدعونا إلى بناء نظام معلومات (لماذا نبني النظام؟)</strong>، كما تحدد <strong>كيف سيسعى فريق المشروع إلى بنائه</strong>.</p>
+                <p>تتألف هذه المرحلة من <strong>خطوتين أساسيتين</strong>:</p>
+
+                <h3>الخطوة الأولى: إقلاع المشروع (Project Initiation)</h3>
+                <p>يجري في هذه الخطوة:</p>
+                <ol class="content-list">
+                    <li><strong>تحديد الفائدة المرجوة من النظام في المؤسسة:</strong> هل سيرفع النظام قيمة العائدات (الأرباح) أم سيخفض النفقات (التكاليف)؟</li>
+                    <li><strong>معرفة طلبات المستخدم عبر <span class="term">وثيقة طلب النظام (System Request)</span>:</strong> وهي عبارة عن وثيقة تتضمن ملخصاً يعبر عن الحاجة إلى نظام برمجي وتشرح كيف يمكن للنظام المطلوب أن يحسن أداء العمل.</li>
+                    <li><strong>إجراء <span class="term">تحليل جدوى المشروع (Feasibility Analysis)</span>:</strong> يقوم فريق المعلوماتية بالعمل مع ممول المشروع (Project Sponsor) لدراسة ثلاث نقاط أساسية:</li>
+                </ol>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box" style="border-top: 4px solid var(--primary);">
+                        <h4>1. الجدوى التقنية</h4>
+                        <span class="term-en">Technical Feasibility</span>
+                        <p style="margin-top:0.5rem;"><strong>السؤال المحوري:</strong> <em>"هل يمكننا بناء النظام؟"</em></p>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">تدرس توفر التقنيات والأجهزة والبرمجيات وخبرة الفريق التقنية لإنجاز النظام.</p>
+                    </div>
+                    <div class="pillar-box" style="border-top: 4px solid var(--success);">
+                        <h4>2. الجدوى الاقتصادية</h4>
+                        <span class="term-en">Economic Feasibility</span>
+                        <p style="margin-top:0.5rem;"><strong>السؤال المحوري:</strong> <em>"هل سيقدم النظام قيمة مضافة؟"</em></p>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">تدرس العائد المالي مقارنة بالتكلفة (Cost-Benefit Analysis) وهل يستحق المشروع الاستثمار.</p>
+                    </div>
+                    <div class="pillar-box" style="border-top: 4px solid var(--accent);">
+                        <h4>3. الجدوى التنظيمية</h4>
+                        <span class="term-en">Organizational Feasibility</span>
+                        <p style="margin-top:0.5rem;"><strong>السؤال المحوري:</strong> <em>"في حال تم بناء النظام، هل سيجري استخدامه؟"</em></p>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">تدرس مدى تقبل الموظفين والإدارة للنظام ومواءمته لثقافة وأهداف المنظمة.</p>
+                    </div>
+                </div>
+
+                <p><strong>قرار الاعتماد:</strong> يُقدم <em>طلب النظام</em> و<em>تحليل الجدوى</em> إلى <strong>لجنة الإشراف على نظم المعلومات (Approval/Steering Committee)</strong> لتقرر فيما إذا كان من الممكن تبني هذا المشروع والمضي قدماً فيه.</p>
+
+                <h3>الخطوة الثانية: إدارة المشروع (Project Management)</h3>
+                <p>بمجرد الموافقة على إقلاع المشروع، يقوم <strong>مدير المشروع</strong> بوضع <span class="term">خطة عمل (Work Plan)</span>، كما يحدد فريق العمل ويوفر التقنيات اللازمة لمساعدته في إدارة المشروع. وفي نهاية هذه الخطوة، يقدم مدير المشروع <strong>خطة عمل لمشروعه</strong> كوثيقة مخرجة.</p>
+            </section>
+
+            <!-- 8. المرحلة الثانية: التحليل Analysis -->
+            <section id="phase-analysis">
+                <span class="section-tag">المرحلة الثانية من SDLC</span>
+                <h2>🔍 المرحلة الثانية: التحليل (Analysis)</h2>
+                <p><strong>الهدف الأساسي:</strong> تسمح مرحلة التحليل بالإجابة عن الأسئلة الجوهرية التالية:</p>
+                <div class="system-model" style="display:flex; gap:1rem; flex-wrap:wrap; margin: 1rem 0;">
+                    <span class="term">1. مَن الذي سيستخدم النظام؟ (Who)</span>
+                    <span class="term">2. ما الذي سيفعله النظام؟ (What)</span>
+                    <span class="term">3. متى وأين سيُستخدم النظام؟ (When & Where)</span>
+                </div>
+                <p>في هذه المرحلة يقوم فريق المشروع بالتحري عن وجود أي نظام حالي ويحدد إمكانات التطوير الممكنة ويطور مفهوماً للنظام الجديد. وتتألف هذه المرحلة من <strong>ثلاث خطوات</strong>:</p>
+
+                <ul class="content-list">
+                    <li>
+                        <strong>1. تطوير استراتيجية للتحليل <span class="term-en">Analysis Strategy</span>:</strong>
+                        تهدف لترشيد جهود الفريق، وتتضمن عادةً:
+                        <ul>
+                            <li>تحليلاً للنظام الحالي ومشكلاته ويسمى <span class="term">النظام كما هو (As-Is System)</span>.</li>
+                            <li>تصوراً للنظام الجديد المطلوب ويسمى <span class="term">النظام المأمول (To-Be System)</span>.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>2. جمع المتطلبات <span class="term-en">Requirement Gathering</span>:</strong>
+                        تتم عن طريق تقنيات مثل: <strong>المقابلات الشخصية، فرق العمل (ورش العمل)، أو الاستبيانات.. إلخ</strong>. يقود تحليل المعلومات التي جُمعت (بالإضافة إلى المعلومات المقدمة من ممول المشروع) إلى تشكيل مفهوم واضح عن النظام الجديد. يُستخدم هذا المفهوم لصنع مجموعة من <strong>نماذج التحليل <span class="term-en">Analysis Models</span></strong> التي تصف كيفية أداء الأعمال إذا تم تطوير النظام الجديد، وتمثل تفاعلات المستخدمين مع النظام والبيانات والعمليات اللازمة لدعم العملية التجارية بالمنظمة.
+                    </li>
+                    <li>
+                        <strong>3. مقترح النظام <span class="term-en">System Proposal</span>:</strong>
+                        تُجمع التحليلات التي تم الحصول عليها مع مفهوم النظام والنماذج في وثيقة واحدة وتُقدم إلى ممول المشروع وإلى المعنيين باتخاذ القرار حول بناء النظام. <strong>تُعتبر وثيقة مقترح النظام الناتج الأول (المخرج الرئيسي) الذي يصف متطلبات النظام المطلوب.</strong>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 9. المرحلة الثالثة: التصميم Design -->
+            <section id="phase-design">
+                <span class="section-tag">المرحلة الثالثة من SDLC</span>
+                <h2>📐 المرحلة الثالثة: التصميم (Design)</h2>
+                <p><strong>الهدف الأساسي:</strong> في هذه المرحلة يتم اتخاذ القرارات حول <strong>كيفية عمل النظام الجديد (How the system will work)</strong>، معبّرين عن ذلك بالتجهيزات والبرمجيات والبنية الشبكية اللازمة للمؤسسة، وواجهات التخاطب مع المستخدم، والاستمارات والتقارير التي ستُستخدم، إضافة إلى البرامج وقواعد المعطيات (البيانات) والملفات التي يحتاجها النظام.</p>
+                <p>تتألف مرحلة التصميم من <strong>أربع خطوات</strong>:</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الخطوة</th>
+                                <th>المصطلح الإنجليزي</th>
+                                <th>الشرح التفصيلي للقرارات المتخذة فيها</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. تطوير استراتيجية للتصميم</strong></td>
+                                <td><span class="term-en">Design Strategy</span></td>
+                                <td>توضح هذه الاستراتيجية ما إذا كان سيجري تطوير النظام:
+                                    <br>• <strong>داخل المؤسسة (In-house)</strong> عبر فريقها الداخلي.
+                                    <br>• أم <strong>خارجها (Outsourcing)</strong> غالباً عبر شركة استشارات تقنية.
+                                    <br>• أم أن المنظمة ستقوم بـ <strong>شراء حزمة برامج مكتوبة مسبقاً (Packaged Software)</strong>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. تطوير تصميم البنيان الخاص بالنظام</strong></td>
+                                <td><span class="term-en">Architecture Design</span></td>
+                                <td>يتضمن وصفاً للتجهيزات (Hardware) والبرمجيات (Software) والبنية الشبكية التي ستُستخدم، إضافة إلى <strong>تصميم الواجهات (UI Design)</strong> حيث تُحدد كيفية التخاطب مع المستخدم والاستمارات والتقارير اللازمة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. توصيف قواعد المعطيات والملفات</strong></td>
+                                <td><span class="term-en">Database and Files Specifications</span></td>
+                                <td>وهنا يُحدد بدقة: <strong>ما هي المعطيات (البيانات) التي يجب تخزينها، وأين هو مكان تخزينها</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. تصميم البرنامج</strong></td>
+                                <td><span class="term-en">Program Design</span></td>
+                                <td>يتضمن <strong>تحديد البرامج التي يجب كتابتها</strong>، والتوصيف الدقيق لعمل هذه البرامج (الخوارزميات والمنطق البرمجي قبل كتابة الكود الفعلي).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 10. المرحلة الرابعة: التنفيذ Implementation -->
+            <section id="phase-implementation">
+                <span class="section-tag">المرحلة الرابعة من SDLC</span>
+                <h2>🚀 المرحلة الرابعة: التنفيذ أو "التنجيز" (Implementation)</h2>
+                <p><strong>الهدف الأساسي:</strong> يجري في هذه المرحلة <strong>بناء النظام فعلياً</strong> (أو شراؤه في حالة تقرير شراء حزمة برمجيات جاهزة). وتتميز هذه المرحلة بمعلومة مهمة جداً للامتحانات:</p>
+
+                <div class="info-box warning-box">
+                    <h4>⚠️ حقيقة هندسية واقتصادية هامة جداً</h4>
+                    <p>تكون مرحلة التنفيذ <span class="term-en">Implementation</span> عادةً <strong>أطول المراحل وأكثرها كلفة</strong> في دورة حياة تطوير النظام، وتُعتبر <strong>عملية الاختبار <span class="term-en">Testing</span></strong> ضمنها من أكثر العمليات كلفة!</p>
+                </div>
+
+                <p>تتألف مرحلة التنفيذ من <strong>ثلاث خطوات</strong>:</p>
+                <ol class="content-list">
+                    <li>
+                        <strong>إنشاء النظام <span class="term-en">System Construction</span>:</strong>
+                        يجري فيها بناء النظام (كتابة الكود البرمجي) و<strong>اختباره (Testing)</strong> للتأكد من أدائه العمل كما جرى تصميمه. وتُعتبر عملية الاختبار من أكثر العمليات كلفة.
+                    </li>
+                    <li>
+                        <strong>التثبيت عند الزبون <span class="term-en">Installation</span>:</strong>
+                        وهنا يجري وضع النظام لدى الزبون (إحلال النظام الجديد محل القديم) إما <strong>تدريجياً أو كلياً</strong> حسب إجرائية يُتفق عليها. وتتضمن هذه الخطوة وضع <span class="term">خطة لتدريب المستخدمين (Training Plan)</span> على النظام الجديد.
+                    </li>
+                    <li>
+                        <strong>وضع خطة لدعم الزبون <span class="term-en">Support Plan</span>:</strong>
+                        تتضمن إجراء مراجعة للنظام في مرحلة الاستثمار (التشغيل الفعلي)، وتحديد التعديلات الصغيرة أو الكبيرة التي يحتاجها النظام (الصيانة والتطوير المستمر).
+                    </li>
+                </ol>
+            </section>
+
+            <!-- 11. المختبر التطبيقي التفاعلي -->
+            <section id="interactive-lab">
+                <span class="section-tag">تطبيق عملي</span>
+                <h2>🧪 المختبر التطبيقي: اختبر فهمك للمواقف العملية</h2>
+                <p>اقرأ الموقف العملي التالي وحدد أي نوع من <strong>دراسات الجدوى</strong> أو <strong>مراحل SDLC</strong> يمثله هذا الموقف:</p>
+
+                <div class="simulator-box">
+                    <h4 id="sim-scenario-title" style="margin-top:0;">الموقف 1 من 4:</h4>
+                    <p id="sim-scenario-text" style="font-size:1.08rem; font-weight:600; color:var(--primary);">
+                        قررت شركة تطوير نظام ذكي، لكن محلل النظم يتساءل: "هل سيرضى موظفو الأرشيف القدامى باستخدام النظام الجديد أم سيقاومونه ويتجاهلونه؟" أي نوع من الجدوى يدرس المحلل هنا؟
+                    </p>
+                    <div class="sim-options" id="sim-options-container">
+                        <!-- Injected by JS -->
+                    </div>
+                    <div id="sim-feedback" style="margin-top:1rem; padding:1rem; border-radius:8px; display:none;"></div>
+                    <button class="quiz-btn" id="sim-next-btn" style="display:none; margin-top:0.8rem;" onclick="nextSimScenario()">الموقف التالي ←</button>
+                </div>
+            </section>
+
+            <!-- 12. بطاقات الاستذكار Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">مراجعة المصطلحات</span>
+                <h2>🗂️ بطاقات الاستذكار (Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها ومراجعة التعريف الأكاديمي الدقيق للمصطلح:</p>
+
+                <div class="flashcards-grid">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                عملية تحليل النظم
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تفكيك النظام وإرجاعه لمكوناته من النظم الفرعية ومعرفة مشاكلها، والسعي لحلها لإنتاج نظام معلومات متكامل خالٍ من المشاكل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                وثيقة طلب النظام (System Request)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                وثيقة في خطوة "إقلاع المشروع" تتضمن ملخصاً يعبر عن الحاجة إلى نظام برمجي وتشرح كيف سيحسن أداء العمل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                As-Is vs. To-Be System
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                <strong>As-Is:</strong> النظام الحالي ومشكلاته.<br>
+                                <strong>To-Be:</strong> التصور المأمول للنظام الجديد (ضمن استراتيجية التحليل).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                مقترح النظام (System Proposal)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                الوثيقة الناتجة في نهاية مرحلة "التحليل"، تجمع التحليلات ومفهوم النظام والنماذج، وتعتبر الناتج الأول الذي يصف متطلبات النظام.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                التحليل التصاعدي vs التنازلي
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                <strong>التصاعدي:</strong> حل المسائل الجزئية ثم تجميعها للكل.<br>
+                                <strong>التنازلي:</strong> وضع الأطر العامة للكل ثم الانتقال لحل المشاكل الجزئية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                محلل إدارة التغيير (Change Manager)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                يركز على القضايا الإدارية للمستخدمين أثناء تثبيت النظام، يوفر الوثائق والتدريب، ويضع استراتيجيات للتغلب على مقاومة التغيير.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                أبعاد دراسة الجدوى الثلاثة
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                1. تقنية (هل يمكننا بناؤه؟)<br>
+                                2. اقتصادية (هل يقدم قيمة مضافة؟)<br>
+                                3. تنظيمية (هل سيجري استخدامه؟)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                مرحلة التنفيذ (Implementation)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                المرحلة الرابعة في SDLC، أطول المراحل وأكثرها كلفة، وتشمل: إنشاء النظام واختباره، التثبيت والتدريب، وخطة دعم الزبون.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13. أسئلة المراجعة الشاملة -->
+            <section id="review-questions">
+                <span class="section-tag">أسئلة مقالية ومراجعة</span>
+                <h2>📝 أسئلة المراجعة والتفكير الناقد (مع الإجابات النموذجية)</h2>
+                <p>انقر على السؤال لإظهار الإجابة النموذجية الكاملة ومقارنتها بفهمك:</p>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س1: هل يُشترط دائماً وجود عيب أو مشكلة في النظام الحالي لإجراء عملية تحليل النظم؟ ولماذا؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>لا، لا يُشترط وجود قصور أو عيب في النظام الحالي.</strong> فإلى جانب حل المشاكل، قد تجري المؤسسة عملية تحليل النظام لثلاثة أسباب أخرى حتى لو كان النظام الحالي يعمل بكفاءة:</p>
+                        <ol class="content-list">
+                            <li>الرغبة في تحسين الأداء أو زيادة الإنتاجية أو تحقيق مزايا تنافسية.</li>
+                            <li>ظهور احتياجات عمل جديدة في المنظمة تتطلب تعديل النظام لتلبيتها.</li>
+                            <li>ظهور تقنيات جديدة تسهم في تحديث النظام وتقليل التكلفة أو تقديم خدمات معلوماتية أفضل.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س2: قارن جوهرياً بين مرحلتي "التحليل (Analysis)" و "التصميم (Design)" في دورة حياة تطوير النظم SDLC.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>مرحلة التحليل (Analysis):</strong> تركز على <strong>"ماذا" (What)</strong> سيفعل النظام، ومَن سيستخدمه، ومتى وأين. وتدرس النظام الحالي (As-Is) وتحدد متطلبات النظام الجديد (To-Be) وتُخرج وثيقة <em>مقترح النظام (System Proposal)</em>.</p>
+                        <p><strong>مرحلة التصميم (Design):</strong> تركز على <strong>"كيف" (How)</strong> سيعمل النظام الجديد تقنياً وهندسياً، فتحدد استراتيجية التطوير (داخلي، خارجي، حزمة جاهزة)، وتصميم البنيان والواجهات، وتوصيف قواعد البيانات والملفات، وتصميم البرامج.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س3: ما الفرق بين دور "محلل الأعمال (Business Analyst)" ودور "محلل البنية التحتية (Infrastructure Analyst)"؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <p><strong>محلل الأعمال:</strong> يركز على المسائل التجارية، فيحدد قيمة الأعمال التي سينشئها النظام ويطور العمليات والسياسات التجارية، ويحتاج لخبرة في إدارة الأعمال إلى جانب التحليل والتصميم.</p>
+                        <p><strong>محلل البنية التحتية:</strong> يركز على القضايا التقنية البحتة وكيفية تفاعل النظام الجديد مع الأجهزة والبرمجيات والشبكات وقواعد البيانات الحالية في المنظمة وضمان توافقه مع المعايير التقنية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 14. الاختبار التقييمي النهائي -->
+            <section id="quiz">
+                <span class="section-tag">التقييم الذاتي الشامل</span>
+                <h2>✅ الاختبار التقييمي للمحاضرة الثانية</h2>
+                <p>اختبر مدى استيعابك لكافة تفاصيل المحاضرة من خلال هذا التقييم التفاعلي المكون من 8 أسئلة شاملة:</p>
+                
+                <div class="quiz-container" id="quiz-app">
+                    <!-- Injected via JS -->
+                </div>
+            </section>
+
+            <!-- Footer Navigation -->
+            <div class="lecture-footer-nav">
+                <a href="Lecture-01.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">→ العودة للمحاضرة الأولى</a>
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0;">📚 العودة لفهرس المقرر</a>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // 1. Reading Progress Bar & Active Sidebar Link
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('reading-progress').style.width = scrolled + '%';
+
+            // Active TOC link
+            let current = '';
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 180)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('#toc-list a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Roles Tabs Switching
+        function openRoleTab(evt, roleId) {
+            document.querySelectorAll('.role-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(roleId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // 3. Interactive SDLC Overview Stepper
+        const sdlcOverviewData = [
+            {
+                title: "💡 نقطة الانطلاق: الفكرة (Idea)",
+                question: "ما هي الحاجة أو المشكلة التي قدحت شرارة المشروع؟",
+                steps: "ظهور مشكلة في النظام الحالي، أو رغبة في تحسين الأداء والميزة التنافسية، أو ظهور احتياجات تنظيمية جديدة، أو بروز تقنيات حديثة.",
+                deliverables: "مبادرة مبدئية تتحول إلى طلب نظام في مرحلة التخطيط."
+            },
+            {
+                title: "📋 المرحلة الأولى: التخطيط (Planning)",
+                question: "لماذا نبني هذا النظام؟ وكيف سيدير الفريق عملية بنائه؟",
+                steps: "1. إقلاع المشروع (تحديد الفائدة، طلب النظام، تحليل الجدوى التقنية والاقتصادية والتنظيمية) ← 2. إدارة المشروع (إعداد خطة العمل وتحديد الفريق).",
+                deliverables: "وثيقة طلب النظام (System Request) + دراسة الجدوى (Feasibility Analysis) + خطة العمل (Work Plan)."
+            },
+            {
+                title: "🔍 المرحلة الثانية: التحليل (Analysis)",
+                question: "مَن سيستخدم النظام؟ وماذا سيفعل النظام؟ ومتى وأين سيُستخدم؟",
+                steps: "1. تطوير استراتيجية التحليل (دراسة النظام الحالي As-Is وتصور النظام الجديد To-Be) ← 2. جمع المتطلبات وبناء نماذج التحليل ← 3. إعداد مقترح النظام.",
+                deliverables: "وثيقة مقترح النظام (System Proposal) متضمنة متطلبات النظام ونماذج التحليل."
+            },
+            {
+                title: "📐 المرحلة الثالثة: التصميم (Design)",
+                question: "كيف سيعمل النظام الجديد تقنياً وهندسياً؟",
+                steps: "1. تطوير استراتيجية التصميم (داخلي / خارجي / شراء حزمة جاهزة) ← 2. تصميم البنيان والواجهات ← 3. توصيف قواعد البيانات والملفات ← 4. تصميم البرنامج.",
+                deliverables: "مواصفات البنية المعمارية، تصميم الواجهات، توصيف قواعد البيانات، وتوصيف البرامج."
+            },
+            {
+                title: "🚀 المرحلة الرابعة: التنفيذ / التنجيز (Implementation)",
+                question: "بناء النظام الفعلي، اختباره، وضعه في الخدمة، وصيانته (الأطول والأكثر كلفة).",
+                steps: "1. إنشاء النظام واختباره (System Construction & Testing) ← 2. التثبيت عند الزبون (Installation) وتدريب المستخدمين ← 3. وضع خطة لدعم الزبون (Support Plan).",
+                deliverables: "نظام معلومات عامل ومختبر + خطة تدريب المستخدمين (Training Plan) + خطة الدعم والصيانة (Support Plan)."
+            }
+        ];
+
+        function selectSdlcOverview(index) {
+            document.querySelectorAll('.sdlc-step-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            const data = sdlcOverviewData[index];
+            document.getElementById('sdlc-overview-display').innerHTML = `
+                <h3 style="margin-top:0; color:var(--primary);">${data.title}</h3>
+                <p><strong>🎯 التركيز الأساسي:</strong> ${data.question}</p>
+                <p><strong>🛠️ الخطوات الرئيسية:</strong> ${data.steps}</p>
+                <p style="margin-bottom:0;"><strong>📄 الوثائق والمخرجات (Deliverables):</strong> <span class="term">${data.deliverables}</span></p>
+            `;
+        }
+        // Initialize SDLC display
+        selectSdlcOverview(1);
+
+        // 4. Accordion Toggle
+        function toggleAccordion(headerBtn) {
+            const item = headerBtn.parentElement;
+            item.classList.toggle('open');
+        }
+
+        // 5. Interactive Practical Lab Simulator
+        const simScenarios = [
+            {
+                text: "قررت شركة تطوير نظام ذكي، لكن محلل النظم يتساءل: «هل سيرضى موظفو الأرشيف القدامى باستخدام النظام الجديد أم سيقاومونه ويتجاهلونه؟» أي نوع من الجدوى يدرس المحلل هنا؟",
+                options: ["الجدوى التقنية (Technical)", "الجدوى الاقتصادية (Economic)", "الجدوى التنظيمية (Organizational)"],
+                correct: 2,
+                explanation: "الجدوى التنظيمية تجيب عن السؤال: (في حال تم بناء النظام، هل سيجري استخدامه فعلاً من قِبل الأفراد داخل المنظمة؟)."
+            },
+            {
+                text: "يقوم الفريق الآن بإجراء مقابلات شخصية وتوزيع استبيانات على الموظفين لمعرفة احتياجاتهم، وبناء نماذج للنظام الجديد (To-Be System). في أي مرحلة من مراحل SDLC يعمل الفريق حالياً؟",
+                options: ["مرحلة التخطيط (Planning)", "مرحلة التحليل (Analysis)", "مرحلة التصميم (Design)", "مرحلة التنفيذ (Implementation)"],
+                correct: 1,
+                explanation: "تطوير استراتيجية (As-Is / To-Be) وجمع المتطلبات عبر المقابلات والاستبيانات هي خطوات المرحلة الثانية: التحليل (Analysis)."
+            },
+            {
+                text: "اجتمع الفريق ليقرر: هل سنبرمج النظام داخل شركتنا، أم نتعاقد مع شركة استشارات خارجية، أم نشتري حزمة برمجية جاهزة؟ في أي خطوة يتم اتخاذ هذا القرار؟",
+                options: ["إقلاع المشروع (Project Initiation)", "استراتيجية التحليل (Analysis Strategy)", "استراتيجية التصميم (Design Strategy)", "إنشاء النظام (System Construction)"],
+                correct: 2,
+                explanation: "تحديد طريقة الحصول على النظام (تطوير داخلي، خارجي، أو شراء حزمة جاهزة) يتم في الخطوة الأولى من مرحلة التصميم وهي: تطوير استراتيجية التصميم (Design Strategy)."
+            },
+            {
+                text: "بدأ محلل النظم بحل المشاكل البسيطة في الأقسام الصغرى أولاً، ثم قام بتجميع هذه الحلول الجزئية تدريجياً للوصول إلى حل شامل للمؤسسة ككل. ما الأسلوب الذي اتبعه؟",
+                options: ["أسلوب التحليل التنازلي (Top-Down)", "أسلوب التحليل التصاعدي (Bottom-Up)", "أسلوب التصميم من الداخل للخارج"],
+                correct: 1,
+                explanation: "البدء بحل المسائل الجزئية البسيطة ثم تجميعها صعوداً للوصول لحل المشكلة الكلية هو أسلوب التحليل التصاعدي."
+            }
+        ];
+
+        let currentSim = 0;
+        let simAnswered = false;
+
+        function loadSimScenario() {
+            const s = simScenarios[currentSim];
+            document.getElementById('sim-scenario-title').innerText = `الموقف التطبيقي ${currentSim + 1} من ${simScenarios.length}:`;
+            document.getElementById('sim-scenario-text').innerText = s.text;
+            const optsContainer = document.getElementById('sim-options-container');
+            optsContainer.innerHTML = s.options.map((opt, idx) => 
+                `<button class="sim-btn" onclick="checkSimAnswer(${idx})">${opt}</button>`
+            ).join('');
+            document.getElementById('sim-feedback').style.display = 'none';
+            document.getElementById('sim-next-btn').style.display = 'none';
+            simAnswered = false;
+        }
+
+        function checkSimAnswer(idx) {
+            if (simAnswered) return;
+            simAnswered = true;
+            const s = simScenarios[currentSim];
+            const fb = document.getElementById('sim-feedback');
+            if (idx === s.correct) {
+                fb.style.background = 'var(--success-bg)';
+                fb.style.border = '1px solid var(--success)';
+                fb.style.color = '#22543d';
+                fb.innerHTML = `✅ <strong>أحسنت! تحليل سليم.</strong> ${s.explanation}`;
+            } else {
+                fb.style.background = 'var(--danger-bg)';
+                fb.style.border = '1px solid var(--danger)';
+                fb.style.color = '#742a2a';
+                fb.innerHTML = `❌ <strong>غير دقيق.</strong> ${s.explanation}`;
+            }
+            fb.style.display = 'block';
+            if (currentSim < simScenarios.length - 1) {
+                document.getElementById('sim-next-btn').style.display = 'inline-block';
+            } else {
+                const btn = document.getElementById('sim-next-btn');
+                btn.innerText = 'إعادة المواقف التطبيقية ↺';
+                btn.style.display = 'inline-block';
+            }
+        }
+
+        function nextSimScenario() {
+            if (currentSim < simScenarios.length - 1) {
+                currentSim++;
+            } else {
+                currentSim = 0;
+            }
+            loadSimScenario();
+        }
+        loadSimScenario();
+
+        // 6. Comprehensive Final Quiz
+        const quizData = [
+            {
+                question: "1. ما هو الحد الأدنى للمؤهلات العلمية التي يجب توفرها لدى محلل النظم؟",
+                options: [
+                    "شهادة الثانوية العامة مع دورة في البرمجة",
+                    "الشهادة الجامعية في أحد مجالات الحاسوب",
+                    "شهادة الدكتوراه في إدارة الأعمال",
+                    "لا يشترط أي مؤهل علمي ويكفي الإلمام الإداري"
+                ],
+                correct: 1,
+                explanation: "نصت المحاضرة صراحةً على أن الشهادة الجامعية في أحد مجالات الحاسوب تُعتبر حداً أدنى للمؤهلات العلمية لمحلل النظم."
+            },
+            {
+                question: "2. أي من الأدوار التالية يركز على توفير الوثائق وتدريب المستخدمين ووضع استراتيجيات للتغلب على مقاومة التغيير أثناء تثبيت النظام؟",
+                options: [
+                    "محلل البنية التحتية (Infrastructure Analyst)",
+                    "محلل المتطلبات (Requirements Analyst)",
+                    "محلل إدارة التغيير (Change Manager Analyst)",
+                    "مدير المشروع (Project Manager)"
+                ],
+                correct: 2,
+                explanation: "محلل إدارة التغيير هو المسؤول عن الجوانب الإدارية للمستخدمين وتدريبهم والتغلب على مقاومة التغيير ولديه خبرة في السلوك التنظيمي."
+            },
+            {
+                question: "3. الأسلوب الذي يقضي بوضع الأطر العامة لحلول المشاكل الكلية ومن ثم الانتقال إلى وضع حلول للمشاكل الجزئية يُسمى:",
+                options: [
+                    "أسلوب التحليل التصاعدي",
+                    "أسلوب التحليل التنازلي (Top-Down Approach)",
+                    "أسلوب التصميم من الداخل إلى الخارج",
+                    "أسلوب التجميع العشوائي"
+                ],
+                correct: 1,
+                explanation: "أسلوب التحليل التنازلي (Top-Down) يبدأ من القمة (الأطر العامة للكل) ثم ينزل لتفكيك وحل المشاكل الجزئية."
+            },
+            {
+                question: "4. في مرحلة التخطيط، ما هي الوثيقة التي تتضمن ملخصاً يعبر عن الحاجة إلى نظام برمجي وتشرح كيف سيحسن أداء العمل؟",
+                options: [
+                    "وثيقة مقترح النظام (System Proposal)",
+                    "وثيقة طلب النظام (System Request)",
+                    "خطة دعم الزبون (Support Plan)",
+                    "توصيف قواعد البيانات"
+                ],
+                correct: 1,
+                explanation: "وثيقة طلب النظام (System Request) تقدم في خطوة إقلاع المشروع (ضمن التخطيط) لتلخيص الحاجة للنظام."
+            },
+            {
+                question: "5. أي من الأسئلة التالية يُمثل محور اهتمام «الجدوى الاقتصادية (Economic Feasibility)»؟",
+                options: [
+                    "هل يمكننا بناء النظام تقنياً؟",
+                    "في حال تم بناء النظام، هل سيجري استخدامه؟",
+                    "هل سيقدم النظام قيمة مضافة (عائدات/تخفيض نفقات)؟",
+                    "ما هي لغة البرمجة التي سنكتب بها النظام؟"
+                ],
+                correct: 2,
+                explanation: "الجدوى الاقتصادية تسأل: هل سيقدم النظام قيمة مضافة للمؤسسة؟ بينما التقنية تسأل (هل يمكننا بناؤه؟) والتنظيمية تسأل (هل سيجري استخدامه؟)."
+            },
+            {
+                question: "6. تُعتبر وثيقة «مقترح النظام (System Proposal)» الناتج الأول الذي يصف متطلبات النظام المطلوب، وتَنتج في نهاية مرحلة:",
+                options: [
+                    "التخطيط (Planning)",
+                    "التحليل (Analysis)",
+                    "التصميم (Design)",
+                    "التنفيذ (Implementation)"
+                ],
+                correct: 1,
+                explanation: "مقترح النظام (System Proposal) هو الخطوة الثالثة والمخرج النهائي لمرحلة التحليل (Analysis)."
+            },
+            {
+                question: "7. في أي مرحلة من مراحل SDLC يتم توصيف قواعد المعطيات والملفات وتصميم الواجهات والبنيان التقني؟",
+                options: [
+                    "مرحلة التخطيط (Planning)",
+                    "مرحلة التحليل (Analysis)",
+                    "مرحلة التصميم (Design)",
+                    "مرحلة التنفيذ (Implementation)"
+                ],
+                correct: 2,
+                explanation: "مرحلة التصميم (Design) تشمل 4 خطوات: استراتيجية التصميم، تصميم البنيان والواجهات، توصيف قواعد البيانات والملفات، وتصميم البرنامج."
+            },
+            {
+                question: "8. أي من العبارات التالية صحيحة فيما يتعلق بمرحلة التنفيذ (Implementation)؟",
+                options: [
+                    "هي أقصر المراحل وأقلها تكلفة في دورة حياة النظام",
+                    "تقتصر على جمع الاستبيانات والمقابلات من المستخدمين",
+                    "هي عادةً أطول المراحل وأكثرها كلفة، وتعتبر عملية الاختبار فيها من أكثر العمليات كلفة",
+                    "تسبق مرحلة التخطيط والتحليل"
+                ],
+                correct: 2,
+                explanation: "مرحلة التنفيذ (التنجيز) هي عادة أطول المراحل وأكثرها كلفة، وعملية الاختبار (Testing) ضمن خطوة إنشاء النظام تُعد من أكثر العمليات كلفة."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        const quizApp = document.getElementById('quiz-app');
+
+        function loadQuiz() {
+            if (currentQuestion >= quizData.length) {
+                showResults();
+                return;
+            }
+
+            const q = quizData[currentQuestion];
+            quizApp.innerHTML = `
+                <div class="quiz-header-bar">
+                    <span>السؤال ${currentQuestion + 1} من ${quizData.length}</span>
+                    <span>النتيجة الحالية: ${score} / ${quizData.length}</span>
+                </div>
+                <h3 style="margin-top:0; color:var(--primary);">${q.question}</h3>
+                <ul class="options" id="quiz-options">
+                    ${q.options.map((opt, i) => `<li onclick="selectOption(${i}, this)">${opt}</li>`).join('')}
+                </ul>
+                <div class="quiz-feedback" id="feedback"></div>
+                <button class="quiz-btn" id="next-btn" style="display:none;" onclick="nextQuestion()">
+                    ${currentQuestion === quizData.length - 1 ? 'عرض النتيجة النهائية 🏆' : 'السؤال التالي ←'}
+                </button>
+            `;
+        }
+
+        function selectOption(index, el) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('next-btn');
+            const allOptions = document.querySelectorAll('#quiz-options li');
+
+            if (index === q.correct) {
+                score++;
+                el.classList.add('correct-ans');
+                feedback.innerHTML = `✅ <strong>إجابة صحيحة!</strong> ${q.explanation}`;
+                feedback.style.backgroundColor = 'var(--success-bg)';
+                feedback.style.color = '#22543d';
+                feedback.style.border = '1px solid var(--success)';
+            } else {
+                el.classList.add('wrong-ans');
+                allOptions[q.correct].classList.add('correct-ans');
+                feedback.innerHTML = `❌ <strong>إجابة غير صحيحة.</strong> ${q.explanation}`;
+                feedback.style.backgroundColor = 'var(--danger-bg)';
+                feedback.style.color = '#742a2a';
+                feedback.style.border = '1px solid var(--danger)';
+            }
+
+            feedback.style.display = 'block';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            loadQuiz();
+        }
+
+        function showResults() {
+            const percentage = Math.round((score / quizData.length) * 100);
+            let msg = '';
+            if (percentage === 100) {
+                msg = '🌟 ممتاز جداً! لقد أتقنت جميع مفاهيم المحاضرة الثانية بنسبة 100%.';
+            } else if (percentage >= 75) {
+                msg = '👏 أداء رائع! لديك استيعاب قوي لدورة حياة تطوير النظم وأدوار محلل النظم.';
+            } else {
+                msg = '📚 بداية جيدة! ننصح بمراجعة المخطط التفاعلي لـ SDLC وبطاقات الاستذكار ثم إعادة المحاولة.';
+            }
+
+            quizApp.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h3 style="font-size:1.8rem; color:var(--primary);">انتهى التقييم النهائي!</h3>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--secondary); margin: 1rem 0;">
+                        ${score} / ${quizData.length} (${percentage}%)
+                    </div>
+                    <p style="font-size: 1.1rem; text-align:center; max-width:500px; margin:0 auto 1.5rem;">${msg}</p>
+                    <button class="quiz-btn" onclick="restartQuiz()">إعادة الاختبار من جديد ↺</button>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            loadQuiz();
+        }
+
+        // Start Quiz on load
+        loadQuiz();
+    </script>
+</body>
+</html>
