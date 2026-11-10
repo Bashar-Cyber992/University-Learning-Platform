@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة مقرر: تصميم البرمجيات الآمنة | Security Software Design</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #102a43;
+            --secondary: #553c9a;
+            --secondary-light: #6b46c1;
+            --accent: #ed8936;
+            --bg-light: #f7fafc;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --success: #38a169;
+            --success-bg: #f0fff4;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --hover-shadow: 0 12px 24px rgba(85, 60, 154, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Top Bar Navigation */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .breadcrumb-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.85rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .breadcrumb-links a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-links span {
+            color: var(--text-muted);
+        }
+
+        .nav-pill {
+            background: #faf5ff;
+            color: var(--secondary);
+            border: 1px solid #e9d8fd;
+            text-decoration: none;
+            padding: 0.35rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Hero Course Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 4rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .course-badge {
+            background-color: rgba(255, 255, 255, 0.16);
+            padding: 0.35rem 1.1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.4rem;
+            font-weight: 800;
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            font-family: monospace;
+            color: #e9d8fd;
+            margin-bottom: 1.2rem;
+            font-weight: normal;
+        }
+
+        header p {
+            font-size: 1.12rem;
+            opacity: 0.93;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1150px;
+            margin: -2.8rem auto 3rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Stats Overview Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.4rem 1.5rem;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 2.2rem;
+            background: #faf5ff;
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-info h4 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-info span {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Course Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .overview-box {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #edf2f7;
+        }
+
+        .overview-box h3 {
+            color: var(--primary);
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        .syllabus-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+        }
+
+        .s-tag {
+            background: #f8fafc;
+            border: 1px solid #cbd5e0;
+            color: var(--primary-dark);
+            padding: 0.4rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .s-tag.done {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: #22543d;
+        }
+
+        .objectives-list {
+            margin-right: 1.4rem;
+            font-size: 0.95rem;
+        }
+
+        .objectives-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.8rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.75rem;
+        }
+
+        /* Lectures List */
+        .lectures-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .lecture-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            border-right: 6px solid var(--secondary);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border-top: 1px solid #edf2f7;
+            border-bottom: 1px solid #edf2f7;
+            border-left: 1px solid #edf2f7;
+        }
+
+        .lecture-card:hover {
+            transform: translateX(-6px);
+            box-shadow: var(--hover-shadow);
+            border-right-color: var(--accent);
+        }
+
+        .lecture-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        .lecture-number {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .lecture-details h3 {
+            font-size: 1.35rem;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .lecture-details p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .lecture-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .feat-badge {
+            background: #faf5ff;
+            color: var(--secondary);
+            border: 1px solid #e9d8fd;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.65rem;
+            border-radius: 6px;
+        }
+
+        .lecture-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: bold;
+        }
+
+        .status-available {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-pending {
+            background-color: #edf2f7;
+            color: #4a5568;
+        }
+
+        .btn-enter {
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.65rem 1.4rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .lecture-card:hover .btn-enter {
+            background-color: var(--primary);
+        }
+
+        .lecture-card.disabled {
+            border-right-color: #cbd5e0;
+            opacity: 0.78;
+            cursor: default;
+            background: #fcfcfc;
+        }
+
+        .lecture-card.disabled:hover {
+            transform: none;
+            box-shadow: var(--card-shadow);
+        }
+
+        .lecture-card.disabled .lecture-number {
+            background: #e2e8f0;
+            color: #718096;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            color: var(--text-muted);
+            border-top: 1px solid #e2e8f0;
+            margin-top: 4rem;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .lecture-card {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.4rem;
+            }
+            .lecture-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .lecture-status {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid #edf2f7;
+                padding-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <span>بوابة مقرر: تصميم البرمجيات الآمنة</span>
+            </div>
+            <div>
+                <a href="Lecture-01.html" class="nav-pill">المحاضرة 1 (متاحة)</a>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="course-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | المستوى الثالث - الترم الثاني</div>
+            <h1>تصميم البرمجيات الآمنة</h1>
+            <h2>Security Software Design</h2>
+            <p>مقرر تخصصي خاص بقسم <strong>الأمن السيبراني وشبكات</strong> | 👨‍🏫 أستاذ المقرر: <strong>د. عبدالرزاق الأهدل</strong></p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🛡️</div>
+                <div class="stat-info">
+                    <h4>1 محاضرة</h4>
+                    <span>منشورة وجاهزة للدراسة</span>
+                </div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--success);">
+                <div class="stat-icon" style="background: #f0fff4;">🧮</div>
+                <div class="stat-info">
+                    <h4>3 أدوات تفاعلية</h4>
+                    <span>حاسبة مخاطر + ورقة عمل + SDLC</span>
+                </div>
+            </div>
+            <div class="stat-card" style="border-top-color: var(--accent);">
+                <div class="stat-icon" style="background: #fffaf0;">🗂️</div>
+                <div class="stat-info">
+                    <h4>21 مصطلحاً</h4>
+                    <span>قاموس أمني + بطاقات استذكار</span>
+                </div>
+            </div>
+            <div class="stat-card" style="border-top-color: #3182ce;">
+                <div class="stat-icon" style="background: #ebf8ff;">✅</div>
+                <div class="stat-info">
+                    <h4>10 درجات</h4>
+                    <span>كوز تقييمي + واجب شامل (30 درجة)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-grid">
+            <div class="overview-box">
+                <h3>🗺️ خارطة موضوعات المقرر</h3>
+                <p style="font-size:0.93rem; color:var(--text-muted);">الموضوعات المعتمدة في مقرر تصميم البرمجيات الآمنة:</p>
+                <div class="syllabus-tags">
+                    <span class="s-tag done">✓ مفهوم أمن البرمجيات و Safety</span>
+                    <span class="s-tag done">✓ مثلث الأمن (CIA Triad)</span>
+                    <span class="s-tag done">✓ دمج الأمن في SDLC و DevSecOps</span>
+                    <span class="s-tag done">✓ تحليل الأصول والمخاطر والصلاحيات</span>
+                    <span class="s-tag">⏳ نمذجة التهديدات (Threat Modeling)</span>
+                    <span class="s-tag">⏳ المعمارية والتصميم الآمن المتقدم</span>
+                    <span class="s-tag">⏳ البرمجة الآمنة ومقاومة الثغرات</span>
+                    <span class="s-tag">⏳ الاختبارات الأمنية والتحقق</span>
+                </div>
+            </div>
+
+            <div class="overview-box">
+                <h3>🎯 المخرجات التعليمية للمقرر</h3>
+                <ol class="objectives-list">
+                    <li>إتقان مفاهيم أمن البرمجيات والتمييز بين الصحة الوظيفية، السلامة التشغيلية، والأمن السيبراني.</li>
+                    <li>تطبيق خصائص السرية والسلامة والتوافر (CIA) ومبادئ التصميم الآمن الخمسة.</li>
+                    <li>دمج الأنشطة والضوابط الأمنية في كافة مراحل دورة حياة تطوير البرمجيات (SDLC).</li>
+                    <li>تحليل الأنظمة الحقيقية لتحديد الأصول والتهديدات والثغرات وحساب المخاطر وتصميم مصفوفة الصلاحيات.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>📖 فهرس المحاضرات التفاعلية</h2>
+        </div>
+
+        <div class="lectures-list">
+            
+            <!-- المحاضرة الأولى -->
+            <a href="Lecture-01.html" class="lecture-card">
+                <div class="lecture-info">
+                    <div class="lecture-number">01</div>
+                    <div class="lecture-details">
+                        <h3>المحاضرة الأولى: أمن البرمجيات وخصائص البرمجيات الآمنة (Software Security)</h3>
+                        <p>مفهوم أمن البرمجيات، المصطلحات الأساسية الثمانية، الفرق بين المصادقة والتفويض، مقارنة Software Security و Software Safety، مثلث CIA بالتفصيل، صحة البرنامج مقابل أمنه، دورة حياة التطوير الآمن (Secure SDLC) ومبادئ التصميم الآمن الخمسة، نماذج التطوير (Waterfall, Agile, DevSecOps)، والتطبيق العملي الشامل على نظام كلية المنار.</p>
+                        <div class="lecture-features">
+                            <span class="feat-badge">📐 مخطط CIA التفاعلي</span>
+                            <span class="feat-badge">🔄 مستكشف Secure SDLC</span>
+                            <span class="feat-badge">🧮 حاسبة المخاطر</span>
+                            <span class="feat-badge">📝 ورقة عمل تفاعلية</span>
+                            <span class="feat-badge">✅ كوز من 10 درجات</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lecture-status">
+                    <span class="status-badge status-available">✓ مكتملة ومتاحة</span>
+                    <span class="btn-enter">ادخل للمحاضرة ←</span>
+                </div>
+            </a>
+
+            <!-- المحاضرة الثانية (قادمة) -->
+            <div class="lecture-card disabled">
+                <div class="lecture-info">
+                    <div class="lecture-number">02</div>
+                    <div class="lecture-details">
+                        <h3>المحاضرة الثانية: حصر الأصول ونمذجة التهديدات (Threat Modeling)</h3>
+                        <p>بانتظار رفع ملف المحاضرة الثانية لتحليله بالكامل وتحويله إلى تجربة تعليمية تفاعلية.</p>
+                    </div>
+                </div>
+                <div class="lecture-status">
+                    <span class="status-badge status-pending">⏳ قيد الإعداد</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>كلية المنار للعلوم والتكنولوجيا | قسم الأمن السيبراني وشبكات - المستوى الثالث - الترم الثاني</p>
+        <p style="margin-top: 0.4rem; font-weight: 800; font-size: 1.05rem; color: var(--primary);">إعداد عضو اللجنة العلمية في القسمين م. بشار زبله</p>
+    </footer>
+
+</body>
+</html>
