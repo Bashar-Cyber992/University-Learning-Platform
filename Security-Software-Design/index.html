@@ -27,6 +27,10 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-light);
             color: var(--text-dark);
@@ -65,14 +69,22 @@
             color: var(--secondary);
             text-decoration: none;
             font-weight: 700;
+            transition: color 0.2s;
         }
 
         .breadcrumb-links a:hover {
+            color: var(--primary);
             text-decoration: underline;
         }
 
         .breadcrumb-links span {
             color: var(--text-muted);
+        }
+
+        .quick-jump {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .nav-pill {
@@ -101,6 +113,17 @@
             position: relative;
             overflow: hidden;
             border-bottom: 5px solid var(--accent);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -10%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
         .header-content {
@@ -215,6 +238,9 @@
             margin-bottom: 1rem;
             padding-bottom: 0.6rem;
             border-bottom: 2px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .syllabus-tags {
@@ -249,7 +275,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Section Header */
+        /* Section Header & Filter Buttons */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -264,6 +290,29 @@
         .section-header h2 {
             color: var(--primary);
             font-size: 1.75rem;
+        }
+
+        .filter-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #cbd5e0;
+            color: var(--text-dark);
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
         }
 
         /* Lectures List */
@@ -316,6 +365,7 @@
             font-size: 1.5rem;
             font-weight: 800;
             flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(85, 60, 154, 0.25);
         }
 
         .lecture-details h3 {
@@ -328,6 +378,7 @@
             color: var(--text-muted);
             font-size: 0.96rem;
             margin-bottom: 0.9rem;
+            text-align: justify;
         }
 
         .lecture-features {
@@ -396,11 +447,13 @@
         .lecture-card.disabled:hover {
             transform: none;
             box-shadow: var(--card-shadow);
+            border-right-color: #cbd5e0;
         }
 
         .lecture-card.disabled .lecture-number {
             background: #e2e8f0;
             color: #718096;
+            box-shadow: none;
         }
 
         footer {
@@ -430,11 +483,15 @@
                 border-top: 1px solid #edf2f7;
                 padding-top: 1rem;
             }
+            header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- الشريط العلوي ومسار التنقل -->
     <div class="top-bar">
         <div class="breadcrumb-nav">
             <div class="breadcrumb-links">
@@ -442,7 +499,7 @@
                 <span>/</span>
                 <span>بوابة مقرر: تصميم البرمجيات الآمنة</span>
             </div>
-            <div style="display:flex; gap:0.5rem;">
+            <div class="quick-jump">
                 <a href="Lecture-01.html" class="nav-pill">المحاضرة 1</a>
                 <a href="Lecture-02.html" class="nav-pill">المحاضرة 2</a>
                 <a href="Lecture-03.html" class="nav-pill">المحاضرة 3</a>
@@ -450,6 +507,7 @@
         </div>
     </div>
 
+    <!-- ترويسة المقرر -->
     <header>
         <div class="header-content">
             <div class="course-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | المستوى الثالث - الترم الثاني</div>
@@ -461,6 +519,7 @@
 
     <div class="container">
         
+        <!-- إحصائيات المقرر التفاعلية -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">🛡️</div>
@@ -472,15 +531,15 @@
             <div class="stat-card" style="border-top-color: var(--success);">
                 <div class="stat-icon" style="background: #f0fff4;">🧮</div>
                 <div class="stat-info">
-                    <h4>7 أدوات تفاعلية</h4>
-                    <span>مصنف ثغرات + مختبر معماري + حاسبة مخاطر</span>
+                    <h4>8+ أدوات تفاعلية</h4>
+                    <span>حاسبة مخاطر + مختبر معماري + مصنف ثغرات</span>
                 </div>
             </div>
             <div class="stat-card" style="border-top-color: var(--accent);">
                 <div class="stat-icon" style="background: #fffaf0;">🗂️</div>
                 <div class="stat-info">
-                    <h4>45+ مصطلحاً</h4>
-                    <span>قاموس أمني + 24 بطاقة استذكار</span>
+                    <h4>24 بطاقة</h4>
+                    <span>بطاقات استذكار + قاموس مصطلحات</span>
                 </div>
             </div>
             <div class="stat-card" style="border-top-color: #3182ce;">
@@ -492,57 +551,20 @@
             </div>
         </div>
 
+        <!-- نظرة عامة على موضوعات وأهداف المقرر -->
         <div class="overview-grid">
             <div class="overview-box">
                 <h3>🗺️ خارطة موضوعات المقرر</h3>
-                <p style="font-size:0.93rem; color:var(--text-muted);">الموضوعات المعتمدة في مقرر تصميم البرمجيات الآمنة:</p>
+                <p style="font-size:0.93rem; color:var(--text-muted);">الموضوعات المعتمدة في مقرر تصميم البرمجيات الآمنة (العلامة الخضراء تعني أنه تم تغطيتها):</p>
                 <div class="syllabus-tags">
                     <span class="s-tag done">✓ مفهوم أمن البرمجيات و Safety</span>
                     <span class="s-tag done">✓ مثلث الأمن (CIA Triad)</span>
-                    <span class="s-tag done">✓ دمج الأمن في SDLC و DevSecOps</span>
-                    <span class="s-tag done">✓ تحليل الأصول والمخاطر والصلاحيات</span>
                     <span class="s-tag done">✓ مبادئ وإرشادات المعمارية الأمنية</span>
                     <span class="s-tag done">✓ حدود الثقة وعزل المكونات و Zero Trust</span>
+                    <span class="s-tag done">✓ دمج الأمن في SDLC و DevSecOps</span>
                     <span class="s-tag done">✓ دورة حياة الثغرات وتصنيف الهجمات</span>
                     <span class="s-tag done">✓ الاختبارات الأمنية (SAST, DAST, SCA)</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: var(--success);">
-                <div class="stat-icon" style="background: #f0fff4;">🧮</div>
-                <div class="stat-info">
-                    <h4>5 أدوات تفاعلية</h4>
-                    <span>مختبر معماري + حاسبة مخاطر + SDLC</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: var(--accent);">
-                <div class="stat-icon" style="background: #fffaf0;">🗂️</div>
-                <div class="stat-info">
-                    <h4>35+ مصطلحاً</h4>
-                    <span>قاموس أمني + 16 بطاقة استذكار</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: #3182ce;">
-                <div class="stat-icon" style="background: #ebf8ff;">✅</div>
-                <div class="stat-info">
-                    <h4>20 سؤال كوز</h4>
-                    <span>تقييمات ذاتية + واجبات شاملة</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="overview-grid">
-            <div class="overview-box">
-                <h3>🗺️ خارطة موضوعات المقرر</h3>
-                <p style="font-size:0.93rem; color:var(--text-muted);">الموضوعات المعتمدة في مقرر تصميم البرمجيات الآمنة:</p>
-                <div class="syllabus-tags">
-                    <span class="s-tag done">✓ مفهوم أمن البرمجيات و Safety</span>
-                    <span class="s-tag done">✓ مثلث الأمن (CIA Triad)</span>
-                    <span class="s-tag done">✓ دمج الأمن في SDLC و DevSecOps</span>
-                    <span class="s-tag done">✓ تحليل الأصول والمخاطر والصلاحيات</span>
-                    <span class="s-tag done">✓ مبادئ وإرشادات المعمارية الأمنية</span>
-                    <span class="s-tag done">✓ حدود الثقة وعزل المكونات و Zero Trust</span>
-                    <span class="s-tag">⏳ نمذجة التهديدات (Threat Modeling)</span>
-                    <span class="s-tag">⏳ البرمجة الآمنة والاختبارات الأمنية</span>
+                    <span class="s-tag">⏳ نمذجة التهديدات المتقدمة (Threat Modeling)</span>
                 </div>
             </div>
 
@@ -550,21 +572,27 @@
                 <h3>🎯 المخرجات التعليمية للمقرر</h3>
                 <ol class="objectives-list">
                     <li>إتقان مفاهيم أمن البرمجيات والتمييز بين الصحة الوظيفية، السلامة التشغيلية، والأمن السيبراني.</li>
-                    <li>تطبيق خصائص السرية والسلامة والتوافر (CIA) ومبادئ التصميم الآمن الخمسة.</li>
-                    <li>دمج الأنشطة والضوابط الأمنية في كافة مراحل دورة حياة تطوير البرمجيات (SDLC).</li>
-                    <li>تحليل الأنظمة الحقيقية لتحديد الأصول والتهديدات والثغرات وحساب المخاطر وتصميم مصفوفة الصلاحيات.</li>
+                    <li>تطبيق خصائص السرية والسلامة والتوافر (CIA) وتصميم المعمارية الأمنية (أقل صلاحية، الدفاع متعدد الطبقات، العزل، وفصل المهام).</li>
+                    <li>دمج الأنشطة والضوابط الأمنية في كافة مراحل دورة حياة تطوير البرمجيات (SDLC) وإدارة دورة حياة الثغرات.</li>
+                    <li>التمييز بين الهجمات على مستوى التصميم والتنفيذ والتشغيل، واستخدام أدوات الفحص الأمني بفعالية.</li>
                 </ol>
             </div>
         </div>
 
+        <!-- قائمة المحاضرات مع أزرار الفلترة -->
         <div class="section-header">
             <h2>📖 فهرس المحاضرات التفاعلية</h2>
+            <div class="filter-btns">
+                <button class="filter-btn active" onclick="filterLectures('all', this)">الكل</button>
+                <button class="filter-btn" onclick="filterLectures('available', this)">المتاحة حالياً (3)</button>
+                <button class="filter-btn" onclick="filterLectures('upcoming', this)">القادمة</button>
+            </div>
         </div>
 
-        <div class="lectures-list">
+        <div class="lectures-list" id="lectures-container">
             
-            <!-- المحاضرة الأولى -->
-            <a href="Lecture-01.html" class="lecture-card">
+            <!-- المحاضرة الأولى (متاحة) -->
+            <a href="Lecture-01.html" class="lecture-card" data-status="available">
                 <div class="lecture-info">
                     <div class="lecture-number">01</div>
                     <div class="lecture-details">
@@ -585,8 +613,30 @@
                 </div>
             </a>
 
+            <!-- المحاضرة الثانية (متاحة) -->
+            <a href="Lecture-02.html" class="lecture-card" data-status="available">
+                <div class="lecture-info">
+                    <div class="lecture-number">02</div>
+                    <div class="lecture-details">
+                        <h3>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية (Security Architecture: Principles and Guidelines)</h3>
+                        <p>مفهوم المعمارية الأمنية وأهدافها الأربعة، تقسيم النظام إلى مكونات وحدود المسؤوليات، حدود الثقة (Trust Boundaries)، مبدأ أقل صلاحية (PoLP) ومقارنة RBAC و ABAC، الدفاع متعدد الطبقات (8 طبقات)، الإعدادات الآمنة افتراضياً (Deny by Default)، تقليل التعقيد، عزل المكونات، تقليل سطح الهجوم، الفصل بين المهام (SoD)، المبادئ المكملة (Complete Mediation, Fail-Safe, Zero Trust)، ومقارنة تصميمين لنظام جامعي.</p>
+                        <div class="lecture-features">
+                            <span class="feat-badge">🏛️ 3 مخططات معمارية SVG</span>
+                            <span class="feat-badge">🛡️ مستكشف الطبقات الثمان</span>
+                            <span class="feat-badge">🧪 مشخص العيوب المعمارية</span>
+                            <span class="feat-badge">🗂️ 8 بطاقات استذكار</span>
+                            <span class="feat-badge">✅ كوز من 10 درجات</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lecture-status">
+                    <span class="status-badge status-available">✓ مكتملة ومتاحة</span>
+                    <span class="btn-enter">ادخل للمحاضرة ←</span>
+                </div>
+            </a>
+
             <!-- المحاضرة الثالثة (متاحة) -->
-            <a href="Lecture-03.html" class="lecture-card">
+            <a href="Lecture-03.html" class="lecture-card" data-status="available">
                 <div class="lecture-info">
                     <div class="lecture-number">03</div>
                     <div class="lecture-details">
@@ -608,7 +658,7 @@
             </a>
 
             <!-- المحاضرة الرابعة (قادمة) -->
-            <div class="lecture-card disabled">
+            <div class="lecture-card disabled" data-status="upcoming">
                 <div class="lecture-info">
                     <div class="lecture-number">04</div>
                     <div class="lecture-details">
@@ -628,6 +678,23 @@
         <p>كلية المنار للعلوم والتكنولوجيا | قسم الأمن السيبراني وشبكات - المستوى الثالث - الترم الثاني</p>
         <p style="margin-top: 0.4rem; font-weight: 800; font-size: 1.05rem; color: var(--primary);">إعداد عضو اللجنة العلمية في القسمين م. بشار زبله</p>
     </footer>
+
+    <script>
+        function filterLectures(filterType, btnEl) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+
+            const cards = document.querySelectorAll('.lecture-card');
+            cards.forEach(card => {
+                const status = card.getAttribute('data-status');
+                if (filterType === 'all' || status === filterType) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
