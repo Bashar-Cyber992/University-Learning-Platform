@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية | تصميم البرمجيات الآمنة</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #102a43;
+            --secondary: #553c9a;
+            --secondary-light: #6b46c1;
+            --accent: #ed8936;
+            --accent-light: #feebc8;
+            --bg-light: #f7fafc;
+            --text-dark: #2d3748;
+            --text-muted: #718096;
+            --success: #38a169;
+            --success-bg: #f0fff4;
+            --danger: #e53e3e;
+            --danger-bg: #fff5f5;
+            --warning: #dd6b20;
+            --warning-bg: #fffaf0;
+            --info-bg: #ebf8ff;
+            --info-border: #3182ce;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+            --hover-shadow: 0 12px 22px rgba(85, 60, 154, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.85;
+            font-size: 16px;
+        }
+
+        /* Top Bar & Progress */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .breadcrumb-nav {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.92rem;
+        }
+
+        .breadcrumb-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .breadcrumb-links span {
+            color: var(--text-muted);
+        }
+
+        .lecture-nav-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-pill {
+            background: #faf5ff;
+            color: var(--secondary);
+            border: 1px solid #e9d8fd;
+            text-decoration: none;
+            padding: 0.35rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .reading-progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+        }
+
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary-light));
+            width: 0%;
+            transition: width 0.15s ease-out;
+        }
+
+        /* Lecture Header */
+        .lecture-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3.8rem 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.16);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            font-weight: 600;
+        }
+
+        .lecture-header h1 {
+            font-size: 2.35rem;
+            margin-bottom: 0.6rem;
+            font-weight: 800;
+        }
+
+        .lecture-header p {
+            font-size: 1.15rem;
+            opacity: 0.93;
+            max-width: 820px;
+            margin: 0 auto 1rem;
+        }
+
+        .header-Golden-rule {
+            display: inline-block;
+            background: rgba(237, 137, 54, 0.22);
+            border: 1px solid var(--accent);
+            color: #feebc8;
+            padding: 0.5rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            max-width: 900px;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Sidebar TOC */
+        .sidebar {
+            background: white;
+            padding: 1.4rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 4.8rem;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 0.9rem;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.3rem;
+        }
+
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 0.87rem;
+            display: block;
+            padding: 0.38rem 0.65rem;
+            border-radius: 6px;
+            border-right: 3px solid transparent;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            color: var(--secondary);
+            background-color: #faf5ff;
+            border-right-color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Content Sections */
+        .content-area section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2.2rem;
+            scroll-margin-top: 5.5rem;
+            border: 1px solid #edf2f7;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #faf5ff;
+            color: var(--secondary);
+            border: 1px solid #e9d8fd;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            margin-bottom: 0.6rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.72rem;
+            margin-bottom: 1.3rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin: 1.7rem 0 0.85rem;
+        }
+
+        h4 {
+            color: var(--primary-dark);
+            font-size: 1.08rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.1rem;
+            text-align: justify;
+        }
+
+        ul.content-list, ol.content-list {
+            margin: 0.8rem 2rem 1.4rem 0;
+        }
+
+        ul.content-list li, ol.content-list li {
+            margin-bottom: 0.55rem;
+        }
+
+        /* Highlighting Terms & Code */
+        .term {
+            color: var(--primary);
+            font-weight: 700;
+            background: #edf2f7;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .term-en {
+            font-family: monospace;
+            background: #faf5ff;
+            color: var(--secondary);
+            border: 1px solid #e9d8fd;
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            direction: ltr;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.3rem 1.5rem;
+            border-radius: 10px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            margin: 1.2rem 0;
+            border-left: 5px solid var(--accent);
+            line-height: 1.65;
+        }
+
+        .code-block .kw { color: #f6ad55; font-weight: bold; }
+        .code-block .fn { color: #63b3ed; font-weight: bold; }
+        .code-block .str { color: #68d391; }
+        .code-block .err { color: #fc8181; }
+
+        /* Callout Info Boxes */
+        .info-box {
+            background-color: var(--info-bg);
+            border-right: 4px solid var(--info-border);
+            padding: 1.35rem 1.6rem;
+            margin: 1.4rem 0;
+            border-radius: 6px 10px 10px 6px;
+        }
+
+        .info-box.security-box {
+            background-color: #faf5ff;
+            border-right-color: var(--secondary);
+        }
+
+        .info-box.security-box h4 { color: var(--secondary); }
+
+        .info-box.warning-box {
+            background-color: var(--warning-bg);
+            border-right-color: var(--warning);
+        }
+
+        .info-box.warning-box h4 { color: #9c4221; }
+
+        .info-box.danger-box {
+            background-color: var(--danger-bg);
+            border-right-color: var(--danger);
+        }
+
+        .info-box.danger-box h4 { color: #9b2c2c; }
+
+        .info-box.success-box {
+            background-color: var(--success-bg);
+            border-right-color: var(--success);
+        }
+
+        .info-box.success-box h4 { color: #22543d; }
+
+        .info-box h4 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.08rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+            gap: 1.2rem;
+            margin: 1.4rem 0;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.4rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+            border-top-color: var(--accent);
+        }
+
+        .card-badge-num {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.7rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table.academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            font-size: 0.94rem;
+        }
+
+        table.academic-table th {
+            background: var(--primary);
+            color: white;
+            padding: 0.9rem 1rem;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        table.academic-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        table.academic-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        table.academic-table tr:hover {
+            background: #faf5ff;
+        }
+
+        /* Interactive Diagrams & Explorers */
+        .figure-box {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 1.6rem;
+            margin: 1.6rem 0;
+            text-align: center;
+        }
+
+        .figure-caption {
+            margin-top: 0.9rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: #edf2f7;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+
+        /* Interactive Layer & Architecture Switcher */
+        .interactive-widget {
+            background: linear-gradient(135deg, #faf5ff, #ebf8ff);
+            border: 2px solid #d6bcfa;
+            border-radius: 12px;
+            padding: 1.8rem;
+            margin: 1.6rem 0;
+        }
+
+        .layer-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin: 1rem 0;
+        }
+
+        .layer-btn {
+            background: white;
+            border: 2px solid #cbd5e0;
+            color: var(--primary);
+            padding: 0.55rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .layer-btn:hover, .layer-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        /* Accordions */
+        .accordion-item {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background: white;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: right;
+            padding: 1rem 1.3rem;
+            background: #f8fafc;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.97rem;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .accordion-header:hover {
+            background: #edf2f7;
+        }
+
+        .accordion-body {
+            display: none;
+            padding: 1.3rem;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+            font-size: 0.95rem;
+        }
+
+        .accordion-item.open .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-icon {
+            transition: transform 0.25s;
+        }
+
+        /* Flashcards */
+        .flashcards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.4rem;
+            margin-top: 1.5rem;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 185px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.05rem;
+            font-weight: bold;
+        }
+
+        .flashcard-front small {
+            margin-top: 0.5rem;
+            opacity: 0.85;
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .flashcard-back {
+            background-color: white;
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 2px solid var(--secondary);
+            font-size: 0.89rem;
+            line-height: 1.5;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            border-top: 5px solid var(--success);
+        }
+
+        .quiz-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #edf2f7;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .options {
+            list-style: none;
+            margin-top: 1.2rem;
+        }
+
+        .options li {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 0.95rem 1.2rem;
+            margin-bottom: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .options li:hover {
+            background: #faf5ff;
+            border-color: var(--secondary);
+        }
+
+        .options li.correct-ans {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: #22543d;
+        }
+
+        .options li.wrong-ans {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: #742a2a;
+        }
+
+        .quiz-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.98rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: var(--primary);
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1.1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* Footer */
+        .lecture-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 2.2rem 1.5rem;
+            background: white;
+            border-top: 2px solid #e2e8f0;
+            color: var(--text-muted);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 920px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+            .lecture-header h1 {
+                font-size: 1.8rem;
+            }
+            .content-area section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي ومسار التنقل -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">🛡️ فهرس تصميم البرمجيات الآمنة</a>
+                <span>/</span>
+                <span>المحاضرة الثانية</span>
+            </div>
+            <div class="lecture-nav-btns">
+                <a href="Lecture-01.html" class="nav-pill">→ المحاضرة السابقة (1)</a>
+                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
+                <a href="#quiz" class="nav-pill">الاختبار التقييمي 🎯</a>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- ترويسة المحاضرة -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | قسم الأمن السيبراني وشبكات (المستوى الثالث - الترم الثاني)</div>
+        <h1>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية</h1>
+        <p>Security Architecture: Principles and Guidelines | إعداد: <strong>د. عبدالرزاق الأهدل</strong> & <strong>أ. وليد الشراعي</strong></p>
+        <div class="header-Golden-rule">🌟 الجملة الذهبية: «المعمارية الأمنية الجيدة تعني أن نصمم النظام بحيث يحصل كل مستخدم ومكون على ما يحتاجه فقط، وتكون كل الاتصالات والعمليات محمية، وتوجد طبقات متعددة تمنع تحول خطأ واحد إلى اختراق شامل»</div>
+    </header>
+
+    <div class="container">
+        <!-- الفهرس الجانبي -->
+        <aside class="sidebar">
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro-axis">0. المقدمة والمحاور الـ 12</a></li>
+                <li><a href="#topic-1">1. مفهوم المعمارية الأمنية</a></li>
+                <li><a href="#topic-2">2. تقسيم النظام وحدود المسؤوليات</a></li>
+                <li><a href="#topic-3">3. حدود الثقة (Trust Boundaries)</a></li>
+                <li><a href="#topic-4">4. مبدأ أقل صلاحية (Least Privilege)</a></li>
+                <li><a href="#topic-5">5. الدفاع متعدد الطبقات (Defense in Depth)</a></li>
+                <li><a href="#topic-6">6. الإعدادات الآمنة افتراضياً</a></li>
+                <li><a href="#topic-7">7. تقليل التعقيد (Economy of Mechanism)</a></li>
+                <li><a href="#topic-8">8. عزل المكونات (Component Isolation)</a></li>
+                <li><a href="#topic-9">9. تقليل الواجهات المكشوفة (Attack Surface)</a></li>
+                <li><a href="#topic-10">10. الفصل بين المهام (Separation of Duties)</a></li>
+                <li><a href="#topic-11">11. المبادئ الأمنية المكملة</a></li>
+                <li><a href="#topic-12">12. دراسة الحالة: مقارنة تصميمين لنظام جامعي</a></li>
+                <li><a href="#tools-lab">13. الأدوات والتجربة المختبرية</a></li>
+                <li><a href="#questions-hw">14. الأسئلة الشاملة والواجب والمراجع</a></li>
+                <li><a href="#flashcards">15. بطاقات الاستذكار (Flashcards)</a></li>
+                <li><a href="#quiz">16. الكوز التقييمي (10 درجات)</a></li>
+            </ul>
+        </aside>
+
+        <!-- المحتوى التعليمي الرئيسي -->
+        <main class="content-area">
+
+            <!-- 0. مقدمة المحاضرة والمحاور الـ 12 -->
+            <section id="intro-axis">
+                <span class="section-tag">أولاً وثانياً: مدخل المحاضرة</span>
+                <h2>🏛️ مقدمة المحاضرة، أهدافها التعليمية، والمحاور الـ 12</h2>
+
+                <div class="info-box security-box">
+                    <h4>🎓 سيناريو التحدي المعماري في النظام الجامعي</h4>
+                    <p>تخيّل أنك مسؤول عن تصميم نظام إلكتروني لجامعة تضم سبع فئات: <strong>(الطلاب، المدرسين، الموظفين، المحاسبين، شؤون الطلاب، إدارة الجامعة، وقسم تقنية المعلومات)</strong>. ويحتوي هذا النظام على معلومات شديدة الحساسية مثل: <strong>(بيانات الطلاب الشخصية، كلمات المرور، الدرجات والنتائج، الرسوم الدراسية، الرواتب، والسجلات الأكاديمية)</strong>.</p>
+                    <p style="margin-bottom:0;"><strong>السؤال المهم:</strong> ماذا سيحدث لو استطاع الطالب الدخول إلى حساب المحاسب وتعديل الرسوم الدراسية؟ أو استطاع المدرس الاطلاع على رواتب الموظفين؟ هنا تظهر أهمية <strong>المعمارية الأمنية <span class="term-en">Security Architecture</span></strong>؛ فهي ليست مجرد إضافة كلمة مرور إلى البرنامج، بل هي طريقة التفكير في بناء النظام منذ البداية بحيث تكون مكوناته وصلاحياته واتصالاته مصممة لحماية المعلومات والموارد.</p>
+                </div>
+
+                <h3>🎯 أهداف المحاضرة التعليمية (10 مخرجات):</h3>
+                <p>بنهاية المحاضرة يُتوقع من الطالب أن يكون قادراً على:</p>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>تعريف معمارية البرمجيات الأمنية.</li>
+                            <li>فهم كيفية تقسيم النظام إلى مكونات.</li>
+                            <li>تحديد حدود الثقة والمسؤوليات.</li>
+                            <li>تطبيق مبدأ أقل صلاحية.</li>
+                            <li>فهم الدفاع متعدد الطبقات.</li>
+                        </ol>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <ol class="content-list" start="6" style="margin-bottom:0;">
+                            <li>تصميم إعدادات آمنة افتراضياً.</li>
+                            <li>تقليل التعقيد والواجهات المكشوفة.</li>
+                            <li>تطبيق مبدأ عزل المكونات.</li>
+                            <li>تطبيق الفصل بين المهام.</li>
+                            <li>تحليل نظام جامعي واكتشاف نقاط الضعف في تصميمه.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>🗺️ ثانياً: خريطة موضوعات المحاضرة (12 محوراً مترابطاً):</h3>
+                <p>ندرس المحاضرة في <strong>12 محوراً مترابطاً</strong>، اعتماداً على المبادئ الكلاسيكية التي وضعها العالمان <strong>Jerome H. Saltzer</strong> و <strong>Michael D. Schroeder</strong> في بحثهما الشهير <em>"The Protection of Information in Computer Systems"</em> عام 1975، مع الاستفادة من إرشادات <strong>OWASP</strong> الحديثة وتعريفات <strong>NIST</strong>:</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>رقم</th>
+                                <th>الموضوع</th>
+                                <th>المصطلح الإنجليزي</th>
+                                <th>رقم</th>
+                                <th>الموضوع</th>
+                                <th>المصطلح الإنجليزي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1</strong></td><td>مفهوم المعمارية الأمنية</td><td><span class="term-en">Security Architecture</span></td>
+                                <td><strong>7</strong></td><td>تقليل التعقيد</td><td><span class="term-en">Economy of Mechanism</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2</strong></td><td>تقسيم النظام إلى مكونات</td><td><span class="term-en">Component-Based Architecture</span></td>
+                                <td><strong>8</strong></td><td>عزل المكونات</td><td><span class="term-en">Component Isolation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>3</strong></td><td>حدود الثقة والمسؤوليات</td><td><span class="term-en">Trust Boundaries</span></td>
+                                <td><strong>9</strong></td><td>تقليل الواجهات المكشوفة</td><td><span class="term-en">Attack Surface Reduction</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>4</strong></td><td>مبدأ أقل صلاحية</td><td><span class="term-en">Least Privilege</span></td>
+                                <td><strong>10</strong></td><td>الفصل بين المهام</td><td><span class="term-en">Separation of Duties</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>5</strong></td><td>الدفاع متعدد الطبقات</td><td><span class="term-en">Defense in Depth</span></td>
+                                <td><strong>11</strong></td><td>مبادئ أمنية مكملة</td><td><span class="term-en">Complete Mediation, Fail-Safe, Zero Trust</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>6</strong></td><td>الإعدادات الآمنة افتراضياً</td><td><span class="term-en">Secure Defaults</span></td>
+                                <td><strong>12</strong></td><td>تحليل وتصميم نظام جامعي آمن</td><td><span class="term-en">Security Architecture Case Study</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 1. الموضوع الأول: مفهوم المعمارية الأمنية -->
+            <section id="topic-1">
+                <span class="section-tag">الموضوع الأول</span>
+                <h2>🏗️ 1. مفهوم المعمارية الأمنية (Security Architecture)</h2>
+
+                <h3>1.1 ما المقصود بالمعمارية؟ (تشبيه هندسة المباني بالبرمجيات)</h3>
+                <p>المعمارية في عالم المباني تعني التخطيط الهندسي للمبنى وتحديد (عدد الطوابق، الغرف، الأبواب، النوافذ، المداخل والمخارج، أماكن الكهرباء والمياه، وأنظمة الحماية). فلا يبدأ المهندس ببناء المبنى عشوائياً، بل يضع مخططاً يحدد علاقة الأجزاء ببعضها. والأمر نفسه يحدث في البرمجيات؛ فعندما نصمم نظاماً إلكترونياً يجب أن نحدد: <strong>ما مكونات النظام؟ أين تُحفظ البيانات؟ من يستطيع الوصول إليها؟ كيف تتواصل المكونات؟ ما الصلاحيات التي يمتلكها كل مستخدم؟ وكيف نحمي النظام من الاختراق؟</strong></p>
+
+                <div class="info-box security-box">
+                    <h4>📌 1.2 التعريف العلمي والمبسط للمعمارية الأمنية (Security Architecture)</h4>
+                    <p><strong>التعريف العلمي:</strong> هي الهيكل والتصميم المنظم للمكونات والآليات والسياسات الأمنية داخل النظام البرمجي، بهدف حماية البيانات والموارد وضمان أن الوصول إليها يتم بطريقة آمنة ومصرح بها.</p>
+                    <p style="margin-bottom:0;"><strong>بمعنى أبسط:</strong> هي المخطط الذي يحدد كيف نبني البرنامج بحيث يصعب اختراقه أو إساءة استخدامه.</p>
+                </div>
+
+                <h3>1.3 مثال من الحياة الواقعية (مبنى البنك) و 1.4 المثال البرمجي (نظام الجامعة):</h3>
+                <p>في <strong>مبنى البنك</strong> توجد (بوابة خارجية، موظف استقبال، حراس أمن، كاميرات مراقبة، مكاتب موظفين، غرفة الخزنة، ونظام تسجيل العمليات). لا يستطيع أي زائر الدخول لغرفة الخزنة، ولا يستطيع موظف الاستقبال تغيير أرصدة العملاء؛ لأن المبنى صُمم بحيث تكون لكل منطقة وظيفة وحدود وصلاحيات. ونفس الفكرة نطبقها في <strong>نظام الجامعة البرمجي</strong>:</p>
+
+                <!-- مخطط SVG لمعمارية نظام الجامعة -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 700 320" style="max-width: 680px; width: 100%; height: auto; background: white; border: 2px solid #cbd5e0; border-radius: 10px;">
+                        <defs>
+                            <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#553c9a" />
+                            </marker>
+                        </defs>
+                        <!-- المستخدمون -->
+                        <rect x="275" y="12" width="150" height="36" rx="8" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+                        <text x="350" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a365d">👥 المستخدمون</text>
+                        <line x1="350" y1="48" x2="350" y2="66" stroke="#553c9a" stroke-width="2" marker-end="url(#arr)"/>
+
+                        <!-- واجهة النظام -->
+                        <rect x="275" y="68" width="150" height="36" rx="8" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+                        <text x="350" y="91" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a365d">🖥️ واجهة النظام</text>
+                        <line x1="350" y1="104" x2="350" y2="122" stroke="#553c9a" stroke-width="2" marker-end="url(#arr)"/>
+
+                        <!-- خدمة المصادقة والصلاحيات -->
+                        <rect x="230" y="124" width="240" height="38" rx="8" fill="#faf5ff" stroke="#553c9a" stroke-width="2.5"/>
+                        <text x="350" y="148" text-anchor="middle" font-size="14" font-weight="bold" fill="#553c9a">🔐 خدمة المصادقة والصلاحيات</text>
+                        <line x1="350" y1="162" x2="350" y2="180" stroke="#553c9a" stroke-width="2" marker-end="url(#arr)"/>
+
+                        <!-- خدمات النظام الفرعية -->
+                        <rect x="520" y="190" width="145" height="42" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="592" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">خدمة شؤون الطلاب</text>
+
+                        <rect x="355" y="190" width="145" height="42" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="427" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">خدمة الدرجات</text>
+
+                        <rect x="190" y="190" width="145" height="42" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="262" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">خدمة الحسابات</text>
+
+                        <rect x="25" y="190" width="145" height="42" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="2"/>
+                        <text x="97" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#9c4221">سجلات المراقبة</text>
+
+                        <!-- خطوط التوزيع -->
+                        <path d="M350,180 L592,180 L592,188" fill="none" stroke="#553c9a" stroke-width="1.8" marker-end="url(#arr)"/>
+                        <path d="M350,180 L427,180 L427,188" fill="none" stroke="#553c9a" stroke-width="1.8" marker-end="url(#arr)"/>
+                        <path d="M350,180 L262,180 L262,188" fill="none" stroke="#553c9a" stroke-width="1.8" marker-end="url(#arr)"/>
+                        <path d="M350,180 L97,180 L97,188" fill="none" stroke="#dd6b20" stroke-width="1.8" marker-end="url(#arr)"/>
+
+                        <!-- قاعدة البيانات -->
+                        <rect x="290" y="265" width="260" height="42" rx="18" fill="#1a365d" stroke="#102a43" stroke-width="2"/>
+                        <text x="420" y="291" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">🗄️ قاعدة البيانات (Database)</text>
+
+                        <line x1="592" y1="232" x2="480" y2="263" stroke="#1a365d" stroke-width="2" marker-end="url(#arr)"/>
+                        <line x1="427" y1="232" x2="420" y2="263" stroke="#1a365d" stroke-width="2" marker-end="url(#arr)"/>
+                        <line x1="262" y1="232" x2="360" y2="263" stroke="#1a365d" stroke-width="2" marker-end="url(#arr)"/>
+                    </svg>
+                    <div><span class="figure-caption">مخطط المعمارية الأمنية لنظام الجامعة: المستخدم لا يتصل مباشرة بقاعدة البيانات بل يمر عبر خدمات التحقق</span></div>
+                </div>
+
+                <h3>1.5 أهداف المعمارية الأمنية الأربعة و 1.6 الفرق بين الأمن البرمجي والمعمارية الأمنية:</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الهدف المعماري</th>
+                                <th>التوضيح</th>
+                                <th>المثال الجامعي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. السرية (Confidentiality)</strong></td><td>منع غير المصرح لهم من الاطلاع على المعلومات.</td><td>الطالب لا يرى درجات زملائه.</td></tr>
+                            <tr><td><strong>2. السلامة (Integrity)</strong></td><td>منع التعديل غير المصرح به.</td><td>الطالب لا يعدل درجته.</td></tr>
+                            <tr><td><strong>3. التوافر (Availability)</strong></td><td>ضمان استمرار الخدمة للمستخدمين المصرح لهم.</td><td>استمرار نظام التسجيل وقت الذروة.</td></tr>
+                            <tr><td><strong>4. المساءلة (Accountability)</strong></td><td>إمكانية معرفة مَن نفذ العملية (هدف مكمل لمثلث CIA).</td><td>تسجيل اسم ووقت مَن عدّل الدرجة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>🛡️ الأمن البرمجي العام</h4>
+                        <p>قد يشمل إجراءات وأدوات كثيرة، وقد يعالج ثغرة موجودة بعد اكتشافها، أو يشمل اختبار الاختراق.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>🏛️ المعمارية الأمنية</h4>
+                        <p>تركز على <strong>تصميم الحماية داخل النظام منذ البداية</strong> لمنع ظهور فئات كاملة من الثغرات، وتحدد كيف تتوزع الحماية والصلاحيات والمكونات.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الأول (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما الفرق بين المعمارية العادية والمعمارية الأمنية؟</strong> المعمارية العادية تنظم مكونات النظام لأداء الوظائف، بينما المعمارية الأمنية تدمج ضوابط الحماية وحدود الثقة والصلاحيات داخل هذا الهيكل لمنع الاختراق وإساءة الاستخدام.</li>
+                            <li><strong>لماذا يجب تصميم الأمن قبل البدء في البرمجة؟</strong> لأن الأمن ليس طبقة تضاف بعد الانتهاء من الكود؛ فإصلاح عيب معماري بعد البرمجة مكلف جداً وقد يتطلب إعادة بناء النظام بالكامل.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. الموضوع الثاني: تقسيم النظام إلى مكونات وحدود واضحة للمسؤوليات -->
+            <section id="topic-2">
+                <span class="section-tag">الموضوع الثاني</span>
+                <h2>🧩 2. تقسيم النظام إلى مكونات وحدود واضحة للمسؤوليات (Component-Based Architecture)</h2>
+                <p>عندما نبني برنامجاً كبيراً، لا نضع جميع الوظائف في جزء واحد متداخل (<span class="term-en">Monolith</span> فوضوي)، بل نقسم البرنامج إلى أجزاء صغيرة مستقلة تُسمى <strong>مكونات <span class="term-en">Components</span></strong>، بحيث يؤدي كل مكون وظيفة محددة ويعرف حدود مسؤولياته (ما يُسمح له بفعله وما لا يُسمح له بفعله؛ فلا ينبغي أن يتولى مكون الطلاب تعديل الرواتب!).</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المكون (Component)</th>
+                                <th>مسؤوليته المحددة</th>
+                                <th>المكون (Component)</th>
+                                <th>مسؤوليته المحددة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="term-en">1. User Interface</span></td><td>عرض الواجهات للمستخدم.</td><td><span class="term-en">5. Grades Service</span></td><td>إدارة الدرجات والنتائج.</td></tr>
+                            <tr><td><span class="term-en">2. Authentication</span></td><td>التأكد من هوية المستخدم.</td><td><span class="term-en">6. Finance Service</span></td><td>إدارة الرسوم والمدفوعات.</td></tr>
+                            <tr><td><span class="term-en">3. Authorization</span></td><td>تحديد صلاحيات المستخدم.</td><td><span class="term-en">7. Database</span></td><td>حفظ البيانات.</td></tr>
+                            <tr><td><span class="term-en">4. Student Service</span></td><td>إدارة بيانات الطلاب.</td><td><span class="term-en">8. Audit Logging</span></td><td>تسجيل العمليات المهمة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>مثال عملي لتسلسل المسؤوليات (عندما يريد المدرس إدخال درجة طالب):</h3>
+                <ol class="content-list">
+                    <li>يدخل المدرس إلى النظام عبر الواجهة.</li>
+                    <li>تتحقق <strong>خدمة المصادقة</strong> من هويته.</li>
+                    <li>تتحقق <strong>خدمة الصلاحيات</strong> من أنه مدرس مخول.</li>
+                    <li>تتحقق <strong>خدمة الدرجات</strong> من أن المادة تخص هذا المدرس فعلاً.</li>
+                    <li>تُحفظ الدرجة في قاعدة البيانات.</li>
+                    <li>تُسجل العملية في <strong>سجل المراقبة (Audit Log)</strong>.</li>
+                </ol>
+
+                <div class="info-box success-box">
+                    <h4>✅ الفوائد الأمنية الخمس لتقسيم النظام إلى مكونات</h4>
+                    <p style="margin-bottom:0;">(1) منع الوصول المباشر غير الضروري إلى قواعد البيانات، (2) الحد من انتقال الاختراق من مكون إلى آخر، (3) سهولة مراقبة كل مكون، (4) تحديد المسؤوليات بدقة، (5) تقليل الأخطاء الناتجة عن تداخل الوظائف.</p>
+                </div>
+            </section>
+
+            <!-- 3. الموضوع الثالث: حدود الثقة والمسؤوليات -->
+            <section id="topic-3">
+                <span class="section-tag">الموضوع الثالث</span>
+                <h2>🚧 3. حدود الثقة والمسؤوليات (Trust Boundaries)</h2>
+                <p><strong>حدود الثقة <span class="term-en">Trust Boundaries</span>:</strong> هي الخطوط الفاصلة بين أجزاء النظام التي تختلف في مستوى الثقة أو مستوى التحكم الأمني (مثلاً: الإنترنت منطقة غير موثوقة، شبكة الجامعة الداخلية أكثر تحكماً، خادم التطبيقات منطقة مخصصة، وقاعدة البيانات منطقة حساسة جداً).</p>
+
+                <div class="info-box danger-box">
+                    <h4>⚠️ قاعدة حاسمة في حدود الثقة</h4>
+                    <p style="margin-bottom:0;"><strong>لا يعني وجود المستخدم داخل شبكة الجامعة أنه موثوق تلقائياً!</strong> يجب التحقق من هويته وصلاحياته عند كل طلب وصول، لأن الاختراق قد يبدأ من منطقة أقل أماناً ويحاول الانتقال إلى منطقة أكثر حساسية.</p>
+                </div>
+
+                <!-- مخطط مسار الطلب عبر حدود الثقة -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 740 110" style="max-width: 720px; width: 100%; height: auto; background: white; border: 2px solid #cbd5e0; border-radius: 10px;">
+                        <rect x="595" y="25" width="130" height="55" rx="8" fill="#fff5f5" stroke="#e53e3e" stroke-width="2"/>
+                        <text x="660" y="50" text-anchor="middle" font-size="13" font-weight="bold" fill="#9b2c2c">الإنترنت</text>
+                        <text x="660" y="68" text-anchor="middle" font-size="11" fill="#c53030">(غير موثوق)</text>
+
+                        <line x1="595" y1="52" x2="560" y2="52" stroke="#2d3748" stroke-width="2" marker-end="url(#arr)"/>
+                        <line x1="577" y1="12" x2="577" y2="95" stroke="#e53e3e" stroke-width="2" stroke-dasharray="4,3"/>
+
+                        <rect x="445" y="25" width="115" height="55" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="2"/>
+                        <text x="502" y="57" text-anchor="middle" font-size="13" font-weight="bold" fill="#9c4221">بوابة الحماية</text>
+
+                        <line x1="445" y1="52" x2="410" y2="52" stroke="#2d3748" stroke-width="2" marker-end="url(#arr)"/>
+
+                        <rect x="295" y="25" width="115" height="55" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                        <text x="352" y="57" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a365d">منطقة التطبيقات</text>
+
+                        <line x1="295" y1="52" x2="260" y2="52" stroke="#2d3748" stroke-width="2" marker-end="url(#arr)"/>
+                        <line x1="277" y1="12" x2="277" y2="95" stroke="#553c9a" stroke-width="2" stroke-dasharray="4,3"/>
+
+                        <rect x="145" y="25" width="115" height="55" rx="8" fill="#faf5ff" stroke="#553c9a" stroke-width="2"/>
+                        <text x="202" y="57" text-anchor="middle" font-size="12" font-weight="bold" fill="#553c9a">المصادقة والتفويض</text>
+
+                        <line x1="145" y1="52" x2="115" y2="52" stroke="#2d3748" stroke-width="2" marker-end="url(#arr)"/>
+
+                        <rect x="10" y="25" width="105" height="55" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="62" y="48" text-anchor="middle" font-size="12" font-weight="bold" fill="#22543d">منطقة البيانات</text>
+                        <text x="62" y="66" text-anchor="middle" font-size="12" font-weight="bold" fill="#22543d">الحساسة</text>
+                    </svg>
+                    <div><span class="figure-caption">عبور الطلب لحدود الثقة (الخطوط المتقطعة): تُفرض عند كل حد وسائل حماية (مصادقة، تفويض، تشفير، فحص مدخلات، جدران حماية، ومراقبة)</span></div>
+                </div>
+            </section>
+
+            <!-- 4. الموضوع الرابع: مبدأ أقل صلاحية -->
+            <section id="topic-4">
+                <span class="section-tag">الموضوع الرابع</span>
+                <h2>🔑 4. مبدأ أقل صلاحية (Principle of Least Privilege – PoLP)</h2>
+                <p><strong>الفكرة الأساسية:</strong> يجب منح كل مستخدم أو برنامج أو خدمة <strong>أقل قدر من الصلاحيات اللازمة لتنفيذ المهمة المطلوبة فقط</strong>، دون إعطائه صلاحيات إضافية لا يحتاجها (فموظف إعارة الكتب في المكتبة يحتاج لإضافة إعارة والاطلاع على سجل الكتب، ولا يحتاج لتعديل درجات الطلاب أو رؤية الرواتب أو حذف قاعدة البيانات!).</p>
+
+                <h3>مصفوفة تطبيق أقل صلاحية في نظام الجامعة:</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>نوع المستخدم</th>
+                                <th>قراءة (Read)</th>
+                                <th>إضافة (Create)</th>
+                                <th>تعديل (Update)</th>
+                                <th>حذف (Delete)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>الطالب</strong></td><td>بياناته فقط</td><td>طلباته الأكاديمية</td><td>بيانات مسموحة فقط</td><td>❌ لا</td></tr>
+                            <tr><td><strong>المدرس</strong></td><td>بيانات طلاب مقرراته</td><td>درجات مقرراته</td><td>درجات مقرراته</td><td>حسب السياسة</td></tr>
+                            <tr><td><strong>المحاسب</strong></td><td>بيانات مالية</td><td>دفعات مالية</td><td>قيود مالية مسموحة</td><td>محدود جداً</td></tr>
+                            <tr><td><strong>مدير النظام</strong></td><td>حسب المهمة</td><td>حسب المهمة</td><td>حسب المهمة</td><td>حسب المهمة</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>💡 ملاحظة معمارية دقيقة حول «مدير النظام (System Admin)»</h4>
+                    <p style="margin-bottom:0;">مدير النظام لا ينبغي أن يحصل تلقائياً على حق الاطلاع على كل البيانات الحساسة (كالدرجات والرواتب) لمجرد امتلاكه صلاحية إدارة البنية التقنية؛ بل الأفضل <strong>فصل الأدوار الإدارية التقنية عن صلاحيات البيانات</strong>.</p>
+                </div>
+
+                <h3>التطبيق التقني (RBAC مقابل ABAC) والمثال البرمجي:</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>1. التحكم حسب الدور <span class="term-en">RBAC</span></h4>
+                        <p><strong>Role-Based Access Control:</strong> منح الصلاحيات بناءً على الوظيفة أو الدور في المؤسسة (طالب، مدرس، محاسب). يتميز بالبساطة والوضوح.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>2. التحكم حسب الخصائص <span class="term-en">ABAC</span></h4>
+                        <p><strong>Attribute-Based Access Control:</strong> منح الصلاحيات ديناميكياً حسب الخصائص والسياق (القسم، حساسية المورد، وقت الطلب، الموقع).</p>
+                    </div>
+                </div>
+
+                <p><strong>مثال برمجي مبسط بلغة Python يوضح التحقق من الدور والمسؤولية معاً:</strong></p>
+                <div class="code-block">
+<span class="kw">def</span> <span class="fn">update_grade</span>(user, student, grade):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> user.role != <span class="str">"teacher"</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">raise</span> <span class="err">PermissionError</span>(<span class="str">"غير مصرح: هذه العملية للمدرسين فقط"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if not</span> <span class="fn">teaches</span>(user, student.course):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">raise</span> <span class="err">PermissionError</span>(<span class="str">"هذه المادة ليست ضمن مسؤوليتك"</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">save_grade</span>(student, grade)
+                </div>
+            </section>
+
+            <!-- 5. الموضوع الخامس: الدفاع متعدد الطبقات -->
+            <section id="topic-5">
+                <span class="section-tag">الموضوع الخامس</span>
+                <h2>🛡️ 5. الدفاع متعدد الطبقات (Defense in Depth)</h2>
+                <p><strong>التعريف:</strong> هو استخدام عدة وسائل حماية مستقلة أو متكاملة بحيث <strong>لا يؤدي فشل وسيلة أمنية واحدة إلى اختراق النظام بالكامل</strong> (تماماً كما تحمي منزلك بسور خارجي، وبوابة، وباب مقفل، وكاميرات، وإنذار، وخزنة داخلية).</p>
+
+                <!-- مستكشف تفاعلي لطبقات الحماية الثمان -->
+                <div class="interactive-widget">
+                    <h4 style="margin-top:0; color:var(--secondary);">🔍 مستكشف طبقات الحماية الثمان في نظام الجامعة (انقر على أي طبقة):</h4>
+                    <div class="layer-buttons">
+                        <button class="layer-btn active" onclick="showLayer(0, this)">1. Firewall</button>
+                        <button class="layer-btn" onclick="showLayer(1, this)">2. WAF</button>
+                        <button class="layer-btn" onclick="showLayer(2, this)">3. Authentication</button>
+                        <button class="layer-btn" onclick="showLayer(3, this)">4. Authorization</button>
+                        <button class="layer-btn" onclick="showLayer(4, this)">5. Input Validation</button>
+                        <button class="layer-btn" onclick="showLayer(5, this)">6. Encryption</button>
+                        <button class="layer-btn" onclick="showLayer(6, this)">7. Monitoring</button>
+                        <button class="layer-btn" onclick="showLayer(7, this)">8. Backup</button>
+                    </div>
+                    <div id="layer-detail-box" style="background:white; padding:1.2rem; border-radius:8px; border-right:4px solid var(--secondary);">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. الموضوع السادس: الإعدادات الآمنة افتراضياً -->
+            <section id="topic-6">
+                <span class="section-tag">الموضوع السادس</span>
+                <h2>⚙️ 6. الإعدادات الآمنة افتراضياً (Secure Defaults / Secure by Default)</h2>
+                <p><strong>المعنى:</strong> أن يبدأ النظام بإعدادات آمنة منذ لحظة تثبيته، دون أن يحتاج المستخدم إلى اكتشاف الإعدادات الخطيرة وتغييرها بنفسه. وتقوم هذه الفلسفة على القاعدة الذهبية: <strong><span class="term-en">Deny by Default</span> (المنع هو الوضع الافتراضي، والسماح يحتاج إلى تصريح واضح)</strong>.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الإعداد في النظام الجامعي</th>
+                                <th>❌ إعداد افتراضي غير آمن</th>
+                                <th>✅ إعداد آمن افتراضياً (Secure Default)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. صلاحيات الحساب</strong></td><td>مفتوحة للجميع تلقائياً</td><td>محددة ومقيدة (Deny by Default)</td></tr>
+                            <tr><td><strong>2. قاعدة البيانات</strong></td><td>مكشوفة للاتصالات الخارجية</td><td>تعمل داخل شبكة داخلية معزولة فقط</td></tr>
+                            <tr><td><strong>3. التشفير</strong></td><td>معطل افتراضياً</td><td>مفعل للاتصالات والبيانات الحساسة</td></tr>
+                            <tr><td><strong>4. الحسابات التجريبية</strong></td><td>تعمل في بيئة الإنتاج الفعلي</td><td>معطلة أو محذوفة في بيئة الإنتاج</td></tr>
+                            <tr><td><strong>5. رسائل الأخطاء</strong></td><td>تعرض تفاصيل النظام الداخلية للمستخدم</td><td>رسائل عامة لا تكشف الأسرار أو البنية</td></tr>
+                            <tr><td><strong>6. كلمات المرور</strong></td><td>تخزين نصي صريح (Plaintext)</td><td>تخزين بتجزئة آمنة مخصصة (Hashing)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 7. الموضوع السابع: تقليل التعقيد و 8. عزل المكونات -->
+            <section id="topic-7">
+                <span class="section-tag">الموضوع السابع</span>
+                <h2>🧹 7. تقليل التعقيد (Economy of Mechanism)</h2>
+                <p><strong>التعريف:</strong> بناء آليات الحماية والنظام بأبسط تصميم واضح يحقق المتطلبات الأمنية والوظيفية، دون إضافة وظائف واتصالات غير ضرورية (الابتعاد عن الكود الفوضوي المتشابك <span class="term-en">Spaghetti Code</span> نحو المعمارية النظيفة <span class="term-en">Clean Architecture</span>).</p>
+                <p><strong>لماذا يعد التعقيد خطراً أمنياً؟</strong> لأنه كلما زادت الأجزاء والعلاقات غير الضرورية، زادت احتمالات: (1) وجود أخطاء برمجية، (2) وجود صلاحيات غير صحيحة، (3) نسيان التحقق من بعض الطلبات، (4) صعوبة اكتشاف الثغرات، و(5) صعوبة تحديث النظام. والهدف هو <strong>التوازن بين البساطة والعزل وتحديد المسؤوليات</strong>.</p>
+            </section>
+
+            <section id="topic-8">
+                <span class="section-tag">الموضوع الثامن</span>
+                <h2>🧱 8. عزل المكونات (Component Isolation)</h2>
+                <p><strong>المقصود بالعزل:</strong> جعل المكونات مستقلة نسبياً بحيث لا يستطيع مكون الوصول إلى موارد مكون آخر إلا من خلال اتصالات محددة ومصرح بها. فإذا تعرضت «خدمة الطلاب» للاختراق، لا يحصل المهاجم تلقائياً على إمكانية التحكم في «خدمة الحسابات» أو «البيانات المالية».</p>
+
+                <!-- مخطط عزل المكونات وقواعد البيانات -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 680 260" style="max-width: 650px; width: 100%; height: auto; background: white; border: 2px solid #cbd5e0; border-radius: 10px;">
+                        <rect x="240" y="15" width="200" height="38" rx="8" fill="#1a365d"/>
+                        <text x="340" y="39" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">بوابة النظام + خدمة المصادقة</text>
+
+                        <!-- الخدمات الثلاث -->
+                        <rect x="490" y="90" width="150" height="40" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                        <text x="565" y="115" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a365d">خدمة الطلاب</text>
+
+                        <rect x="265" y="90" width="150" height="40" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                        <text x="340" y="115" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a365d">خدمة الدرجات</text>
+
+                        <rect x="40" y="90" width="150" height="40" rx="8" fill="#faf5ff" stroke="#553c9a" stroke-width="2"/>
+                        <text x="115" y="115" text-anchor="middle" font-size="14" font-weight="bold" fill="#553c9a">خدمة الحسابات</text>
+
+                        <!-- قواعد البيانات المعزولة -->
+                        <rect x="490" y="190" width="150" height="45" rx="15" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="565" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">🗄️ بيانات الطلاب</text>
+
+                        <rect x="265" y="190" width="150" height="45" rx="15" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="340" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">🗄️ بيانات الدرجات</text>
+
+                        <rect x="40" y="190" width="150" height="45" rx="15" fill="#fff5f5" stroke="#e53e3e" stroke-width="2"/>
+                        <text x="115" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#9b2c2c">🗄️ البيانات المالية</text>
+
+                        <!-- اتصالات مسموحة -->
+                        <line x1="565" y1="130" x2="565" y2="188" stroke="#38a169" stroke-width="2.5" marker-end="url(#arr)"/>
+                        <line x1="340" y1="130" x2="340" y2="188" stroke="#38a169" stroke-width="2.5" marker-end="url(#arr)"/>
+                        <line x1="115" y1="130" x2="115" y2="188" stroke="#38a169" stroke-width="2.5" marker-end="url(#arr)"/>
+
+                        <!-- منع الوصول المباشر -->
+                        <line x1="310" y1="130" x2="155" y2="188" stroke="#e53e3e" stroke-width="2" stroke-dasharray="5,4"/>
+                        <text x="230" y="162" text-anchor="middle" font-size="11" font-weight="bold" fill="#e53e3e">🚫 لا وصول مباشر</text>
+                    </svg>
+                    <div><span class="figure-caption">مخطط عزل المكونات: كل خدمة تتصل ببياناتها المخصصة فقط، ولا يوجد وصول مباشر للبيانات المالية من الخدمات الأخرى</span></div>
+                </div>
+
+                <p><strong>كيف نطبق العزل تقنياً؟</strong> (1) فصل قواعد البيانات أو مخططاتها (Schemas)، (2) تحديد صلاحيات مستقلة لكل خدمة، (3) استخدام الشبكات الخاصة (VLANs/Subnets)، (4) استخدام الحاويات (<span class="term-en">Docker Containers</span>) أو الآلات الافتراضية، (5) منع الاتصالات غير الضرورية، (6) تحديد واجهات API آمنة، و(7) عزل الأسرار ومفاتيح التشفير.</p>
+            </section>
+
+            <!-- 9. الموضوع التاسع: تقليل الواجهات المكشوفة و 10. الفصل بين المهام -->
+            <section id="topic-9">
+                <span class="section-tag">الموضوع التاسع</span>
+                <h2>🎯 9. تقليل الواجهات المكشوفة (Attack Surface Reduction)</h2>
+                <p><strong>سطح الهجوم <span class="term-en">Attack Surface</span>:</strong> هو مجموع النقاط أو الواجهات أو الخدمات التي يمكن للمهاجم محاولة استخدامها للتفاعل مع النظام أو استغلاله (مثل: صفحات تسجيل الدخول، واجهات API، منافذ الشبكة المفتوحة، خدمات الإدارة، ميزة رفع الملفات، والحسابات الافتراضية).</p>
+                <div class="info-box warning-box">
+                    <h4>🛡️ كيف نقلل سطح الهجوم في نظام الجامعة؟ (9 إجراءات عملية)</h4>
+                    <p style="margin-bottom:0;">(1) تعطيل الخدمات غير المستخدمة، (2) إغلاق المنافذ غير الضرورية، (3) <strong>عدم نشر لوحة الإدارة للعامة على الإنترنت</strong> وجعلها عبر شبكة إدارية محمية بـ MFA، (4) تقييد واجهات API، (5) حذف الحسابات الافتراضية، (6) تحديث المكونات البرمجية، (7) استخدام جدار حماية، (8) تقييد رفع الملفات وفحصها، (9) عدم كشف رسائل الأخطاء الداخلية.</p>
+                </div>
+            </section>
+
+            <section id="topic-10">
+                <span class="section-tag">الموضوع العاشر</span>
+                <h2>⚖️ 10. الفصل بين المهام (Separation of Duties – SoD)</h2>
+                <p><strong>التعريف:</strong> توزيع المهام الحساسة على شخصين أو أكثر، بحيث <strong>لا يستطيع شخص واحد تنفيذ العملية كاملة بمفرده</strong> عندما يكون ذلك خطراً (ففي البنك: موظف ينشئ طلب التحويل، وموظف ثانٍ يراجع ويوافق، والنظام ينفذ ويسجل؛ وفي الجامعة: المدرس يطلب تعديل الدرجة استثنائياً، ورئيس القسم يراجع، والمسؤول المخول يعتمد، والنظام يسجل العملية تلقائياً).</p>
+
+                <h3>جدول المقارنة الجوهرية بين «أقل صلاحية» و«الفصل بين المهام»:</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>مبدأ أقل صلاحية (Least Privilege)</th>
+                                <th>مبدأ الفصل بين المهام (Separation of Duties)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>الفكرة الأساسية</strong></td><td>تقليل صلاحيات كل مستخدم للحد الأدنى اللازم لعمله.</td><td>توزيع خطوات العملية الحساسة الواحدة على أكثر من شخص.</td></tr>
+                            <tr><td><strong>الهدف الأمني</strong></td><td>منع الوصول غير الضروري للموارد.</td><td>منع انفراد شخص واحد بعملية حساسة ومنع التلاعب وتضارب المصالح.</td></tr>
+                            <tr><td><strong>المثال الجامعي</strong></td><td>المدرس لا يرى رواتب الموظفين.</td><td>المدرس يدخل طلب تعديل الدرجة، ورئيس القسم/المسؤول يعتمد التعديل.</td></tr>
+                            <tr><td><strong>محور التركيز</strong></td><td>مقدار الصلاحية الممنوحة للدور.</td><td>توزيع المسؤولية والرقابة المتبادلة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 11. الموضوع الحادي عشر: مبادئ أمنية إضافية مكملة -->
+            <section id="topic-11">
+                <span class="section-tag">رابعاً: الموضوع الحادي عشر</span>
+                <h2>➕ 11. مبادئ أمنية إضافية مكملة للمعمارية الأمنية</h2>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>1. التحقق الكامل <span class="term-en">Complete Mediation</span></h4>
+                        <p>التحقق من صلاحية <strong>كل طلب وصول</strong> إلى مورد محمي في كل مرة، وعدم الاكتفاء بالتحقق مرة واحدة عند تسجيل الدخول.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. الفشل الآمن <span class="term-en">Fail-Safe Defaults</span></h4>
+                        <p>إذا حدث خطأ أو تعطلت خدمة التحقق من الصلاحيات، يكون القرار التلقائي هو <strong>رفض الوصول</strong> وليس السماح به.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>3. الثقة الصفرية <span class="term-en">Zero Trust</span></h4>
+                        <p>شعارها <em>"Never trust, always verify"</em>: لا تمنح الثقة تلقائياً لمجرد وجود المستخدم داخل شبكة الجامعة، بل تحقق دائماً من الهوية والجهاز والسياق.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>4. التسجيل والتصميم الآمن <span class="term-en">Logging & Secure by Design</span></h4>
+                        <p>تسجيل الأحداث الحساسة (الدخول الفاشل، تعديل الدرجات، العمليات المالية) وحمايتها من التعديل دون تسجيل كلمات المرور، وإدخال نمذجة التهديدات منذ البداية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 12. الموضوع الثاني عشر: التطبيق العملي الرئيسي (مقارنة تصميمين لنظام جامعي) -->
+            <section id="topic-12">
+                <span class="section-tag">خامساً: التطبيق العملي الرئيسي للمحاضرة</span>
+                <h2>🏛️ 12. دراسة الحالة: مقارنة تصميمين معماريين لنظام جامعي</h2>
+                <p>نطبق الآن جميع المبادئ السابقة للمقارنة بين <strong>الحالة الأولى (التصميم غير الآمن)</strong> و<strong>الحالة الثانية (التصميم الآمن)</strong> لنظام الجامعة:</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المبدأ المعماري</th>
+                                <th>❌ التصميم الأول (غير الآمن - Monolithic Chaotic)</th>
+                                <th>✅ التصميم الثاني (المعمارية الآمنة - Layered & Isolated)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. أقل صلاحية</strong></td><td>غير مطبق (جميع المستخدمين بنفس الصلاحيات الواسعة).</td><td>مطبق بدقة (لكل مستخدم دور وصلاحيات محددة).</td></tr>
+                            <tr><td><strong>2. الدفاع متعدد الطبقات</strong></td><td>ضعيف (طبقة واحدة، وكلمات مرور غير محمية).</td><td>مطبق (بوابة حماية، MFA، فحص أدوار، تجزئة آمنة، مراقبة).</td></tr>
+                            <tr><td><strong>3. الإعدادات الآمنة</strong></td><td>غير مطبقة (قاعدة البيانات ولوحة الإدارة مكشوفتان للإنترنت).</td><td>مطبقة (قاعدة البيانات معزولة ولوحة الإدارة مقيدة ومحمية).</td></tr>
+                            <tr><td><strong>4. تقليل التعقيد</strong></td><td>تداخل كبير وجميع الخدمات متصلة ببعضها مباشرة.</td><td>تقسيم واضح للمكونات وواجهات API محددة.</td></tr>
+                            <tr><td><strong>5. عزل المكونات</strong></td><td>لا يوجد عزل (المدرس يعدل الحسابات، والطالب يصل لصفحات غيره).</td><td>موجود (فصل خدمات وبيانات الطلاب والدرجات والحسابات).</td></tr>
+                            <tr><td><strong>6. تقليل سطح الهجوم</strong></td><td>ضعيف (واجهات ومنافذ مفتوحة للعامة).</td><td>جيد (إغلاق غير الضروري وحماية البوابات).</td></tr>
+                            <tr><td><strong>7. الفصل بين المهام</strong></td><td>غير موجود في تعديل الدرجات والعمليات المالية.</td><td>موجود (فصل إدخال الدرجات عن اعتماد التعديلات الحساسة).</td></tr>
+                            <tr><td><strong>8. التحقق من الوصول</strong></td><td>غير كافٍ (عند الدخول فقط).</td><td>تحقق كامل (Complete Mediation) عند كل طلب + سجل مراقبة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- أداة فحص وتشخيص العيوب المعمارية التفاعلية -->
+                <div class="interactive-widget">
+                    <h4 style="margin-top:0; color:var(--primary);">🧪 مختبر تشخيص العيوب المعمارية (Architecture Vulnerability Inspector)</h4>
+                    <p>اختر أحد الأخطاء التصميمية من نظام الجامعة لترى <strong>المبدأ الأمني الذي تم انتهاكه</strong> و<strong>الحل المعماري الصحيح</strong>:</p>
+                    <select id="arch-flaw-select" onchange="inspectFlaw()" style="width:100%; padding:0.75rem; border-radius:8px; border:2px solid var(--secondary); font-weight:bold; margin-bottom:1rem;">
+                        <option value="0">1. الطالب سجل الدخول بنجاح، ثم غيّر رقم الطالب في الرابط فظهرت له درجات زميله!</option>
+                        <option value="1">2. تعطل خادم الصلاحيات في الجامعة، فقام النظام بالسماح لجميع الطلبات بالمرور حتى لا يتعطل العمل!</option>
+                        <option value="2">3. تمكن مهاجم من اختراق خدمة عرض الأخبار الجامعية، ومنها وصل مباشرة لقاعدة بيانات الرواتب!</option>
+                        <option value="3">4. يستطيع موظف واحد في المالية إنشاء أمر صرف منحة، والموافقة عليه، وتحويل المبلغ لحسابه!</option>
+                    </select>
+                    <div id="arch-flaw-result" style="background:white; padding:1.2rem; border-radius:8px; border-right:4px solid var(--danger);">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13. الأدوات والتجربة المختبرية -->
+            <section id="tools-lab">
+                <span class="section-tag">سادساً: الجانب العملي والمعملي</span>
+                <h2>🛠️ 13. الأدوات الست المستخدمة والتجربة المختبرية المقترحة</h2>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الأداة</th>
+                                <th>استخدامها في مختبر المعمارية الأمنية</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. Draw.io (diagrams.net)</strong></td><td>(مناسب للتطبيق الأساسي): رسم معمارية النظام الجامعي، تحديد المكونات وحدود الثقة، ورسم طبقات الحماية.</td></tr>
+                            <tr><td><strong>2. OWASP Threat Dragon</strong></td><td>تحليل التهديدات، رسم حدود الثقة، تحديد نقاط الضعف، واقتراح وسائل المعالجة.</td></tr>
+                            <tr><td><strong>3. OWASP ZAP</strong></td><td>اختبار أمان تطبيقات الويب، فحص نقاط الضعف الشائعة، ومراجعة الطلبات والاستجابات.</td></tr>
+                            <tr><td><strong>4. Postman</strong></td><td>اختبار واجهات API، تجربة الصلاحيات، والتحقق من رفض الطلبات غير المصرح بها.</td></tr>
+                            <tr><td><strong>5. Docker</strong></td><td>عزل الخدمات في حاويات (Containers)، تحديد الشبكات بين المكونات، وتطبيق فصل المسؤوليات.</td></tr>
+                            <tr><td><strong>6. Microsoft Threat Modeling Tool</strong></td><td>تحليل تصميم النظام، تحديد تدفقات البيانات، واكتشاف التهديدات المحتملة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box security-box">
+                    <h4>🔬 خطوات التجربة المختبرية المقترحة: «تصميم معمارية أمنية لنظام جامعي» (باستخدام Draw.io و Threat Dragon)</h4>
+                    <ol class="content-list" style="margin-bottom:0;">
+                        <li>رسم المستخدمين الرئيسيين.</li>
+                        <li>إضافة واجهة النظام وبوابة الحماية.</li>
+                        <li>إضافة خدمة المصادقة وخدمة الصلاحيات.</li>
+                        <li>تقسيم النظام إلى خدمات معزولة: (الطلاب، الدرجات، الحسابات).</li>
+                        <li>إضافة قواعد البيانات المعزولة وسجل المراقبة.</li>
+                        <li>تحديد <strong>حدود الثقة (Trust Boundaries)</strong> وطبقات الحماية، وتحديد العمليات التي تتطلب موافقة شخص آخر (SoD)، ثم مقارنة التصميم بالتصميم غير الآمن.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 14. الأسئلة الشاملة والواجب المنزلي والمراجع -->
+            <section id="questions-hw">
+                <span class="section-tag">سابعاً وتاسعاً وحادي عشر: المراجعة والتكليفات</span>
+                <h2>📚 14. الأسئلة الشاملة، الواجب المنزلي، والمراجع العلمية</h2>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📖 المجموعات الأربع لأسئلة المحاضرة الشاملة (التعريف، المقارنة، التحليل، والتطبيق)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li><strong>المجموعة الأولى (التعريف والفهم):</strong> عرّف المعمارية الأمنية، حدود الثقة، أقل صلاحية، الدفاع متعدد الطبقات، Secure Defaults، Economy of Mechanism، عزل المكونات، Attack Surface، و Separation of Duties.</li>
+                            <li><strong>المجموعة الثانية (المقارنة):</strong> قارن بين (أقل صلاحية والفصل بين المهام)، (التصميم المعقد والبسيط)، (الحماية الأحادية ومتعددة الطبقات)، (الإعدادات الافتراضية والآمنة افتراضياً)، و(العزل وتقسيم النظام إلى مكونات).</li>
+                            <li><strong>المجموعة الثالثة (التحليل والتفكير):</strong> لماذا لا يمتلك الطالب صلاحية الوصول المباشر لقاعدة البيانات؟ كيف نمنع انتقال اختراق خدمة الطلاب إلى خدمة الحسابات؟ ماذا يحدث إذا فشلت خدمة التحقق من الصلاحيات (Fail-Safe Defaults)؟</li>
+                            <li><strong>المجموعة الرابعة (التطبيق):</strong> صمم نظاماً جامعياً يطبق أقل صلاحية، وارسم مخططاً للدفاع متعدد الطبقات، وصمم عملية مالية تعتمد على الفصل بين المهام.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🏠 الواجب المنزلي الشامل: «تحليل وتصميم معمارية أمنية لنظام إدارة جامعة»</h4>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>الجزء الأول (الأسئلة النظرية):</strong> عرّف المعمارية الأمنية، واشرح أهمية تقسيم النظام لمكونات، ومبدأ أقل صلاحية، والدفاع متعدد الطبقات، والفصل بين المهام.</li>
+                        <li><strong>الجزء الثاني (التحليل الأمني):</strong> افترض أن النظام الحالي يسمح لجميع المستخدمين بالوصول المباشر لقاعدة البيانات؛ حدد: (5 مخاطر أمنية، 5 إجراءات لمعالجتها، المكونات التي تحتاج للعزل، والواجهات التي يجب تقييدها).</li>
+                        <li><strong>الجزء الثالث (تصميم النظام - 10 درجات):</strong> ارسم مخططاً معمارياً كاملاً يوضح: (المستخدمين، واجهة النظام، المصادقة، الصلاحيات، الخدمات المختلفة، قواعد البيانات، طبقات الحماية، حدود الثقة، ونظام المراقبة).</li>
+                    </ul>
+                </div>
+
+                <h4>📖 المراجع العلمية الخمسة المعتمدة للمحاضرة:</h4>
+                <ol class="content-list" style="margin-bottom:0;">
+                    <li><strong>Saltzer & Schroeder (1975):</strong> <em>The Protection of Information in Computer Systems</em> — المرجع الكلاسيكي للمبادئ الأساسية لتصميم أنظمة الحماية (MIT).</li>
+                    <li><strong>OWASP Secure by Design Framework:</strong> مرجع حديث لتطبيق مبادئ التصميم الآمن على مستوى المعمارية.</li>
+                    <li><strong>OWASP Developer Guide – Security Principles:</strong> شرح أقل صلاحية والفصل بين المهام والتحقق الكامل وتقليل التعقيد.</li>
+                    <li><strong>NIST – Least Privilege:</strong> التعريف الرسمي لمبدأ أقل صلاحية.</li>
+                    <li><strong>OWASP – Secure by Default:</strong> إرشادات الإعدادات الآمنة افتراضياً.</li>
+                </ol>
+            </section>
+
+            <!-- 15. بطاقات الاستذكار Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">عاشراً: ملخص المحاضرة التفاعلي</span>
+                <h2>🗂️ 15. بطاقات الاستذكار للمبادئ العشرة (Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها ومراجعة أهم 10 مبادئ في المعمارية الأمنية:</p>
+
+                <div class="flashcards-grid">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">1. Security Architecture<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">المعمارية الأمنية: الهيكل والتصميم المنظم للمكونات والآليات والسياسات الأمنية داخل النظام منذ البداية لحماية البيانات والموارد.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">2. Trust Boundaries<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">حدود الثقة: الخطوط الفاصلة بين أجزاء النظام التي تختلف في مستوى الثقة أو التحكم الأمني، وتوضع عندها نقاط التفتيش والتحقق.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">3. Least Privilege (PoLP)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">مبدأ أقل صلاحية: منح كل مستخدم أو برنامج أو خدمة أقل قدر من الصلاحيات اللازمة لتنفيذ المهمة المطلوبة فقط.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">4. Defense in Depth<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">الدفاع متعدد الطبقات: استخدام عدة وسائل حماية متكاملة بحيث لا يؤدي فشل طبقة واحدة إلى اختراق النظام بالكامل.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">5. Secure Defaults<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">الإعدادات الآمنة افتراضياً: بدء النظام بأعلى إعدادات الأمان منذ لحظة تثبيته وتطبيق قاعدة المنع افتراضياً (Deny by Default).</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">6. Economy of Mechanism<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">تقليل التعقيد: بناء آليات الحماية والنظام بأبسط تصميم واضح يحقق المتطلبات دون اتصالات أو تعقيدات غير ضرورية.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">7. Component Isolation & Attack Surface<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>عزل المكونات:</strong> استقلال الخدمات لمنع انتشار الاختراق.<br><strong>تقليل سطح الهجوم:</strong> إغلاق المنافذ والواجهات غير الضرورية.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">8. SoD & Complete Mediation<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>الفصل بين المهام (SoD):</strong> توزيع العملية الحساسة على أكثر من شخص.<br><strong>Complete Mediation:</strong> التحقق من الصلاحية عند كل طلب وصول.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 16. الكوز التقييمي (10 أسئلة) -->
+            <section id="quiz">
+                <span class="section-tag">ثامناً: كوز المحاضرة الرسمي — 10 درجات</span>
+                <h2>✅ 16. اختبر فهمك (Quiz — 10 أسئلة)</h2>
+                <p>أجب عن الأسئلة العشرة التالية لقياس استيعابك لمبادئ وإرشادات المعمارية الأمنية:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- Injected via JS -->
+                </div>
+            </section>
+
+            <!-- التنقل السفلي -->
+            <div class="lecture-footer-nav">
+                <a href="Lecture-01.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">→ المحاضرة الأولى: مدخل أمن البرمجيات</a>
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0;">📚 العودة لفهرس مقرر تصميم البرمجيات الآمنة</a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <p>كلية المنار للعلوم والتكنولوجيا | قسم الأمن السيبراني وشبكات (المستوى الثالث - الترم الثاني) | أستاذ المقرر: د. عبدالرزاق الأهدل</p>
+        <p style="margin-top: 0.4rem; font-weight: 800; font-size: 1.05rem; color: var(--primary);">إعداد عضو اللجنة العلمية في القسمين م. بشار زبله</p>
+    </footer>
+
+    <script>
+        // 1. Reading Progress & Active Sidebar TOC
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('reading-progress').style.width = scrolled + '%';
+
+            let current = '';
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 180)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('#toc-list a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+        // 2. Accordions
+        function toggleAccordion(btn) {
+            btn.parentElement.classList.toggle('open');
+        }
+
+        // 3. Defense in Depth 8 Layers Explorer
+        const layersData = [
+            { title: "الطبقة الأولى: جدار الحماية الشبكي (Firewall)", role: "التحكم في حركة الشبكة الداخلة والخارجة ومنع الاتصالات والمنافذ غير المصرح بها." },
+            { title: "الطبقة الثانية: جدار حماية تطبيقات الويب (WAF)", role: "حماية تطبيق الويب الجامعي من أنماط الهجمات الشائعة على مستوى الطلبات (مثل SQLi و XSS)." },
+            { title: "الطبقة الثالثة: المصادقة (Authentication & MFA)", role: "التحقق القوي من هوية المستخدم قبل السماح له بالدخول، وتفعيل المصادقة متعددة العوامل." },
+            { title: "الطبقة الرابعة: التفويض والتحكم بالوصول (Authorization)", role: "التحقق من صلاحيات المستخدم عند كل عملية ومنع الوصول لحسابات أو بيانات الآخرين." },
+            { title: "الطبقة الخامسة: التحقق من صحة المدخلات (Input Validation)", role: "فحص وتطهير جميع البيانات المدخلة على الخادم لمنع الأوامر والبيانات الخبيثة أو غير المنطقية." },
+            { title: "الطبقة السادسة: التشفير (Encryption)", role: "حماية البيانات الحساسة أثناء النقل (TLS/HTTPS) وعند التخزين (At Rest) وتجزئة كلمات المرور." },
+            { title: "الطبقة السابعة: المراقبة والتسجيل (Monitoring & Logging)", role: "تسجيل العمليات الحساسة واكتشاف الأنشطة والمحاولات المشبوهة وإطلاق التنبيهات." },
+            { title: "الطبقة الثامنة: النسخ الاحتياطي (Backup & Recovery)", role: "استعادة البيانات والخدمة بأمان عند وقوع عطل أو حادث." }
+        ];
+
+        function showLayer(idx, btnEl) {
+            document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            const l = layersData[idx];
+            document.getElementById('layer-detail-box').innerHTML = `
+                <h4 style="margin-top:0; color:var(--primary);">🛡️ ${l.title}</h4>
+                <p style="margin-bottom:0;"><strong>وظيفتها المعمارية:</strong> ${l.role}</p>
+            `;
+        }
+        showLayer(0, document.querySelector('.layer-btn'));
+
+        // 4. Architecture Vulnerability Inspector
+        const flawsData = [
+            {
+                principle: "انتهاك مبدأ التحقق الكامل (Complete Mediation) ومبدأ أقل صلاحية (Least Privilege)",
+                fix: "يجب ألا يكتفي الخادم بتسجيل دخول الطالب، بل عليه التحقق عند كل طلب (Complete Mediation) من أن السجل المطلوب يخص هذا الطالب تحديداً."
+            },
+            {
+                principle: "انتهاك مبدأ الفشل الآمن (Fail-Safe Defaults)",
+                fix: "عند تعطل خدمة التحقق من الصلاحيات أو حدوث خطأ، يجب أن يكون القرار التلقائي هو رفض الوصول (Deny) وليس السماح به."
+            },
+            {
+                principle: "انتهاك مبدأ عزل المكونات (Component Isolation) وحدود الثقة (Trust Boundaries)",
+                fix: "يجب عزل خدمة الأخبار العامة عن قاعدة بيانات الرواتب الحساسة، ومنع أي اتصال مباشر بينهما، ووضع حدود ثقة وصلاحيات مستقلة لكل خدمة."
+            },
+            {
+                principle: "انتهاك مبدأ الفصل بين المهام (Separation of Duties - SoD)",
+                fix: "يجب توزيع العملية المالية الحساسة على أكثر من شخص: موظف ينشئ الطلب، ومسؤول آخر يراجع ويعتمد، والنظام ينفذ ويسجل في Audit Log."
+            }
+        ];
+
+        function inspectFlaw() {
+            const idx = parseInt(document.getElementById('arch-flaw-select').value);
+            const f = flawsData[idx];
+            document.getElementById('arch-flaw-result').innerHTML = `
+                <p style="margin-bottom:0.5rem;">🚨 <strong>المبدأ المنتهك:</strong> <span class="term">${f.principle}</span></p>
+                <p style="margin-bottom:0;">✅ <strong>العلاج المعماري الصحيح:</strong> ${f.fix}</p>
+            `;
+        }
+        inspectFlaw();
+
+        // 5. Official 10-Question Lecture Quiz
+        const quizData = [
+            {
+                question: "1. ما المقصود بمبدأ أقل صلاحية (Least Privilege)؟",
+                options: [
+                    "منح جميع المستخدمين صلاحيات المدير",
+                    "منح المستخدم أقل صلاحيات يحتاجها لأداء مهمته فقط",
+                    "منع جميع المستخدمين من الدخول للنظام",
+                    "منح الصلاحيات دون مراجعة"
+                ],
+                correct: 1,
+                explanation: "ينص مبدأ أقل صلاحية (PoLP) على منح كل مستخدم أو برنامج أو خدمة أقل قدر من الصلاحيات اللازمة لتنفيذ المهمة المطلوبة فقط."
+            },
+            {
+                question: "2. ما الهدف الأساسي من الدفاع متعدد الطبقات (Defense in Depth)؟",
+                options: [
+                    "زيادة عدد المستخدمين في النظام",
+                    "إلغاء قواعد البيانات",
+                    "عدم الاعتماد على وسيلة حماية واحدة بحيث لا يؤدي فشل طبقة إلى اختراق النظام بالكامل",
+                    "إلغاء المصادقة"
+                ],
+                correct: 2,
+                explanation: "الدفاع متعدد الطبقات يستخدم عدة طبقات حماية متكاملة حتى إذا فشلت طبقة واحدة تتصدى الطبقات الأخرى للهجوم."
+            },
+            {
+                question: "3. ماذا يعني مبدأ الإعدادات الآمنة افتراضياً (Secure Defaults)؟",
+                options: [
+                    "النظام مفتوح للجميع افتراضياً",
+                    "النظام يأتي بإعدادات آمنة منذ لحظة تثبيته (Deny by Default)",
+                    "المستخدم يختار عدم استخدام كلمة مرور",
+                    "تعطيل التشفير افتراضياً"
+                ],
+                correct: 1,
+                explanation: "Secure Defaults يعني أن يبدأ النظام بإعدادات آمنة تلقائياً منذ تثبيته دون انتظار تدخل المستخدم."
+            },
+            {
+                question: "4. أي مبدأ يتطلب توزيع المهام الحساسة على أشخاص مختلفين؟",
+                options: [
+                    "Least Privilege",
+                    "Secure Defaults",
+                    "Separation of Duties (الفصل بين المهام)",
+                    "Attack Surface"
+                ],
+                correct: 2,
+                explanation: "الفصل بين المهام (Separation of Duties - SoD) يوزع خطوات العملية الحساسة (كالدفع المالي أو تعديل الدرجة) على أكثر من شخص لمنع التلاعب."
+            },
+            {
+                question: "5. أي مما يلي يساعد على تقليل سطح الهجوم (Attack Surface Reduction)؟",
+                options: [
+                    "فتح جميع منافذ الشبكة",
+                    "تفعيل الخدمات غير الضرورية",
+                    "إغلاق الخدمات والمنافذ غير المستخدمة وتقييد الواجهات",
+                    "كشف لوحة الإدارة للعامة"
+                ],
+                correct: 2,
+                explanation: "تقليل سطح الهجوم يتم عبر إغلاق المنافذ والخدمات غير المستخدمة وحجب لوحات الإدارة عن الإنترنت العام."
+            },
+            {
+                question: "6. ما وظيفة المصادقة (Authentication)؟",
+                options: [
+                    "تحديد والتحقق من هوية المستخدم",
+                    "حذف قاعدة البيانات",
+                    "تشفير جميع الملفات فقط",
+                    "توزيع المهام المالية"
+                ],
+                correct: 0,
+                explanation: "المصادقة (Authentication) تتأكد من هوية المستخدم، بينما التفويض (Authorization) يحدد صلاحياته وما يُسمح له بفعله."
+            },
+            {
+                question: "7. ما المقصود بعزل المكونات (Component Isolation)؟",
+                options: [
+                    "دمج كل الوظائف في ملف واحد",
+                    "السماح لجميع الخدمات بالوصول لكل قواعد البيانات",
+                    "تحديد اتصالات وصلاحيات مستقلة للمكونات لمنع انتقال الاختراق بينها",
+                    "إلغاء واجهات API"
+                ],
+                correct: 2,
+                explanation: "عزل المكونات يجعل كل خدمة مستقلة في مواردها وصلاحياتها بحيث لا يتسبب اختراق مكون واحد في السيطرة على بقية النظام."
+            },
+            {
+                question: "8. إذا فشل التحقق من صلاحية المستخدم بسبب خطأ، فما التصرف الصحيح وفق مبدأ Fail-Safe Defaults؟",
+                options: [
+                    "السماح بالدخول مؤقتاً",
+                    "رفض الوصول",
+                    "منح صلاحية المدير",
+                    "تجاوز التحقق"
+                ],
+                correct: 1,
+                explanation: "مبدأ الفشل الآمن (Fail-Safe Defaults) يقضي برفض الوصول تلقائياً إذا حدث أي خطأ أو تعطل أثناء التحقق من الصلاحيات."
+            },
+            {
+                question: "9. ما وظيفة مبدأ التحقق الكامل (Complete Mediation)؟",
+                options: [
+                    "التحقق من صلاحية كل عملية وصول إلى مورد محمي",
+                    "تسجيل الدخول مرة واحدة دون أي مراجعة لاحقة للصلاحيات",
+                    "إلغاء الأدوار الوظيفية",
+                    "فتح قاعدة البيانات للجميع"
+                ],
+                correct: 0,
+                explanation: "Complete Mediation يوجب فحص الصلاحية عند كل طلب وصول لمورد محمي وليس عند تسجيل الدخول فقط."
+            },
+            {
+                question: "10. أي تصميم معماري هو الأفضل لنظام الجامعة؟",
+                options: [
+                    "جميع المستخدمين مديرون (Administrators)",
+                    "قاعدة البيانات مكشوفة مباشرة للإنترنت",
+                    "مكونات محددة ومعزولة، صلاحيات مقيدة، وطبقات حماية متعددة مع سجل مراقبة",
+                    "نظام بلا سجل للعمليات الحساسة"
+                ],
+                correct: 2,
+                explanation: "المعمارية الأمنية السليمة تجمع بين تقسيم وعزل المكونات، وتقييد الصلاحيات (أقل صلاحية)، والدفاع متعدد الطبقات، وتسجيل العمليات."
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let answered = false;
+        const quizApp = document.getElementById('quiz-app');
+
+        function loadQuiz() {
+            if (currentQ >= quizData.length) {
+                showQuizResult();
+                return;
+            }
+            const q = quizData[currentQ];
+            quizApp.innerHTML = `
+                <div class="quiz-header-bar">
+                    <span>السؤال ${currentQ + 1} من ${quizData.length}</span>
+                    <span>الدرجة الحالية: ${score} / ${quizData.length}</span>
+                </div>
+                <h3 style="margin-top:0; color:var(--primary);">${q.question}</h3>
+                <ul class="options" id="quiz-options">
+                    ${q.options.map((opt, i) => `<li onclick="selectQuizOpt(${i}, this)">${opt}</li>`).join('')}
+                </ul>
+                <div class="quiz-feedback" id="quiz-fb"></div>
+                <button class="quiz-btn" id="next-q-btn" style="display:none;" onclick="nextQuizQ()">
+                    ${currentQ === quizData.length - 1 ? 'عرض النتيجة النهائية 🏆' : 'السؤال التالي ←'}
+                </button>
+            `;
+        }
+
+        function selectQuizOpt(idx, el) {
+            if (answered) return;
+            answered = true;
+            const q = quizData[currentQ];
+            const fb = document.getElementById('quiz-fb');
+            const allOpts = document.querySelectorAll('#quiz-options li');
+
+            if (idx === q.correct) {
+                score++;
+                el.classList.add('correct-ans');
+                fb.style.background = 'var(--success-bg)';
+                fb.style.border = '1px solid var(--success)';
+                fb.style.color = '#22543d';
+                fb.innerHTML = `✅ <strong>إجابة صحيحة!</strong> ${q.explanation}`;
+            } else {
+                el.classList.add('wrong-ans');
+                allOpts[q.correct].classList.add('correct-ans');
+                fb.style.background = 'var(--danger-bg)';
+                fb.style.border = '1px solid var(--danger)';
+                fb.style.color = '#742a2a';
+                fb.innerHTML = `❌ <strong>إجابة غير صحيحة.</strong> ${q.explanation}`;
+            }
+            fb.style.display = 'block';
+            document.getElementById('next-q-btn').style.display = 'inline-block';
+        }
+
+        function nextQuizQ() {
+            currentQ++;
+            answered = false;
+            loadQuiz();
+        }
+
+        function showQuizResult() {
+            const pct = Math.round((score / quizData.length) * 100);
+            let msg = pct === 100 ? '🌟 ممتاز جداً! لقد حصلت على الدرجة الكاملة (10/10) وأتقنت مبادئ المعمارية الأمنية.' :
+                      pct >= 70 ? '👏 أداء رائع! استيعابك لمبادئ التصميم المعماري الآمن متميز جداً.' :
+                      '📚 بداية جيدة! ننصح بمراجعة المخططات المعمارية وبطاقات الاستذكار ثم إعادة المحاولة.';
+            quizApp.innerHTML = `
+                <div style="text-align:center; padding: 2rem;">
+                    <h3 style="font-size:1.8rem; color:var(--primary);">نتيجة الكوز التقييمي للمحاضرة الثانية</h3>
+                    <div style="font-size:2.6rem; font-weight:800; color:var(--secondary); margin:1rem 0;">
+                        ${score} / ${quizData.length} (${pct}%)
+                    </div>
+                    <p style="font-size:1.1rem; text-align:center; max-width:520px; margin:0 auto 1.5rem;">${msg}</p>
+                    <button class="quiz-btn" onclick="restartQuiz()">إعادة الاختبار من جديد ↺</button>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            score = 0;
+            answered = false;
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
