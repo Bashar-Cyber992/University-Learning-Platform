@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثالثة: البنية التقنية للحوسبة السحابية والمحاكاة الافتراضية | الحوسبة السحابية</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="cloud-computing">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 البوابة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">☁️ مقرر الحوسبة السحابية</a>
+                <span>/</span>
+                <span style="font-weight: 600;">المحاضرة الثالثة: البنية التقنية والمحاكاة الافتراضية</span>
+            </div>
+            <div class="top-controls">
+                <a href="Lecture-02.html" class="nav-pill">← المحاضرة السابقة (2)</a>
+                <a href="index.html" class="nav-pill">📚 فهرس المقرر</a>
+                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn" aria-label="تبديل الوضع">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Lecture Hero Header -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | المستوى الثالث - الترم الثاني</div>
+        <h1>المحاضرة الثالثة: البنية التقنية للحوسبة السحابية والمحاكاة الافتراضية</h1>
+        <h2>Cloud Computing Architecture, Data Centers & Virtualization Technology</h2>
+        <p>مقرر مشترك بين قسمي <strong>الأمن السيبراني والشبكات</strong> و<strong>تكنولوجيا المعلومات (IT)</strong> | 👨‍🏫 أستاذ المقرر: <strong>أ.د. عبده ناصر شويه</strong></p>
+        <div class="golden-rule-banner">
+            💡 <strong>القاعدة الذهبية للمحاضرة:</strong> «المحاكاة الافتراضية (Virtualization) هي المحرك البرمجي المعجز الذي حوّل الخوادم الفيزيائية الصامتة إلى سحابة حية ومرنة؛ تقسم الموارد وتوزعها في ثوانٍ، وتمنح آلاف المستخدمين تجربة حاسوبية مستقلة على خادم مادي واحد!»
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sticky Sidebar / Table of Contents -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul>
+                <li><a href="#intro" class="active">🚀 0. المقدمة وأهداف التعلم</a></li>
+                <li><a href="#cloud-architecture">🏛️ 1. البنية التقنية للسحابة (Architecture)</a></li>
+                <li><a href="#front-end">💻 2. الواجهة الأمامية (Front End)</a></li>
+                <li><a href="#back-end">⚙️ 3. الواجهة الخلفية (Back End)</a></li>
+                <li><a href="#communication-flow">🔄 4. الاتصال ودورة الطلب (Communication)</a></li>
+                <li><a href="#data-centers">🏢 5. مراكز البيانات (Data Centers)</a></li>
+                <li><a href="#virtualization-core">🔮 6. تفكيك عقدة المحاكاة الافتراضية</a></li>
+                <li><a href="#virtualization-components">🧩 7. المكونات الأساسية والـ Hypervisor</a></li>
+                <li><a href="#hypervisor-types">⚡ 8. أنواع الـ Hypervisor (Type 1 vs 2)</a></li>
+                <li><a href="#cloud-apps">🌐 9. تطبيقات الحوسبة والتخزين السحابي</a></li>
+                <li><a href="#solutions-bank">🎯 10. بنك الحلول والسيناريوهات</a></li>
+                <li><a href="#flashcards">🗂️ 11. بطاقات الاستذكار السريعة</a></li>
+                <li><a href="#interactive-quiz">📝 12. الاختبار التقييمي التفاعلي</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- Section 0: Intro & Objectives -->
+            <section id="intro">
+                <span class="section-tag">مدخل استراتيجي</span>
+                <h2>🚀 0. المقدمة، سيناريو الانطلاق، وأهداف التعلم</h2>
+                
+                <div class="scenario-card">
+                    <h4>🎬 سيناريو استهلالي واقعي: ما الذي يحدث وراء الكواليس؟</h4>
+                    <p>
+                        تخيل أنك طالب في كلية المنار للعلوم والتكنولوجيا، أمسكت بهاتفك الذكي وفتحت المتصفح ودخلت إلى بوابة الجامعة، وكتبت رقمك الأكاديمي وكلمة المرور ونقرت على <strong>«عرض كشف الدرجات»</strong>. في أقل من ثانية واحدة (500 ميلي ثانية)، ظهرت درجاتك ومعدلك التراكمي مرتبة وواضحة أمامك على شاشة هاتفك!
+                    </p>
+                    <p>
+                        <strong>السؤال الهندسي هنا:</strong> ما الذي حدث في تلك النصف ثانية؟ هل هاتفك الصغير هو من قام بالبحث في ملايين السجلات وحساب المعدل التراكمي؟ بالطبع لا! لقد كان هاتفك مجرد «واجهة أمامية» (Front End)، بينما دارت عاصفة من المعالجة في مكان بعيد داخل «الواجهة الخلفية» (Back End) في مركز بيانات عملاق يحوي مئات الخوادم وقواعد البيانات، والتي تعمل جميعها بفضل تقنية برمجية خارقة تُدعى <strong>«المحاكاة الافتراضية» (Virtualization)</strong>. هذه المحاضرة ستكشف لنا كل أسرار هذا العالم وتفكك خيوطه خطوة بخطوة.
+                    </p>
+                </div>
+
+                <h3>🎯 مخرجات التعلم المستهدفة (Learning Outcomes):</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏛️</div>
+                            <h4>1. فهم معمارية السحابة</h4>
+                        </div>
+                        <p>استيعاب مفهوم معمارية الحوسبة السحابية (Cloud Architecture) والتقسيم الثنائي الحاسم بين الواجهة الأمامية والواجهة الخلفية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⚙️</div>
+                            <h4>2. تفكيك مكونات الـ Back End</h4>
+                        </div>
+                        <p>التعرف التفصيلي على المكونات الستة للواجهة الخلفية (الخوادم، قواعد البيانات، أنظمة التخزين، أنظمة التشغيل، الشبكات، برامج إدارة الموارد).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏢</div>
+                            <h4>3. هندسة مراكز البيانات</h4>
+                        </div>
+                        <p>فهم مكونات مراكز البيانات السحابية (Data Centers)، وإدراك الأهمية الحرجة لأنظمة التبريد والطاقة الاحتياطية والمراقبة المستمرة.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🔮</div>
+                            <h4>4. إتقان المحاكاة الافتراضية</h4>
+                        </div>
+                        <p>تفكيك مفهوم الـ Virtualization، ومعرفة الأسباب الأربعة التي جعلت العالم ينتقل من الخوادم التقليدية إلى الخوادم الافتراضية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⚡</div>
+                            <h4>5. التمييز بين أنواع الـ Hypervisors</h4>
+                        </div>
+                        <p>المقارنة المعمارية الدقيقة بين Type 1 (Bare-Metal) و Type 2 (Hosted)، ومعرفة تطبيقات كل نوع وأمثلته في سوق العمل.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🎯</div>
+                            <h4>6. حل السيناريوهات الامتحانية</h4>
+                        </div>
+                        <p>اكتساب المنهجية الهندسية لتحليل أعطال تسجيل الدخول الفردية، وحل أزمة الاختناق والبطء عند دخول 5000 طالب متزامن.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1: Architecture Overview -->
+            <section id="cloud-architecture">
+                <span class="section-tag">الهندسة المعمارية التأسيسية</span>
+                <h2>🏛️ 1. البنية التقنية للحوسبة السحابية (Cloud Architecture Overview)</h2>
+                <p>
+                    <strong>البنية التقنية للحوسبة السحابية (Cloud Computing Architecture):</strong> هي مجموعة المكونات والأجهزة والبرمجيات والشبكات وبروتوكولات الربط التي تتكامل وتعمل معًا بتناغم كامل لتوفير الخدمات السحابية للمستخدمين عبر شبكة الإنترنت.
+                </p>
+
+                <div class="concept-card">
+                    <h4>💡 المعادلة الجوهرية لمعمارية السحابة:</h4>
+                    <p style="font-size:1.15rem; font-weight:700; color:var(--primary); text-align:center; margin:0.5rem 0;">
+                        معمارية السحابة = واجهة أمامية (Front End) + شبكة اتصال (Internet / Protocols / APIs) + واجهة خلفية (Back End)
+                    </p>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📱</div>
+                            <h4>الواجهة الأمامية (Front End)</h4>
+                        </div>
+                        <p><strong>عالم العميل (Client Side):</strong> هو كل ما يراه ويلمسه ويتعامل معه المستخدم النهائي من أجهزة وتطبيقات ومتصفحات لإرسال الطلبات وتلقي الإجابات.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🌐</div>
+                            <h4>شبكة الاتصال (Internet & APIs)</h4>
+                        </div>
+                        <p><strong>الجسر الناقل:</strong> الشبكات السلكية واللاسلكية، البروتوكولات الآمنة (HTTPS)، وواجهات برمجة التطبيقات (APIs) التي تنقل الطلبات ذهاباً وإياباً بأمان وسرعة.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏢</div>
+                            <h4>الواجهة الخلفية (Back End)</h4>
+                        </div>
+                        <p><strong>عالم المزود (Provider Side):</strong> مصنع القوة الحسابية الخفي؛ يضم مزارع الخوادم، أنظمة التخزين، قواعد البيانات، والبرمجيات المنظمة في مراكز البيانات.</p>
+                    </div>
+                </div>
+
+                <div class="flow-container">
+                    <h4 style="color:var(--primary); margin-bottom:1rem;">مخطط التدفق المعماري الشامل للحوسبة السحابية</h4>
+                    <div class="flow-steps">
+                        <div class="flow-node">المستخدم النهائي<br><small>(جوال / حاسوب)</small></div>
+                        <div class="flow-arrow">⇄</div>
+                        <div class="flow-node">الواجهة الأمامية<br><small>(المتصفح / التطبيق)</small></div>
+                        <div class="flow-arrow">⇄</div>
+                        <div class="flow-node" style="border-color:var(--accent);">الإنترنت & HTTPS<br><small>(موجهات / جدران حماية)</small></div>
+                        <div class="flow-arrow">⇄</div>
+                        <div class="flow-node">بوابة الواجهة الخلفية<br><small>(API / Load Balancer)</small></div>
+                        <div class="flow-arrow">⇄</div>
+                        <div class="flow-node">الواجهة الخلفية<br><small>(خوادم / قواعد بيانات)</small></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Front End -->
+            <section id="front-end">
+                <span class="section-tag">واجهة العميل</span>
+                <h2>💻 2. الواجهة الأمامية (Front End) - مكوناتها ووظائفها</h2>
+                <p>
+                    تمثل <strong>الواجهة الأمامية (Front End)</strong> الجزء الذي يتعامل معه المستخدم مباشرة للوصول إلى الخدمات والبيانات السحابية. تشمل البنية التحتية للعميل (Client Infrastructure)، والبرامج، وواجهات الاستخدام التفاعلية.
+                </p>
+
+                <h3>المكونات الأساسية للواجهة الأمامية:</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💻</div>
+                            <h4>1. أجهزة الحاسوب (Computers)</h4>
+                        </div>
+                        <p>الأجهزة المكتبية (Desktops) والمحمولة (Laptops) ومحطات العمل التي يستخدمها الموظفون والطلاب للوصول إلى الأنظمة السحابية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📱</div>
+                            <h4>2. الهواتف الذكية والأجهزة اللوحية</h4>
+                        </div>
+                        <p>الهواتف (Smartphones) مثل iPhone و Android والأجهزة اللوحية (Tablets) التي تتيح الوصول للخدمات السحابية في أي وقت ومن أي مكان.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🌍</div>
+                            <h4>3. متصفحات الإنترنت (Web Browsers)</h4>
+                        </div>
+                        <p>البوابة البرمجية الأساسية مثل Google Chrome, Firefox, Safari, Edge، التي تقوم بطلب صفحات الويب وعرضها (HTML/CSS/JS).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📦</div>
+                            <h4>4. التطبيقات المثبتة (Client Applications)</h4>
+                        </div>
+                        <p>التطبيقات المخصصة المثبتة محلياً التي تتصل بالسحابة عبر APIs (مثل تطبيق Teams، تطبيق Google Drive للديسكتوب، تطبيقات الجوال البنكية).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🎨</div>
+                            <h4>5. واجهات المستخدم (User Interfaces - UI/UX)</h4>
+                        </div>
+                        <p>العناصر التفاعلية الرسومية (الأزرار، الحقول، القوائم، لوحات التحكم Dashboards) المصممة لتسهيل تجربة المستخدم وتوجيه أوامره.</p>
+                    </div>
+                </div>
+
+                <div class="info-box success-box">
+                    <strong>💡 مثال من واقع حياة الطالب الجامعي:</strong><br>
+                    عندما يقوم طالب في كلية المنار بتسجيل مقرراته عبر هاتفه الذكي من خلال متصفح Chrome، فإن:
+                    <ul style="margin-right: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>جهاز الهاتف الذكي:</strong> هو العتاد الفعلي للواجهة الأمامية (Client Hardware).</li>
+                        <li><strong>متصفح Chrome:</strong> هو البيئة البرمجية للواجهة الأمامية (Client Software).</li>
+                        <li><strong>شاشة تسجيل الدخول والحقول والأزرار:</strong> هي واجهة المستخدم الرسومية (GUI).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 3: Back End -->
+            <section id="back-end">
+                <span class="section-tag">قلب السحابة النابض</span>
+                <h2>⚙️ 3. الواجهة الخلفية (Back End) - المكونات الستة والمعمارية الشاملة</h2>
+                <p>
+                    تمثل <strong>الواجهة الخلفية (Back End)</strong> الجزء المسؤول عن تنفيذ العمليات الحسابية، معالجة البيانات، التخزين الآمن، وإدارة الخدمات السحابية كافة. توجد الواجهة الخلفية فعلياً داخل <strong>مراكز البيانات (Data Centers)</strong> الضخمة التابعة لمزودي الخدمة، وتعمل كخلية نحل متواصلة لتلبية ملايين الطلبات المتزامنة التي ترد إليها عبر الواجهة الأمامية.
+                </p>
+
+                <h3>المكونات الأساسية الستة للواجهة الخلفية (وفق المحاضرة):</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">المكون (Component)</th>
+                                <th style="width: 45%;">الدور والوظيفة في السحابة</th>
+                                <th style="width: 30%;">مثال عملي تطبيقي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. الخوادم<br>(Servers)</strong></td>
+                                <td>عضلات المعالجة؛ تقوم بتشغيل التطبيقات السحابية، استقبال طلبات المستخدمين ومعالجتها، تنفيذ منطق الأعمال (Business Logic)، وتوليد النتائج.</td>
+                                <td>خوادم الويب وتطبيقات الحوسبة عالية الأداء (Blade / Rack Servers في مراكز البيانات).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. قواعد البيانات<br>(Databases)</strong></td>
+                                <td>مستودع البيانات المنظمة؛ تخزين وتنظيم وتحديث وتأمين واسترجاع بيانات المستخدمين والعمليات بسرعة فائقة.</td>
+                                <td>أنظمة MySQL, PostgreSQL, Oracle, MongoDB, SQL Server لحفظ بيانات الطلاب ودرجاتهم.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. أنظمة التخزين<br>(Storage Systems)</strong></td>
+                                <td>خزائن السحابة الرقمية؛ حفظ الملفات، الصور، الفيديوهات، قواعد البيانات الضخمة، وعمل النسخ الاحتياطية (Backups) وحمايتها من التلف.</td>
+                                <td>أنظمة SAN و NAS و Object Storage مثل Amazon S3 و Google Cloud Storage.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. أنظمة التشغيل<br>(Operating Systems)</strong></td>
+                                <td>مدير العتاد؛ إدارة موارد الخوادم المادية والافتراضية، تشغيل البرامج وتأمين بيئة العمليات والتنسيق بين المعالج والذاكرة.</td>
+                                <td>توزيعات Linux للمؤسسات (Red Hat, Ubuntu Server) وأنظمة Windows Server.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. الشبكات<br>(Networks)</strong></td>
+                                <td>شرايين الاتصال؛ ربط آلاف الخوادم وقواعد البيانات ووحدات التخزين ببعضها داخل مركز البيانات، وتأمين وصولها للإنترنت بسرعات فائقة.</td>
+                                <td>كابلات الألياف الضوئية (Fiber Optics)، محولات السرعات العالية (100Gbps Switches)، والموجهات.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. برامج إدارة الموارد<br>(Resource Management)</strong></td>
+                                <td>العقل المدبر والمنسق؛ مراقبة استخدام العتاد، وتوزيع المعالجات والذاكرة والتخزين ديناميكياً بين التطبيقات وفق حاجة كل نظام.</td>
+                                <td>برمجيات الأوركسترا والجدولة مثل VMware vCenter و Kubernetes و OpenStack.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>طبقات الواجهة الخلفية الإضافية (معمارية TechVidvan الشاملة):</h3>
+                <p>يوضح المخطط المتقدم لمعمارية السحابة وجود مكونات تنظيمية إضافية تدعم المكونات الستة السابقة:</p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📱</div>
+                            <h4>Application (التطبيقات)</h4>
+                        </div>
+                        <p>البرمجيات التي يطلبها العميل مباشرة مثل برامج إدارة شؤون الطلاب، المحاسبة، ومنصات التعلم الإلكتروني.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🛠️</div>
+                            <h4>Service (الخدمات السحابية)</h4>
+                        </div>
+                        <p>نماذج تقديم الخدمات الثلاثة: IaaS (البنية التحتية)، PaaS (المنصة البرمجية)، SaaS (البرمجيات الجاهزة).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⚡</div>
+                            <h4>Cloud Runtime (بيئة التشغيل)</h4>
+                        </div>
+                        <p>توفير بيئة التنفيذ الفعلي للأجهزة الافتراضية والحاويات وإدارة وقت تشغيل العمليات البرمجية بمرونة.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📊</div>
+                            <h4>Management (الإدارة والحوكمة)</h4>
+                        </div>
+                        <p>برامج إدارة التنسيق، وموازنة الأحمال (Load Balancing)، ومراقبة الأداء، وإدارة النسخ الاحتياطية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🛡️</div>
+                            <h4>Security (الأمن السحابي)</h4>
+                        </div>
+                        <p>جدران الحماية (Firewalls)، أنظمة كشف ومنع التسلل (IDS/IPS)، وإدارة التشفير والهويات (IAM).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Communication Flow -->
+            <section id="communication-flow">
+                <span class="section-tag">بروتوكولات التخاطب السحابي</span>
+                <h2>🔄 4. آلية الاتصال بين الواجهتين ودورة حياة الطلب (Request Lifecycle)</h2>
+                <p>
+                    لا يمكن للواجهة الأمامية أن تستفيد من قوة الواجهة الخلفية دون وجود قناة اتصال موثوقة وسريعة وآمنة. يتم الاتصال بين الواجهة الأمامية والواجهة الخلفية عبر <strong>شبكة الإنترنت (أو شبكات الاتصال الخاصة VPN)</strong>، باستخدام <strong>بروتوكولات الاتصال (Communication Protocols)</strong> و<strong>واجهات برمجة التطبيقات (APIs)</strong>.
+                </p>
+
+                <div class="concept-card accent-border">
+                    <h4>📡 الأدوات التكنولوجية للاتصال السحابي:</h4>
+                    <ul>
+                        <li><strong>بروتوكول HTTPS (Hypertext Transfer Protocol Secure):</strong> البروتوكول المعياري لتشفير حركة البيانات بين متصفح المستخدم والخادم السحابي عبر طبقة أمان TLS 1.3 لحمايتها من التنصت والتلاعب.</li>
+                        <li><strong>واجهات برمجة التطبيقات (APIs - RESTful APIs & GraphQL):</strong> لغة الحوار القياسية؛ حيث ترسل الواجهة الأمامية طلبات (Requests) بصيغة JSON، وتستقبل استجابات (Responses) بنفس الصيغة المعيارية.</li>
+                    </ul>
+                </div>
+
+                <h3>دورة حياة الطلب خطوة بخطوة (مثال: استعلام الطالب عن درجاته):</h3>
+                <div class="flow-container">
+                    <div class="flow-steps">
+                        <div class="flow-node"><strong>1. تفاعل الطالب</strong><br>نقر زر "عرض الدرجات" في المتصفح</div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-node"><strong>2. توليد الطلب</strong><br>إنشاء HTTP GET Request مشفر عبر HTTPS</div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-node"><strong>3. نقل الإنترنت</strong><br>عبر الراوترات ومزود الخدمة ISP</div>
+                    </div>
+                    <div class="flow-steps" style="margin-top:1.2rem;">
+                        <div class="flow-node"><strong>4. استقبال الخلفية</strong><br>الخادم يستقبل الطلب ويتحقق من جلسة الطالب</div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-node"><strong>5. استعلام البيانات</strong><br>استخراج الدرجات من Database عبر SQL Query</div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-node"><strong>6. الاستجابة والعرض</strong><br>إرسال JSON Response للمتصفح وعرض النتيجة</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Data Centers -->
+            <section id="data-centers">
+                <span class="section-tag">القلاع الفيزيائية للسحابة</span>
+                <h2>🏢 5. مراكز البيانات في الحوسبة السحابية (Data Centers)</h2>
+                <p>
+                    <strong>مركز البيانات (Data Center):</strong> هو منشأة فيزيائية هندسية ضخمة ومؤمنة للغاية، مجهزة بآلاف الخوادم ووحدات التخزين والمعدات الشبكية، وتُبنى وفق أعلى المعايير الهندسية لضمان عمل الخدمات السحابية على مدار الساعة (24/7/365) دون توقف.
+                </p>
+
+                <h3>المكونات الأساسية الستة لمراكز البيانات:</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🖥️</div>
+                            <h4>1. الخوادم (Servers)</h4>
+                        </div>
+                        <p>حواسيب فائقة القدرة تُركب في خزائن رأسية تسمى الرفوف (Server Racks)، تضم معالجات متعددة الأنوية ورامات ضخمة لتشغيل الأنظمة السحابية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💾</div>
+                            <h4>2. أجهزة التخزين (Storage Devices)</h4>
+                        </div>
+                        <p>مصفوفات تخزين هائلة (SAN/NAS) وأقراص SSD/NVMe فائقة السرعة لحفظ ملفات وقواعد بيانات ملايين المستخدمين والمؤسسات.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🔌</div>
+                            <h4>3. أجهزة الشبكات (Networking Devices)</h4>
+                        </div>
+                        <p>المحولات الأساسية (Core Switches)، الموجهات المتطورة، وجدران الحماية الصلبة المتصلة بخطوط ألياف ضوئية فائقة السرعة بالإنترنت العالمي.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">❄️</div>
+                            <h4>4. أنظمة التبريد (Cooling Systems)</h4>
+                        </div>
+                        <p>وحدات تكييف متخصصة (HVAC) والتبريد السائل (Liquid Cooling) ونظام الممرات الحارة والباردة (Hot/Cold Aisles) للحفاظ على حرارة مثالية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🔋</div>
+                            <h4>5. أنظمة الطاقة الاحتياطية (Backup Power)</h4>
+                        </div>
+                        <p>بطاريات التغذية غير المنقطعة (UPS) التي تتدخل في جزء من الثانية، مع مولدات ديزل عملاقة تكفي للعمل لأسابيع عند انقطاع الكهرباء.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📹</div>
+                            <h4>6. أنظمة المراقبة والأمان (Monitoring & Security)</h4>
+                        </div>
+                        <p>كاميرات مراقبة، مسح البصمة الحيوية (Biometrics)، حساسات حرارة ودخان، ونظم إخماد الحريق بالغاز الخامل لحماية الأجهزة.</p>
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4 style="color:#b45309; margin-top:0;">❓ سؤال المحاضرة الجوهري: لماذا تحتاج مراكز البيانات حتماً إلى أنظمة تبريد وطاقة احتياطية؟</h4>
+                    <p><strong>1. الأهمية القصوى لأنظمة التبريد (Cooling Systems):</strong></p>
+                    <p>
+                        تعمل آلاف الخوادم والمعالجات ووحدات الطاقة بكامل طاقتها داخل مساحات مغلقة، مما يولد حرارة هائلة (Thermal Dissipation). إذا لم يتم سحب هذه الحرارة وتبريدها باستمرار، ترتفع حرارة الرقائق الإلكترونية فوق 85 درجة مئوية، مما يؤدي فورياً إلى:
+                    </p>
+                    <ul style="margin-right:1.5rem; margin-bottom:0.8rem;">
+                        <li><strong>الخنق الحراري (Thermal Throttling):</strong> انخفاض سرعة المعالجات تلقائياً لحماية نفسها، فينهار أداء السحابة.</li>
+                        <li><strong>الاحتراق والتلف الفيزيائي:</strong> ذوبان نقاط اللحام وتلف السيليكون والترانزستورات للأبد.</li>
+                        <li><strong>انهيار الخدمة (System Crash):</strong> توقف الخوادم فجأة وخروجها من الخدمة.</li>
+                    </ul>
+                    <p><strong>2. الأهمية القصوى لأنظمة الطاقة الاحتياطية (Backup Power Systems):</strong></p>
+                    <p>
+                        تلتزم الشركات السحابية باتفاقيات مستوى خدمة (SLA) تتعهد فيها بإتاحة تبلغ <strong>99.999% ("خمس تسعات")</strong>، أي أن التوقف المسموح لا يتجاوز 5 دقائق طوال عام كامل! انقطاع الكهرباء ولو لثانية واحدة يؤدي إلى:
+                    </p>
+                    <ul style="margin-right:1.5rem;">
+                        <li>فقدان فوري لجميع البيانات الموجودة في الذاكرة العشوائية (RAM) والتي لم تُحفظ بعد على الأقراص.</li>
+                        <li>تلف ملفات أنظمة التشغيل وجداول قواعد البيانات (Database Corruption).</li>
+                        <li>شلل تام للبنوك والمستشفيات والجامعات التي تعتمد على تلك الخوادم وخسائر مالية بملايين الدولارات.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 6: Virtualization Core -->
+            <section id="virtualization-core">
+                <span class="section-tag">جوهر ثورة السحابة</span>
+                <h2>🔮 6. تفكيك عقدة المحاكاة الافتراضية (Virtualization Technology)</h2>
+                <p>
+                    <strong>المحاكاة الافتراضية (Virtualization):</strong> هي التقنية السحرية التي حوّلت العتاد الفيزيائي الصلب إلى برمجيات، وهي السبب الرئيسي والأساس الذي قامت عليه الحوسبة السحابية الحديثة.
+                </p>
+
+                <div class="concept-card">
+                    <h4>📖 التعريف العلمي المعتمد للمحاكاة الافتراضية:</h4>
+                    <p>
+                        هي <strong>تقنية برمجية</strong> تعتمد على فصل نظام التشغيل والتطبيقات عن العتاد المادي الفعلي، لإنشاء <strong>نسخ افتراضية مستقلة</strong> من الموارد الحاسوبية (المعالجات، الذاكرة العشوائية، وحدات التخزين، وبطاقات الشبكة)، مما يتيح تشغيل عدة بيئات حاسوبية وأنظمة تشغيل متعددة ومستقلة على خادم مادي واحد في نفس الوقت.
+                    </p>
+                </div>
+
+                <h3>تفكيك العقدة: الطريقة التقليدية مقابل المحاكاة الافتراضية</h3>
+                <div class="scenario-card">
+                    <h4>🏛️ مثال الجامعة ومقارنة الطريقتين:</h4>
+                    <p>
+                        لنفترض أن كلية المنار تمتلك خادمًا حاسوبيًا قويًا (Physical Server)، وتحتاج إلى تشغيل أربعة أنظمة حيوية:
+                    </p>
+                    <ol style="margin-right:1.5rem; margin-bottom:1rem;">
+                        <li>نظام إدارة شؤون الطلاب (Student Information System).</li>
+                        <li>نظام المحاسبة والرسوم الدراسية (Accounting & Tuition System).</li>
+                        <li>نظام الموارد البشرية وشؤون الموظفين (Human Resources - HR).</li>
+                        <li>نظام التعليم الإلكتروني والمحاضرات (LMS - Learning Management).</li>
+                    </ol>
+                    <div class="cards-grid">
+                        <div class="card" style="border-right: 5px solid var(--danger);">
+                            <h4 style="color:var(--danger);">❌ بالطريقة التقليدية (Traditional Setup):</h4>
+                            <p>تحتاج الجامعة إلى <strong>شراء 4 خوادم فيزيائية مستقلة</strong>؛ خادم لكل نظام، لأن تثبيت أكثر من نظام تشغيل أو تطبيقات متعارضة على نفس الخادم كان مستحيلاً أو خطيراً، مما يضاعف التكلفة والكهرباء والتعقيد.</p>
+                        </div>
+                        <div class="card" style="border-right: 5px solid var(--success);">
+                            <h4 style="color:var(--success);">✅ بالمحاكاة الافتراضية (Virtualization Setup):</h4>
+                            <p>تشتري الجامعة <strong>خادمًا فيزيائيًا واحدًا قويًا</strong>، وتثبت عليه برنامج المحاكاة، وتنشئ بداخله <strong>4 أجهزة افتراضية (Virtual Machines)</strong> مستقلة تماماً، يعمل كل نظام على جهازه الافتراضي بمعزولية وأمان تام!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>لماذا نستخدم المحاكاة الافتراضية؟ (المشكلات الأربع للخوادم التقليدية وحلولها):</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📉</div>
+                            <h4>1. تدني استغلال الموارد (Low Resource Utilization)</h4>
+                        </div>
+                        <p><strong>المشكلة التقليدية:</strong> تشتري الشركة خادماً ضخماً (16-Core, 64GB RAM, 2TB Storage) لتشغيل برنامج محاسبي بسيط، فيستهلك البرنامج فقط 5% إلى 10% من قدرات الخادم، بينما يظل 90% من العتاد مهدرًا ومحروقًا دون فائدة!</p>
+                        <p><strong>الحل الافتراضي:</strong> تشغيل 10 أجهزة افتراضية على نفس الخادم، لترتفع نسبة استغلال الموارد إلى 75% - 85% بكفاءة قصوى.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💰</div>
+                            <h4>2. ارتفاع تكاليف العتاد والتشغيل (High Hardware Costs)</h4>
+                        </div>
+                        <p><strong>المشكلة التقليدية:</strong> شراء 10 خوادم يعني دفع ثمن 10 أجهزة غالية الثمن (CapEx)، وتوفير كهرباء وتبريد ومساحة صالات لـ 10 خوادم (OpEx).</p>
+                        <p><strong>الحل الافتراضي:</strong> شراء خادمين فيزيائيين فقط وتشغيل الأنظمة العشرة عليهما، مما يوفر أكثر من 70% من التكاليف المالية.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🎛️</div>
+                            <h4>3. صعوبة إدارة وصيانة الخوادم (Management Complexity)</h4>
+                        </div>
+                        <p><strong>المشكلة التقليدية:</strong> متابعة وصيانة 20 خادماً فيزيائياً يتطلب تمديد مئات الكابلات، والوقوف أمام كل رف للتحديث والفحص اليدوي.</p>
+                        <p><strong>الحل الافتراضي:</strong> إدارة جميع الخوادم الافتراضية من شاشة تحكم برمجية مركزية واحدة (Single Pane of Glass)، مع إمكانية أخذ لقطات فورية (Snapshots) للنسخ الاحتياطي في ثانية.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🚀</div>
+                            <h4>4. بطء ومحدودية التوسع (Limited Scalability)</h4>
+                        </div>
+                        <p><strong>المشكلة التقليدية:</strong> عندما ترغب الجامعة في تشغيل نظام جديد، تضطر إلى طلب شراء خادم وشحنه لأسابيع وتجميعه وتثبيته فيزيائياً.</p>
+                        <p><strong>الحل الافتراضي:</strong> بنقرة زر واحدة، يتم استنساخ ونشر جهاز افتراضي جديد وتخصيص المعالج والرام له في أقل من دقيقتين دون شراء أي عتاد إضافي!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Virtualization Components & Hypervisor -->
+            <section id="virtualization-components">
+                <span class="section-tag">عمارة البيئة الافتراضية</span>
+                <h2>🧩 7. المكونات الأساسية للبيئة الافتراضية والـ Hypervisor</h2>
+                <p>
+                    لكي تعمل البيئة الافتراضية بتكامل وأمان، تعتمد على منظومة تتكون من أربعة مكونات رئيسية مترابطة:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🖥️</div>
+                            <h4>1. الخادم الفعلي (Physical Server)</h4>
+                        </div>
+                        <p>هو العتاد المادي الحقيقي (Host Hardware) الذي يحتوي على المعالج الفعلي (CPU)، الذاكرة العشوائية (RAM)، وحدات التخزين الفيزيائية (Storage)، وبطاقات الشبكة (NICs).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🧠</div>
+                            <h4>2. برنامج المحاكاة (Hypervisor)</h4>
+                        </div>
+                        <p>هو المحرك البرمجي والمدير التنفيذي المسؤول عن إنشاء وإدارة الأجهزة الافتراضية، وتوزيع موارد الخادم الفعلي عليها بعدالة وعزل تام.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📦</div>
+                            <h4>3. الأجهزة الافتراضية (Virtual Machines - VMs)</h4>
+                        </div>
+                        <p>حواسيب برمجية مستقلة ومنعزلة، تمتلك معالجات ورامات وأقراص تخزين وهمية (Virtual Hardware)، وتعمل وكأنها أجهزة حقيقية منفصلة.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💿</div>
+                            <h4>4. نظام التشغيل المضيف والضيف</h4>
+                        </div>
+                        <p>
+                            <strong>نظام التشغيل المضيف (Host OS):</strong> النظام المثبت مباشرة على الحاسوب الفعلي (مثل Windows 11).<br>
+                            <strong>نظام التشغيل الضيف (Guest OS):</strong> النظام المثبت داخل الجهاز الافتراضي (مثل Ubuntu Linux).
+                        </p>
+                    </div>
+                </div>
+
+                <h3>وظائف برنامج إدارة الأجهزة الافتراضية (Hypervisor Functions):</h3>
+                <div class="concept-card success-border">
+                    <h4>🛠️ الوظائف السبع الأساسية للـ Hypervisor:</h4>
+                    <ol style="margin-right:1.5rem; line-height:2;">
+                        <li><strong>إنشاء الأجهزة الافتراضية (Create VMs):</strong> تخصيص العتاد الوهمي وتهيئة البيئة لكل نظام.</li>
+                        <li><strong>تخصيص وجدولة موارد المعالج (CPU Allocation & Scheduling):</strong> تقسيم أنوية المعالج الفعلي (vCPUs) ومشاركة وقت التنفيذ بين الأجهزة.</li>
+                        <li><strong>تخصيص وإدارة الذاكرة (Memory Management):</strong> حجز مساحات من الـ RAM لكل جهاز افتراضي ومنع أي جهاز من اختراق ذاكرة جهاز آخر (Memory Isolation).</li>
+                        <li><strong>إدارة وسائط التخزين الافتراضية (Virtual Storage Management):</strong> إنشاء أقراص صلبة وهمية (Virtual Disks بصيغ مثل VMDK أو VHD) والتعامل معها كملفات سهلة النقل والنسخ.</li>
+                        <li><strong>تنظيم الشبكات الافتراضية (Virtual Network Management):</strong> إنشاء محولات شبكة وهمية (vSwitches) لربط الـ VMs ببعضها وبالشبكة الخارجية بأمان.</li>
+                        <li><strong>التحكم بدورة حياة الأجهزة الافتراضية (Start & Stop VMs):</strong> التشغيل، الإيقاف، الإيقاف المؤقت، وأخذ لقطات فورية لحالة النظام (Snapshots).</li>
+                        <li><strong>مراقبة استهلاك الموارد (Resource Monitoring):</strong> فحص مستمر للأداء والتأكد من عدم استنزاف جهاز افتراضي لموارد الخادم بالكامل.</li>
+                    </ol>
+                </div>
+
+                <h3>الفرق بين الخادم الفعلي (Physical) والخادم الافتراضي (Virtual):</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>الخادم الفعلي (Physical Server)</th>
+                                <th>الخادم الافتراضي (Virtual Server)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>الطبيعة</strong></td>
+                                <td>جهاز حاسوبي مادي ملموس (Hardware).</td>
+                                <td>بيئة حاسوبية برمجية منعزلة (Software-defined).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المكونات</strong></td>
+                                <td>يمتلك معالجاً وذاكرة وتخزيناً فعلياً مستقلاً.</td>
+                                <td>يستخدم موارد افتراضية مستمدة ومقتطعة من الخادم الفعلي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الإنشاء والجاهزية</strong></td>
+                                <td>يتطلب شراء جهاز مادي وشحنه وتركيبه (أسابيع/أيام).</td>
+                                <td>يتم إنشاؤه برمجياً عبر الـ Hypervisor في ثوانٍ أو دقائق.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مرونة التوسع (Scalability)</strong></td>
+                                <td>يتطلب فتح الجهاز وإضافة قطع مادية (RAMs/Disks).</td>
+                                <td>يتم تعديل الموارد الافتراضية فورياً من لوحة التحكم بنقرة زر.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>طريقة التشغيل</strong></td>
+                                <td>يعمل مباشرة على العتاد أو من خلال نظام تشغيل واحد.</td>
+                                <td>يعمل كطبقة برمجية فوق برنامج إدارة المحاكاة (Hypervisor).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التكلفة والإنفاق</strong></td>
+                                <td>تكلفة باهظة لشراء خادم مستقل لكل خدمة (عالي CapEx).</td>
+                                <td>تقليل كبير لعدد الأجهزة الفعلية المطلوبة وتوفير الطاقة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>النسخ الاحتياطي والنقل</strong></td>
+                                <td>معقد ويتطلب برامج متخصصة وصور أقراص كاملة.</td>
+                                <td>بسيط جداً؛ الخادم الافتراضي عبارة عن ملف يمكن نسخه ونقله حياً.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 8: Hypervisor Types -->
+            <section id="hypervisor-types">
+                <span class="section-tag">المقارنة المعمارية الحاسمة</span>
+                <h2>⚡ 8. أنواع برامج الـ Hypervisor: Type 1 (Bare-Metal) مقابل Type 2 (Hosted)</h2>
+                <p>
+                    ينقسم برنامج إدارة الأجهزة الافتراضية (Hypervisor) إلى نوعين رئيسيين يختلفان تماماً في مكان التثبيت، ومستوى الأداء، وحالات الاستخدام:
+                </p>
+
+                <div class="cards-grid">
+                    <!-- Type 1 -->
+                    <div class="card" style="border-top: 5px solid var(--secondary);">
+                        <div class="card-header">
+                            <div class="card-icon">⚡</div>
+                            <div>
+                                <h4 style="color:var(--primary);">النوع الأول: Type 1</h4>
+                                <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">Bare-Metal (التشغيل المباشر على العتاد)</span>
+                            </div>
+                        </div>
+                        <p><strong>المفهوم وطريقة العمل:</strong></p>
+                        <p>
+                            يُثبّت هذا النوع <strong>مباشرة على العتاد الفيزيائي للخادم الفعلي (Bare-Metal)</strong> بدون الحاجة إلى وجود نظام تشغيل وسيط قبله! هو نفسه يقوم بدور نظام التشغيل الخفيف والمتحكم المباشر بالمعالج والذاكرة.
+                        </p>
+                        <div class="flow-container" style="padding:0.8rem; margin:0.8rem 0;">
+                            <small style="font-weight:700; color:var(--primary);">ترتيب الطبقات المعماري:</small><br>
+                            <code>[الأجهزة الافتراضية VMs] ➔ [Hypervisor Type 1] ➔ [العتاد المادي Hardware]</code>
+                        </div>
+                        <p><strong>المزايا الرئيسية:</strong></p>
+                        <ul style="margin-right:1.2rem; font-size:0.92rem; margin-bottom:1rem;">
+                            <li><strong>أداء فائق وسرعة قصوى:</strong> وصول مباشر للعتاد دون طبقات وسيطة تعطل الأوامر.</li>
+                            <li><strong>استهلاك طفيف للموارد:</strong> لا يوجد نظام تشغيل مكتبي يستهلك الرام والمعالج.</li>
+                            <li><strong>أمان واستقرار عالي:</strong> سطح هجوم صغير جداً وخالٍ من ثغرات أنظمة التشغيل العادية.</li>
+                        </ul>
+                        <p><strong>أشهر البرمجيات:</strong></p>
+                        <p style="font-weight:700; color:var(--secondary);">
+                            VMware ESXi, Microsoft Hyper-V Server, KVM (Kernel-based VM), Citrix XenServer, Proxmox VE.
+                        </p>
+                        <p><strong>بيئة الاستخدام:</strong> مراكز البيانات، السحب العامة والخاصة، وخوادم الشركات الضخمة.</p>
+                    </div>
+
+                    <!-- Type 2 -->
+                    <div class="card" style="border-top: 5px solid var(--accent);">
+                        <div class="card-header">
+                            <div class="card-icon">💻</div>
+                            <div>
+                                <h4 style="color:#b45309;">النوع الثاني: Type 2</h4>
+                                <span style="font-size:0.85rem; color:var(--text-muted); font-weight:700;">Hosted (المستضاف فوق نظام تشغيل)</span>
+                            </div>
+                        </div>
+                        <p><strong>المفهوم وطريقة العمل:</strong></p>
+                        <p>
+                            يُثبّت <strong>كبرنامج تطبيقي عادي</strong> فوق نظام تشغيل موجود مسبقاً على الحاسوب يُسمى <strong>(Host OS)</strong> مثل Windows 11 أو macOS أو Linux. يتولى الـ Host OS إدارة العتاد، ويتعامل الـ Hypervisor معه كوسيط.
+                        </p>
+                        <div class="flow-container" style="padding:0.8rem; margin:0.8rem 0;">
+                            <small style="font-weight:700; color:var(--accent);">ترتيب الطبقات المعماري:</small><br>
+                            <code>[VMs] ➔ [Hypervisor Type 2] ➔ [Host OS] ➔ [Hardware]</code>
+                        </div>
+                        <p><strong>المزايا الرئيسية:</strong></p>
+                        <ul style="margin-right:1.2rem; font-size:0.92rem; margin-bottom:1rem;">
+                            <li><strong>سهولة التثبيت والاستخدام:</strong> يُثبت مثل أي برنامج (Next.. Next.. Finish).</li>
+                            <li><strong>مناسب للأجهزة الشخصية:</strong> يتيح تجربة أنظمة أخرى دون حذف نظامك الأساسي.</li>
+                            <li><strong>مثالي للتعليم والمطورين:</strong> اختبار التطبيقات البرمجية على بيئات Linux و Windows معاً.</li>
+                        </ul>
+                        <p><strong>أشهر البرمجيات:</strong></p>
+                        <p style="font-weight:700; color:var(--secondary);">
+                            Oracle VirtualBox, VMware Workstation, VMware Fusion (لأجهزة Mac), Parallels Desktop.
+                        </p>
+                        <p><strong>بيئة الاستخدام:</strong> حواسيب الطلاب، أجهزة المطورين، والمختبرات التعليمية والتجريبية.</p>
+                    </div>
+                </div>
+
+                <h3>مصفوفة المقارنة الهندسية الشاملة بين النوعين:</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>Type 1 (Bare-Metal)</th>
+                                <th>Type 2 (Hosted)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>مكان التثبيت</strong></td>
+                                <td>مباشرة على العتاد المادي للخادم دون أي نظام تشغيل وسيط.</td>
+                                <td>فوق نظام تشغيل مضيف (Host OS) كبرنامج تطبيقي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مستوى الأداء وزمن الاستجابة</strong></td>
+                                <td><strong>فائق جداً (Near-native speed)</strong> بدون أي تأخير.</td>
+                                <td><strong>أقل سرعة</strong> بسبب وجود طبقة الـ Host OS الوسيطة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>استهلاك موارد العتاد</strong></td>
+                                <td>منخفض جداً (مخصص بالكامل للأجهزة الافتراضية).</td>
+                                <td>أعلى (يستهلك الـ Host OS جزءاً كبيراً من الرام والمعالج).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مستوى الأمان والاستقرار</strong></td>
+                                <td><strong>عالي جداً؛</strong> نظام معزول ومحصن بخصائص أمنية صلبة.</td>
+                                <td><strong>أقل؛</strong> إذا تعرض نظام الـ Host OS لفايروس أو انهيار ستتوقف جميع الـ VMs.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>سهولة الإعداد والتثبيت</strong></td>
+                                <td>يتطلب خبرة مهنية في إدارة الخوادم وإعدادات الشبكات.</td>
+                                <td>سهل وبسيط جداً لأي مستخدم أو طالب.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>حالات الاستخدام الأنسب</strong></td>
+                                <td>بيئات الإنتاج، مراكز البيانات، السحابة (AWS/Azure).</td>
+                                <td>التدريب، اختبار البرمجيات، وتجارب الطلاب الشخصية.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 9: Cloud Applications -->
+            <section id="cloud-apps">
+                <span class="section-tag">السحابة في حياتنا اليومية</span>
+                <h2>🌐 9. تطبيقات الحوسبة والتخزين السحابي الحياتية</h2>
+                <p>
+                    تجسد صور وشعارات المحاضرة كيف أصبحت الحوسبة والتخزين السحابي عصب الحياة الرقمية المعاصرة. جميع هذه التطبيقات تعتمد في خلفيتها على نفس المعمارية التي شرحناها (واجهة أمامية على أجهزتنا + مراكز بيانات وخوادم افتراضية في الواجهة الخلفية):
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">✉️</div>
+                            <h4>1. البريد والتواصل السحابي</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> Gmail, Yahoo Mail, Outlook, Hotmail, Skype.<br>
+                        تخزين مليارات الرسائل والمرفقات سحابياً والوصول إليها لحظياً من أي متصفح أو هاتف دون الحاجة لحفظها على القرص الصلب المحلي.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">☁️</div>
+                            <h4>2. التخزين والمزامنة السحابية</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> Google Drive, OneDrive (SkyDrive), Dropbox, Box, Apple iCloud, Amazon Cloud Drive.<br>
+                        مزامنة فورية للملفات والصور بين أجهزة العميل والخوادم السحابية مع نسخ احتياطي وتشفير متقدم.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🎬</div>
+                            <h4>3. بث الوسائط والترفيه السحابي</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> YouTube, Netflix, Hulu, Vimeo, Pandora Internet Radio, iTunes, Flickr, Photobucket.<br>
+                        بث المحتوى المرئي والصوتي بدقات فائقة عبر شبكات توزيع المحتوى (CDNs) السحابية دون تنزيل الملف كاملاً.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🛍️</div>
+                            <h4>4. المتاجر الرقمية والمنصات</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> Google Play Store, Amazon, Amazon Kindle, Barnes & Noble Nook, Apple App Store, Overstock.<br>
+                        استضافة ملايين الكتب والتطبيقات وقواعد بيانات المبيعات ومعالجة طلبات الشراء اللحظية.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">👥</div>
+                            <h4>5. الشبكات الاجتماعية السحابية</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> LinkedIn, Facebook, Twitter (X), Instagram, Tumblr, Pinterest, Goodreads.<br>
+                        معالجة مليارات المنشورات والرسائل والتفاعلات عبر قواعد بيانات موزعة ضخمة في الواجهة الخلفية.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📝</div>
+                            <h4>6. الإنتاجية وتدوين الملاحظات</h4>
+                        </div>
+                        <p><strong>أمثلة:</strong> Evernote, Opera Cloud Sync, Google Keep.<br>
+                        حفظ الملاحظات والأفكار ومزامنتها لحظياً عبر خوادم السحابة لتبقى متاحة للمستخدم أينما ذهب.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Solutions Bank -->
+            <section id="solutions-bank">
+                <span class="section-tag">التحليل الأكاديمي والامتحاني</span>
+                <h2>🎯 10. بنك الحلول النموذجية الشاملة لتمارين وسيناريوهات المحاضرة</h2>
+                <p>
+                    إليك التحليل الهندسي والأكاديمي الدقيق لجميع التمارين الواردة في المحاضرة لضمان تفوقك الكامل في الاختبارات:
+                </p>
+
+                <!-- Exercise 1 -->
+                <div class="scenario-card">
+                    <h3 style="color:#b45309; margin-top:0;">📋 السؤال الأول: سيناريو تعطل تسجيل الدخول الفردي لطالب</h3>
+                    <p style="font-weight:700;">
+                        «دخل أحد الطلاب إلى منصة الجامعة الإلكترونية باستخدام هاتفه، لكنه لم يتمكن من تسجيل الدخول، رغم أن اتصال الإنترنت يعمل بصورة طبيعية، بينما يستطيع طلاب آخرون الدخول إلى المنصة.»
+                    </p>
+
+                    <div class="accordion">
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>1. ما المكونات التي تمثل الواجهة الأمامية (Front End) في هذا الموقف؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <ul>
+                                    <li><strong>الهاتف الذكي للطالب (Smartphone):</strong> العتاد الفعلي للعميل ونظام تشغيله (Android / iOS).</li>
+                                    <li><strong>متصفح الإنترنت في الهاتف:</strong> البرنامج الوسيط (مثل Chrome أو Safari) وإعداداته (ملفات الكوكيز وجافاسكريبت).</li>
+                                    <li><strong>تطبيق الجامعة (إن وُجد):</strong> التطبيق المثبت على هاتف الطالب.</li>
+                                    <li><strong>واجهة تسجيل الدخول (User Interface):</strong> حقول إدخال الرقم الأكاديمي وكلمة المرور وزر الإرسال.</li>
+                                    <li><strong>ذاكرة التخزين المؤقت المحلية (Local Cache & Cookies):</strong> المحفوظة داخل متصفح الطالب.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>2. ما المكونات التي يمكن أن تكون سببًا في هذه المشكلة؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p>بما أن زملاءه يدخلون بنجاح، فإن خوادم الجامعة العامة تعمل بشكل سليم، وتنحصر المشكلة في أحد الاحتمالين:</p>
+                                <p><strong>أولاً: أسباب في الواجهة الأمامية لجهاز الطالب:</strong></p>
+                                <ul>
+                                    <li>خطأ بشري في كتابة اسم المستخدم أو كلمة المرور (حالة الأحرف أو المسافات).</li>
+                                    <li>تلف أو امتلاء ذاكرة التخزين المؤقت (Corrupted Cache/Cookies) في متصفح الهاتف.</li>
+                                    <li>إيقاف تفعيل JavaScript أو الكوكيز الضرورية لجلسة المصادقة في إعدادات المتصفح.</li>
+                                    <li>إصدار المتصفح قديم جداً وغير متوافق مع تقنيات تشفير بوابة الجامعة.</li>
+                                </ul>
+                                <p><strong>ثانياً: أسباب في الواجهة الخلفية خاصة بحساب هذا الطالب حصراً:</strong></p>
+                                <ul>
+                                    <li>حساب الطالب مقفل (Account Locked) في قاعدة البيانات بسبب محاولات دخول خاطئة سابقة.</li>
+                                    <li>سجل الطالب غير مفعل في قاعدة بيانات الفصل الدراسي الحالي (عدم تسجيل أو توقف الرسوم).</li>
+                                    <li>عدم توافق صلاحيات الحساب في نظام التوثيق والتفويض (Authorization Failure).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>3. ما دور الخوادم وقواعد البيانات في عملية تسجيل الدخول؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <ul>
+                                    <li><strong>دور الخوادم (Servers):</strong> استقبال بيانات الاعتماد (اسم المستخدم وكلمة المرور) المشفرة عبر طلب HTTPS، تطبيق خوارزمية الهاشينغ (Hashing) على كلمة المرور، توليد استعلام والتحقق من صحة المدخلات، وإنشاء رمز الجلسة الآمن (Session Token / JWT) وإرجاعه للواجهة الأمامية في حالة النجاح.</li>
+                                    <li><strong>دور قواعد البيانات (Databases):</strong> البحث عن سجل الطالب المطابق للرقم الأكاديمي، مطابقة تجزئة كلمة المرور (Hash Match)، التحقق من حالة تفعيل الحساب والصلاحيات، وإرجاع بيانات الملف الشخصي للخادم.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>4. كيف يمكن للمهندس تحديد ما إذا كان العطل في الواجهة الأمامية أم الخلفية؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p>نطبق قاعدة <strong>«عزل المتغيرات الهندسية» (Troubleshooting Isolation):</strong></p>
+                                <ol style="margin-right:1.5rem;">
+                                    <li><strong>اختبار الجهاز والمتصفح:</strong> يطلب من الطالب فتح متصفح آخر، أو تشغيل وضع التصفح الخفي (Incognito Mode)، أو تجربة الدخول من حاسوب مكتبي.
+                                        <ul>
+                                            <li>إذا <strong>نجح الدخول من جهاز آخر:</strong> فالعطل حتماً في الواجهة الأمامية لهاتف الطالب (كاش تالف أو إعدادات متصفح).</li>
+                                            <li>إذا <strong>فشل الدخول من كل الأجهزة بنفس الرسالة:</strong> فالعطل حتماً في حسابه المسجل في الواجهة الخلفية بقاعدة البيانات.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>فحص كود استجابة الخادم (HTTP Status Code):</strong>
+                                        <ul>
+                                            <li>ظهور كود <code>401 Unauthorized</code> أو <code>403 Forbidden</code> يعني أن المشكلة في بيانات الاعتماد أو صلاحيات الحساب.</li>
+                                            <li>ظهور كود <code>500 Internal Server Error</code> يعني حدوث انهيار في برمجة الواجهة الخلفية أو اتصال قاعدة البيانات.</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercise 2 -->
+                <div class="scenario-card" style="margin-top:2rem;">
+                    <h3 style="color:#b45309; margin-top:0;">📋 السؤال الثاني: أزمة الـ 5000 طالب وبطء إعلان النتائج</h3>
+                    <p style="font-weight:700;">
+                        «أعلنت الجامعة عن نتائج الاختبارات، فدخل 5000 طالب إلى المنصة في الوقت نفسه، وأصبحت المنصة بطيئة جدًا، وتأخر عرض النتائج.»
+                    </p>
+
+                    <div class="accordion">
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>1. لماذا أصبحت المنصة بطيئة جدًا رغم توفر خدمة الإنترنت؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p>
+                                    المشكلة هنا لا تتعلق بسرعة الإنترنت لدى الطلاب، بل بحدوث <strong>اختناق حاد في موارد الواجهة الخلفية (Server Resource Bottleneck):</strong>
+                                </p>
+                                <ul>
+                                    <li><strong>تشبع المعالجات (CPU Saturation):</strong> وصول استهلاك معالجات الخوادم إلى 100% بسبب معالجة 5000 طلب معقد في نفس اللحظة.</li>
+                                    <li><strong>استنزاف الذاكرة العشوائية (RAM Exhaustion):</strong> حجز الذاكرة لتتبع جلسات آلاف الطلاب المتصلين.</li>
+                                    <li><strong>اختناق قاعدة البيانات (Database Connection Pool Exhaustion):</strong> قواعد البيانات تمتلك حدًا أقصى للاتصالات المتزامنة (مثلاً 500 اتصال)، فعندما يهجم 5000 طالب تصطف 4500 طلب في طابور الانتظار (Queue)، وتحدث أقفال على الجداول (Database Locks).</li>
+                                    <li><strong>اختناق قنوات الإدخال والإخراج (I/O Bottleneck):</strong> عجز وحدات التخزين عن قراءة آلاف السجلات ونقلها في نفس الثانية.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>2. ما دور الخوادم (Servers) في معالجة طلبات الطلاب؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <ul>
+                                    <li>استقبال اتصالات الـ TCP المشفرة وتفكيك تشفير SSL/TLS Handshake لكل طالب.</li>
+                                    <li>تشغيل الكود البرمجي للتحقق من هوية الطالب وطلب نتيجته.</li>
+                                    <li>تجميع النتائج وتنسيقها في قوالب HTML أو كائنات JSON وإرسالها عبر الشبكة لكل جهاز. عند عجز الخوادم عن استيعاب العدد، تتراكم الطلبات في طوابير الانتظار مسببة البطء والـ Timeouts.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>3. ما دور برامج إدارة الموارد (Resource Management Software)؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <ul>
+                                    <li><strong>المراقبة الحية للحمل (Real-time Load Monitoring):</strong> رصد وصول استهلاك الـ CPU والـ RAM لعتبة الخطر (مثلاً تجاوز 75%).</li>
+                                    <li><strong>موازنة الأحمال (Load Balancing):</strong> توزيع الطلاب بالتساوي على مجموعة الخوادم المتاحة لمنع سقوط خادم واحد تحت الضغط.</li>
+                                    <li><strong>إدارة التوسع التلقائي (Auto-Scaling Orchestration):</strong> إصدار أوامر فورية للـ Hypervisor لإنشاء خوادم افتراضية إضافية وتخصيص موارد عتادية جديدة لتخفيف الحمل تلقائياً.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>4. كيف يمكن للحوسبة السحابية التعامل مع الزيادة المفاجئة في عدد المستخدمين؟</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p>توفر الحوسبة السحابية حلاً هندسياً جذرياً عبر ثلاث تقنيات متكاملة:</p>
+                                <ol style="margin-right:1.5rem;">
+                                    <li><strong>المرونة والتوسع التلقائي الأفقي (Elasticity & Horizontal Auto-Scaling):</strong> عند استشعار النظام لارتفاع الضغط، يقوم النظام السحابي تلقائياً بتشغيل 10 خوادم افتراضية جديدة خلال 60 ثانية لتوزيع الطلاب عليها، وفور انتهاء ذروة النتائج يتم إيقاف الخوادم الزائدة لتقليل التكلفة.</li>
+                                    <li><strong>موزعات الأحمال الذكية (Elastic Load Balancers - ELB):</strong> تقف كبوابة أمامية توزع آلاف الطلبات بين الخوادم السحابية بنمط Round Robin أو Least Connections.</li>
+                                    <li><strong>طبقات التخزين المؤقت في الذاكرة (Caching Layers - Redis / Memcached):</strong> حفظ درجات الطلاب مسبقاً في ذاكرة RAM فائقة السرعة، بحيث تُقرأ النتائج من الذاكرة خلال 2 ميلي ثانية دون الحاجة لضرب قاعدة البيانات الرئيسية 5000 مرة في نفس اللحظة!</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 11: Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">المراجعة التفاعلية النشطة</span>
+                <h2>🗂️ 11. بطاقات الاستذكار السريعة (Interactive Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار معلوماتك السريعة حول مفاهيم المحاضرة الثالثة:</p>
+
+                <div class="flashcards-grid">
+                    <!-- Card 1 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الواجهة الأمامية<br>(Front End)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                الجزء الذي يتعامل معه المستخدم للوصول للخدمات السحابية؛ يشمل الأجهزة، المتصفحات، والتطبيقات التفاعلية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الواجهة الخلفية<br>(Back End)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                مصنع المعالجة والتخزين داخل مراكز البيانات؛ يشمل الخوادم، قواعد البيانات، أنظمة التخزين، وبرامج إدارة الموارد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                المحاكاة الافتراضية<br>(Virtualization)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                تقنية برمجية لفصل أنظمة التشغيل عن العتاد المادي، لإنشاء أجهزة افتراضية متعددة ومستقلة على خادم مادي واحد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Hypervisor Type 1<br>(Bare-Metal)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                برنامج محاكاة يُثبت مباشرة على العتاد المادي للخادم دون نظام تشغيل وسيط، ويوفر أداءً فائقاً وأماناً عالياً (مثل ESXi).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Hypervisor Type 2<br>(Hosted)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                برنامج محاكاة يُثبت كتطبيق عادي فوق نظام تشغيل موجود مسبقاً (Host OS) مثل VirtualBox و VMware Workstation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Host OS مقابل Guest OS
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <strong>Host OS:</strong> نظام التشغيل الأساسي على الحاسوب الفعلي.<br>
+                                <strong>Guest OS:</strong> نظام التشغيل المثبت داخل الجهاز الافتراضي نفسه.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                أهمية تبريد مراكز البيانات
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                حماية المعالجات من الاحتراق والانصهار، ومنع الخنق الحراري (Thermal Throttling) وانهيار خدمات السحابة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                التوسع التلقائي<br>(Auto-Scaling)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                قدرة السحابة على زيادة عدد الخوادم والموارد الافتراضية تلقائياً وقت الضغط الشديد وتقليصها عند انتهاء الذروة.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 12: Quiz -->
+            <section id="interactive-quiz">
+                <span class="section-tag">الاختبار والتقييم الذاتي</span>
+                <h2>📝 12. الاختبار التقييمي التفاعلي الشامل</h2>
+                <p>اختبر استيعابك لكافة موضوعات المحاضرة الثالثة عبر هذا الاختبار التفاعلي المكون من 10 أسئلة امتحانية نموذجية:</p>
+
+                <div class="quiz-container">
+                    <div id="quiz-app">
+                        <!-- Loaded by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- Interactive Scripts -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const quizData = [
+            {
+                question: "1. تتكون معمارية الحوسبة السحابية (Cloud Architecture) بصورة أساسية من جزأين رئيسيين هما:",
+                options: [
+                    "الواجهة الأمامية (Front End) والواجهة الخلفية (Back End)",
+                    "نظام التشغيل المضيف ونظام التشغيل الضيف فقط",
+                    "الخوادم الفعلية والخوادم الوهمية فقط",
+                    "برامج الأوفيس وبرامج قواعد البيانات"
+                ],
+                correct: 0,
+                explanation: "تتكون البنية السحابية من جزأين رئيسيين: Front End (جانب المستخدم) و Back End (جانب الخوادم ومراكز البيانات) يربطهما الإنترنت والبروتوكولات."
+            },
+            {
+                question: "2. أي من المكونات التالية يُعد جزءاً لا يتجزأ من الواجهة الأمامية (Front End) للحوسبة السحابية؟",
+                options: [
+                    "مصفوفات وحدات التخزين SAN في مركز البيانات",
+                    "متصفحات الإنترنت وتطبيقات الهواتف الذكية",
+                    "برمجيات إدارة الموارد والجدولة الافتراضية",
+                    "خوادم قواعد البيانات المركزية"
+                ],
+                correct: 1,
+                explanation: "الواجهة الأمامية تشمل كل ما يستخدمه العميل للوصول للخدمات: كالأجهزة والمتصفحات والتطبيقات وواجهات المستخدم."
+            },
+            {
+                question: "3. ما هو المكون المسؤول عن معالجة طلبات المستخدمين وتنفيذ العمليات الحسابية ومنطق التطبيقات في الواجهة الخلفية؟",
+                options: [
+                    "الخوادم (Servers)",
+                    "أجهزة التخزين (Storage Systems)",
+                    "كابلات الألياف الضوئية",
+                    "الهواتف الذكية"
+                ],
+                correct: 0,
+                explanation: "الخوادم (Servers) هي عضلات المعالجة المسؤولة عن تنفيذ العمليات ومنطق الأعمال ومعالجة الطلبات في الواجهة الخلفية."
+            },
+            {
+                question: "4. التقنية البرمجية التي تتيح تشغيل عدة بيئات حاسوبية وأنظمة تشغيل مستقلة على جهاز فيزيائي واحد تسمى:",
+                options: [
+                    "الحوسبة المتوازية (Parallel Computing)",
+                    "المحاكاة الافتراضية (Virtualization)",
+                    "تجزئة الأقراص الصلبة (Disk Partitioning)",
+                    "الشبكات المحلية (LAN)"
+                ],
+                correct: 1,
+                explanation: "المحاكاة الافتراضية (Virtualization) هي التقنية البرمجية التي تفصل العتاد عن البرمجيات لإنشاء أجهزة افتراضية متعددة على جهاز مادي واحد."
+            },
+            {
+                question: "5. ما هو السبب الرئيسي الذي كان يعيب الخوادم التقليدية ودفع المؤسسات بقوة نحو تبني المحاكاة الافتراضية؟",
+                options: [
+                    "انخفاض استغلال موارد الخادم إلى ما دون 10% إلى 15%",
+                    "استحالة اتصال الخوادم التقليدية بالإنترنت",
+                    "عدم دعم الخوادم التقليدية لأنظمة Windows",
+                    "صغر حجم الخوادم التقليدية وعدم استيعابها للكهرباء"
+                ],
+                correct: 0,
+                explanation: "في الخوادم التقليدية كان يخصص خادم كامل لتطبيق واحد لا يستهلك إلا 5-10% من موارده، مما يهدر معظم طاقة الخادم ويرفع التكاليف."
+            },
+            {
+                question: "6. برنامج إدارة الأجهزة الافتراضية (Hypervisor Type 1) يتميز بأنه:",
+                options: [
+                    "يُثبت كبرنامج تطبيقي عادي داخل نظام Windows 11",
+                    "يُثبت مباشرة على العتاد المادي للخادم (Bare-Metal) دون نظام تشغيل وسيط",
+                    "مخصص فقط للأجهزة اللوحية والهواتف الذكية",
+                    "أبطأ في الأداء من Type 2 لوجود طبقات وسيطة كثيرة"
+                ],
+                correct: 1,
+                explanation: "النوع الأول (Type 1 Bare-Metal) يعمل مباشرة على العتاد الفيزيائي للخادم ويوفر أعلى مستويات السرعة والأداء والاستقرار."
+            },
+            {
+                question: "7. إذا قام طالب بتثبيت برنامج Oracle VirtualBox داخل حاسوبه الذي يعمل بنظام Windows لتجربة نظام Linux، فإن VirtualBox يُصنف كـ:",
+                options: [
+                    "Hypervisor Type 1 (Bare-Metal)",
+                    "Hypervisor Type 2 (Hosted)",
+                    "نظام تشغيل مادي (Physical OS)",
+                    "قاعدة بيانات سحابية"
+                ],
+                correct: 1,
+                explanation: "VirtualBox يعمل فوق نظام تشغيل مضيف (Windows)، ولذلك فهو مثال صريح لبرامج Hypervisor Type 2 (المستضافة)."
+            },
+            {
+                question: "8. في مصطلحات المحاكاة الافتراضية، يُطلق مصطلح 'نظام التشغيل الضيف' (Guest OS) على:",
+                options: [
+                    "النظام الأساسي المثبت على الحاسوب الفعلي",
+                    "نظام التشغيل المثبت داخل الجهاز الافتراضي (VM)",
+                    "نظام تشغيل موزع الأحمال (Load Balancer)",
+                    "برمجيات مراقبة حرارة مراكز البيانات"
+                ],
+                correct: 1,
+                explanation: "Guest OS هو نظام التشغيل الذي يعمل داخل بيئة الجهاز الافتراضي، بينما Host OS هو النظام المثبت على الجهاز الحقيقي."
+            },
+            {
+                question: "9. لماذا يُعد توفير أنظمة طاقة احتياطية (UPS ومولدات ديزل) أمرًا حتميًا في مراكز البيانات السحابية؟",
+                options: [
+                    "لتقليل فواتير الكهرباء الحكومية في الصيف فقط",
+                    "لضمان استمرارية الخدمة وتفادي فقدان البيانات وتلف قواعد البيانات عند انقطاع الكهرباء",
+                    "لأن الخوادم السحابية لا تعمل إلا بالطاقة الشمسية",
+                    "لزيادة سرعة المتصفحات في الهواتف الذكية"
+                ],
+                correct: 1,
+                explanation: "انقطاع الكهرباء ولو لثوانٍ يسبب فقدان بيانات الذاكرة المؤقتة وتلف قواعد البيانات وخروج الخدمات الحيوية، لذلك تتدخل الـ UPS والمولدات بلا انقطاع."
+            },
+            {
+                question: "10. عند دخول 5000 طالب متزامن لمنصة الجامعة وإصابتها بالبطء الشديد، ما هو الحل السحابي الأنسب لمعالجة هذه الأزمة تلقائيًا؟",
+                options: [
+                    "إيقاف الموقع ومنع الطلاب من الدخول نهائياً",
+                    "تقنية التوسع التلقائي (Auto-Scaling) وموزع الأحمال (Load Balancer)",
+                    "حذف بيانات نصف الطلاب لتقليل الحجم",
+                    "استبدال شبكة الهاتف بشبكة بلوتوث"
+                ],
+                correct: 1,
+                explanation: "التوسع التلقائي (Auto-Scaling) يقوم بإنشاء خوادم افتراضية إضافية تلقائياً ويقوم موزع الأحمال بنشر الطلبات عليها لضمان سرعة الاستجابة."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_cloud_lec03');
+    </script>
+</body>
+</html>

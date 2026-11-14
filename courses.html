@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل المقررات الدراسية | كلية المنار للعلوم والتكنولوجيا - المستوى الثالث</title>
+    
+    <!-- الخطوط العربية القياسية مع التوافقية الكاملة دون اتصال -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-course="root">
+
+    <!-- ==============================================================================
+         شريط التنقل العلوي الموحد (Sticky Navigation Bar)
+         ============================================================================== -->
+    <nav class="site-navbar" id="mainNavbar">
+        <div class="site-navbar-inner">
+            
+            <!-- الهوية والشعار -->
+            <a href="index.html" class="brand-link" title="المنصة الأكاديمية - كلية المنار">
+                <div class="brand-logo-icon">🎓</div>
+                <div class="brand-text-col">
+                    <span class="brand-name">كلية المنار للعلوم والتكنولوجيا</span>
+                    <span class="brand-sub">دليل المقررات الأكاديمية • M.C.S.T</span>
+                </div>
+            </a>
+
+            <!-- روابط التنقل الرئيسية (سطح المكتب) -->
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
+                <li><a href="courses.html" class="nav-link active">📚 المقررات الدراسية</a></li>
+                <li><a href="index.html#departments" class="nav-link">🏛️ الأقسام الأكاديمية</a></li>
+                <li><a href="index.html#stats" class="nav-link">📊 الإحصائيات</a></li>
+                <li><a href="index.html#features" class="nav-link">⚡ مميزات المنصة</a></li>
+            </ul>
+
+            <!-- إجراءات شريط التنقل -->
+            <div class="nav-actions">
+                <!-- شارة المشرف / الطالب -->
+                <div class="nav-user-badge" title="عضو اللجنة العلمية في القسمين">
+                    <div class="user-avatar-circle">ب</div>
+                    <span>م. بشار زبله</span>
+                </div>
+
+                <!-- زر الوضع الليلي / النهاري -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل المظهر">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+
+                <!-- زر القائمة للأجهزة الذكية (Mobile Hamburger) -->
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="فتح القائمة الرئيسية" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- القائمة الجانبية للأجهزة الذكية (Mobile Off-canvas Drawer) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
+        <div class="mobile-drawer-header">
+            <div class="brand-link">
+                <div class="brand-logo-icon" style="width:34px; height:34px; font-size:1.1rem;">🎓</div>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--primary);">كلية المنار M.C.S.T</span>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
+        </div>
+
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><span>🏠</span> الرئيسية</a></li>
+            <li><a href="courses.html" class="active"><span>📚</span> دليل المقررات الدراسية</a></li>
+            <li><a href="index.html#departments"><span>🏛️</span> الأقسام والتخصصات</a></li>
+            <li><a href="index.html#stats"><span>📊</span> الإحصائيات الأكاديمية</a></li>
+            <li><a href="index.html#features"><span>⚡</span> مميزات المنصة الذكية</a></li>
+        </ul>
+
+        <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:var(--space-3);">
+            <div class="nav-user-badge" style="justify-content:center;">
+                <div class="user-avatar-circle">ب</div>
+                <span>إعداد: م. بشار زبله</span>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin:0;">
+                المستوى الثالث — الترم الثاني (2026)
+            </p>
+        </div>
+    </aside>
+
+    <!-- ==============================================================================
+         رأس الصفحة الأكاديمي (Page Header & Breadcrumbs)
+         ============================================================================== -->
+    <header class="page-header-modern">
+        <div class="page-header-inner">
+            
+            <!-- مسار التنقل (Breadcrumbs) -->
+            <nav class="breadcrumbs-trail" aria-label="مسار التنقل">
+                <a href="index.html">🏠 المنصة الرئيسية</a>
+                <span class="breadcrumbs-sep">/</span>
+                <span class="breadcrumbs-current">دليل المقررات الدراسية</span>
+            </nav>
+
+            <h1 class="page-header-title">المقررات الدراسية المعتمدة</h1>
+            <p class="page-header-desc">
+                تصفح واستكشف جميع المقررات الأكاديمية المعتمدة لطلاب <strong>المستوى الثالث (الترم الثاني)</strong> لقسمي <strong>الأمن السيبراني والشبكات</strong> و<strong>تكنولوجيا المعلومات</strong>، مع إمكانية البحث الفوري والتصفية حسب التخصص، والترتيب متعدد المعايير.
+            </p>
+
+            <div class="page-header-stats-row">
+                <span class="header-stat-chip">📚 6 مقررات معتمدة</span>
+                <span class="header-stat-chip">⚡ 13 محاضرة تفاعلية كاملة</span>
+                <span class="header-stat-chip">🏛️ قسمان أكاديميان</span>
+                <span class="header-stat-chip">🎯 كويزات ومختبرات فورية</span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==============================================================================
+         المحتوى الرئيسي: شريط الفلاتر وشبكة المقررات
+         ============================================================================== -->
+    <main class="content-container" style="padding-top: var(--space-8); padding-bottom: var(--space-12);">
+
+        <!-- شريط أدوات البحث والتصفية والترتيب المتقدم -->
+        <div class="courses-filter-toolbar">
+            
+            <!-- الصف العلوي: البحث والترتيب -->
+            <div class="toolbar-top-row">
+                
+                <!-- حقل البحث الفوري -->
+                <div class="search-field-modern">
+                    <span class="search-leading-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        id="courseSearchInput" 
+                        placeholder="ابحث باسم المقرر، اسم الأستاذ، الموضوع، أو المصطلحات بالإنجليزية..." 
+                        aria-label="ابحث عن مقرر"
+                    />
+                    <button class="search-trailing-clear" id="searchClearBtn" onclick="clearSearch()" title="مسح نص البحث">✕</button>
+                </div>
+
+                <!-- قائمة ترتيب المقررات -->
+                <div class="toolbar-select-group">
+                    <div class="sort-select-wrapper">
+                        <span>ترتيب المقررات:</span>
+                        <select id="courseSortSelect" onchange="handleSortChange(this.value)" aria-label="ترتيب المقررات حسب">
+                            <option value="default">الترتيب الافتراضي (الخطة الدراسية)</option>
+                            <option value="name-asc">اسم المقرر (أ - ي)</option>
+                            <option value="name-desc">اسم المقرر (ي - أ)</option>
+                            <option value="lectures">الأكثر محاضرات متاحة</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- الصف السفلي: أزرار التصفية والعداد وإعادة التعيين -->
+            <div class="toolbar-bottom-row">
+                
+                <!-- أزرار التصفية حسب القسم -->
+                <div class="filter-pills-row" role="group" aria-label="تصفية المقررات حسب القسم">
+                    <button class="filter-pill-btn active" data-dept="all" onclick="filterCourses('all', this)">
+                        <span>جميع المقررات</span>
+                        <span style="opacity:0.75;">(6)</span>
+                    </button>
+                    <button class="filter-pill-btn" data-dept="shared" onclick="filterCourses('shared', this)">
+                        <span>المقررات المشتركة</span>
+                        <span style="opacity:0.75;">(4)</span>
+                    </button>
+                    <button class="filter-pill-btn" data-dept="cyber" onclick="filterCourses('cyber', this)">
+                        <span>الأمن السيبراني وشبكات</span>
+                        <span style="opacity:0.75;">(5)</span>
+                    </button>
+                    <button class="filter-pill-btn" data-dept="it" onclick="filterCourses('it', this)">
+                        <span>تكنولوجيا المعلومات</span>
+                        <span style="opacity:0.75;">(5)</span>
+                    </button>
+                </div>
+
+                <!-- شريط الحالة والعداد -->
+                <div class="toolbar-status-row">
+                    <div class="results-counter-pill" id="resultsCount">عرض جميع المقررات (6)</div>
+                    <button class="reset-filters-btn" id="resetFiltersBtn" onclick="resetAllFilters()" title="إلغاء جميع الفلاتر والبحث">
+                        <span>إعادة تعيين الفلاتر</span>
+                        <span>✕</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- شبكة المقررات الدراسية الموحدة -->
+        <div class="courses-grid" id="coursesGrid">
+            
+            <!-- 1. أساسيات تطوير البرمجيات (مشترك) -->
+            <article class="course-card" data-course-id="sfd" data-dept="shared cyber it" data-lectures="2">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-lectures-badge">2 محاضرات متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">💻</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">أساسيات تطوير البرمجيات</h3>
+                            <span class="card-cover-title-en">Fundamentals of Software Development</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👨‍🏫</span>
+                        <span>أستاذ المقرر: د. عبدالرزاق الأهدل & أ. وليد الشراعي</span>
+                    </div>
+                    <p class="course-card-desc">
+                        الانتقال من كتابة الشيفرة إلى هندسة المنتجات البرمجية: إعداد بيئة التطوير الاحترافية، إدارة التبعيات والحزم، VS Code والطرفية والمصحح، إدارة الإصدارات (Git)، والشيفرة النظيفة والاختبارات وهندسة الأخطاء.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">بيئة التطوير</span>
+                        <span class="topic-chip">Git & GitHub</span>
+                        <span class="topic-chip">كود نظيف</span>
+                        <span class="topic-chip">كويز تفاعلي</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="Software-Development-Fundamentals/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1a365d, #2563eb);">
+                            <span>استعراض بوابة المقرر (2 محاضرات)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. تصميم البرمجيات الآمنة (أمن سيبراني) -->
+            <article class="course-card" data-course-id="security" data-dept="cyber" data-lectures="3">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge" style="background:rgba(124, 58, 237, 0.4);">🛡️ أمن سيبراني وشبكات</span>
+                        <span class="card-lectures-badge">3 محاضرات متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">🛡️</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">تصميم البرمجيات الآمنة</h3>
+                            <span class="card-cover-title-en">Security Software Design</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👨‍🏫</span>
+                        <span>أستاذ المقرر: د. عبدالرزاق الأهدل</span>
+                    </div>
+                    <p class="course-card-desc">
+                        مبادئ الأمن بالاستناد إلى التصميم (Security by Design)، نمذجة التهديدات وفق منهجية STRIDE، حماية التطبيقات من الثغرات السيبرانية، وهندسة الأنظمة المنيعة والمشفرة والتحكم بالوصول.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">Security by Design</span>
+                        <span class="topic-chip">STRIDE</span>
+                        <span class="topic-chip">تشفير وحماية</span>
+                        <span class="topic-chip">تحليل الثغرات</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="Security-Software-Design/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1e133d, #7c3aed);">
+                            <span>استعراض بوابة المقرر (3 محاضرات)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. الحوسبة السحابية (مشترك) -->
+            <article class="course-card" data-course-id="cloud" data-dept="shared cyber it" data-lectures="3">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-lectures-badge">3 محاضرات متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">☁️</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">الحوسبة السحابية</h3>
+                            <span class="card-cover-title-en">Cloud Computing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👨‍🏫</span>
+                        <span>أستاذ المقرر: أ.د. عبده ناصر شويه</span>
+                    </div>
+                    <p class="course-card-desc">
+                        نماذج الخدمة السحابية (IaaS, PaaS, SaaS)، تقنيات المحاكاة الافتراضية (Virtualization & Containers)، وبناء وإدارة البنية التحتية السحابية وحمايتها واقتصاديات الحوسبة الموزعة.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">IaaS & PaaS</span>
+                        <span class="topic-chip">Virtualization</span>
+                        <span class="topic-chip">Containers</span>
+                        <span class="topic-chip">أمن السحابة</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="Cloud-Computing/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #075985, #0284c7);">
+                            <span>استعراض بوابة المقرر (3 محاضرات)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. تحليل وتصميم نظم (مشترك) -->
+            <article class="course-card" data-course-id="sad" data-dept="shared cyber it" data-lectures="2">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-lectures-badge">2 محاضرات متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">📊</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">تحليل وتصميم نظم</h3>
+                            <span class="card-cover-title-en">Systems Analysis & Design</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👩‍🏫</span>
+                        <span>أستاذ المقرر: أ. أفنان الشرفي</span>
+                    </div>
+                    <p class="course-card-desc">
+                        دراسة شاملة لمفاهيم النظم، أدوار محلل النظم، دورة حياة تطوير الأنظمة البرمجية (SDLC)، هندسة المتطلبات، وتصميم الحلول التقنية المتكاملة ومخططات تدفق البيانات.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">SDLC</span>
+                        <span class="topic-chip">هندسة المتطلبات</span>
+                        <span class="topic-chip">DFD & UML</span>
+                        <span class="topic-chip">تصميم الحلول</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="Systems-Analysis-and-Design/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #134e4a, #0d9488);">
+                            <span>استعراض بوابة المقرر (2 محاضرات)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. التحقيق الجنائي الرقمي (مشترك) -->
+            <article class="course-card" data-course-id="forensics" data-dept="shared cyber it" data-lectures="1">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-lectures-badge">1 محاضرة متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">🔎</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">التحقيق الجنائي الرقمي</h3>
+                            <span class="card-cover-title-en">Digital Forensics</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👨‍🏫</span>
+                        <span>أستاذ المقرر: د. ضياء الحق القدمي / أ. أفنان الشرفي</span>
+                    </div>
+                    <p class="course-card-desc">
+                        منهجيات جمع وحفظ الأدلة الرقمية (Chain of Custody)، تحليل البيانات والأنظمة والشبكات، وأدوات استخراج الأدلة الجنائية من الوسائط وأنظمة التشغيل ومسرح الجريمة السيبراني.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">سلسلة الحيازة</span>
+                        <span class="topic-chip">الأدلة الرقمية</span>
+                        <span class="topic-chip">تحليل الذاكرة</span>
+                        <span class="topic-chip">سلامة الأدلة</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="Digital-Forensics/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1e293b, #e11d48);">
+                            <span>استعراض بوابة المقرر (1 محاضرة)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. إدارة مشاريع تقنية المعلومات (تقنية معلومات) -->
+            <article class="course-card" data-course-id="itpm" data-dept="it" data-lectures="2">
+                <div class="course-card-cover">
+                    <div class="card-cover-badges">
+                        <span class="card-dept-badge" style="background:rgba(5, 150, 105, 0.4);">💻 خاص بقسم تكنولوجيا المعلومات</span>
+                        <span class="card-lectures-badge">2 محاضرات متاحة</span>
+                    </div>
+                    <div class="card-cover-main">
+                        <div class="card-cover-icon">📋</div>
+                        <div class="card-cover-titles">
+                            <h3 class="card-cover-title">إدارة مشاريع تقنية المعلومات</h3>
+                            <span class="card-cover-title-en">IT Project Management</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card-body">
+                    <div class="course-instructor-pill">
+                        <span>👨‍🏫</span>
+                        <span>أستاذ المقرر: أ.د. عبده ناصر شويه</span>
+                    </div>
+                    <p class="course-card-desc">
+                        تخطيط وإدارة المشاريع التقنية، جدولة الموارد والميزانيات (WBS, Gantt)، إدارة المخاطر والجودة، وقيادة فرق العمل لإنجاز أنظمة تقنية المعلومات بنجاح والمنهجيات الرشيقة.
+                    </p>
+                    <div class="course-card-meta-tags">
+                        <span class="topic-chip">WBS & Gantt</span>
+                        <span class="topic-chip">إدارة المخاطر</span>
+                        <span class="topic-chip">منهجية Agile</span>
+                        <span class="topic-chip">ميزانية المشاريع</span>
+                    </div>
+                    <div class="course-card-footer">
+                        <a href="IT-Project-Management/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #14271d, #059669);">
+                            <span>استعراض بوابة المقرر (2 محاضرات)</span>
+                            <span>←</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- حالة عدم العثور على نتائج (No Results State) -->
+            <div class="no-results-state" id="noResultsMsg">
+                <div class="no-results-icon">🔎</div>
+                <h3>لم يتم العثور على أي مقررات مطابقة</h3>
+                <p>لم نجد أي مقرر دراسي يطابق معايير البحث أو التصفية المحددة. تأكد من صحة الكلمات أو جرب البحث بكلمات عامة أو إلغاء التصفية.</p>
+                <button class="btn btn-primary" onclick="resetAllFilters()">
+                    <span>إعادة ضبط البحث والفلاتر</span>
+                    <span>↺</span>
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- نقطة ربط التذييل الموحد المركزي -->
+    <div id="site-footer"></div>
+
+    <!-- السكربتات المركزية المشتركة -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/components.js"></script>
+    <script src="assets/js/course-portal.js"></script>
+
+</body>
+</html>

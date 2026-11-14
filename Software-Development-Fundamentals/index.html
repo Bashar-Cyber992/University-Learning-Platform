@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة مقرر: أساسيات تطوير البرمجيات | Fundamentals of Software Development</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="software-development-fundamentals" data-course-id="sfd">
+
+    <!-- ==============================================================================
+         شريط التنقل العلوي الموحد (Sticky Navigation Bar)
+         ============================================================================== -->
+    <nav class="site-navbar" id="mainNavbar">
+        <div class="site-navbar-inner">
+            
+            <!-- الهوية والشعار الأكاديمي -->
+            <a href="../index.html" class="brand-link" title="المنصة الأكاديمية - كلية المنار">
+                <div class="brand-logo-icon">🎓</div>
+                <div class="brand-text-col">
+                    <span class="brand-name">كلية المنار للعلوم والتكنولوجيا</span>
+                    <span class="brand-sub">بوابة مقرر: أساسيات تطوير البرمجيات • M.C.S.T</span>
+                </div>
+            </a>
+
+            <!-- روابط التنقل الرئيسية (سطح المكتب) -->
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">🏠 الرئيسية</a></li>
+                <li><a href="../courses.html" class="nav-link active">📚 المقررات الدراسية</a></li>
+                <li><a href="../index.html#departments" class="nav-link">🏛️ الأقسام والتخصصات</a></li>
+                <li><a href="../index.html#stats" class="nav-link">📊 الإحصائيات</a></li>
+                <li><a href="../index.html#features" class="nav-link">⚡ مميزات المنصة</a></li>
+            </ul>
+
+            <!-- إجراءات شريط التنقل -->
+            <div class="nav-actions">
+                <!-- شارة المشرف / الطالب -->
+                <div class="nav-user-badge" title="عضو اللجنة العلمية في القسمين">
+                    <div class="user-avatar-circle">ب</div>
+                    <span>م. بشار زبله</span>
+                </div>
+
+                <!-- زر الوضع الليلي / النهاري -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل المظهر">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+
+                <!-- زر القائمة للأجهزة الذكية (Mobile Hamburger) -->
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="فتح القائمة الرئيسية" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- القائمة الجانبية للأجهزة الذكية (Mobile Off-canvas Drawer) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
+        <div class="mobile-drawer-header">
+            <div class="brand-link">
+                <div class="brand-logo-icon" style="width:34px; height:34px; font-size:1.1rem;">🎓</div>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--primary);">كلية المنار M.C.S.T</span>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
+        </div>
+
+        <ul class="mobile-nav-links">
+            <li><a href="../index.html"><span>🏠</span> المنصة الرئيسية</a></li>
+            <li><a href="../courses.html" class="active"><span>📚</span> دليل المقررات الدراسية</a></li>
+            <li><a href="../index.html#departments"><span>🏛️</span> الأقسام والتخصصات</a></li>
+            <li><a href="../index.html#stats"><span>📊</span> الإحصائيات الأكاديمية</a></li>
+            <li><a href="../index.html#features"><span>⚡</span> مميزات المنصة الذكية</a></li>
+        </ul>
+
+        <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:var(--space-3);">
+            <div class="nav-user-badge" style="justify-content:center;">
+                <div class="user-avatar-circle">ب</div>
+                <span>إعداد: م. بشار زبله</span>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin:0;">
+                المستوى الثالث — الترم الثاني (2026)
+            </p>
+        </div>
+    </aside>
+
+    <!-- ==============================================================================
+         القسم الرئيسي لمعلومات المقرر (Course Hero Header)
+         ============================================================================== -->
+    <header class="course-hero-header">
+        <div class="course-hero-inner">
+            
+            <!-- مسار التنقل (Breadcrumbs) -->
+            <nav class="breadcrumbs-trail" aria-label="مسار التصفح">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span class="breadcrumbs-sep">/</span>
+                <a href="../courses.html">📚 دليل المقررات</a>
+                <span class="breadcrumbs-sep">/</span>
+                <span class="breadcrumbs-current">أساسيات تطوير البرمجيات</span>
+            </nav>
+
+            <!-- شارة الكلية والمستوى -->
+            <div class="course-hero-badge">
+                <span>🏛️</span>
+                <span>كلية المنار للعلوم والتكنولوجيا • المستوى الثالث (الترم الثاني)</span>
+            </div>
+
+            <!-- عناوين المقرر -->
+            <h1 class="course-hero-title">أساسيات تطوير البرمجيات</h1>
+            <h2 class="course-hero-subtitle">Fundamentals of Software Development (Clean Code & Craftsmanship)</h2>
+
+            <!-- وسوم بيانات المقرر -->
+            <div class="course-hero-meta-row">
+                <div class="course-meta-pill">
+                    <span>👨‍🏫</span>
+                    <span>أستاذ المقرر: <strong>د. عبدالرزاق الأهدل & أ. وليد الشراعي</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>🏛️</span>
+                    <span>مقرر مشترك: <strong>الأمن السيبراني وشبكات & IT</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>📚</span>
+                    <span>المحاضرات: <strong>2 متاحة للدراسة من إجمالي 12 محاضرة</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>🎯</span>
+                    <span>المخرجات: <strong>13 هدفاً أكاديمياً و 11 مخرج تعلم عملي</strong></span>
+                </div>
+            </div>
+
+            <!-- المقولة التأسيسية للمقرر -->
+            <div class="course-hero-quote">
+                💡 «البرمجة ليست مجرد كتابة شيفرة تعمل، بل هي عملية هندسية منظمة لتحويل المشكلات إلى حلول برمجية موثوقة وآمنة وقابلة للتطوير والصيانة.»
+            </div>
+
+            <!-- أزرار الإجراء السريع والتنقل بين المحاضرات -->
+            <div class="course-hero-actions">
+                <a href="Lecture-01.html" class="btn btn-primary" style="background:#ffffff; color:var(--course-theme-deep, #1a365d); font-weight:800;">
+                    <span>ابدأ دراسة المحاضرة 1</span>
+                    <span>⬅️</span>
+                </a>
+                <a href="../courses.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4); color:#ffffff;">
+                    <span>📚 كل المقررات</span>
+                </a>
+                <div class="quick-jump-pills">
+                    <span style="font-size:var(--text-xs); color:rgba(255,255,255,0.8); font-weight:700; margin-left:var(--space-1);">الوصول السريع:</span>
+                    <a href="Lecture-01.html" class="quick-jump-pill">المحاضرة 01</a>
+                    <a href="Lecture-02.html" class="quick-jump-pill">المحاضرة 02</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==============================================================================
+         محتوى بوابة المقرر الرئيسي
+         ============================================================================== -->
+    <main class="course-portal-container">
+
+        <!-- إحصائيات المقرر الأكاديمية الحقيقية -->
+        <section class="stats-summary-grid" aria-label="إحصائيات المقرر">
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(37, 99, 235, 0.1); color:var(--secondary);">
+                    <span>📚</span>
+                </div>
+                <div class="stat-details">
+                    <h4>2 / 12 محاضرة</h4>
+                    <p>محاضرتان منشورتان (10 قيد الإعداد الأكاديمي)</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(237, 137, 54, 0.1); color:#ed8936;">
+                    <span>🎯</span>
+                </div>
+                <div class="stat-details">
+                    <h4>13 هدفاً تعليمياً</h4>
+                    <p>من المبادئ الأساسية إلى الاحتراف البرمجي</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(56, 161, 105, 0.1); color:#38a169;">
+                    <span>🏆</span>
+                </div>
+                <div class="stat-details">
+                    <h4>11 مخرج تعلم</h4>
+                    <p>مهارات هندسية تطبيقية قابلة للقياس</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(128, 90, 213, 0.1); color:#805ad5;">
+                    <span>🧪</span>
+                </div>
+                <div class="stat-details">
+                    <h4>15 سؤال مراجعة</h4>
+                    <p>كوزات واختبارات تقييمية + واجب مشروع عملي</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- أهداف ومفردات المقرر -->
+        <section class="overview-grid" aria-label="نظرة عامة على المقرر">
+            <div class="overview-box">
+                <h3><span>🎯</span> أهداف المقرر الأكاديمية (13 هدفاً)</h3>
+                <ol class="objectives-list" style="margin-right:1.2rem; font-size:0.92rem; line-height:1.75; color:var(--text-dark);">
+                    <li><strong>الانتقال من البرمجة إلى التطوير الاحترافي:</strong> فهم الفرق بين كتابة الشيفرة وبناء منتج برمجي متكامل.</li>
+                    <li><strong>إتقان أدوات التطوير:</strong> التعامل مع محررات الشيفرة، والطرفية، والمصححات، ومديري المكتبات والتبعيات.</li>
+                    <li><strong>تحسين جودة الشيفرة:</strong> تطبيق مبادئ التسمية الواضحة، وتقليل التكرار، وإعادة الهيكلة (Refactoring).</li>
+                    <li><strong>التصميم البرمجي الجيد:</strong> استخدام التجريد والتقسيم إلى وحدات ومبادئ SOLID الأساسية.</li>
+                    <li><strong>مهارات التشخيص:</strong> اكتشاف الأخطاء البرمجية وتحديد أسبابها الجذرية وإصلاحها.</li>
+                    <li><strong>الاختبارات الآلية:</strong> كتابة اختبارات تتحقق من صحة وظائف البرنامج وتمنع عودة الأخطاء.</li>
+                    <li><strong>إدارة الإصدارات والتعاون:</strong> استخدام Git والفروع وعمليات الدمج ومراجعة الشيفرة.</li>
+                    <li><strong>التعامل مع قواعد البيانات:</strong> تنفيذ عمليات CRUD مع المحافظة على سلامة البيانات والمعاملات.</li>
+                    <li><strong>تطوير واجهات API:</strong> بناء خدمات تسمح للتطبيقات بالتواصل وتبادل البيانات عبر HTTP وJSON.</li>
+                    <li><strong>أساسيات الأمن البرمجي:</strong> التحقق من المدخلات، وحماية كلمات المرور، ومنع ثغرات SQLi و XSS.</li>
+                    <li><strong>تحسين الأداء:</strong> كتابة شيفرة تستهلك الموارد بكفاءة وتستجيب بسرعة.</li>
+                    <li><strong>النشر والتشغيل:</strong> نقل التطبيق من بيئة التطوير إلى خادم حقيقي ومراقبة أدائه.</li>
+                    <li><strong>بناء عقلية المهندس:</strong> التفكير التحليلي، والتعلم المستمر، وحل المشكلات المعقدة.</li>
+                </ol>
+            </div>
+
+            <div class="overview-box">
+                <h3><span>📑</span> المحاور والمفردات الدراسية (12 محوراً)</h3>
+                <div class="syllabus-tags">
+                    <span class="s-tag done">✓ بيئة التطوير الاحترافية وأدوات المطور</span>
+                    <span class="s-tag done">✓ الشيفرة النظيفة وإعادة الهيكلة (Clean Code)</span>
+                    <span class="s-tag">التصميم البرمجي ومبادئ SOLID</span>
+                    <span class="s-tag">تشخيص الأخطاء وحل المشكلات (Debugging)</span>
+                    <span class="s-tag">الاختبارات الآلية وضمان الجودة (Testing)</span>
+                    <span class="s-tag">إدارة الإصدارات والعمل الجماعي (Git & GitHub)</span>
+                    <span class="s-tag">التعامل مع البيانات وقواعد البيانات (CRUD)</span>
+                    <span class="s-tag">تطوير واجهات البرمجة (RESTful APIs)</span>
+                    <span class="s-tag">أساسيات الأمن البرمجي (Secure Coding)</span>
+                    <span class="s-tag">الأداء والتحسين وقابلية التوسع (Optimization)</span>
+                    <span class="s-tag">النشر وبيئات التشغيل (Deployment)</span>
+                    <span class="s-tag">هندسة الحلول وبناء منتج متكامل</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- مقارنة الشيفرة النظيفة مقابل الشيفرة القديمة -->
+        <section class="comparison-box" aria-label="مقارنة هندسية">
+            <h3><span>⚖️</span> مقارنة هندسية: الشيفرة النظيفة (Clean Code) مقابل الشيفرة القديمة (Legacy Code)</h3>
+            <div style="overflow-x:auto;">
+                <table class="academic-table comparison-table" style="width:100%; font-size:0.92rem;">
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">المعيار</th>
+                            <th style="width:40%;">الشيفرة النظيفة (Clean Code)</th>
+                            <th style="width:40%;">الشيفرة القديمة / غير المنظمة (Legacy Code)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>قابلية القراءة</strong></td>
+                            <td>واضحة ومباشرة؛ تقرأ كالنثر وتُفهم نيتها سريعاً.</td>
+                            <td>غامضة ومربكة؛ تحتاج جهداً كبيراً لتتبع مسار تنفيذها.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>التسمية</strong></td>
+                            <td>أسماء دلالية تصف الهدف والوظيفة بدقة.</td>
+                            <td>أسماء مختصرة أو مضللة مثل (x, temp, data1, func).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>حجم الدوال</strong></td>
+                            <td>دوال صغيرة ومحددة تؤدي مهمة واحدة فقط (Single Responsibility).</td>
+                            <td>دوال ضخمة تتجاوز مئات الأسطر وتؤدي مهام متعددة ومتشابكة.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>التكرار (DRY)</strong></td>
+                            <td>المنطق موحد ومُعاد استخدامه في دوال أو وحدات مستقلة.</td>
+                            <td>شيفرات مكررة ومنسوخة في مواضع متعددة من النظام.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>الاختبارات</strong></td>
+                            <td>مغطاة باختبارات آلية تضمن صحة التعديلات وسرعة اكتشاف الأخطاء.</td>
+                            <td>تفتقر إلى الاختبارات؛ أي تعديل قد يسبب انهيار أجزاء أخرى.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>سهولة الصيانة</strong></td>
+                            <td>التعديل والإضافة عليها سريع ومنخفض التكلفة والمخاطر.</td>
+                            <td>التعديل بطيء ومكلف ومحفوف بالخوف من حدوث أخطاء غير متوقعة.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==============================================================================
+             قسم محاضرات المقرر الأساسية
+             ============================================================================== -->
+        <section class="course-lectures-section" aria-label="محاضرات المقرر">
+            
+            <div class="section-header">
+                <h2>
+                    <span>📚 محاضرات المقرر (12 محاضرة)</span>
+                    <span class="lecture-count-badge" id="lectureCountLabel">(محاضرتان متاحتان + 10 قيد الإعداد)</span>
+                </h2>
+            </div>
+
+            <!-- شريط أدوات البحث وتصفية المحاضرات -->
+            <div class="lecture-toolbar">
+                <div class="lecture-search-wrapper">
+                    <input type="text" id="lectureSearch" class="lecture-search-input" placeholder="ابحث في عناوين وموضوعات المحاضرات..." aria-label="بحث في محاضرات المقرر">
+                    <span class="lecture-search-icon">🔍</span>
+                </div>
+
+                <div class="lecture-filters">
+                    <button class="lecture-filter-btn active" onclick="filterLectures('all', this)">جميع المحاضرات (12)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('available', this)">متاحة للدراسة (2)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('pending', this)">قيد الإعداد (10)</button>
+                </div>
+            </div>
+
+            <!-- قائمة بطاقات المحاضرات -->
+            <div class="lectures-list" id="lecturesList">
+                
+                <!-- المحاضرة 01 (متاحة) -->
+                <a href="Lecture-01.html" class="lecture-card available" data-status="available">
+                    <div class="lecture-info">
+                        <div class="lecture-number">01</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الأولى: بيئة التطوير الاحترافية وأدوات المطور</h3>
+                            <p>محرر الشيفرة وإعداداته، الطرفية (Terminal) وأوامرها الأساسية، مفسر/مترجم اللغة وإدارة البيئات، مدير الحزم (Package Manager)، مصحح الأخطاء (Debugger)، ونظام التحكم في الإصدارات (Git).</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🛠️ أدوات المطور</span>
+                                <span class="lecture-feature-pill">💻 Terminal & Git</span>
+                                <span class="lecture-feature-pill">📝 بنك أسئلة واختبار</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-available">🟢 مكتملة ومتاحة</span>
+                        <span class="lecture-enter-btn">ابدأ دراسة المحاضرة ⬅️</span>
+                    </div>
+                </a>
+
+                <!-- المحاضرة 02 (متاحة) -->
+                <a href="Lecture-02.html" class="lecture-card available" data-status="available">
+                    <div class="lecture-info">
+                        <div class="lecture-number">02</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة (Clean Code & Refactoring)</h3>
+                            <p>أهمية قراءة الشيفرة مقابل كتابتها، التسمية الواضحة والدلالية، الدوال الصغيرة وحيدة المسؤولية، تقليل التعليقات عبر الشيفرة ذاتية التوثيق، تجنب التكرار (DRY)، وأساليب إعادة الهيكلة دون كسر الوظائف.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">✨ مبادئ Clean Code</span>
+                                <span class="lecture-feature-pill">🔄 تقنيات Refactoring</span>
+                                <span class="lecture-feature-pill">📝 اختبار تفاعلي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-available">🟢 مكتملة ومتاحة</span>
+                        <span class="lecture-enter-btn">ابدأ دراسة المحاضرة ⬅️</span>
+                    </div>
+                </a>
+
+                <!-- المحاضرات 03 - 12 (قيد الإعداد) -->
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">03</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثالثة: التصميم البرمجي ومبادئ SOLID الأساسية</h3>
+                            <p>التقسيم إلى وحدات، تقليل الترابط وزيادة التماسك، مبادئ SOLID مع أمثلة عملية، والأنماط الشائعة في بناء التطبيقات.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">📐 مبادئ SOLID</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">04</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الرابعة: تشخيص الأخطاء وحل المشكلات (Debugging & Problem Solving)</h3>
+                            <p>أنواع الأخطاء، قراءة رسائل الخطأ، استخدام المصحح ونقاط التوقف، أساليب التفكير المنهجي في حصر المشكلات وإصلاحها.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🔍 تقنيات Debugging</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">05</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الخامسة: الاختبارات الآلية وضمان الجودة (Automated Testing & QA)</h3>
+                            <p>أهمية الاختبارات، اختبارات الوحدة (Unit Tests)، اختبارات التكامل، أطر الاختبارات، ومفهوم التطوير الموجه باختبارات (TDD).</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🧪 Unit Testing & TDD</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">06</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة السادسة: إدارة الإصدارات والعمل الجماعي (Git & Collaborative Development)</h3>
+                            <p>فلسفة Git، الفروع والدمج، حل التعارضات، طلبات السحب ومراجعة الشيفرة، ومنهجيات التعاون الجماعي في المشاريع البرمجية.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🌿 Git Branches & PRs</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">07</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة السابعة: التعامل مع البيانات وقواعد البيانات (Databases & Data Persistence)</h3>
+                            <p>تصميم الجداول والعلاقات، لغة SQL وعمليات CRUD، استخدام ORM، وإدارة المعاملات وسلامة البيانات في التطبيقات.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">💾 SQL & CRUD Operations</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">08</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثامنة: تطوير واجهات البرمجة (APIs & Web Services)</h3>
+                            <p>مبادئ REST، صياغة المسارات، التعامل مع طلبات HTTP وحالات الاستجابة، وتنسيق وتبادل البيانات عبر صيغة JSON.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🌐 RESTful APIs & JSON</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">09</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة التاسعة: أساسيات الأمان البرمجي (Secure Coding Fundamentals)</h3>
+                            <p>التحقق من المدخلات، تجنب هجمات الحقن، إدارة الجلسات والمصادقة، والتعامل الآمن مع البيانات الحساسة وكلمات المرور.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🛡️ Secure Coding Basics</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">10</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة العاشرة: الأداء والتحسين وقابلية التوسع (Performance & Optimization)</h3>
+                            <p>قياس استهلاك الذاكرة والمعالج، تحسين الاستعلامات، استخدام التخزين المؤقت (Caching)، وكتابة شيفرة تستجيب بكفاءة تحت الضغط.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">⚡ Caching & Optimization</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">11</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الحادية عشرة: النشر وبيئات التشغيل (Deployment & DevOps Basics)</h3>
+                            <p>الفرق بين بيئة التطوير والإنتاج، متغيرات البيئة، إعداد خادم التشغيل، واستخدام الحاويات (Docker) لتوحيد بيئة العمل.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🚀 Deployment & Docker</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">12</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثانية عشرة: هندسة الحلول وبناء منتج متكامل (Software Craftsmanship)</h3>
+                            <p>مراجعة شاملة لجميع مراحل التطوير، تقييم المشروع الفردي والجماعي، وأفضل الممارسات المستمرة في مسيرة المطور المحترف.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🏆 Capstone & Craftsmanship</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- رسالة عند عدم وجود نتائج للبحث -->
+            <div id="noLecturesMsg" class="empty-state" style="display:none; text-align:center; padding:var(--space-8); background:var(--surface); border:1px solid var(--border-color); border-radius:var(--radius-xl); margin-top:var(--space-4);">
+                <div style="font-size:2.5rem; margin-bottom:var(--space-2);">🔍</div>
+                <h4 style="color:var(--primary); margin-bottom:var(--space-2);">لم يتم العثور على محاضرات مطابقة</h4>
+                <p style="color:var(--text-muted); font-size:var(--text-sm); margin-bottom:var(--space-4);">يرجى تجربة كلمات بحث أخرى أو الضغط على زر استعراض جميع المحاضرات.</p>
+                <button onclick="document.getElementById('lectureSearch').value=''; filterLectures('all');" class="btn btn-primary" style="font-size:var(--text-xs);">عرض كل المحاضرات</button>
+            </div>
+
+        </section>
+
+        <!-- مخرجات التعلم المتوقعة (11 مخرج) -->
+        <section class="outcomes-box" aria-label="مخرجات التعلم المتوقعة" style="margin-top:var(--space-8);">
+            <h3><span>🏆</span> مخرجات التعلم المتوقعة — بنهاية المقرر، يُتوقع أن يكون الطالب قادراً على:</h3>
+            <div class="outcomes-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:var(--space-3); margin-top:var(--space-4);">
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">1</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">تجهيز مشروع برمجي قائم وتشغيله وفهم مكوناته وبنيته التحتية.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">2</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">قراءة الشيفرة المكتوبة مسبقاً وتحسين تنظيمها وإعادة هيكلتها (Refactoring).</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">3</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">تصميم وحدات برمجية واضحة وتقليل الترابط غير الضروري بينها.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">4</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">استخدام أدوات تصحيح الأخطاء وكتابة اختبارات آلية فعالة تمنع الانحدار.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">5</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">إدارة التغييرات باستخدام Git والتعاون الاحترافي في تطوير مشروع برمجي.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">6</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">إنشاء تطبيق متصل بقاعدة بيانات علائقية مع تنفيذ عمليات CRUD الآمنة.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">7</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">تصميم واجهة API واختبار طلبات واستجابات HTTP بصورة منهجية عبر JSON.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">8</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">تطبيق ضوابط أمنية أساسية في الشيفرة ومنع الثغرات الشائعة (SQLi & XSS).</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">9</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">فهم مشكلات الأداء الشائعة وكيفية قياسها والتعامل معها بنجاح.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">10</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">نشر تطبيق ويب بسيط وتأمين تشغيله ومراقبته في بيئة الإنتاج.</span>
+                </div>
+                <div class="outcome-item" style="display:flex; align-items:flex-start; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--surface-soft); border:1px solid var(--border-color); border-radius:var(--radius-lg);">
+                    <span class="outcome-num" style="background:var(--secondary); color:#fff; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">11</span>
+                    <span style="font-size:0.9rem; color:var(--text-dark); line-height:1.6;">العمل باستقلالية داخل مشروع برمجي وتعلّم تقنيات وأدوات جديدة بفاعلية.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- واجب مشروع التطبيق العملي للترم -->
+        <section class="assignment-box" aria-label="واجب المشروع العملي" style="margin-top:var(--space-8); background:var(--surface); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:var(--space-6); box-shadow:var(--card-shadow); border-top:4px solid var(--secondary);">
+            <h3 style="color:var(--primary); font-size:1.3rem; margin-bottom:var(--space-2); display:flex; align-items:center; gap:var(--space-2);">
+                <span>📝</span> واجب مشروع التطبيق العملي للترم
+            </h3>
+            <p style="color:var(--text-muted); font-size:0.92rem; line-height:1.7; margin-bottom:var(--space-4);">
+                يُطلب من كل طالب (أو فريق ثنائي) بناء تطبيق برمجي مصغر يُغطي المحاور المدروسة، متضمناً:
+            </p>
+            <ul style="margin-right:1.4rem; font-size:0.9rem; color:var(--text-dark); line-height:1.75;">
+                <li>مستودع Git مُدار باحترافية يحتوي على فروع ورسائل حفظ واضحة (Conventional Commits).</li>
+                <li>شيفرة برمجية تطبق معايير الشيفرة النظيفة (Clean Code) والتقسيم إلى وحدات مستقلة.</li>
+                <li>اتصال بقاعدة بيانات وإجراء عمليات CRUD مع معالجة الأخطاء والتحقق من المدخلات.</li>
+                <li>واجهة API بسيطة أو واجهة مستخدم تفاعلية تتواصل مع الخادم عبر صيغة JSON.</li>
+                <li>مجموعة اختبارات آلية تتحقق من صحة الوظائف الحيوية في التطبيق.</li>
+                <li>ملف توثيق (README.md) يوضح خطوات التثبيت والتشغيل وهيكل المشروع البرمجي.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- التذييل الموحد المركزي -->
+    <div id="site-footer"></div>
+
+    <!-- البرمجيات المشتركة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/course-portal.js"></script>
+</body>
+</html>

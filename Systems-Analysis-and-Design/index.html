@@ -4,686 +4,361 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بوابة مقرر: أساسيات تحليل وتصميم النظم | Systems Analysis & Design</title>
-    <style>
-        :root {
-            --primary: #1a365d;
-            --primary-dark: #102a43;
-            --secondary: #2b6cb0;
-            --accent: #ed8936;
-            --accent-light: #feebc8;
-            --bg-light: #f7fafc;
-            --text-dark: #2d3748;
-            --text-muted: #718096;
-            --success: #38a169;
-            --success-bg: #f0fff4;
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-            --hover-shadow: 0 12px 24px rgba(26, 54, 93, 0.14);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-
-        /* Top Bar Navigation */
-        .top-bar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .breadcrumb-nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0.85rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .breadcrumb-links {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .breadcrumb-links a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.2s;
-        }
-
-        .breadcrumb-links a:hover {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        .breadcrumb-links span {
-            color: var(--text-muted);
-        }
-
-        .quick-jump {
-            display: flex;
-            gap: 0.6rem;
-        }
-
-        .nav-pill {
-            background: #edf2f7;
-            color: var(--primary);
-            text-decoration: none;
-            padding: 0.35rem 0.95rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-
-        .nav-pill:hover {
-            background: var(--secondary);
-            color: white;
-        }
-
-        /* Hero Course Header */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 4rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 5px solid var(--accent);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: -10%;
-            width: 420px;
-            height: 420px;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .course-badge {
-            background-color: rgba(255, 255, 255, 0.18);
-            padding: 0.35rem 1.1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.4rem;
-            font-weight: 800;
-        }
-
-        header h2 {
-            font-size: 1.2rem;
-            font-family: monospace;
-            color: #bee3f8;
-            margin-bottom: 1.2rem;
-            font-weight: normal;
-        }
-
-        header p {
-            font-size: 1.12rem;
-            opacity: 0.92;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1150px;
-            margin: -2.8rem auto 3rem;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Stats Overview Row */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.4rem 1.5rem;
-            box-shadow: var(--card-shadow);
-            border-top: 4px solid var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .stat-icon {
-            font-size: 2.2rem;
-            background: #ebf8ff;
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .stat-info h4 {
-            font-size: 1.4rem;
-            color: var(--primary);
-            line-height: 1.2;
-        }
-
-        .stat-info span {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        /* Course Overview & Syllabus Cards */
-        .overview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .overview-box {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: var(--card-shadow);
-            border: 1px solid #edf2f7;
-        }
-
-        .overview-box h3 {
-            color: var(--primary);
-            font-size: 1.35rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 2px solid #edf2f7;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .syllabus-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.8rem;
-        }
-
-        .s-tag {
-            background: #f8fafc;
-            border: 1px solid #cbd5e0;
-            color: var(--primary-dark);
-            padding: 0.4rem 0.85rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .s-tag.done {
-            background: var(--success-bg);
-            border-color: var(--success);
-            color: #22543d;
-        }
-
-        .objectives-list {
-            margin-right: 1.4rem;
-            font-size: 0.95rem;
-        }
-
-        .objectives-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Section Header & Filter Buttons */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 0.8rem;
-        }
-
-        .section-header h2 {
-            color: var(--primary);
-            font-size: 1.75rem;
-        }
-
-        .filter-btns {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .filter-btn {
-            background: white;
-            border: 1px solid #cbd5e0;
-            color: var(--text-dark);
-            padding: 0.45rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Lectures List */
-        .lectures-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .lecture-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.8rem 2rem;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-            border-right: 6px solid var(--secondary);
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-            border-top: 1px solid #edf2f7;
-            border-bottom: 1px solid #edf2f7;
-            border-left: 1px solid #edf2f7;
-        }
-
-        .lecture-card:hover {
-            transform: translateX(-6px);
-            box-shadow: var(--hover-shadow);
-            border-right-color: var(--accent);
-        }
-
-        .lecture-info {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            flex: 1;
-        }
-
-        .lecture-number {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(43, 108, 176, 0.25);
-        }
-
-        .lecture-details h3 {
-            font-size: 1.35rem;
-            color: var(--primary);
-            margin-bottom: 0.4rem;
-        }
-
-        .lecture-details p {
-            color: var(--text-muted);
-            font-size: 0.96rem;
-            margin-bottom: 0.9rem;
-        }
-
-        .lecture-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .feat-badge {
-            background: #ebf8ff;
-            color: var(--secondary);
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.2rem 0.65rem;
-            border-radius: 6px;
-        }
-
-        .lecture-status {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.8rem;
-            flex-shrink: 0;
-        }
-
-        .status-badge {
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: bold;
-        }
-
-        .status-available {
-            background-color: #c6f6d5;
-            color: #22543d;
-        }
-
-        .status-pending {
-            background-color: #edf2f7;
-            color: #4a5568;
-        }
-
-        .btn-enter {
-            background-color: var(--secondary);
-            color: white;
-            padding: 0.65rem 1.4rem;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 0.95rem;
-            transition: background-color 0.2s;
-            white-space: nowrap;
-        }
-
-        .lecture-card:hover .btn-enter {
-            background-color: var(--primary);
-        }
-
-        /* Disabled Card Style for upcoming lectures */
-        .lecture-card.disabled {
-            border-right-color: #cbd5e0;
-            opacity: 0.78;
-            cursor: default;
-            background: #fcfcfc;
-        }
-
-        .lecture-card.disabled:hover {
-            transform: none;
-            box-shadow: var(--card-shadow);
-            border-right-color: #cbd5e0;
-        }
-
-        .lecture-card.disabled .lecture-number {
-            background: #e2e8f0;
-            color: #718096;
-            box-shadow: none;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-            color: var(--text-muted);
-            border-top: 1px solid #e2e8f0;
-            margin-top: 4rem;
-            background: white;
-        }
-
-        @media (max-width: 768px) {
-            .lecture-card {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 1.4rem;
-            }
-            .lecture-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .lecture-status {
-                width: 100%;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                border-top: 1px solid #edf2f7;
-                padding-top: 1rem;
-            }
-            header h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
-<body>
+<body data-course="systems-analysis-and-design" data-course-id="sad">
 
-    <!-- الشريط العلوي ومسار التنقل -->
-    <div class="top-bar">
-        <div class="breadcrumb-nav">
-            <div class="breadcrumb-links">
-                <a href="../index.html">🏠 المنصة الرئيسية</a>
-                <span>/</span>
-                <span>بوابة مقرر: تحليل وتصميم نظم</span>
+    <!-- ==============================================================================
+         شريط التنقل العلوي الموحد (Sticky Navigation Bar)
+         ============================================================================== -->
+    <nav class="site-navbar" id="mainNavbar">
+        <div class="site-navbar-inner">
+            
+            <!-- الهوية والشعار الأكاديمي -->
+            <a href="../index.html" class="brand-link" title="المنصة الأكاديمية - كلية المنار">
+                <div class="brand-logo-icon">🎓</div>
+                <div class="brand-text-col">
+                    <span class="brand-name">كلية المنار للعلوم والتكنولوجيا</span>
+                    <span class="brand-sub">بوابة مقرر: تحليل وتصميم النظم • M.C.S.T</span>
+                </div>
+            </a>
+
+            <!-- روابط التنقل الرئيسية (سطح المكتب) -->
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">🏠 الرئيسية</a></li>
+                <li><a href="../courses.html" class="nav-link active">📚 المقررات الدراسية</a></li>
+                <li><a href="../index.html#departments" class="nav-link">🏛️ الأقسام والتخصصات</a></li>
+                <li><a href="../index.html#stats" class="nav-link">📊 الإحصائيات</a></li>
+                <li><a href="../index.html#features" class="nav-link">⚡ مميزات المنصة</a></li>
+            </ul>
+
+            <!-- إجراءات شريط التنقل -->
+            <div class="nav-actions">
+                <!-- شارة المشرف / الطالب -->
+                <div class="nav-user-badge" title="عضو اللجنة العلمية في القسمين">
+                    <div class="user-avatar-circle">ب</div>
+                    <span>م. بشار زبله</span>
+                </div>
+
+                <!-- زر الوضع الليلي / النهاري -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل المظهر">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+
+                <!-- زر القائمة للأجهزة الذكية (Mobile Hamburger) -->
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="فتح القائمة الرئيسية" aria-expanded="false">
+                    ☰
+                </button>
             </div>
-            <div class="quick-jump">
-                <a href="Lecture-01.html" class="nav-pill">المحاضرة 1</a>
-                <a href="Lecture-02.html" class="nav-pill">المحاضرة 2</a>
-            </div>
+
         </div>
-    </div>
+    </nav>
 
-    <!-- ترويسة المقرر -->
-    <header>
-        <div class="header-content">
-            <div class="course-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | المستوى الثالث - الترم الثاني</div>
-            <h1>أساسيات تحليل وتصميم النظم</h1>
-            <h2>Systems Analysis & Design (SAD)</h2>
-            <p>مقرر مشترك بين قسمي <strong>الأمن السيبراني وشبكات</strong> و<strong>تكنولوجيا المعلومات</strong> | 👩‍🏫 أستاذ المقرر: <strong>أ. أفنان الشرفي</strong></p>
+    <!-- القائمة الجانبية للأجهزة الذكية (Mobile Off-canvas Drawer) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
+        <div class="mobile-drawer-header">
+            <div class="brand-link">
+                <div class="brand-logo-icon" style="width:34px; height:34px; font-size:1.1rem;">🎓</div>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--primary);">كلية المنار M.C.S.T</span>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
+        </div>
+
+        <ul class="mobile-nav-links">
+            <li><a href="../index.html"><span>🏠</span> المنصة الرئيسية</a></li>
+            <li><a href="../courses.html" class="active"><span>📚</span> دليل المقررات الدراسية</a></li>
+            <li><a href="../index.html#departments"><span>🏛️</span> الأقسام والتخصصات</a></li>
+            <li><a href="../index.html#stats"><span>📊</span> الإحصائيات الأكاديمية</a></li>
+            <li><a href="../index.html#features"><span>⚡</span> مميزات المنصة الذكية</a></li>
+        </ul>
+
+        <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:var(--space-3);">
+            <div class="nav-user-badge" style="justify-content:center;">
+                <div class="user-avatar-circle">ب</div>
+                <span>إعداد: م. بشار زبله</span>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin:0;">
+                المستوى الثالث — الترم الثاني (2026)
+            </p>
+        </div>
+    </aside>
+
+    <!-- ==============================================================================
+         القسم الرئيسي لمعلومات المقرر (Course Hero Header)
+         ============================================================================== -->
+    <header class="course-hero-header">
+        <div class="course-hero-inner">
+            
+            <!-- مسار التنقل (Breadcrumbs) -->
+            <nav class="breadcrumbs-trail" aria-label="مسار التصفح">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span class="breadcrumbs-sep">/</span>
+                <a href="../courses.html">📚 دليل المقررات</a>
+                <span class="breadcrumbs-sep">/</span>
+                <span class="breadcrumbs-current">تحليل وتصميم النظم</span>
+            </nav>
+
+            <!-- شارة الكلية والمستوى -->
+            <div class="course-hero-badge">
+                <span>🏛️</span>
+                <span>كلية المنار للعلوم والتكنولوجيا • المستوى الثالث (الترم الثاني)</span>
+            </div>
+
+            <!-- عناوين المقرر -->
+            <h1 class="course-hero-title">أساسيات تحليل وتصميم النظم</h1>
+            <h2 class="course-hero-subtitle">Systems Analysis & Design (SAD)</h2>
+
+            <!-- وسوم بيانات المقرر -->
+            <div class="course-hero-meta-row">
+                <div class="course-meta-pill">
+                    <span>👩‍🏫</span>
+                    <span>أستاذ المقرر: <strong>أ. أفنان الشرفي</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>🏛️</span>
+                    <span>مقرر مشترك: <strong>الأمن السيبراني وشبكات & IT</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>📚</span>
+                    <span>المحاضرات: <strong>محاضرتان متاحتان + محاضرتان قيد الإعداد</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>🔄</span>
+                    <span>المنهجية: <strong>دورة حياة تطوير النظم (SDLC) ونمذجة DFD</strong></span>
+                </div>
+            </div>
+
+            <!-- أزرار الإجراء السريع والتنقل بين المحاضرات -->
+            <div class="course-hero-actions">
+                <a href="Lecture-01.html" class="btn btn-primary" style="background:#ffffff; color:var(--course-theme-deep, #134e4a); font-weight:800;">
+                    <span>ابدأ دراسة المحاضرة 1</span>
+                    <span>⬅️</span>
+                </a>
+                <a href="../courses.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4); color:#ffffff;">
+                    <span>📚 كل المقررات</span>
+                </a>
+                <div class="quick-jump-pills">
+                    <span style="font-size:var(--text-xs); color:rgba(255,255,255,0.8); font-weight:700; margin-left:var(--space-1);">الوصول السريع:</span>
+                    <a href="Lecture-01.html" class="quick-jump-pill">المحاضرة 01</a>
+                    <a href="Lecture-02.html" class="quick-jump-pill">المحاضرة 02</a>
+                </div>
+            </div>
+
         </div>
     </header>
 
-    <div class="container">
-        
-        <!-- إحصائيات المقرر التفاعلية -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">📚</div>
-                <div class="stat-info">
-                    <h4>2 محاضرات</h4>
-                    <span>منشورة وجاهزة للدراسة</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: var(--success);">
-                <div class="stat-icon" style="background: #f0fff4;">🖼️</div>
-                <div class="stat-info">
-                    <h4>8+ مخططات</h4>
-                    <span>رسوم ومستكشفات تفاعلية</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: var(--accent);">
-                <div class="stat-icon" style="background: #fffaf0;">🗂️</div>
-                <div class="stat-info">
-                    <h4>16 بطاقة</h4>
-                    <span>بطاقات استذكار للمصطلحات</span>
-                </div>
-            </div>
-            <div class="stat-card" style="border-top-color: #805ad5;">
-                <div class="stat-icon" style="background: #faf5ff;">✅</div>
-                <div class="stat-info">
-                    <h4>24 سؤالاً</h4>
-                    <span>اختبارات ومختبرات تطبيقية</span>
-                </div>
-            </div>
-        </div>
+    <!-- ==============================================================================
+         محتوى بوابة المقرر الرئيسي
+         ============================================================================== -->
+    <main class="course-portal-container">
 
-        <!-- نظرة عامة على مفردات وأهداف المقرر -->
-        <div class="overview-grid">
+        <!-- إحصائيات المقرر الأكاديمية الحقيقية -->
+        <section class="stats-summary-grid" aria-label="إحصائيات المقرر">
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(13, 148, 136, 0.1); color:var(--secondary);">
+                    <span>📚</span>
+                </div>
+                <div class="stat-details">
+                    <h4>2 محاضرات متاحة</h4>
+                    <p>منشورة ومتاحة بالكامل للدراسة</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(16, 185, 129, 0.1); color:#10b981;">
+                    <span>🖼️</span>
+                </div>
+                <div class="stat-details">
+                    <h4>8+ مخططات هندسية</h4>
+                    <p>رسوم ومستكشفات تفاعلية لـ SDLC و DFD</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(245, 158, 11, 0.1); color:#f59e0b;">
+                    <span>🗂️</span>
+                </div>
+                <div class="stat-details">
+                    <h4>16 بطاقة استذكار</h4>
+                    <p>بطاقات مصطلحات ومفاهيم دور المحلل</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(128, 90, 213, 0.1); color:#805ad5;">
+                    <span>✅</span>
+                </div>
+                <div class="stat-details">
+                    <h4>24 سؤال تقييم</h4>
+                    <p>اختبارات تفاعلية ومختبرات مواقف عملية</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- أهداف ومفردات المقرر -->
+        <section class="overview-grid" aria-label="نظرة عامة على المقرر">
             <div class="overview-box">
-                <h3>🗺️ خارطة مفردات المقرر</h3>
-                <p style="font-size:0.93rem; color:var(--text-muted);">الموضوعات المعتمدة في خطة مقرر أساسيات تحليل وتصميم النظم (العلامة الخضراء تعني أنه تم تغطيتها):</p>
+                <h3><span>🎯</span> أهداف المقرر ومخرجات التعلم</h3>
+                <ul class="objectives-list">
+                    <li>فهم الأسس النظرية لتحليل وتصميم نظم المعلومات ومكوناتها الخمسة وعناصر البيئة المحيطة.</li>
+                    <li>إتقان مراحل دورة حياة تطوير النظم (SDLC) من التخطيط والتحليل حتى التصميم والتنفيذ والصيانة.</li>
+                    <li>التعرف على المهارات والصفات الأساسية لمحلل النظم والأدوار التخصصية المختلفة في فرق العمل.</li>
+                    <li>استخدام أدوات النمذجة المنطقية والمخططات البيانية (Data Flow Diagrams - DFD).</li>
+                    <li>تقييم المشكلات التشغيلية للمؤسسات وصياغة متطلبات الحلول البرمجية المؤتمتة.</li>
+                </ul>
+            </div>
+
+            <div class="overview-box">
+                <h3><span>🗺️</span> خارطة مفردات المقرر المعتمدة</h3>
+                <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:var(--space-3);">الموضوعات المعتمدة في خطة المقرر (العلامة الخضراء توضح الموضوعات المغطاة):</p>
                 <div class="syllabus-tags">
-                    <span class="s-tag done">✓ مفاهيم أساسية في النظم</span>
-                    <span class="s-tag done">✓ محلل النظم وتطوير النظام</span>
-                    <span class="s-tag done">✓ دورة حياة النظام (SDLC)</span>
-                    <span class="s-tag">⏳ مرحلة التخطيط بالتفصيل</span>
-                    <span class="s-tag">⏳ تحليل الأنظمة</span>
-                    <span class="s-tag">⏳ تصميم المدخلات والمخرجات</span>
-                    <span class="s-tag">⏳ تصميم الإجراءات والنماذج</span>
-                    <span class="s-tag">⏳ التنفيذ ودراسة الحالة</span>
+                    <span class="s-tag done">✓ مفاهيم أساسية في النظم وعناصرها</span>
+                    <span class="s-tag done">✓ دور محلل النظم والمهارات المطلوبة</span>
+                    <span class="s-tag done">✓ دورة حياة تطوير النظام (SDLC بالتفصيل)</span>
+                    <span class="s-tag">⏳ مرحلة التخطيط ودراسة الجدوى الفنية والاقتصادية</span>
+                    <span class="s-tag">⏳ تحليل الأنظمة وتحديد المتطلبات</span>
+                    <span class="s-tag">⏳ تصميم المدخلات والمخرجات ونماذج البيانات</span>
+                    <span class="s-tag">⏳ تصميم الإجراءات والمخططات (DFD / UML)</span>
+                    <span class="s-tag">⏳ التنفيذ ودراسة الحالة التطبيقية</span>
                 </div>
             </div>
+        </section>
 
-            <div class="overview-box">
-                <h3>🎯 المخرجات التعليمية للمقرر</h3>
-                <ol class="objectives-list">
-                    <li>التعرف الدقيق على تحليل وتصميم نظم المعلومات ومكوناتها الخمسة.</li>
-                    <li>تبيان الأهداف والغايات الخمس لدراسة تحليل وتصميم النظم (الفعالية، الكفاءة، الوثوقية..).</li>
-                    <li>تعداد وإتقان مراحل دورة حياة تطوير النظم (SDLC) الأربع ووثائقها.</li>
-                    <li>عكس المهارات العملية والأدوار التخصصية الستة اللازمة لمحلل النظم.</li>
-                    <li>امتلاك القدرة الهندسية على تحليل وتصميم نظم المعلومات وتنفيذ دراسة الحالة.</li>
-                </ol>
-            </div>
-        </div>
-
-        <!-- قائمة المحاضرات مع أزرار الفلترة -->
-        <div class="section-header">
-            <h2>📖 فهرس المحاضرات التفاعلية</h2>
-            <div class="filter-btns">
-                <button class="filter-btn active" onclick="filterLectures('all', this)">الكل</button>
-                <button class="filter-btn" onclick="filterLectures('available', this)">المتاحة حالياً (2)</button>
-                <button class="filter-btn" onclick="filterLectures('upcoming', this)">القادمة</button>
-            </div>
-        </div>
-
-        <div class="lectures-list" id="lectures-container">
+        <!-- ==============================================================================
+             قسم محاضرات المقرر الأساسية
+             ============================================================================== -->
+        <section class="course-lectures-section" aria-label="محاضرات المقرر">
             
-            <!-- المحاضرة الأولى (متاحة) -->
-            <a href="Lecture-01.html" class="lecture-card" data-status="available">
-                <div class="lecture-info">
-                    <div class="lecture-number">01</div>
-                    <div class="lecture-details">
-                        <h3>المحاضرة الأولى: أساسيات ونظم المعلومات</h3>
-                        <p>مفهوم وماهية النظام، عناصر النظام وحدوده وبيئته، النموذج العام للنظام (المدخلات الأساسية والاستبدالية والبيئية، المعالجة، المخرجات النهائية والارتدادية)، مثال نظام الجامعة، النظم الفرعية، التصنيفات الأربعة للنظم، مكونات نظام المعلومات الخمسة، وأهداف وغايات تحليل وتصميم النظم.</p>
-                        <div class="lecture-features">
-                            <span class="feat-badge">📐 5 مخططات SVG</span>
-                            <span class="feat-badge">🏛️ مستكشف نظام الجامعة</span>
-                            <span class="feat-badge">🧪 مختبر تطبيقي</span>
-                            <span class="feat-badge">🗂️ 8 بطاقات استذكار</span>
-                            <span class="feat-badge">✅ اختبار من 8 أسئلة</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="lecture-status">
-                    <span class="status-badge status-available">✓ مكتملة ومتاحة</span>
-                    <span class="btn-enter">ادخل للمحاضرة ←</span>
-                </div>
-            </a>
+            <div class="section-header">
+                <h2>
+                    <span>📚 محاضرات المقرر</span>
+                    <span class="lecture-count-badge" id="lectureCountLabel">(محاضرتان متاحتان + محاضرتان قيد الإعداد)</span>
+                </h2>
+            </div>
 
-            <!-- المحاضرة الثانية (متاحة) -->
-            <a href="Lecture-02.html" class="lecture-card" data-status="available">
-                <div class="lecture-info">
-                    <div class="lecture-number">02</div>
-                    <div class="lecture-details">
-                        <h3>المحاضرة الثانية: محلل النظام وتطوير نظم المعلومات</h3>
-                        <p>ماهية عملية تحليل النظم والأسباب الأربعة الداعية لها، مؤهلات وصفات محلل النظم، الأدوار التخصصية الستة (محلل النظم، الأعمال، المتطلبات، البنية التحتية، إدارة التغيير، ومدير المشروع)، المشاكل الأربعة وأساليب التحليل (التصاعدي والتنازلي)، والتفصيل الكامل لمراحل دورة حياة تطوير النظام (SDLC) الأربع وخطواتها ووثائقها.</p>
-                        <div class="lecture-features">
-                            <span class="feat-badge">🎭 مستكشف الأدوار الستة</span>
-                            <span class="feat-badge">🔄 مخطط SDLC التفاعلي</span>
-                            <span class="feat-badge">🧪 مختبر مواقف عملية</span>
-                            <span class="feat-badge">🗂️ 8 بطاقات استذكار</span>
-                            <span class="feat-badge">✅ اختبار من 8 أسئلة</span>
-                        </div>
-                    </div>
+            <!-- شريط أدوات البحث وتصفية المحاضرات -->
+            <div class="lecture-toolbar">
+                <div class="lecture-search-wrapper">
+                    <input type="text" id="lectureSearch" class="lecture-search-input" placeholder="ابحث في عناوين وموضوعات المحاضرات..." aria-label="بحث في محاضرات المقرر">
+                    <span class="lecture-search-icon">🔍</span>
                 </div>
-                <div class="lecture-status">
-                    <span class="status-badge status-available">✓ مكتملة ومتاحة</span>
-                    <span class="btn-enter">ادخل للمحاضرة ←</span>
-                </div>
-            </a>
 
-            <!-- المحاضرة الثالثة (قادمة) -->
-            <div class="lecture-card disabled" data-status="upcoming">
-                <div class="lecture-info">
-                    <div class="lecture-number">03</div>
-                    <div class="lecture-details">
-                        <h3>المحاضرة الثالثة: التخطيط وتحليل الجدوى وإدارة المشروع</h3>
-                        <p>بانتظار رفع ملف المحاضرة الثالثة لتحليله بالكامل وتحويله إلى تجربة تعليمية تفاعلية.</p>
-                    </div>
-                </div>
-                <div class="lecture-status">
-                    <span class="status-badge status-pending">⏳ قيد الإعداد</span>
+                <div class="lecture-filters">
+                    <button class="lecture-filter-btn active" onclick="filterLectures('all', this)">جميع المحاضرات (4)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('available', this)">متاحة للدراسة (2)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('pending', this)">قيد الإعداد (2)</button>
                 </div>
             </div>
 
-            <!-- المحاضرة الرابعة (قادمة) -->
-            <div class="lecture-card disabled" data-status="upcoming">
-                <div class="lecture-info">
-                    <div class="lecture-number">04</div>
-                    <div class="lecture-details">
-                        <h3>المحاضرة الرابعة: تحليل الأنظمة وجمع المتطلبات ونمذجة العمليات</h3>
-                        <p>بانتظار رفع ملف المحاضرة الرابعة لتحليله بالكامل وتحويله إلى تجربة تعليمية تفاعلية.</p>
+            <!-- قائمة بطاقات المحاضرات -->
+            <div class="lectures-list" id="lecturesList">
+                
+                <!-- المحاضرة الأولى (متاحة) -->
+                <a href="Lecture-01.html" class="lecture-card available" data-status="available">
+                    <div class="lecture-info">
+                        <div class="lecture-number">01</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الأولى: أساسيات ونظم المعلومات</h3>
+                            <p>تعريف النظام وعناصره الستة، خصائص النظام التسع، تصنيفات النظم، مكونات نظام المعلومات الخمسة، وأهداف وغايات تحليل وتصميم النظم الهندسية والتطبيقية.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">📐 5 مخططات SVG</span>
+                                <span class="lecture-feature-pill">🏛️ مستكشف نظام الجامعة</span>
+                                <span class="lecture-feature-pill">🧪 مختبر تطبيقي</span>
+                                <span class="lecture-feature-pill">🗂️ 8 بطاقات استذكار</span>
+                                <span class="lecture-feature-pill">✅ اختبار من 8 أسئلة</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-available">🟢 مكتملة ومتاحة</span>
+                        <span class="lecture-enter-btn">ابدأ دراسة المحاضرة ⬅️</span>
+                    </div>
+                </a>
+
+                <!-- المحاضرة الثانية (متاحة) -->
+                <a href="Lecture-02.html" class="lecture-card available" data-status="available">
+                    <div class="lecture-info">
+                        <div class="lecture-number">02</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثانية: محلل النظام وتطوير نظم المعلومات</h3>
+                            <p>ماهية عملية تحليل النظم والأسباب الأربعة الداعية لها، مؤهلات وصفات محلل النظم، الأدوار التخصصية الستة، المشاكل الأربعة وأساليب التحليل، والتفصيل الكامل لمراحل دورة حياة تطوير النظام (SDLC) الأربع ووثائقها.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🎭 مستكشف الأدوار الستة</span>
+                                <span class="lecture-feature-pill">🔄 مخطط SDLC التفاعلي</span>
+                                <span class="lecture-feature-pill">🧪 مختبر مواقف عملية</span>
+                                <span class="lecture-feature-pill">🗂️ 8 بطاقات استذكار</span>
+                                <span class="lecture-feature-pill">✅ اختبار من 8 أسئلة</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-available">🟢 مكتملة ومتاحة</span>
+                        <span class="lecture-enter-btn">ابدأ دراسة المحاضرة ⬅️</span>
+                    </div>
+                </a>
+
+                <!-- المحاضرة الثالثة (قيد الإعداد) -->
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">03</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثالثة: التخطيط وتحليل الجدوى وإدارة المشروع</h3>
+                            <p>بانتظار استكمال ملف المحاضرة الثالثة لتحليله بالكامل وتحويله إلى تجربة تعليمية تفاعلية ببنك أسئلة واختبارات قياسية.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">📊 دراسة الجدوى Feasibility</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
                     </div>
                 </div>
-                <div class="lecture-status">
-                    <span class="status-badge status-pending">⏳ قيد الإعداد</span>
+
+                <!-- المحاضرة الرابعة (قيد الإعداد) -->
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">04</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الرابعة: تحليل الأنظمة وجمع المتطلبات ونمذجة العمليات</h3>
+                            <p>بانتظار استكمال ملف المحاضرة الرابعة لتحليله بالكامل وتحويله إلى تجربة تعليمية تفاعلية ببنك أسئلة واختبارات قياسية.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🔄 مخططات DFD & UML</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد الإعداد الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
                 </div>
+
             </div>
 
-        </div>
-    </div>
+            <!-- رسالة عند عدم وجود نتائج للبحث -->
+            <div id="noLecturesMsg" class="empty-state" style="display:none; text-align:center; padding:var(--space-8); background:var(--surface); border:1px solid var(--border-color); border-radius:var(--radius-xl); margin-top:var(--space-4);">
+                <div style="font-size:2.5rem; margin-bottom:var(--space-2);">🔍</div>
+                <h4 style="color:var(--primary); margin-bottom:var(--space-2);">لم يتم العثور على محاضرات مطابقة</h4>
+                <p style="color:var(--text-muted); font-size:var(--text-sm); margin-bottom:var(--space-4);">يرجى تجربة كلمات بحث أخرى أو الضغط على زر استعراض جميع المحاضرات.</p>
+                <button onclick="document.getElementById('lectureSearch').value=''; filterLectures('all');" class="btn btn-primary" style="font-size:var(--text-xs);">عرض كل المحاضرات</button>
+            </div>
 
-    <footer>
-        <p>كلية المنار للعلوم والتكنولوجيا | قسمي الأمن السيبراني وشبكات وتكنولوجيا المعلومات - المستوى الثالث - الترم الثاني</p>
-        <p style="margin-top: 0.4rem; font-weight: 800; font-size: 1.05rem; color: var(--primary);">إعداد عضو اللجنة العلمية في القسمين م. بشار زبله</p>
-    </footer>
+        </section>
 
-    <script>
-        function filterLectures(filterType, btnEl) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btnEl.classList.add('active');
+    </main>
 
-            const cards = document.querySelectorAll('.lecture-card');
-            cards.forEach(card => {
-                const status = card.getAttribute('data-status');
-                if (filterType === 'all' || status === filterType) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
+    <!-- التذييل الموحد المركزي -->
+    <div id="site-footer"></div>
 
+    <!-- البرمجيات المشتركة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/course-portal.js"></script>
 </body>
 </html>

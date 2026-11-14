@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: دورة حياة مشروع تكنولوجيا المعلومات ومراحله الأساسية | IT Project Management</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="it-project-management">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 البوابة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">📊 مقرر إدارة المشاريع</a>
+                <span>/</span>
+                <span style="font-weight: 600;">المحاضرة الثانية: دورة حياة المشروع والاتجاهات الحديثة</span>
+            </div>
+            <div class="top-controls">
+                <a href="Lecture-01.html" class="nav-pill">← المحاضرة السابقة (1)</a>
+                <a href="index.html" class="nav-pill">📚 فهرس المقرر</a>
+                <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn" aria-label="تبديل الوضع">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Lecture Hero Header -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | المستوى الثالث - الترم الثاني</div>
+        <h1>المحاضرة الثانية: دورة حياة مشروع تكنولوجيا المعلومات ومراحله الأساسية</h1>
+        <h2>Information Technology Project Life Cycle, Team Dynamics, Trends & Constraints</h2>
+        <p>مقرر قسم <strong>تكنولوجيا المعلومات (IT)</strong> والأمن السيبراني | 👨‍🏫 أستاذ المقرر: <strong>أ.د. عبده ناصر شويه</strong></p>
+        <div class="golden-rule-banner">
+            💡 <strong>القاعدة الذهبية للمحاضرة:</strong> «المشروع التقني الناجح لا ينتهي عند كتابة الأكواد؛ بل هو رحلة تبدأ من وثيقة التأسيس (Project Charter)، وتنضبط بمثلث القيود (الوقت، التكلفة، النطاق)، وتُدار بمراقبة صارمة للنتائج والمخاطر حتى التسليم الرسمي والدروس المستفادة!»
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sticky Sidebar / Table of Contents -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul>
+                <li><a href="#intro" class="active">🚀 0. المقدمة وأهداف التعلم</a></li>
+                <li><a href="#life-cycle-concept">🔄 1. مفهوم وأهمية دورة حياة المشروع</a></li>
+                <li><a href="#five-phases">⚡ 2. المراحل الخمس الأساسية لدورة الحياة</a></li>
+                <li><a href="#life-cycle-exercises">🎯 3. حلول التمارين التطبيقية لدورة الحياة</a></li>
+                <li><a href="#it-project-nature">💻 4. طبيعة مشاريع تقنية المعلومات</a></li>
+                <li><a href="#team-characteristics">👥 5. خصائص أعضاء فريق عمل المشروع</a></li>
+                <li><a href="#modern-trends">🌐 6. الاتجاهات الحديثة (Outsourcing & Virtual)</a></li>
+                <li><a href="#agile-management">🏃 7. إدارة المشاريع الرشيقة (Agile)</a></li>
+                <li><a href="#trends-exercises">📝 8. حلول تمارين الاتجاهات الحديثة</a></li>
+                <li><a href="#constraints-stakeholders">📐 9. القيود الثلاثية وأصحاب المصلحة</a></li>
+                <li><a href="#risk-management">🛡️ 10. إدارة المخاطر في مشاريع الـ IT</a></li>
+                <li><a href="#flashcards">🗂️ 11. بطاقات الاستذكار السريعة</a></li>
+                <li><a href="#interactive-quiz">📝 12. الاختبار التقييمي التفاعلي</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- Section 0: Intro & Objectives -->
+            <section id="intro">
+                <span class="section-tag">مدخل استراتيجي</span>
+                <h2>🚀 0. المقدمة، سيناريو الانطلاق، وأهداف التعلم</h2>
+
+                <div class="scenario-card">
+                    <h4>🎬 سيناريو استهلالي واقعي: لماذا تفشل مشاريع البرمجيات العشوائية؟</h4>
+                    <p>
+                        طلب أحد المستثمرين من فريق مبرمجين إنشاء تطبيق تسوق إلكتروني معقد يشبه Amazon. تحمس الفريق وبدأ المبرمجون في كتابة الأكواد من اليوم الأول دون كتابة وثيقة نطاق واضحة، ودون خطة زمنية، ودون دراسة متطلبات العميل. بعد 6 أشهر من العمل الشاق استنزفوا الميزانية كاملة، واكتشفوا أن العميل كان يريد تطبيقاً مخصصاً لبيع اللحوم الطازجة ويحتاج نظام تبريد وتتبع أسطول سيارات وليس مجرد متجر إلكتروني للملابس! النتيجة: مشروع فاشل وخسائر مالية ضخمة ونزاع قضائي!
+                    </p>
+                    <p>
+                        <strong>ما الذي غاب عن هذا الفريق؟</strong> غاب عنهم فهم <strong>«دورة حياة المشروع» (Project Life Cycle)</strong>؛ فالأعمال التقنية ليست كتابة أكواد فورية، بل مراحل منضبطة تبدأ بدراسة الجدوى وميثاق المشروع، وتمر بالتخطيط والتنفيذ والمراقبة، وتنتهي بالفحص والتسليم الرسمي وتدريب المستخدمين.
+                    </p>
+                </div>
+
+                <h3>🎯 مخرجات التعلم المستهدفة (Learning Outcomes):</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🔄</div>
+                            <h4>1. إتقان دورة الحياة الخماسية</h4>
+                        </div>
+                        <p>التعرف العميق على المراحل الخمس (البدء، التخطيط، التنفيذ، المراقبة والتحكم، الإغلاق) وأهمية وأنشطة ومخرجات كل مرحلة.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📜</div>
+                            <h4>2. التمييز بين المخرجات التأسيسية</h4>
+                        </div>
+                        <p>معرفة الفرق الجوهري بين وثيقة تأسيس المشروع (Project Charter) وخطة إدارة المشروع (Project Management Plan).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💻</div>
+                            <h4>3. استيعاب خصوصية مشاريع الـ IT</h4>
+                        </div>
+                        <p>فهم طبيعة مشاريع تقنية المعلومات من حيث الحجم والتعقيد والمخرجات وتنوع تخصصات أعضاء الفريق وتكاملها.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🌐</div>
+                            <h4>4. التمييز الدقيق بين التوجهات</h4>
+                        </div>
+                        <p>التفريق الهندسي القاطع بين الاستعانة بمصادر خارجية (Outsourcing) والنقل للخارج (Offshoring) والفرق الافتراضية (Virtual Teams).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏃</div>
+                            <h4>5. فهم منهجية Agile الرشيقة</h4>
+                        </div>
+                        <p>إدراك فلسفة إدارة المشاريع الرشيقة، تقسيم العمل إلى دورات قصيرة (Sprints)، والاستجابة السريعة لملاحظات العملاء.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📐</div>
+                            <h4>6. إدارة القيود والمخاطر</h4>
+                        </div>
+                        <p>السيطرة على مثلث القيود الثلاثية (الوقت، التكلفة، النطاق)، وإدارة أصحاب المصلحة والمخاطر السيبرانية والتقنية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1: Life Cycle Concept & Importance -->
+            <section id="life-cycle-concept">
+                <span class="section-tag">التأسيس المنهجي</span>
+                <h2>🔄 1. مفهوم دورة حياة المشروع وأهميتها الاستراتيجية</h2>
+
+                <div class="concept-card">
+                    <h4>📖 التعريف العلمي المعتمد لدورة حياة المشروع (Project Life Cycle):</h4>
+                    <p>
+                        هي <strong>مجموعة المراحل المتتابعة أو المتداخلة</strong> التي يمر بها المشروع منذ انطلاقه وظهور فكرته وحتى اكتماله وإغلاقه رسمياً، بحيث تتضمن كل مرحلة مجموعة محددة من الأنشطة والمهام والمخرجات (Deliverables) التي تسهم في تحقيق أهداف المشروع وتسليمه للجهة المستفيدة.
+                    </p>
+                </div>
+
+                <h3>أهمية دورة حياة المشروع (7 فوائد حاسمة لنجاح مشاريع تكنولوجيا المعلومات):</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📑</div>
+                            <h4>1. تنظيم مراحل المشروع</h4>
+                        </div>
+                        <p>تقسيم المشروع المعقد إلى محطات ومراحل واضحة، يعرف فيها كل عضو في الفريق ما هو المطلوب منه بالضبط (مثل مرحلة تحليل المتطلبات قبل البدء في البرمجة).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⏱️</div>
+                            <h4>2. تحسين التخطيط</h4>
+                        </div>
+                        <p>تحديد الأنشطة والموارد والوقت والمال اللازم لكل مرحلة بدقة (مثل تخصيص شهر للتصميم وشهرين للبرمجة وشهر للاختبار والتأمين).</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🛡️</div>
+                            <h4>3. تقليل وتفادي المخاطر</h4>
+                        </div>
+                        <p>اكتشاف المشكلات التقنية مبكراً قبل أن تتفاقم؛ مثل اكتشاف عدم توافق النظام الجديد مع قاعدة بيانات الجامعة الحالية في مرحلة التحليل قبل البرمجة.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📊</div>
+                            <h4>4. تحسين الرقابة والمتابعة</h4>
+                        </div>
+                        <p>تمكين الإدارة من مقارنة الإنجاز الفعلي على أرض الواقع بما تم التخطيط له في الجدول، واكتشاف أي انحراف في الميزانية أو الوقت وتصحيحه فورياً.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⭐</div>
+                            <h4>5. تحسين جودة المخرجات</h4>
+                        </div>
+                        <p>ضمان مراجعة وفحص المخرجات البرمجية وإجراء الاختبارات الأمنية والوظيفية في نهاية كل مرحلة قبل الانتقال للمرحلة التالية.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">👥</div>
+                            <h4>6. تحديد المسؤوليات بدقة</h4>
+                        </div>
+                        <p>توزيع الأدوار بوضوح بين مدير المشروع وفريق البرمجة وفريق فحص الجودة (QA) والجهات المستفيدة والعملاء.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">⚖️</div>
+                            <h4>7. تسهيل اتخاذ القرارات</h4>
+                        </div>
+                        <p>توفير بوابات اتخاذ القرار (Gateways / Milestones) في نهاية كل مرحلة لتقييم جدوى الاستمرار في المشروع، أو تعديل مساره، أو إيقافه عند ظهور معوقات جوهرية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Five Phases -->
+            <section id="five-phases">
+                <span class="section-tag">خارطة الطريق التنفيذية</span>
+                <h2>⚡ 2. المراحل الخمس الأساسية لدورة حياة مشروع تقنية المعلومات</h2>
+                <p>
+                    تمر مشاريع تكنولوجيا المعلومات بخمس مراحل رئيسية وفق المعيار العالمي لإدارة المشاريع (PMI / PMBOK). لكل مرحلة سؤال جوهري تجيب عنه، وأنشطة محددة، ومخرج نهائي حاسم:
+                </p>
+
+                <div class="flow-container">
+                    <h4 style="color:var(--primary); margin-bottom:1rem;">التسلسل الزمني لمراحل دورة حياة المشروع</h4>
+                    <div class="flow-steps">
+                        <div class="flow-node">1. البدء<br><small>(Initiation)</small></div>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-node">2. التخطيط<br><small>(Planning)</small></div>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-node">3. التنفيذ<br><small>(Execution)</small></div>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-node">5. الإغلاق<br><small>(Closing)</small></div>
+                    </div>
+                    <div style="margin-top:0.8rem; font-weight:700; color:var(--secondary);">
+                        🔄 مرحلة «المراقبة والتحكم» (Monitoring & Controlling) تتزامن وتواكب جميع المراحل من التنفيذ حتى الإغلاق!
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">المرحلة</th>
+                                <th style="width: 18%;">السؤال الأساسي</th>
+                                <th style="width: 42%;">أهم الأنشطة والمهام</th>
+                                <th style="width: 25%;">المخرج الأساسي (Deliverable)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. البدء<br>(Initiation)</strong></td>
+                                <td><strong>لماذا نحتاج إلى هذا المشروع؟</strong></td>
+                                <td>
+                                    • تحديد المشكلة التجارية أو الحاجة التقنية.<br>
+                                    • تحديد الأهداف والنتائج المرجوة.<br>
+                                    • تحديد المستفيدين وأصحاب المصلحة.<br>
+                                    • دراسة الجدوى الأولية (التقنية والمالية).<br>
+                                    • الحصول على الموافقة المبدئية والتمويل الأولي.
+                                </td>
+                                <td><strong style="color:var(--secondary);">وثيقة تأسيس المشروع<br>(Project Charter)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. التخطيط<br>(Planning)</strong></td>
+                                <td><strong>كيف سننفذ المشروع؟</strong></td>
+                                <td>
+                                    • تحديد نطاق المشروع بدقة (Project Scope).<br>
+                                    • تقسيم المشروع إلى مهام (WBS).<br>
+                                    • إعداد الجدول الزمني والمواعيد النهائية.<br>
+                                    • تقدير التكاليف وإعداد الميزانية المالية.<br>
+                                    • اختيار فريق العمل وتحديد المسؤوليات.<br>
+                                    • وضع خطة إدارة وتخفيف المخاطر.
+                                </td>
+                                <td><strong style="color:var(--secondary);">خطة إدارة المشروع الشاملة<br>(Project Management Plan)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. التنفيذ<br>(Execution)</strong></td>
+                                <td><strong>كيف نحول الخطة إلى عمل فعلي؟</strong></td>
+                                <td>
+                                    • توزيع المهام وتوجيه أعضاء الفريق.<br>
+                                    • تنفيذ أعمال البرمجة وتصميم الواجهات.<br>
+                                    • توفير أدوات التطوير والسيرفرات.<br>
+                                    • ربط قواعد البيانات وخدمات الدفع والتوصيل.<br>
+                                    • التواصل الدوري وإطلاع الإدارة على التقدم.
+                                </td>
+                                <td><strong style="color:var(--secondary);">مخرجات المشروع الفعلية<br>(Deliverables - النسخة المنجزة)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. المراقبة والتحكم<br>(Monitoring & Control)</strong></td>
+                                <td><strong>هل يسير المشروع وفق الخطة؟</strong></td>
+                                <td>
+                                    • قياس نسبة الإنجاز ومقارنتها بالجدول الزمني.<br>
+                                    • مراقبة المصروفات والتأكد من عدم تجاوز الميزانية.<br>
+                                    • فحص واختبار جودة الأكواد وحماية النظام.<br>
+                                    • اكتشاف المشكلات ومعالجة التأخيرات.<br>
+                                    • تطبيق التعديلات المعتمدة على الخطة.
+                                </td>
+                                <td><strong style="color:var(--secondary);">تقارير الأداء والإجراءات التصحيحية<br>(Performance Reports & Corrective Actions)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. الإغلاق<br>(Closing)</strong></td>
+                                <td><strong>هل اكتمل المشروع وتم تسليمه؟</strong></td>
+                                <td>
+                                    • الفحص النهائي واختبار قبول المستخدم (UAT).<br>
+                                    • تسليم النظام والحصول على الاعتماد الرسمي.<br>
+                                    • تدريب الموظفين والمستخدمين على النظام.<br>
+                                    • تسوية العقود والمستحقات المالية للشركات.<br>
+                                    • أرشفة الوثائق وتوثيق الدروس المستفادة.
+                                </td>
+                                <td><strong style="color:var(--secondary);">تقرير ومحضر إغلاق المشروع الرسمي<br>(Project Closure Report)</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>💡 الفرق الجوهري بين مرحلة البدء ومرحلة التخطيط (سؤال امتحاني متكرر):</h4>
+                    <p>
+                        <strong>مرحلة البدء (Initiation):</strong> تركز على <em>«الجدوى والأهداف والمشروع كفكرة»</em>؛ تجيب على: هل ننفذ هذا المشروع أم لا؟ وما هي المشكلة التي يعالجها؟ ومخرجها وثيقة التأسيس (Project Charter) التي تعطي الضوء الأخضر للمدير بالبدء.
+                    </p>
+                    <p>
+                        <strong>مرحلة التخطيط (Planning):</strong> تركز على <em>«التفاصيل الهندسية والتشغيلية»</em>؛ تجيب على: كيف سننفذ المشروع خطوة بخطوة؟ كم الميزانية التفصيلية؟ ما هو الجدول الزمني باليوم والساعة؟ وما هي المخاطر؟ ومخرجها خطة إدارة المشروع (Project Management Plan).
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3: Life Cycle Exercises -->
+            <section id="life-cycle-exercises">
+                <span class="section-tag">التطبيقات العملية</span>
+                <h2>🎯 3. بنك الحلول النموذجية للأسئلة التطبيقية لدورة حياة المشروع</h2>
+
+                <div class="scenario-card">
+                    <div class="accordion">
+                        <!-- Q1 -->
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال الأول: مستشفى ونظام المواعيد الإلكتروني</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «قررت إحدى المستشفيات إنشاء نظام إلكتروني لإدارة مواعيد المرضى بدلًا من التسجيل اليدوي، وبدأت الإدارة بدراسة الحاجة إلى النظام وتحديد أهدافه والتكلفة الأولية. المطلوب: في أي مرحلة من دورة حياة المشروع تقع هذه الأعمال؟ ولماذا؟»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    تقع هذه الأعمال في <strong>مرحلة البدء (Initiation Phase)</strong>.<br>
+                                    <strong>السبب:</strong> لأن الإدارة في هذه اللحظة تبحث «جدوى المشروع» وتحدد المشكلة (التسجيل اليدوي) والهدف من النظام والحاجة إليه، وتضع تقديرات مالية أولية للحصول على الموافقة المبدئية قبل البدء في وضع الخطط التفصيلية.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال الثاني: تطبيق توصيل الطلبات واجتماع الفريق</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «تقرر إنشاء تطبيق لتوصيل الطلبات، واجتمع مدير المشروع مع فريق العمل لتحديد الميزانية والمدة الزمنية وعدد المبرمجين والمهام المطلوبة. المطلوب: حدد المرحلة، واذكر ثلاثة أنشطة تم تنفيذها.»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    المرحلة هي <strong>مرحلة التخطيط (Planning Phase)</strong>.<br>
+                                    <strong>الأنشطة الثلاثة المنفذة:</strong>
+                                    <ol style="margin-right:1.5rem;">
+                                        <li>تقدير الميزانية والتكاليف المالية المتوقعة للمشروع (Cost Estimation).</li>
+                                        <li>تحديد الجدول الزمني والمدة الإجمالية للتنفيذ (Schedule Planning).</li>
+                                        <li>تحديد الموارد البشرية (عدد المبرمجين وتوزيع المهام المطلوبة).</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال الثالث: موقع تجاري والبدء في كتابة الأكواد</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «بدأ فريق تقني بتصميم موقع إلكتروني لشركة تجارية، وشرع المبرمجون في كتابة الأكواد وربط الموقع بقاعدة بيانات المنتجات. المطلوب: ما المرحلة التي يمر بها المشروع؟ وما المخرج المتوقع؟»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    المرحلة هي <strong>مرحلة التنفيذ (Execution Phase)</strong>.<br>
+                                    <strong>المخرج المتوقع:</strong> النسخة الأولية أو البرمجية المكتملة من الموقع الإلكتروني (Deliverable)، وربطه الفعلي بقاعدة بيانات المنتجات لتكون جاهزة للفحص والاختبار.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q4 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال الرابع: مشكلة عدم توافق النظام المصرفي مع قاعدة البيانات</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «أثناء تطوير نظام إلكتروني لبنك، اكتشف الفريق أن النظام الجديد لا يتوافق مع قاعدة البيانات الحالية، مما يمنعه من قراءة بعض بيانات العملاء بصورة صحيحة. المطلوب: كيف يتعامل مدير المشروع مع هذه المشكلة؟ وما المرحلة المرتبطة بها؟»</p>
+                                <div class="info-box warning-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    • <strong>المرحلة المرتبطة:</strong> <strong>مرحلة المراقبة والتحكم (Monitoring and Controlling)</strong>، حيث تم اكتشاف الانحراف والخطأ أثناء متابعة سير العمل.<br>
+                                    • <strong>كيف يتعامل مدير المشروع:</strong>
+                                    <ol style="margin-right:1.5rem;">
+                                        <li>تحليل أسباب عدم التوافق بين بنية النظام وقاعدة البيانات الحالية وتحديد الأثر الفني والمالي.</li>
+                                        <li>عقد اجتماع طارئ مع مهندسي قواعد البيانات ومطوري البرمجيات لتطوير وسيط تكاملي (API Middleware) أو ترحيل البيانات وتعديل هيكلتها (Data Migration).</li>
+                                        <li>إصدار طلب تغيير رسمي معتمد (Change Request) لتعديل خطة العمل والجدول الزمني إن لزم الأمر.</li>
+                                        <li>إجراء اختبارات دقيقة ومكثفة للتأكد من سلامة بيانات العملاء وحمايتها قبل استئناف بقية المهام.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q5 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال الخامس: اكتمال نظام المخزون والتدريب</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «انتهت شركة تقنية من تطوير نظام لإدارة المخزون، وتم اختباره واعتماده، ثم درّبت الشركة الموظفين وسلمتهم النظام والوثائق الفنية. المطلوب: حدد المرحلة، واذكر أهم إجراءين فيها.»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    المرحلة هي <strong>مرحلة الإغلاق (Closing Phase)</strong>.<br>
+                                    <strong>أهم إجراءين تم تنفيذهما:</strong>
+                                    <ol style="margin-right:1.5rem;">
+                                        <li>تدريب المستخدمين والموظفين على تشغيل واستخدام النظام الجديد بصورة صحيحة.</li>
+                                        <li>التسليم النهائي للنظام المكتمل وتوثيق واعتماد استلامه رسمياً مع الوثائق الفنية (Documentation).</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Q6 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>السؤال السادس: توزيع أعمال التطبيق المصرفي على المراحل</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «يريد أحد البنوك تطوير تطبيق للهواتف الذكية يتيح للعملاء تحويل الأموال ودفع الفواتير والاستعلام عن أرصدتهم. وزّع الأعمال التالية على مراحل دورة حياة المشروع الخمس:»</p>
+                                <div class="table-responsive">
+                                    <table class="comparison-table">
+                                        <thead>
+                                            <tr>
+                                                <th>النشاط / العمل</th>
+                                                <th>المرحلة المقابلة في دورة الحياة</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1. تحديد الحاجة إلى التطبيق وأهدافه المصرفية</td>
+                                                <td><strong>مرحلة البدء (Initiation)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2. تحديد الميزانية والموارد والجدول الزمني</td>
+                                                <td><strong>مرحلة التخطيط (Planning)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3. برمجة التطبيق وتصميم شاشات تحويل الأموال</td>
+                                                <td><strong>مرحلة التنفيذ (Execution)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4. اختبار عمليات التحويل ومعالجة الأخطاء ومتابعة التأخير</td>
+                                                <td><strong>مرحلة المراقبة والتحكم (Monitoring & Controlling)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5. تسليم التطبيق للبنك وإطلاقه رسمياً وتدريب الدعم الفني</td>
+                                                <td><strong>مرحلة الإغلاق (Closing)</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Nature of IT Projects -->
+            <section id="it-project-nature">
+                <span class="section-tag">الخصوصية البرمجية</span>
+                <h2>💻 4. طبيعة مشاريع تقنية المعلومات (The Nature of IT Projects)</h2>
+                <p>
+                    تختلف مشاريع تكنولوجيا المعلومات جذرياً عن مشاريع البناء والتشييد التقليدية؛ فهي تتميز بالتغير السريع، عدم الملموسية (Intangibility)، والاعتماد العالي على الإبداع الفكري. وتتحدد طبيعتها من خلال خمسة جوانب رئيسية:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📏</div>
+                            <h4>1. حجم المشروع (Project Size)</h4>
+                        </div>
+                        <p>تتراوح المشاريع بين صغيرة (موقع لمحل تجاري يطوره مبرمج واحد في أسبوعين)، ومتوسطة (نظام إدارة عيادة طبية)، إلى ضخمة وممتدة (نظام مصرفي أو حكومي متكامل يمتد لسنوات).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🧩</div>
+                            <h4>2. درجة التعقيد (Complexity)</h4>
+                        </div>
+                        <p>تتفاوت الصعوبة من برمجة كود بسيط، إلى مشاريع غاية في التعقيد تتطلب الربط بين قواعد بيانات موزعة، أنظمة ذكاء اصطناعي، وتطبيق تشفير عسكري فائق الحماية.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">📦</div>
+                            <h4>3. المخرجات (Project Deliverables)</h4>
+                        </div>
+                        <p>تنتج المشاريع برمجيات غير ملموسة؛ كتطبيقات الجوال، المواقع الإلكترونية، نظم تخطيط موارد المؤسسات (ERP)، أو بنية تحتية سحابية وشبكات مراكز بيانات.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏥</div>
+                            <h4>4. مجال التطبيق (Application Area)</h4>
+                        </div>
+                        <p>تتغلغل تقنية المعلومات في كل المجالات بلا استثناء: الطب والصحة (أنظمة المشافي)، التعليم (بوابات الجامعات)، المصارف والمالية، الصناعة، والتجارة.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💼</div>
+                            <h4>5. الموارد المطلوبة (Resources)</h4>
+                        </div>
+                        <p>تتطلب مزيجاً فريداً من العتاد (خوادم وأجهزة)، والبرمجيات (تراخيص ولغات برمجة)، والميزانية المالية، والخبرات البشرية عالية التخصص.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Team Characteristics -->
+            <section id="team-characteristics">
+                <span class="section-tag">العنصر البشري والقيادة</span>
+                <h2>👥 5. خصائص أعضاء فريق مشروع تقنية المعلومات</h2>
+                <p>
+                    المفهوم الخاطئ الشائع هو أن فريق مشاريع الـ IT يتكون فقط من مبرمجين ومنعزلين في غرف مظلمة! الواقع العلمي والعملي يؤكد أن فرق مشاريع تقنية المعلومات الحديثة هي <strong>«فرق متعددة التخصصات ومتنوعة الثقافات»</strong>، تضم متخصصين في البرمجة، إدارة الأعمال، المالية، التصميم، والقانون.
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🎓</div>
+                            <h4>1. تنوع التخصصات (Diverse Backgrounds)</h4>
+                        </div>
+                        <p>يضم الفريق مبرمجين، محللي أعمال (Business Analysts)، محاسبين وخبراء مالية، وخبراء قانون لضمان الامتثال للوائح حماية البيانات.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🛠️</div>
+                            <h4>2. تنوع المهارات (Diverse Skill Sets)</h4>
+                        </div>
+                        <p>يمتلك الأعضاء مهارات تقنية صلبة (كتابة الأكواد، أمن الشبكات، إدارة قواعد البيانات)، ومهارات ناعمة (التواصل، التفاوض، حل النزاعات، وإدارة الوقت).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🤝</div>
+                            <h4>3. تكامل الخبرات (Complementary)</h4>
+                        </div>
+                        <p>يكمل كل عضو عمل الآخر؛ فمحلل النظم يفهم متطلبات العميل ويصيغها، ومصمم الـ UI/UX يبتكر واجهة مريحة، والمبرمج يترجمها لأكواد، وخبير الـ QA يفحص الثغرات.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏆</div>
+                            <h4>4. العمل الجماعي وروح الفريق (Teamwork)</h4>
+                        </div>
+                        <p>النجاح لا يُنسب لفرد بعينه؛ فالمشروع يفشل إذا كتب المبرمج كوداً عبقرياً ولكن لم يتمكن فريق التصميم أو فحص الجودة من تسليمه بنجاح للمستخدمين.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Modern Trends -->
+            <section id="modern-trends">
+                <span class="section-tag">رياح التغيير التكنولوجي</span>
+                <h2>🌐 6. الاتجاهات الحديثة المؤثرة في إدارة مشاريع تقنية المعلومات</h2>
+                <p>
+                    بفضل ثورة الإنترنت والسحابة، تحولت إدارة المشاريع من النموذج المكتبي التقليدي المنغلق إلى ساحة عالمية مفتوحة. ومن أهم هذه الاتجاهات:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🌍</div>
+                            <h4>1. العولمة (Globalization)</h4>
+                        </div>
+                        <p>القدرة على تنفيذ المشاريع بالتعاون مع فرق وموردين وعملاء من مختلف قارات العالم.<br>
+                        <strong>مثال تطبيقي:</strong> شركة أردنية تطور نظام مبيعات عبر شركة برمجية في الهند، وتستضيفه على سحابة في أمريكا، ويسوقه فريق محلي في الأردن.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🏢</div>
+                            <h4>2. الاستعانة بمصادر خارجية (Outsourcing)</h4>
+                        </div>
+                        <p>التعاقد مع شركة أو طرف خارجي متخصص لتقديم خدمة أو تنفيذ جزء من المشروع بدل الاعتماد على الموظفين الداخليين غير المتخصصين في ذلك المجال.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">✈️</div>
+                            <h4>3. النقل إلى الخارج (Offshoring)</h4>
+                        </div>
+                        <p>تنفيذ الأعمال أو توظيف الكفاءات في <strong>دولة أخرى</strong> خارج الحدود للاستفادة من انخفاض تكلفة العمالة وتوفر خبرات نادرة (مثل التعاقد مع شركات بالهند).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💻</div>
+                            <h4>4. الفرق الافتراضية (Virtual Teams)</h4>
+                        </div>
+                        <p>فريق عمل موزع جغرافياً في دول ومناطق زمنية مختلفة، يتعاون أعضاؤه يومياً دون لقاء جسدي عبر أدوات الاتصال الحديثة (Zoom, Teams, Slack, Trello).</p>
+                    </div>
+                </div>
+
+                <h3>جدول المقارنة الجوهري: Outsourcing مقابل Offshoring</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>الاستعانة بمصادر خارجية (Outsourcing)</th>
+                                <th>النقل إلى الخارج (Offshoring)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>السؤال الجوهري</strong></td>
+                                <td><strong>مَن ينفذ العمل؟</strong> (جهة خارجية متخصصة).</td>
+                                <td><strong>أين يُنفذ العمل؟</strong> (في دولة أخرى خارج الحدود).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مقر الشركة المنفذة</strong></td>
+                                <td>قد تكون <strong>داخل نفس الدولة</strong> أو خارجها.</td>
+                                <td>يجب حتماً أن تكون <strong>خارج حدود الدولة</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الهدف الأساسي</strong></td>
+                                <td>الاستفادة من خبرات تخصصية وتوفير الجهد والتركيز على الأعمال الأساسية.</td>
+                                <td>تقليل تكاليف الأجور والإنتاج والاستفادة من فارق العملة والمناطق الزمنية.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 7: Agile -->
+            <section id="agile-management">
+                <span class="section-tag">المرونة والرشاقة البرمجية</span>
+                <h2>🏃 7. إدارة المشاريع الرشيقة (Agile Project Management)</h2>
+                <p>
+                    الأساليب التقليدية (مثل Waterfall) كانت تنتظر شهوراً حتى تنتهي من كل المراحل لتري العميل المنتج، وغالباً ما كان يصدم بتغير السوق أو عدم مطابقة البرنامج لاحتياجاته! هنا ظهرت <strong>منهجية Agile الرشيقة</strong> كحل ثوري لمشاريع الـ IT.
+                </p>
+
+                <div class="concept-card accent-border">
+                    <h4>🎯 المبادئ والخصائص الأساسية لمنهجية Agile:</h4>
+                    <ul>
+                        <li><strong>التقسيم إلى دورات قصيرة (Sprints):</strong> تجزئة المشروع إلى فترات زمنية محددة (عادة من أسبوعين إلى 4 أسابيع)، تُنتج كل دورة جزءاً برمجياً يعمل فعلياً.</li>
+                        <li><strong>التعاون المستمر والتواصل اليومي:</strong> اجتماعات وقوف سريعة (Daily Standups) بين أعضاء الفريق لإزالة أي عوائق برمجية.</li>
+                        <li><strong>إشراك العميل في كل خطوة:</strong> يرى العميل النسخ التجريبية بعد كل Sprint ويبدي ملاحظاته فوراً.</li>
+                        <li><strong>الاستجابة الفورية للتغيير:</strong> الترحيب بتعديل المتطلبات حتى في المراحل المتأخرة دون هدم المشروع.</li>
+                        <li><strong>التحسين والترقية المستمرة:</strong> اختبار مستمر وكتابة أكواد نظيفة وتطوير تدريجي للمنتج.</li>
+                    </ul>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>📱 مثال تطبيقي: بناء تطبيق تجارة إلكترونية بنمط Agile</h4>
+                    <p>بدلاً من الانتظار سنة لتطوير التطبيق كاملاً، يقسمه الفريق إلى Sprints:</p>
+                    <ol style="margin-right:1.5rem;">
+                        <li><strong>Sprint 1 (أسبوعان):</strong> بناء شاشات تسجيل الدخول وإنشاء الحساب وتجربتها.</li>
+                        <li><strong>Sprint 2 (أسبوعان):</strong> إضافة واجهات استعراض المنتجات والبحث وتجربتها مع المستخدمين.</li>
+                        <li><strong>Sprint 3 (أسبوعان):</strong> إضافة سلة التسوق وربطها ببوابة الدفع الإلكتروني.</li>
+                        <li><strong>Sprint 4 (أسبوعان):</strong> إضافة خيارات التوصيل وتتبع الشحنات.</li>
+                    </ol>
+                    <p>بهذه الطريقة، أصبح لدى الشركة تطبيق يعمل في السوق خلال شهرين فقط، ويتم تحسينه وتطويره باستمرار بناءً على سلوك المتسوقين الفعلي!</p>
+                </div>
+            </section>
+
+            <!-- Section 8: Trends Exercises -->
+            <section id="trends-exercises">
+                <span class="section-tag">التحليل الأكاديمي للاتجاهات</span>
+                <h2>📝 8. بنك الحلول لتمارين الاتجاهات الحديثة (Outsourcing & Offshoring)</h2>
+
+                <div class="scenario-card">
+                    <div class="accordion">
+                        <!-- Trend Q1 -->
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>تمرين 1: تعاقد جامعة مع شركة برمجيات محلية لإدارة شؤون الطلاب</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «جامعة لا تمتلك مبرمجين متخصصين، لذلك تعاقدت مع شركة برمجيات محلية لتصميم نظام إلكتروني لإدارة شؤون الطلاب. ما الاتجاه الذي يمثله هذا الموقف؟ ولماذا لم تنفذ المشروع بموظفيها؟ وما الفوائد والمخاطر المحتملة؟»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    1. <strong>الاتجاه الممثل:</strong> <strong>الاستعانة بمصادر خارجية (Outsourcing)</strong>.<br>
+                                    2. <strong>لماذا لم تنفذه بموظفيها؟</strong> لأن نشاط الجامعة الأساسي هو التعليم الأكاديمي، ولا تمتلك فريق برمجة محترف ومستقر ولديه الأدوات والخبرة اللازمة لبناء نظام ضخم ومعقد.<br>
+                                    3. <strong>الفوائد والمخاطر المحتملة:</strong>
+                                    <ul>
+                                        <li><strong>الفوائد:</strong> الحصول على نظام احترافي عالي الجودة، توفير وقت الجامعة وجهدها، والاستفادة من خبرات الشركة المتخصصة دون الحاجة لتحمل رواتب مبرمجين دائمين.</li>
+                                        <li><strong>المخاطر:</strong> حساسية بيانات الطلاب واحتمال تسريبها، الاعتماد الكامل على الشركة الخارجية (Vendor Lock-in)، وصعوبة الصيانة إذا تخلت الشركة عن المشروع لاحقاً.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trend Q2 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>تمرين 2: مستشفى يمني يتعاقد مع شركة تقنية في الهند</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «مستشفى يمني يريد تطوير تطبيق لحجز المواعيد، فتعاقد مع شركة تقنية في الهند لتنفيذ المشروع. هل يمثل هذا الموقف Outsourcing أم Offshoring أم كليهما؟ وما الفرق بين المصطلحين في هذا المثال؟»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    • يمثل هذا الموقف <strong>المصطلحين معاً (Outsourcing & Offshoring)</strong> في نفس الوقت!<br>
+                                    • <strong>الفرق الدقيق في هذا المثال:</strong>
+                                    <ul>
+                                        <li>يعد <strong>Outsourcing:</strong> لأن المستشفى تعاقد مع طرف خارجي (جهة متخصصة) لتنفيذ البرمجة بدلاً من موظفيه الداخليين.</li>
+                                        <li>ويعد <strong>Offshoring:</strong> لأن الشركة المتعاقد معها تقع خارج حدود الدولة (في الهند وليس داخل اليمن).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trend Q3 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAcc(this)">
+                                <span>تمرين 3: شركة يمنية تتعاقد مع شركة محلية متخصصة في الأمن السيبراني</span>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-body">
+                                <p><strong>نص السؤال:</strong> «شركة يمنية لديها فريق برمجة داخلي، لكنها قررت التعاقد مع شركة محلية متخصصة في الأمن السيبراني لاختبار نظامها وحمايته. لماذا لجأت لجهة خارجية؟ وهل يعد هذا Outsourcing أم Offshoring؟»</p>
+                                <div class="info-box success-box">
+                                    <strong>الحل النموذجي:</strong><br>
+                                    1. <strong>لماذا لجأت الشركة لجهة خارجية رغم وجود مبرمجين لديها؟</strong><br>
+                                    لأن اختبار الاختراق (Penetration Testing) واكتشاف الثغرات الأمنية يتطلب خبرات وتراخيص وأدوات دقيقة جداً تختلف عن مهارات البرمجة العادية، ومن القواعد الأمنية أن المبرمج لا يختبر أمان نظامه بنفسه لتفادي الانحياز والعمى المهني.<br>
+                                    2. <strong>التصنيف:</strong> يعد هذا <strong>Outsourcing فقط</strong>؛ لأن الشركة تعاقدت مع جهة خارجية مستقلة، <strong>ولا يعد Offshoring</strong> لأن الشركة المنفذة شركة محلية تقع داخل اليمن.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Constraints & Stakeholders -->
+            <section id="constraints-stakeholders">
+                <span class="section-tag">أركان السيطرة والحوكمة</span>
+                <h2>📐 9. القيود الثلاثية للمشروع وأصحاب المصلحة (Triple Constraints & Stakeholders)</h2>
+
+                <h3>1. مثلث قيود المشروع (The Triple Constraint):</h3>
+                <p>
+                    تخضع إدارة أي مشروع تقني لثلاثة قيود مترابطة تؤثر في بعضها البعض كالمثلث؛ وإذا تم تغيير أي طرف منها سيتأثر الطرفان الآخران وجودة المشروع حتماً:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="card" style="border-top: 4px solid var(--primary);">
+                        <div class="card-header">
+                            <div class="card-icon">⏱️</div>
+                            <h4>1. الوقت (Time)</h4>
+                        </div>
+                        <p>الجدول الزمني والموعد النهائي الصارم المخصص لتسليم المشروع (مثل 3 أشهر).</p>
+                    </div>
+
+                    <div class="card" style="border-top: 4px solid var(--secondary);">
+                        <div class="card-header">
+                            <div class="card-icon">💰</div>
+                            <h4>2. التكلفة (Cost)</h4>
+                        </div>
+                        <p>الميزانية المالية والموارد التمويلية المعتمدة لتنفيذ كافة الأعمال (مثل 20 ألف دولار).</p>
+                    </div>
+
+                    <div class="card" style="border-top: 4px solid var(--accent);">
+                        <div class="card-header">
+                            <div class="card-icon">📋</div>
+                            <h4>3. النطاق (Scope)</h4>
+                        </div>
+                        <p>قائمة الأعمال والميزات والمهام والأنظمة المحددة بدقة والمطلوب إنتاجها في المشروع.</p>
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <strong>⚠️ المعادلة الذهبية للتوازن:</strong><br>
+                    إذا طلبت الجامعة فجأة إضافة نظام جديد لبوابتها دون زيادة الوقت أو الميزانية؛ فإما أن يتأخر المشروع (خلل بالوقت)، أو تتضاعف المصاريف (خلل بالتكلفة)، أو تنهار جودة البرنامج وتكثر الثغرات والأخطاء البرمجية (خلل بالجودة Quality)!
+                </div>
+
+                <h3>2. أصحاب المصلحة في المشروع (Project Stakeholders):</h3>
+                <p>
+                    <strong>أصحاب المصلحة:</strong> هم كل الأفراد والجهات والمنظمات الذين يؤثرون في المشروع أو يتأثرون بنتائجه ومخرجاته سلباً أو إيجاباً.
+                </p>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">👑</div>
+                            <h4>1. الممول / المالك (Project Sponsor)</h4>
+                        </div>
+                        <p>الجهة أو الشخص الذي يمتلك المشروع ويوفر التمويل المالي والموافقة الرسمية (مثل مجلس إدارة الجامعة).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">👔</div>
+                            <h4>2. مدير المشروع (Project Manager)</h4>
+                        </div>
+                        <p>الشخص المسؤول عن قيادة الفريق، وتخطيط الأنشطة، والتحكم بالوقت والميزانية، وتسليم المخرجات بنجاح.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">💻</div>
+                            <h4>3. فريق العمل (Project Team)</h4>
+                        </div>
+                        <p>المبرمجون والمصممون والمهندسون الذين ينفذون الأعمال التقنية اليومية للمشروع.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">👨‍🎓</div>
+                            <h4>4. العملاء والمستخدمون (Users)</h4>
+                        </div>
+                        <p>الذين سيستخدمون النظام النهائي فعلياً (مثل الطلاب والأساتذة وموظفي التسجيل في بوابة الجامعة).</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">🚚</div>
+                            <h4>5. الموردون والمتعاقدون (Suppliers)</h4>
+                        </div>
+                        <p>الشركات الخارجية التي تقدم خدمات داعمة مثل شركات الاستضافة السحابية وشركات بوابات الدفع الإلكتروني.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Risk Management -->
+            <section id="risk-management">
+                <span class="section-tag">الحماية واستباق الأزمات</span>
+                <h2>🛡️ 10. إدارة المخاطر في مشاريع تكنولوجيا المعلومات (Risk Management)</h2>
+                <p>
+                    <strong>إدارة المخاطر (Risk Management):</strong> هي عملية استباقية علمية لتحديد المشكلات والتهديدات المحتملة التي قد تعرقل المشروع، وتقدير احتمالية حدوثها وأثرها، ووضع خطط وقائية للحد منها أو مواجهتها فور حدوثها.
+                </p>
+
+                <h3>أبرز 6 مخاطر تواجه مشاريع تقنية المعلومات:</h3>
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>نوع الخطر التقني</th>
+                                <th>طبيعة وأثر الخطر</th>
+                                <th>الإجراء الوقائي والاستجابة المعتمدة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. التأخر في الجدول الزمني (Schedule Delay)</strong></td>
+                                <td>عدم تسليم النظام في الموعد المحدد للجهة المستفيدة، مما يعطل أعمالها.</td>
+                                <td>استخدام منهجية المسار الحرج (CPM)، وتوفير فترات أمان (Buffer)، والمتابعة اليومية للإنجاز.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. تجاوز الميزانية (Cost Overrun)</strong></td>
+                                <td>نفاد السيولة المالية قبل اكتمال تطوير وبرمجة النظام.</td>
+                                <td>تقدير دقيق للتكاليف، ووضع احتياطي للطوارئ (Contingency Reserve)، ومراقبة الإنفاق.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. تسريب وفقدان البيانات (Data Loss/Breach)</strong></td>
+                                <td>ضياع سجلات المستخدمين أو سرقتها وتعريض المؤسسة للمساءلة القانونية.</td>
+                                <td>تطبيق التشفير الشامل (Encryption)، وتوزيع الصلاحيات، وعمل نسخ احتياطية دورية وسحابية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. الهجمات السيبرانية (Cyber Attacks)</strong></td>
+                                <td>تعرض النظام لاختراق أو لهجمات حجب الخدمة (DDoS) وتوقف التطبيق عن العمل.</td>
+                                <td>إجراء اختبارات اختراق دورية، وتركيب جدران نارية متطورة (WAF)، وتطبيق معايير OWASP.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. تعطل الأنظمة والأجهزة (System Failure)</strong></td>
+                                <td>احتراق خادم أو تعطل مزود الاستضافة السحابية فجأة.</td>
+                                <td>تصميم بنية تحتية فائقة الإتاحة (High Availability)، وتوفير خوادم بديلة متزامنة (Redundancy).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. عدم التوافق مع الأنظمة الحالية (Incompatibility)</strong></td>
+                                <td>عجز النظام الجديد عن قراءة وتبادل البيانات مع قواعد البيانات القديمة للمؤسسة.</td>
+                                <td>الفحص الهندسي المسبق في مرحلة البدء والتحليل، وبناء واجهات تكاملية ووسطاء (APIs).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 11: Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">المراجعة النشطة السريعة</span>
+                <h2>🗂️ 11. بطاقات الاستذكار السريعة (Interactive Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار معلوماتك حول مفاهيم المحاضرة الثانية:</p>
+
+                <div class="flashcards-grid">
+                    <!-- Card 1 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                وثيقة تأسيس المشروع<br>(Project Charter)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                المخرج الرسمي لمرحلة البدء؛ تمنح الترخيص الرسمي لانطلاق المشروع وتوضح أهدافه ونطاقه ومديره وصلاحياته.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                خطة إدارة المشروع<br>(Project Mgmt Plan)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                المخرج الشامل لمرحلة التخطيط؛ يحدد تفصيلياً كيف سيتم تنفيذ ومراقبة وإغلاق المشروع (الجدول، التكلفة، الجودة، والمخاطر).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                المراقبة والتحكم<br>(Monitoring & Control)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                مرحلة مستمرة تواكب التنفيذ؛ تقارن المنجز الفعلي بالخطة الموضوعة لمعالجة الانحرافات والأخطاء فورياً.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الاستعانة بمصادر خارجية<br>(Outsourcing)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                التعاقد مع شركة أو جهة خارجية متخصصة لتنفيذ مهام أو خدمات يحتاجها المشروع (سواء داخل الدولة أو خارجها).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                النقل إلى الخارج<br>(Offshoring)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                تنفيذ الأعمال أو الاستعانة بخدمات برمجية تقع في دولة أخرى خارج الحدود للاستفادة من فارق التكلفة والخبرات.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                القيود الثلاثية للمشروع<br>(Triple Constraint)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                الأركان الثلاثة الحاكمة لأي مشروع: الوقت (Time)، التكلفة (Cost)، والنطاق (Scope) مع الحفاظ على الجودة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                دورات Agile السريعة<br>(Sprints)
+                                <div class="hint">انقر لقلب البطاقة 👆</div>
+                            </div>
+                            <div class="flashcard-back">
+                                مراحل عمل قصيرة ومكثفة (أسبوعين إلى 4 أسابيع) تنتج في نهايتها جزءاً برمجياً جاهزاً للتجربة والفحص.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                أصحاب المصلحة<br>(Stakeholders)
+                            </div>
+                            <div class="flashcard-back">
+                                كل الأفراد والجهات المؤثرين في المشروع أو المتأثرين بنتائجه (المالك، المدير، المطورون، والمستخدمون النهائيون).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 12: Quiz -->
+            <section id="interactive-quiz">
+                <span class="section-tag">التقييم الذاتي والامتحانات</span>
+                <h2>📝 12. الاختبار التقييمي التفاعلي الشامل</h2>
+                <p>اختبر استيعابك لكافة موضوعات المحاضرة الثانية عبر 10 أسئلة امتحانية دقيقة مزودة بالتصحيح التلقائي والشرح:</p>
+
+                <div class="quiz-container">
+                    <div id="quiz-app">
+                        <!-- Loaded by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- Interactive Scripts -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const quizData = [
+            {
+                question: "1. ما هو المخرج الأساسي والرسمي الناتج عن مرحلة البدء (Initiation Phase) والذي يعطي الصلاحية الرسمية لانطلاق المشروع؟",
+                options: [
+                    "خطة إدارة المشروع التفصيلية (Project Management Plan)",
+                    "وثيقة تأسيس المشروع (Project Charter)",
+                    "محضر إغلاق وتسليم المشروع النهائي",
+                    "تقرير فحص واختبار الأكواد البرمجية"
+                ],
+                correct: 1,
+                explanation: "وثيقة تأسيس المشروع (Project Charter) هي المخرج الحاسم لمرحلة البدء؛ حيث تثبت وجود المشروع قانونياً وتحدد أهدافه ومديره وصلاحياته."
+            },
+            {
+                question: "2. في أي مرحلة من دورة حياة المشروع يتم تفكيك نطاق العمل وتحديد الميزانية الدقيقة والجدول الزمني واختيار فريق العمل؟",
+                options: [
+                    "مرحلة البدء (Initiation)",
+                    "مرحلة التخطيط (Planning)",
+                    "مرحلة التنفيذ (Execution)",
+                    "مرحلة الإغلاق (Closing)"
+                ],
+                correct: 1,
+                explanation: "مرحلة التخطيط تجيب عن سؤال (كيف سننفذ المشروع؟) وفيها يتم وضع خطط النطاق والتكلفة والجدول والموارد وإدارة المخاطر."
+            },
+            {
+                question: "3. مرحلة دورة حياة المشروع التي تتزامن وتتواكب باستمرار مع مرحلة التنفيذ لمقارنة الإنجاز الفعلي بالخطة تسمى:",
+                options: [
+                    "مرحلة البدء",
+                    "مرحلة المراقبة والتحكم (Monitoring and Controlling)",
+                    "مرحلة الإغلاق",
+                    "مرحلة التأسيس"
+                ],
+                correct: 1,
+                explanation: "المراقبة والتحكم مرحلة مستمرة تواكب التنفيذ وتكشف الانحرافات في الوقت والتكلفة لتصحيحها فوراً."
+            },
+            {
+                question: "4. إذا تعاقدت جامعة في اليمن مع شركة برمجيات محلية في صنعاء لتطوير بوابتها الإلكترونية، فإن هذا التعاقد يُصنف كـ:",
+                options: [
+                    "Offshoring فقط",
+                    "Outsourcing فقط",
+                    "Outsourcing & Offshoring معاً",
+                    "Virtual Team فقط"
+                ],
+                correct: 1,
+                explanation: "يُصنف كـ Outsourcing لأن العمل أُسند لجهة خارجية، ولا يعد Offshoring لأن الشركة محلية وتقع داخل اليمن."
+            },
+            {
+                question: "5. عندما يتعاقد بنك في اليمن مع شركة برمجيات في دولة الهند لتطوير تطبيقه المصرفي، فإن هذا التصرف يمثل:",
+                options: [
+                    "Outsourcing فقط",
+                    "Offshoring فقط",
+                    "كلا المصطلحين معاً (Outsourcing & Offshoring)",
+                    "إدارة مشاريع رشيقة Agile"
+                ],
+                correct: 2,
+                explanation: "يمثل الاثنين معاً: Outsourcing لأن التنفيذ تم بشركة خارجية، و Offshoring لأن الشركة تقع في دولة أخرى (الهند)."
+            },
+            {
+                question: "6. ما هي المنهجية الحديثة في إدارة المشاريع التي تعتمد على تقسيم المشروع إلى دورات قصيرة (Sprints) ومشاركة العميل المستمرة؟",
+                options: [
+                    "منهجية الشلال التقليدية (Waterfall)",
+                    "إدارة المشاريع الرشيقة (Agile Project Management)",
+                    "منهجية المسار الحرج (CPM)",
+                    "المحاكاة الافتراضية (Virtualization)"
+                ],
+                correct: 1,
+                explanation: "منهجية Agile تقوم على المرونة، والدورات القصيرة (Sprints)، والاستجابة السريعة للملاحظات والتحسين المستمر."
+            },
+            {
+                question: "7. يتكون مثلث قيود المشروع التقليدي (Triple Constraint) الحاكم لأي مشروع تقني من:",
+                options: [
+                    "الوقت (Time)، التكلفة (Cost)، والنطاق (Scope)",
+                    "الخادم، قاعدة البيانات، ونظام التشغيل",
+                    "المدير، المبرمج، ومحلل النظم",
+                    "التصميم، البرمجة، والاختبار"
+                ],
+                correct: 0,
+                explanation: "القيود الثلاثية الكلاسيكية هي الوقت، والتكلفة، والنطاق، ويؤدي الإخلال بأي منها إلى التأثير المباشر على الجودة."
+            },
+            {
+                question: "8. ما هو الإجراء الأخير والأهم الذي يجب تنفيذه في مرحلة الإغلاق (Closing Phase) للاستفادة منه في المشاريع القادمة؟",
+                options: [
+                    "كتابة أكواد برمجية جديدة للموقع",
+                    "توثيق الدروس المستفادة (Lessons Learned) وأرشفة الوثائق",
+                    "تعديل ميزانية المشروع بزيادة الأموال",
+                    "إلغاء عقود الصيانة نهائياً"
+                ],
+                correct: 1,
+                explanation: "توثيق الدروس المستفادة ومحضر الإغلاق يحمي المؤسسة من تكرار الأخطاء السابقة وينقل الخبرة للمشاريع المستقبلية."
+            },
+            {
+                question: "9. فريق عمل يتكون من مدير في الأردن، ومبرمج في مصر، ومصمم في اليمن، وخبير أمن في الهند؛ هذا الفريق يمثل نموذج:",
+                options: [
+                    "الفرق المتمركزة في موقع واحد (Co-located Team)",
+                    "الفرق الافتراضية (Virtual Teams)",
+                    "المشروع المحلي المصغر",
+                    "العمل الفردي المستقل"
+                ],
+                correct: 1,
+                explanation: "الفرق الافتراضية تضم أعضاء موزعين جغرافياً يتواصلون وينجزون المهام عبر تقنيات الإنترنت وأدوات العمل الجماعي."
+            },
+            {
+                question: "10. اكتشف فريق العمل أثناء مرحلة المراقبة أن النظام الجديد لا يتوافق مع قاعدة بيانات العملاء الحالية، ما التصرف المهني الأصح لمدير المشروع؟",
+                options: [
+                    "تجاهل المشكلة وإطلاق النظام للعملاء لتقليل التكاليف",
+                    "إلغاء المشروع كاملاً وتحميل المبرمجين المسؤولية",
+                    "تحليل الخلل، وبناء وسيط تكاملي (API Middleware) أو ترحيل البيانات، وإصدار طلب تغيير معتمد",
+                    "حذف قاعدة البيانات القديمة بكامل بيانات العملاء"
+                ],
+                correct: 2,
+                explanation: "التعامل الهندسي السليم يتطلب تحليل المشكلة، وبناء طبقة ربط وتكامل برمجي، وتحديث الخطة عبر إجراء تصحيحي رسمي معتمد."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_itpm_lec02');
+    </script>
+</body>
+</html>

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الأولى: مدخل إلى إدارة مشاريع تقنيات المعلومات | IT Project Management</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="it-project-management">
+
+    <!-- الشريط العلوي وشريط التقدم -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">📋 مقرر إدارة مشاريع تقنية المعلومات</a>
+                <span>/</span>
+                <span>المحاضرة 1: مدخل إلى إدارة مشاريع تقنيات المعلومات</span>
+            </div>
+            <div class="top-controls">
+                <a href="index.html" class="nav-pill">📚 فهرس المقرر</a>
+                <a href="Lecture-02.html" class="nav-pill">المحاضرة التالية (2) ←</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="readingProgressBar"></div>
+        </div>
+    </div>
+
+    <!-- ترويسة المحاضرة -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا (M.C.S.T) | المستوى الثالث - الترم الثاني</div>
+        <h1>المحاضرة الأولى: مدخل إلى إدارة مشاريع تقنيات المعلومات</h1>
+        <h2>Introduction to Information Technology Project Management (ITPM)</h2>
+        <p>مقرر لطلاب <strong>تكنولوجيا المعلومات</strong> و<strong>الأمن السيبراني والشبكات</strong> | أستاذ المقرر: <strong>أ.د. عبده ناصر شويه (Prof: Abdo Nasser Shewia)</strong></p>
+        <div class="golden-rule-banner">
+            💡 <strong>الحقيقة الجوهرية:</strong> التكنولوجيا وحدها لا تصنع النجاح؛ بل التخطيط والتنظيم والقيادة والرقابة هي التي تحول الملايين إلى قيمة حقيقية!
+        </div>
+    </header>
+
+    <!-- جسم المحتوى والتخطيط -->
+    <div class="container">
+        
+        <!-- الشريط الجانبي الفهرس -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul>
+                <li><a href="#intro" class="active">🚀 0. سيناريو الانطلاق والواقع الرقمي</a></li>
+                <li><a href="#statistics">📊 1. إحصاءات الإنفاق والرواتب وأداء المشاريع</a></li>
+                <li><a href="#motivation">🔍 2. دوافع دراسة ITPM وتقرير CHAOS</a></li>
+                <li><a href="#what-is-project">🎯 3. ما هو المشروع؟ وخصائصه الخمس</a></li>
+                <li><a href="#operations-vs-projects">⚖️ 4. المشاريع مقابل العمليات التشغيلية</a></li>
+                <li><a href="#activity-solved">📝 5. حل النشاط التطبيقي (التمييز)</a></li>
+                <li><a href="#advantages">🌟 6. مزايا تطبيق إدارة المشاريع (9 مزايا)</a></li>
+                <li><a href="#it-projects-list">💻 7. مفهوم ITPM وقائمة المشاريع العشرين</a></li>
+                <li><a href="#modern-tech">🤖 8. التقنيات الحديثة والذكاء الاصطناعي</a></li>
+                <li><a href="#project-manager-triple">📐 9. مدير المشروع ومثلث القيد الثلاثي</a></li>
+                <li><a href="#flashcards">🗂️ 10. بطاقات الاستذكار السريعة</a></li>
+                <li><a href="#interactive-quiz">🏆 11. الاختبار التقييمي التفاعلي</a></li>
+            </ul>
+        </aside>
+
+        <!-- مساحة المقالات والأقسام -->
+        <main class="content-area">
+
+            <!-- 0. سيناريو الانطلاق والواقع الرقمي -->
+            <section id="intro">
+                <span class="section-tag">مدخل استراتيجي</span>
+                <h2>🚀 0. سيناريو الانطلاق: عندما تنهار الأنظمة التقنية</h2>
+                
+                <div class="scenario-card">
+                    <span class="scenario-badge">🚨 سيناريو الواقع الصادم: أين تكمن المشكلة الحقيقية؟</span>
+                    <h4>تخيل هذا المشهد في صباح يوم عمل عادي:</h4>
+                    <p>
+                        تطبيق البنك الذي تعتمد عليه يرفض فتح الحسابات وإجراء التحويلات، والنظام الإلكتروني لأحد أكبر المستشفيات أصبح غير قادر على استرجاع ملفات المرضى وغرف العمليات، ومنصة الجامعة لا تستقبل آلاف الطلاب الراغبين في تسجيل المقررات، وشركة تجارية كبرى تفقد فجأة القدرة على متابعة شحناتها ومبيعاتها الرقمية!
+                    </p>
+                    <p><strong>ما الذي حدث تحديداً؟</strong></p>
+                    <ul class="content-list">
+                        <li>هل المشكلة في عطل طرأ على أجهزة الحواسيب والخوادم؟</li>
+                        <li>أم هي انقطاع في أسلاك شبكة الإنترنت العالمية؟</li>
+                        <li>أم ثغرة برمجية مفاجئة في الكود؟</li>
+                    </ul>
+                    <p style="margin-bottom:0;">
+                        <strong>الحقيقة الأعمق:</strong> في أغلب الأحيان، الكارثة ليست عطلاً فيزيائياً في العتاد، بل هي نتيجة <strong>مشروع تقني لم يُخطط له بصورة سليمة</strong>، أو لم تُحدد أهدافه ومتطلباته بدقة، أو لم تُدر موارده البشرية ومخاطره الفنية بكفاءة. ومن هنا نصل إلى القاعدة الذهبية الأولى: <strong>ليس النجاح في امتلاك التكنولوجيا فحسب، بل في القدرة على إدارتها وتوظيفها لتحقيق الأهداف!</strong>
+                    </p>
+                </div>
+
+                <h3>❓ أسئلة جوهرية تصنع الفارق بين النجاح والفشل:</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>معجزة الأنظمة العملاقة</h4>
+                        <p>كيف استطاعت شركة مثل <strong>Amazon</strong> أو <strong>Google</strong> إنشاء منصة تخدم ملايين المستخدمين حول العالم في نفس اللحظة دون أن تنهار؟</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>لغز الملايين المهدورة</h4>
+                        <p>لماذا تنجح بعض المشاريع البرمجية البسيطة، بينما تفشل مشاريع أخرى تكلفت مئات الملايين من الدولارات وتوفرت لها أحدث الأجهزة وأعلى الكفاءات؟</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>المسؤولية القيادية</h4>
+                        <p>من المسؤول الأول عن نجاح مشروع إنشاء نظام معلومات متكامل في بنك أو جامعة أو مستشفى؟ (إنه مهندس ومدير مشروع تقنية المعلومات!).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. إحصاءات الإنفاق والرواتب وأداء المشاريع -->
+            <section id="statistics">
+                <span class="section-tag">الأرقام لا تكذب</span>
+                <h2>📊 1. إحصاءات عالمية: الإنفاق، الرواتب، وواقع المشاريع</h2>
+                <p>
+                    إن إدارة مشاريع تقنية المعلومات ليست ترفاً إدارياً، بل هي المحرك الأساسي للاقتصاد الرقمي العالمي، وتؤكد ذلك أحدث البيانات المعتمدة دولياً:
+                </p>
+
+                <!-- أرقام Gartner و PMI -->
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: #2f855a;">
+                        <div class="card-badge-num">💰</div>
+                        <h4>الإنفاق العالمي على تقنية المعلومات (Gartner)</h4>
+                        <p>تتوقع مؤسسة <strong>Gartner</strong> العالمية أن يصل الإنفاق العالمي على IT إلى <strong>7.35 تريليون دولار أمريكي في عام 2027</strong>، بزيادة ضخمة قدرها <strong>15%</strong> مقارنة بعام 2026، مدفوعة باستثمارات الذكاء الاصطناعي والحوسبة السحابية.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #d69e2e;">
+                        <div class="card-badge-num">👥</div>
+                        <h4>فجوة الكفاءات والطلب العالمي (PMI)</h4>
+                        <p>وفقاً لمعهد إدارة المشاريع العالمي (<strong>PMI</strong>)، سيتراوح الطلب العالمي على المتخصصين بين <strong>58.6 و 65.4 مليون متخصص بحلول عام 2035</strong>، مع وجود عجز ونقص عالمي متوقع يصل إلى <strong>29.8 مليون وظيفة شاغرة</strong> تبحث عن كفاءات مؤهلة!</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #3182ce;">
+                        <div class="card-badge-num">💵</div>
+                        <h4>رواتب حاملي شهادة PMP</h4>
+                        <p>بلغ متوسط الراتب السنوي لحاملي شهادة محترف إدارة المشاريع (<span class="term-en">PMP</span>) في الولايات المتحدة نحو <strong>135,000 دولار سنوياً</strong>، وتزيد رواتبهم بنسبة <strong>17%</strong> مقارنة بزملائهم غير المعتمدين في 21 دولة.</p>
+                    </div>
+                </div>
+
+                <!-- واقع أداء المشاريع -->
+                <h3>أداء المشاريع حول العالم (دراسة PMI الحديثة):</h3>
+                <div class="info-box warning-box">
+                    <h4>📉 واقع صادم يفرض ضرورة التعلم الأكاديمي الرصين:</h4>
+                    <p>أكدت دراسة معهد PMI (التي شملت أكثر من 5,800 متخصص وصاحب مصلحة) أن نتائج مشاريع العالم تتوزع كالآتي:</p>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>50% فقط:</strong> تحقق مفهوم النجاح الكامل وفقاً لمعايير النطاق والوقت والتكلفة.</li>
+                        <li><strong>37%:</strong> مشاريع متعثرة تحقق نتائج جزئية (تأخير زمني أو تجاوز في الميزانية أو تقليص للمواصفات).</li>
+                        <li><strong>13%:</strong> مشاريع تفشل فشلاً كاملاً وتُلغى وتُرمى في سلة المهملات بعد هدر أموالها!</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. دوافع دراسة ITPM وتقرير CHAOS -->
+            <section id="motivation">
+                <span class="section-tag">جذور المشكلة التاريخية</span>
+                <h2>🔍 2. دوافع دراسة إدارة مشاريع تقنية المعلومات وتقرير CHAOS</h2>
+                <p>
+                    لماذا نخص مشاريع تقنية المعلومات بدراسة منفصلة؟ لأن مشاريع الـ IT تتميز بطبيعة <strong>غير ملموسة (Intangible)</strong>، وتغير متسارع في المتطلبات، واعتمادية تكنولوجية معقدة.
+                </p>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">📜 تقرير CHAOS الشهير (Standish Group 1995)</span>
+                    <h4>نقطة التحول التاريخية في هندسة البرمجيات وإدارة المشاريع</h4>
+                    <p>
+                        في عام 1995، نشرت مجموعة Standish Group دراسة صدمت قطاع التكنولوجيا حول العالم، كشفت فيها أن:
+                    </p>
+                    <ul class="content-list">
+                        <li><strong>16.2% فقط</strong> من مشاريع تقنية المعلومات نجحت في تسليم المطلوب في الوقت المحدد والميزانية المحددة!</li>
+                        <li><strong>أكثر من 31%</strong> من المشاريع تم إلغاؤها بالكامل قبل أن تكتمل وتم إهدار مليارات الدولارات دون فائدة!</li>
+                        <li><strong>52.8%</strong> تجاوزت تكاليفها المخططة بمعدل وصل إلى 189% من الميزانية الأصلية!</li>
+                    </ul>
+                    <p style="margin-bottom:0;">
+                        <strong>الدافع الرئيسي لدراسة المادة:</strong> منع تكرار هذه الكوارث، وتزويد الطالب بالمعارف والأدوات القياسية لإيصال المشروع التقني لبر الأمان بجودة عالية ودون تجاوز للوقت والمال.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3. ما هو المشروع؟ وخصائصه الخمس -->
+            <section id="what-is-project">
+                <span class="section-tag">التأسيس المفاهيمي</span>
+                <h2>🎯 3. ما هو المشروع؟ (What is a Project?)</h2>
+                <p>
+                    <strong>التعريف الأكاديمي المعتمد (PMI):</strong> المشروع هو <strong>جهد مؤقت</strong> يتكون من مجموعة من الأنشطة والمهام المترابطة، يُنفذ خلال <strong>فترة زمنية محددة</strong> وباستخدام <strong>موارد معينة</strong>؛ بهدف إنتاج <strong>منتج فريد</strong>، أو تقديم <strong>خدمة فريدة</strong>، أو تحقيق <strong>نتيجة فريدة</strong>.
+                </p>
+
+                <h3>الخصائص الجوهرية الخمس للمشروع (Project Characteristics):</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>مؤقت (Temporary)</h4>
+                        <p>لكل مشروع نقطة بداية محددة وتاريخ نهاية محدد بدقة. المشروع لا يستمر للأبد؛ فبمجرد تحقيق الأهداف أو إلغاء المشروع ينتهي العمل.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>هدف محدد (Specific Objective)</h4>
+                        <p>يُقام المشروع لتحقيق غاية واضحة ونتيجة محددة مسبقاً (مثل إطلاق تطبيق جوال للبنك أو تركيب كابلات الألياف الضوئية للمبنى الجديد).</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>فريد وغير مكرر (Unique)</h4>
+                        <p>المخرجات تتميز بخصائص جديدة تختلف عن الأعمال الروتينية. حتى لو بنيت تطبيقين مصرفيين لبنكين مختلفين، فلكل منهما خصوصيته وتقنياته وبيئته.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">4</div>
+                        <h4>موارد محدودة (Limited Resources)</h4>
+                        <p>يعمل المشروع بموارد محددة تشمل: الميزانية المالية، الكوادر البشرية (مبرمجين، مصممين)، العتاد المادي، والتراخيص البرمجية.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">5</div>
+                        <h4>قيود الوقت والتكلفة (Constraints)</h4>
+                        <p>يتحرك المشروع ضمن جدول زمني صارم (<span class="term-en">Schedule</span>) وميزانية مالية معتمدة (<span class="term-en">Budget</span>) لا يجوز تجاوزهما بدون إجراءات ضبط وتغيير رسمية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. المشاريع مقابل العمليات التشغيلية -->
+            <section id="operations-vs-projects">
+                <span class="section-tag">الفصل الجوهري</span>
+                <h2>⚖️ 4. المشاريع (Projects) مقابل العمليات التشغيلية (Operations)</h2>
+                <p>
+                    يقع الكثير من الطلاب والمهندسين المبتدئين في خطأ الخلط بين إدارة المشاريع وإدارة العمليات اليومية. إليك التمييز الأكاديمي الحاسم:
+                </p>
+
+                <div class="info-box">
+                    <h4>🔄 ما هي العمليات التشغيلية (Operational Processes)؟</h4>
+                    <p style="margin-bottom:0;">
+                        هي مجموعة الأنشطة والأعمال اليومية المتكررة التي تنفذها المؤسسة <strong>بصورة مستمرة ودائمة</strong>؛ بهدف الحفاظ على سير العمل اليومي وتقديم المنتجات والخدمات الروتينية.<br>
+                        <strong>أمثلة في الجامعة:</strong> عملية تسجيل الطلاب في المواد كل فصل دراسي، إعداد الجداول، رصد الدرجات الأسبوعية، إصدار الشهادات، وصيانة أجهزة المعامل.
+                    </p>
+                </div>
+
+                <h3>جدول المقارنة الأكاديمية الشاملة:</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>العمليات التشغيلية (Operations)</th>
+                                <th>المشروعات (Projects)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>طبيعة العمل</strong></td>
+                                <td>مستمرة، روتينية، ومتكررة دائماً</td>
+                                <td>مؤقتة، غير متكررة، وذات طابع خاص</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الهدف الأساسي</strong></td>
+                                <td>المحافظة على الوضع الراهن واستمرار العمل</td>
+                                <td>تحقيق هدف استراتيجي محدد وإنتاج نتيجة فريدة</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المدة الزمنية</strong></td>
+                                <td>مستمرة بلا نهاية محددة (تنتهي فقط بإغلاق المؤسسة)</td>
+                                <td>لها نقطة بداية محددة ونقطة نهاية محددة</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المخرجات والنتائج</strong></td>
+                                <td>خدمات أو سلع نمطية متطابقة ومتكررة</td>
+                                <td>منتج جديد، خدمة مطورة، أو تغيير جذري</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التغيير والتطوير</strong></td>
+                                <td>تحافظ على الاستقرار وثبات الوضع التشغيلي</td>
+                                <td>تُحدث نقلة نوعية وتغييراً وتطويراً في المؤسسة</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مثال تطبيقي بالجامعة</strong></td>
+                                <td>تسجيل الطلاب في المقررات بداية كل ترم</td>
+                                <td>تصميم وبرمجة نظام تسجيل إلكتروني سحابي جديد للجامعة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. حل النشاط التطبيقي -->
+            <section id="activity-solved">
+                <span class="section-tag">تطبيقات عملية وامتحانية</span>
+                <h2>📝 5. حل النشاط التطبيقي: ميّز بين المشروع والعملية التشغيلية</h2>
+                <p>
+                    هذا النشاط ورد نصاً في الشريحة رقم 9 من المحاضرة، وإليك الحل النموذجي مع التعليل العلمي الدقيق لكل حالة:
+                </p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الحالة المعروضة في النشاط</th>
+                                <th>التصنيف الدقيق</th>
+                                <th>التعليل الأكاديمي للحل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>تسجيل الطلاب في بداية كل فصل دراسي</strong></td>
+                                <td><span class="term" style="background:#fed7d7; color:#9b2c2c;">عملية تشغيلية (Operation)</span></td>
+                                <td>لأنها نشاط روتيني دوري يتكرر كل فصل دراسي بنفس الإجراءات للمحافظة على استمرار الدراسة.</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>إنشاء نظام إلكتروني جديد للجامعة</strong></td>
+                                <td><span class="term" style="background:#c6f6d5; color:#22543d;">مشروع (Project)</span></td>
+                                <td>لأنه عمل مؤقت له بداية ونهاية محددتان وينتج عنه منتج برمجي فريد يُحدث تغييراً في الكلية.</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>إعداد رواتب الموظفين شهرياً</strong></td>
+                                <td><span class="term" style="background:#fed7d7; color:#9b2c2c;">عملية تشغيلية (Operation)</span></td>
+                                <td>لأنه إجراء مالي متكرر في نهاية كل شهر ميلادي وفق قواعد ثابتة وثابت المخرجات.</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>تطوير تطبيق مصرفي جديد للهواتف</strong></td>
+                                <td><span class="term" style="background:#c6f6d5; color:#22543d;">مشروع (Project)</span></td>
+                                <td>لأنه يتطلب فريق تطوير وميزانية وجدول زمني محدد لإنتاج تطبيق جديد تماماً يخدم البنك.</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>تحديث بيانات العملاء بصورة يومية</strong></td>
+                                <td><span class="term" style="background:#fed7d7; color:#9b2c2c;">عملية تشغيلية (Operation)</span></td>
+                                <td>لأنه عمل وظيفي دائم ومستمر لخدمة العملاء والحفاظ على تدفق البيانات في النظام.</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>تنفيذ مشروع للتحول إلى الحوسبة السحابية</strong></td>
+                                <td><span class="term" style="background:#c6f6d5; color:#22543d;">مشروع (Project)</span></td>
+                                <td>لأنه جهد استراتيجي مؤقت له خطة ترحيل بيانات وجدول زمني وميزانية لنقل الخوادم إلى السحابة.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 6. مزايا تطبيق إدارة المشاريع -->
+            <section id="advantages">
+                <span class="section-tag">القيمة المضافة</span>
+                <h2>🌟 6. مزايا استخدام إدارة المشاريع (Advantages - 9 مزايا أساسية)</h2>
+                <p>
+                    لماذا تدفع الشركات الكبرى آلاف الدولارات لتوظيف مديري مشاريع محترفين؟ لأن التطبيق العلمي الرصين لإدارة المشاريع يحقق **9 فوائد استراتيجية**:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>تحسين السيطرة على الموارد</h4>
+                        <p>الاستخدام الأمثل للميزانية والعتاد والعاملين، وتوزيع المهام بدقة وفق احتياجات كل مرحلة دون هدر.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>تحسين علاقات العملاء</h4>
+                        <p>فهم متطلبات العميل وإشراكه المستمر في المراجعات، مما يبني الثقة ويضمن مطابقة المنتج النهائي لتطلعاته.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>تقليل مدة تنفيذ المشروع</h4>
+                        <p>التخطيط الزمني المنظم وحساب العلاقات والمسار الحرج يمنع التخبط ويسرع تسليم المنتج للسوق.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">4</div>
+                        <h4>خفض التكاليف وتجنب إعادة العمل</h4>
+                        <p>اكتشاف الأخطاء البرمجية في مرحلة التصميم بدلاً من اكتشافها بعد التشغيل يقلل تكاليف التعديل بعشرة أضعاف.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">5</div>
+                        <h4>رفع الجودة وزيادة الموثوقية</h4>
+                        <p>وضع معايير واضحة للاختبار (<span class="term-en">QA & Testing</span>) والرقابة الصارمة يضمن نظاماً آمناً خالياً من الانهيارات.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">6</div>
+                        <h4>زيادة هوامش الربح والعائد</h4>
+                        <p>ضبط النفقات وتسليم المشروع ضمن الميزانية يرفع الربحية ويزيد العائد على الاستثمار (<span class="term-en">ROI</span>).</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">7</div>
+                        <h4>تحسين الإنتاجية الفردية والجماعية</h4>
+                        <p>وضوح الأدوار والمسؤوليات لكل مبرمج ومهندس شبكات يمنع التردد ويزيد سرعة الإنجاز اليومي.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">8</div>
+                        <h4>تحسين التنسيق الداخلي</h4>
+                        <p>إزالة الحواجز بين قسم البرمجة وقسم الأمن وقسم الشبكات وقسم الأعمال، وتوحيد جهودهم نحو هدف واحد.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">9</div>
+                        <h4>رفع الروح المعنوية للعاملين</h4>
+                        <p>البيئة المنظمة والتقدير الواضح للإنجازات والعدالة في توزيع الأعباء تزيد من حماس الفريق وانتمائه للمشروع.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. مفهوم ITPM وقائمة المشاريع العشرين -->
+            <section id="it-projects-list">
+                <span class="section-tag">التخصص التقني</span>
+                <h2>💻 7. مفهوم إدارة مشاريع تكنولوجيا المعلومات (ITPM) وأمثلتها العشرين</h2>
+                
+                <div class="info-box success-box">
+                    <h4>🛠️ تعريف إدارة مشاريع تقنية المعلومات (IT Project Management):</h4>
+                    <p style="margin-bottom:0;">
+                        هي عملية **تخطيط، وتنظيم، وتنفيذ، ومراقبة، وإغلاق** المشاريع المتعلقة بتطوير الأنظمة البرمجية، وشبكات الحواسيب، وقواعد البيانات، والبنى التحتية التقنية، والأمن السيبراني؛ بهدف تحقيق الأهداف الاستراتيجية للمؤسسة ضمن قيود النطاق والوقت والتكلفة والجودة المحددة.
+                    </p>
+                </div>
+
+                <h3>📋 قائمة العشرين مشروعاً تقنياً في سوق العمل الحديث:</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><p>1. إنشاء نظام إلكتروني لشؤون الطلاب بالجامعات.</p></div>
+                    <div class="feature-card"><p>2. تطوير تطبيق إلكتروني للخدمات المصرفية.</p></div>
+                    <div class="feature-card"><p>3. إنشاء متجر إلكتروني متكامل للتجارة عبر الويب.</p></div>
+                    <div class="feature-card"><p>4. تطوير تطبيق هاتف ذكي للخدمات الحكومية الرقمية.</p></div>
+                    <div class="feature-card"><p>5. إنشاء نظام إلكتروني لإدارة المستشفيات والملفات الطبية.</p></div>
+                    <div class="feature-card"><p>6. تصميم وتطوير بوابة إلكترونية تفاعلية لشركة كبرى.</p></div>
+                    <div class="feature-card"><p>7. إنشاء نظام لإدارة الموارد البشرية والرواتب (HRMS).</p></div>
+                    <div class="feature-card"><p>8. تطوير وتطبيق نظام تخطيط موارد المؤسسة (ERP).</p></div>
+                    <div class="feature-card"><p>9. إنشاء قاعدة بيانات مركزية ضخمة لإدارة معلومات العملاء.</p></div>
+                    <div class="feature-card"><p>10. تنفيذ مشروع إنشاء شبكة حاسوبية سلكية ولاسلكية للمؤسسة.</p></div>
+                    <div class="feature-card"><p>11. تطوير نظام إلكتروني ذكي لإدارة المكتبات ومصادر التعلم.</p></div>
+                    <div class="feature-card"><p>12. تنفيذ مشروع التحول الشامل نحو الحوسبة السحابية (Cloud Migration).</p></div>
+                    <div class="feature-card"><p>13. إنشاء منصة للتعليم الإلكتروني وإدارة المقررات (LMS).</p></div>
+                    <div class="feature-card"><p>14. تطوير بوابة دفع إلكتروني وبوابات التجارة الرقمية الآمنة.</p></div>
+                    <div class="feature-card"><p>15. تنفيذ مشروع وطني للأمن السيبراني وحماية البنية الحيوية.</p></div>
+                    <div class="feature-card"><p>16. تطوير نظام آلي لإدارة المخزون والمبيعات وسلاسل التوريد.</p></div>
+                    <div class="feature-card"><p>17. إنشاء منصة إلكترونية للتوظيف الذكي والعمل عن بُعد.</p></div>
+                    <div class="feature-card"><p>18. تطبيق نظام متقدم لإدارة علاقات العملاء (CRM).</p></div>
+                    <div class="feature-card"><p>19. إنشاء نظام بصمة بيومترية والتعرف على الوجه للحضور والانصراف.</p></div>
+                    <div class="feature-card"><p>20. تطوير تطبيق يعتمد على الذكاء الاصطناعي التوليدي لخدمة العملاء.</p></div>
+                </div>
+            </section>
+
+            <!-- 8. التقنيات الحديثة والذكاء الاصطناعي -->
+            <section id="modern-tech">
+                <span class="section-tag">أحدث توجهات العصر</span>
+                <h2>🤖 8. التقنيات الحديثة وأثرها في مشاريع تقنية المعلومات</h2>
+                <p>
+                    لا يمكن لمدير المشروع التقني اليوم أن يعمل بمعزل عن الثورة التكنولوجية المعاصرة. هذه التقنيات تمثل إما **موضوع المشروع نفسه** أو **أدوات معينة تدير المشروع**:
+                </p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">AI</div>
+                        <h4>الذكاء الاصطناعي (AI)</h4>
+                        <p>استخدام الأنظمة الخوارزمية لتحليل البيانات الضخمة، والتعلم الآلي، وأتمتة اتخاذ القرار داخل المنظمات.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">GenAI</div>
+                        <h4>الذكاء الاصطناعي التوليدي</h4>
+                        <p>أدوات مثل ChatGPT و Gemini التي توظف الآن في صياغة خطط المشاريع، كتابة المتطلبات، تقييم المخاطر، وتوليد الأكواد.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">Cloud</div>
+                        <h4>الحوسبة السحابية (Cloud)</h4>
+                        <p>توفير البنية التحتية والبرمجيات كخدمات مرنة عبر الإنترنت مما يلغي تكلفة بناء مراكز بيانات خاصة لكل مشروع.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">IoT</div>
+                        <h4>إنترنت الأشياء (IoT)</h4>
+                        <p>ربط أجهزة الاستشعار والمعدات بالشبكة لجمع البيانات اللحظية والتحكم عن بُعد في المنشآت والمدن الذكية.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">Sec</div>
+                        <h4>الأمن السيبراني (Cybersecurity)</h4>
+                        <p>العمود الفقري لأي مشروع تقني؛ تأمين الشيفرة، حماية الخوادم، تشفير قواعد البيانات، والامتثال للوائح الحماية.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">Data</div>
+                        <h4>التحليلات المتقدمة (Analytics)</h4>
+                        <p>استخراج الأنماط التنبؤية ودعم قرارات الإدارة العليا وتتبع مسارات تقدم المشاريع ومعدلات الأداء الفعلي.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. مدير المشروع ومثلث القيد الثلاثي -->
+            <section id="project-manager-triple">
+                <span class="section-tag">جوهر الإدارة</span>
+                <h2>📐 9. مدير المشروع ومثلث القيد الثلاثي (The Triple Constraint)</h2>
+                
+                <div class="info-box">
+                    <h4>👤 من هو مدير المشروع (Project Manager)؟</h4>
+                    <p style="margin-bottom:0;">
+                        هو الشخص المخول رسمياً والمسؤول الأول عن **تخطيط المشروع، وتنظيم موارده، وتوجيه فريق العمل، والمتابعة الدقيقة للتنفيذ**؛ لضمان تسليم مخرجات المشروع وتحقيق رضا أصحاب المصلحة ضمن القيود المحددة.
+                    </p>
+                </div>
+
+                <div class="triangle-container">
+                    <h3 style="margin-top:0; color:var(--primary);">مثلث القيود الثلاثية لإدارة المشاريع (The Triple Constraint)</h3>
+                    <p style="font-size:0.95rem; color:var(--text-muted);">الشكل المعياري المرجعي (Figure 1-1 من معهد PMI): النجاح يعني تحقيق أهداف النطاق والوقت والتكلفة مع إرضاء راعي المشروع!</p>
+
+                    <div class="triangle-grid">
+                        <div class="triangle-card">
+                            <h4>🎯 هدف النطاق (Scope Goal)</h4>
+                            <p style="font-size:0.9rem; margin-bottom:0;">ما هي المهام والوظائف والميزات المطلوبة بدقة؟ وما هو المنتج النهائي الذي سينتج؟</p>
+                        </div>
+                        <div class="triangle-card">
+                            <h4>⏱️ هدف الوقت (Time Goal)</h4>
+                            <p style="font-size:0.9rem; margin-bottom:0;">كم يستغرق المشروع لإكماله؟ وما هو الجدول الزمني للمراحل وتاريخ التسليم النهائي؟</p>
+                        </div>
+                        <div class="triangle-card">
+                            <h4>💰 هدف التكلفة (Cost Goal)</h4>
+                            <p style="font-size:0.9rem; margin-bottom:0;">ما هي الميزانية المالية المعتمدة؟ وما هي تكاليف العمالة والعتاد والتراخيص؟</p>
+                        </div>
+                    </div>
+
+                    <div class="center-target">
+                        🎯 الهدف الأسمى (Target):<br>
+                        تحقيق الجودة العالية (Quality) وإرضاء راعي المشروع وأصحاب المصلحة (Satisfying the Project Sponsor)!
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>⚖️ قانون الاتزان في القيد الثلاثي (The Golden Trade-off Rule):</h4>
+                    <p style="margin-bottom:0;">
+                        القيود الثلاثية مترابطة بشكل عضوي كأضلاع المثلث؛ <strong>إذا قمت بتغيير أي ضلع منها، سيتأثر الضلعان الآخران حتماً!</strong><br>
+                        • إذا طلب العميل زيادة وظائف وميزات التطبيق (زيادة <strong>Scope</strong>) ← ستحتاج بالضرورة إلى وقت أطول (زيادة <strong>Time</strong>) أو ميزانية مالية ومبرمجين إضافيين (زيادة <strong>Cost</strong>).<br>
+                        • إذا أرادت الإدارة ضغط الجدول الزمني وتسليم النظام مبكراً (تقليص <strong>Time</strong>) ← سيتطلب ذلك زيادة التكلفة بتوظيف كفاءات إضافية أو العمل الإضافي، أو التنازل عن بعض الميزات (تقليص <strong>Scope</strong>) وإلا ستنهار <strong>الجودة (Quality)</strong>!
+                    </p>
+                </div>
+            </section>
+
+            <!-- 10. بطاقات الاستذكار السريعة -->
+            <section id="flashcards">
+                <span class="section-tag">المراجعة النشطة</span>
+                <h2>🗂️ 10. بطاقات الاستذكار السريعة (Interactive Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار مدى حفظك واستيعابك للمفاهيم الأساسية للمحاضرة الأولى:</p>
+
+                <div class="flashcards-grid">
+                    <!-- Card 1 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Project<br>(المشروع)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                جهد مؤقت يتكون من مجموعة من الأنشطة المترابطة، يُنفذ خلال فترة محددة وبموارد معينة لإنتاج منتج أو خدمة فريدة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Operations<br>(العمليات التشغيلية)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                أنشطة يومية مستمرة ومتكررة تحافظ على سير العمل الروتيني وتقديم الخدمات الاعتيادية للمنظمة (مثل تسجيل الطلاب الفصلي).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Triple Constraint<br>(القيد الثلاثي)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                توازن أهداف النطاق (Scope) والوقت (Time) والتكلفة (Cost) للوصول إلى هدف الجودة وإرضاء راعي المشروع.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                CHAOS Report<br>(تقرير الفوضى 1995)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                دراسة تاريخية لـ Standish Group أثبتت أن 16.2% فقط من مشاريع تقنية المعلومات نجحت، بينما أُلغي أكثر من 31% منها بالكامل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                PMP Certification<br>(محترف إدارة المشاريع)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                أشهر شهادة مهنية عالمية في إدارة المشاريع يقدمها معهد PMI، ويحصل حاملوها على رواتب أعلى بنسبة 17% عالمياً.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Temporary Characteristic<br>(خاصية المؤقتية)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تعني أن لكل مشروع نقطة بداية محددة وتاريخ نهاية محدد مسبقاً، ولا يستمر المشروع إلى ما لا نهاية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Unique Output<br>(المخرج الفريد)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                ميزة أساسية للمشروع؛ حيث ينتج عنه نظام أو برمجية أو بنية تحتية تتميز باختلافها وجدتها عن الأعمال الروتينية النمطية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Project Manager<br>(مدير المشروع)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                الشخص المسؤول عن قيادة وتخطيط وتنظيم وتوجيه ومراقبة المشروع لضمان تسليمه بنجاح ضمن قيود النطاق والوقت والتكلفة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 9 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                ITPM<br>(إدارة مشاريع تقنية المعلومات)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تطبيق المعارف والأدوات في مشاريع تطوير البرمجيات والشبكات والسحابة وقواعد البيانات والأمن السيبراني.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 10 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                PMI Study 2025<br>(إحصاءات نجاح المشاريع)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                50% من المشاريع تحقق النجاح الكامل، و 37% تحقق نجاحاً جزئياً (متعثرة)، و 13% تفشل وتلغى بالكامل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 11 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                IT Spending Forecast<br>(إنفاق تقنية المعلومات)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تتوقع Gartner وصول الإنفاق على تقنية المعلومات عالمياً إلى 7.35 تريليون دولار في عام 2027 بنمو 15%.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 12 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Scope Creep<br>(زحف النطاق)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                التوسع غير المنضبط في متطلبات وميزات المشروع دون زيادة في الوقت أو الميزانية، وهو العدو الأول لمدير المشروع.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 11. الاختبار التقييمي التفاعلي -->
+            <section id="interactive-quiz">
+                <span class="section-tag">التقييم الذاتي الفوري</span>
+                <h2>🏆 11. الاختبار التقييمي التفاعلي (Interactive Quiz)</h2>
+                <p>اختبر معلوماتك في موضوعات المحاضرة الأولى عبر هذا الكويز التفاعلي. اختر الإجابة الصحيحة لتحصل على الشرح الأكاديمي والنتيجة النهائية فوراً:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- سيتم تحميل الأسئلة تفاعلياً بواسطة JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <div id="site-footer"></div>
+
+    <!-- سكربت التفاعل والكويز والوضع الليلي وشريط القراءة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const quizData = [
+            {
+                question: "1. ما هو الفرق الجوهري الأساسي بين المشروع (Project) والعملية التشغيلية (Operation)؟",
+                options: [
+                    "المشروع عمل مستمر بلا نهاية، بينما العملية التشغيلية مؤقتة",
+                    "المشروع جهد مؤقت ينتج مخرجاً فريداً، بينما العملية التشغيلية عمل يومي متكرر ومستمر",
+                    "المشروع لا يحتاج إلى ميزانية، بينما العملية التشغيلية تحتاج لميزانية ضخمة",
+                    "العملية التشغيلية تنتج منتجات جديدة دائماً، بينما المشروع يحافظ على الوضع الراهن"
+                ],
+                correct: 1,
+                explanation: "المشروع يتصف بالمؤقتية (بداية ونهاية محددتان) وإنتاج مخرج فريد، بينما العمليات التشغيلية مستمرة ومتكررة للمحافظة على سير الأعمال."
+            },
+            {
+                question: "2. قيام موظفي شؤون الطلاب في الجامعة بتسجيل المقررات الدراسية للطلاب في بداية كل فصل دراسي يُعد مثالاً على:",
+                options: [
+                    "مشروع تقني جديد (IT Project)",
+                    "عملية تشغيلية مستمرة (Operational Process)",
+                    "إدارة مخاطر المشروع (Risk Management)",
+                    "دراسة جدوى للمشروع"
+                ],
+                correct: 1,
+                explanation: "تسجيل الطلاب في بداية كل ترم هو عمل روتيني دوري متكرر للمحافظة على سير العملية التعليمية، فهو عملية تشغيلية."
+            },
+            {
+                question: "3. أظهر تقرير CHAOS التاريخي الصادر عام 1995 عن Standish Group أن نسبة مشاريع تقنية المعلومات التي حققت أهدافها بنجاح كانت حوالي:",
+                options: [
+                    "80.5%",
+                    "50.0%",
+                    "16.2% فقط",
+                    "95.0%"
+                ],
+                correct: 2,
+                explanation: "تقرير CHAOS الشهير أظهر أن 16.2% فقط من مشاريع تقنية المعلومات نجحت في تسليم أهداف النطاق والوقت والتكلفة، بينما أُلغي أكثر من 31% منها."
+            },
+            {
+                question: "4. يتكون مثلث القيد الثلاثي (Triple Constraint) لإدارة المشاريع من ثلاثة أهداف متوازنة هي:",
+                options: [
+                    "النطاق (Scope)، والوقت (Time)، والتكلفة (Cost)",
+                    "الأجهزة (Hardware)، والبرمجيات (Software)، والشبكات (Networks)",
+                    "الربح، والخسارة، والضرائب",
+                    "المدير، والمبرمج، والعميل"
+                ],
+                correct: 0,
+                explanation: "القيد الثلاثي يتكون من النطاق (Scope)، والوقت (Time)، والتكلفة (Cost)، مع استهداف الجودة وإرضاء راعي المشروع."
+            },
+            {
+                question: "5. وفقاً لدراسة معهد PMI في ديسمبر 2025، ما هي نسبة المشاريع التي تفشل فشلاً كاملاً ويتم إلغاؤها؟",
+                options: [
+                    "50%",
+                    "13%",
+                    "37%",
+                    "70%"
+                ],
+                correct: 1,
+                explanation: "أظهرت الدراسة أن 50% من المشاريع تحقق النجاح، و 37% تحقق نتائج جزئية (متعثرة)، بينما تفشل 13% من المشاريع بالكامل."
+            },
+            {
+                question: "6. إذا طلب العميل إضافة ميزات ووظائف برمجية جديدة لم تكن متفقاً عليها في النطاق (زيادة Scope)، فما النتيجة الحتمية حسب القيد الثلاثي؟",
+                options: [
+                    "ستنخفض التكلفة ويقل الوقت تلقائياً",
+                    "سيتطلب ذلك بالضرورة وقتاً أطول أو تكلفة إضافية وإلا ستتضرر الجودة",
+                    "لا يتأثر الوقت ولا التكلفة بأي شكل",
+                    "يجب إلغاء المشروع فوراً"
+                ],
+                correct: 1,
+                explanation: "أضلاع القيد الثلاثي مترابطة عضوياً؛ وأي زيادة في النطاق تتطلب حتماً زيادة في الوقت أو التكلفة للحفاظ على الجودة."
+            },
+            {
+                question: "7. أي من الخصائص التالية ليست من الخصائص الأساسية للمشروع؟",
+                options: [
+                    "له بداية ونهاية محددتان (Temporary)",
+                    "ينتج مخرجاً أو خدمة فريدة (Unique)",
+                    "عمل روتيني مستمر إلى الأبد دون نهاية (Infinite)",
+                    "يعمل بموارد محددة وقيود وقت وتكلفة (Constraints)"
+                ],
+                correct: 2,
+                explanation: "المشروع لا يستمر للأبد؛ فخاصية الاستمرار الدائم بلا نهاية هي خاصية العمليات التشغيلية وليست من خصائص المشروعات."
+            },
+            {
+                question: "8. ما هي المنظمة العالمية المتخصصة التي تمنح شهادة محترف إدارة المشاريع (PMP)؟",
+                options: [
+                    "مؤسسة Gartner",
+                    "معهد إدارة المشاريع (PMI - Project Management Institute)",
+                    "منظمة الأيزو (ISO) فقط",
+                    "شركة مايكروسوفت"
+                ],
+                correct: 1,
+                explanation: "شهادة PMP يمنحها معهد إدارة المشاريع الأمريكي (PMI)، وهو المرجع الأبرز عالمياً في معايير إدارة المشاريع."
+            },
+            {
+                question: "9. من فوائد ومزايا تطبيق إدارة المشاريع: اكتشاف الأخطاء مبكراً أثناء التطوير بدلاً من اكتشافها بعد التشغيل، وهذا يسهم في:",
+                options: [
+                    "زيادة مدة التنفيذ",
+                    "خفض التكاليف وتقليل الهدر وإعادة العمل",
+                    "تقليل أرباح الشركة المنفذة",
+                    "إلغاء الحاجة لمدير المشروع"
+                ],
+                correct: 1,
+                explanation: "معالجة الأخطاء في المراحل المبكرة يقلل تكاليف الإصلاح بمعدلات هائلة ويمنع الهدر وإعادة العمل المكلفة."
+            },
+            {
+                question: "10. استخدام تقنيات الذكاء الاصطناعي التوليدي (مثل ChatGPT و Gemini) في إدارة المشاريع يفيد مديري المشاريع في:",
+                options: [
+                    "الاستغناء التام عن فريق العمل البشري",
+                    "إعداد مسودات خطط المشاريع وتحليل البيانات والمخاطر وصياغة التقارير",
+                    "شراء الأجهزة والخوادم مجاناً",
+                    "إلغاء قيود الميزانية والوقت"
+                ],
+                correct: 1,
+                explanation: "الذكاء الاصطناعي التوليدي يعمل كمساعد ذكي فائق القوة لمدير المشروع في صياغة الخطط وتحديد المتطلبات وتحليل المخاطر."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_itpm_lec01');
+    </script>
+</body>
+</html>

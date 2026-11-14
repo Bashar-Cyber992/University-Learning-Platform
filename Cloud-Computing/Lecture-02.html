@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: نماذج الخدمات ونماذج النشر وتحديات السحابة | الحوسبة السحابية</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="cloud-computing">
+
+    <!-- الشريط العلوي وشريط التقدم -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">☁️ مقرر الحوسبة السحابية</a>
+                <span>/</span>
+                <span>المحاضرة 2: نماذج الخدمات والنشر والتحديات</span>
+            </div>
+            <div class="top-controls">
+                <a href="Lecture-01.html" class="nav-pill">← المحاضرة السابقة (1)</a>
+                <a href="index.html" class="nav-pill">📚 فهرس المقرر</a>
+                <a href="Lecture-03.html" class="nav-pill">المحاضرة التالية (3) ←</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="readingProgressBar"></div>
+        </div>
+    </div>
+
+    <!-- ترويسة المحاضرة -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا (M.C.S.T) | المستوى الثالث - الترم الثاني</div>
+        <h1>المحاضرة الثانية: نماذج الخدمات ونماذج النشر وتحديات السحابة</h1>
+        <h2>Cloud Service Models (IaaS, PaaS, SaaS), Deployment Models & Cloud Challenges</h2>
+        <p>مقرر مشترك بين قسمي <strong>الأمن السيبراني وشبكات</strong> و<strong>تكنولوجيا المعلومات</strong> | أستاذ المقرر: <strong>أ.د. عبده ناصر شويه (Prof: Abdo Nasser Shewia)</strong></p>
+        <div class="golden-rule-banner">
+            💡 <strong>القاعدة الذهبية للسحابة:</strong> كلما صعدت في هرم الخدمات السحابية زادت راحة المستخدم وقل تحكمه، وكلما نزلت زاد تحكمه ومسؤوليته الأمنية!
+        </div>
+    </header>
+
+    <!-- جسم المحتوى والتخطيط -->
+    <div class="container">
+        
+        <!-- الشريط الجانبي الفهرس -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul>
+                <li><a href="#intro" class="active">🚀 0. المقدمة وسيناريو الانطلاق</a></li>
+                <li><a href="#service-models">☁️ 1. نماذج الخدمات (IaaS, PaaS, SaaS)</a></li>
+                <li><a href="#analogies">🍕 2. تشبيه البيتزا ووسائل النقل</a></li>
+                <li><a href="#deployment-models">🌐 3. نماذج النشر السحابي (Public, Private...)</a></li>
+                <li><a href="#shared-responsibility">🛡️ 4. نموذج المسؤولية المشتركة</a></li>
+                <li><a href="#challenges-tech">⚡ 5. تحديات السحابة التقنية والأمنية</a></li>
+                <li><a href="#challenges-admin">📋 6. تحديات السحابة الإدارية والتنظيمية</a></li>
+                <li><a href="#overcoming-challenges">🛠️ 7. استراتيجيات التغلب على التحديات</a></li>
+                <li><a href="#solutions-bank">🎯 8. بنك الحلول لجميع الأسئلة التطبيقية</a></li>
+                <li><a href="#flashcards">🗂️ 9. بطاقات الاستذكار السريعة</a></li>
+                <li><a href="#interactive-quiz">🏆 10. الاختبار التقييمي التفاعلي</a></li>
+            </ul>
+        </aside>
+
+        <!-- مساحة المقالات والأقسام -->
+        <main class="content-area">
+
+            <!-- 0. المقدمة وسيناريو الانطلاق -->
+            <section id="intro">
+                <span class="section-tag">مدخل استراتيجي</span>
+                <h2>🚀 0. المقدمة، سيناريو الانطلاق، وأهداف التعلم</h2>
+                
+                <div class="scenario-card">
+                    <span class="scenario-badge">🎓 سيناريو الانطلاق الواقعي: تحدي كلية المنار</span>
+                    <h4>نظام التسجيل وبوابة الطلاب الجامعية</h4>
+                    <p>
+                        تخيل أن <strong>كلية المنار للعلوم والتكنولوجيا</strong> قررت الانتقال الكامل إلى السحابة. اجتمع عميد الكلية مع رئيس قسم الأمن السيبراني ورئيس قسم تكنولوجيا المعلومات لمناقشة الخطة:
+                    </p>
+                    <ul class="content-list">
+                        <li><strong>مهندس البنية التحتية:</strong> يريد استئجار خوادم افتراضية خام وتركيب توزيعة Linux وإعداد قواعد البيانات والجدار الناري بنفسه ليملك أقصى درجات التحكم. (هذا اختيار <strong>IaaS</strong>).</li>
+                        <li><strong>فريق البرمجة وتطوير الأنظمة:</strong> يقولون: "نحن نريد فقط بيئة تدعم Python و Node.js لكتابة كود البوابة، ولا نريد إضاعة الوقت في تحديث أنظمة التشغيل أو إعداد السيرفرات!". (هذا اختيار <strong>PaaS</strong>).</li>
+                        <li><strong>عمادة شؤون الطلاب والمحاسبة:</strong> قالوا: "نحن لسنا مبرمجين ولا مهندسي شبكات، نريد برنامجاً جاهزاً لإصدار النتائج والفواتير عبر المتصفح فوراً مثل Google Workspace أو نظام محاسبي سحابي جاهز!". (هذا اختيار <strong>SaaS</strong>).</li>
+                        <li><strong>مسؤول الأمن السيبراني:</strong> يتساءل: أين سنضع بيانات درجات الطلاب والملفات المالية الحساسة؟ هل نضعها على سحابة عامة متاحة لعموم الناس، أم سحابة خاصة معزولة، أم ندمج بينهما في سحابة هجينة؟ وماذا عن بطء السيرفر أثناء تسجيل المواد وانقطاع الإنترنت؟</li>
+                    </ul>
+                    <p style="margin-bottom:0;"><strong>الهدف من هذه المحاضرة:</strong> تفكيك هذه العقد بالكامل، وتمكينك من اتخاذ القرار الهندسي الصائب في بيئات العمل الحقيقية والامتحانات الأكاديمية.</p>
+                </div>
+
+                <h3>🎯 مخرجات التعلم المستهدفة (Learning Outcomes):</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>فهم معماريات الخدمات السحابية</h4>
+                        <p>التمييز الدقيق بين نماذج الخدمة الثلاثة (IaaS, PaaS, SaaS) ومعرفة نطاق مسؤولية كل طرف والفئة المستهدفة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>إتقان نماذج النشر الأربعة</h4>
+                        <p>المقارنة بين السحابة العامة، الخاصة، الهجينة، والمجتمعية من حيث الملكية والإدارة والتحكم والتكلفة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>هندسة المسؤولية المشتركة</h4>
+                        <p>تحديد الجهة المسؤولة قانونياً وتقنياً عن أمان البيانات وحمايتها عند وقوع أي تسريب أو اختراق.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">4</div>
+                        <h4>مواجهة تحديات السحابة</h4>
+                        <p>اكتساب الحلول الهندسية لـ 12 تحدياً تقنياً وإدارياً مثل Vendor Lock-in و Auto-scaling والتكاليف والامتثال.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. نماذج الخدمات السحابية -->
+            <section id="service-models">
+                <span class="section-tag">الهندسة المعمارية</span>
+                <h2>☁️ 1. نماذج خدمات الحوسبة السحابية (Cloud Service Models)</h2>
+                <p>
+                    تُقسّم خدمات الحوسبة السحابية عالمياً وفق معيار <strong>NIST</strong> إلى ثلاثة نماذج رئيسة. المعيار الأساسي للتمايز بينها هو: <strong>ما هو مستوى الخدمة المقدمة؟ وما هو مقدار التحكم والإدارة التي يمتلكها العميل مقابل ما يتولاه مزود الخدمة السحابية (Cloud Service Provider - CSP)؟</strong>
+                </p>
+
+                <!-- الهرم البصري -->
+                <div class="diagram-container">
+                    <h4 style="margin-top:0; color:var(--primary);">هرم نماذج الخدمات السحابية ورؤية القيمة (Value Visibility)</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">يوضح الشكل تدرج الخدمات من البنية التحتية إلى البرمجيات، وعلاقة كل طبقة بالجمهور المستهدف ومستوى القيمة الظاهرة للمستخدم النهائي.</p>
+                    <div class="pyramid-wrapper">
+                        <div class="pyramid-tier tier-saas">
+                            <span class="tier-title">💻 SaaS: البرمجيات كخدمة</span>
+                            <span class="tier-audience">المستخدمون النهائيون (End Users)</span>
+                        </div>
+                        <div class="pyramid-tier tier-paas">
+                            <span class="tier-title">⚙️ PaaS: المنصة كخدمة</span>
+                            <span class="tier-audience">مطورو التطبيقات (App Developers)</span>
+                        </div>
+                        <div class="pyramid-tier tier-iaas">
+                            <span class="tier-title">🖥️ IaaS: البنية التحتية كخدمة</span>
+                            <span class="tier-audience">مهندسو الشبكات والأنظمة (Network Architects)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1.1 IaaS -->
+                <h3>1.1 البنية التحتية كخدمة (Infrastructure as a Service – IaaS)</h3>
+                <p>
+                    <strong>المفهوم والتعريف:</strong> هي خدمة سحابية توفر للمستخدم المكونات التحتية الأساسية للحوسبة عبر الإنترنت (مثل الخوادم الافتراضية، ومساحات التخزين، والشبكات الافتراضية، وجدران الحماية)، <strong>دون الحاجة إلى شراء أجهزة عتادية فيزيائية وامتلاكها وصيانتها داخل مركز بيانات محلي</strong>.
+                </p>
+                <div class="info-box">
+                    <h4>💡 كيف تعمل IaaS عملياً؟</h4>
+                    <p style="margin-bottom:0;">
+                        بدلاً من شراء خادم فعلي (Physical Server) بمبلغ آلاف الدولارات، ووضعه في غرفة خوادم مجهزة بالتبريد ومولدات الطاقة، تقوم المؤسسة باستئجار جهاز افتراضي (<span class="term-en">Virtual Machine - VM</span>) من مزود الخدمة (مثل AWS أو Microsoft Azure). المؤسسة هي التي تختار نظام التشغيل (Windows Server أو Ubuntu Linux)، وتقوم بتهيئته، وتثبيت محرك قواعد البيانات، والبرامج المحاسبية أو الإدارية وإدارتها بالكامل.
+                    </p>
+                </div>
+                <ul class="content-list">
+                    <li><strong>ماذا يدير مزود الخدمة (CSP)؟</strong> العتاد الفيزيائي (الخوادم، أقراص التخزين، الكابلات)، الكهرباء، التبريد، وطبقة المحاكاة الافتراضية (<span class="term-en">Hypervisor</span>).</li>
+                    <li><strong>ماذا يدير المستخدم (العميل)؟</strong> نظام التشغيل (<span class="term-en">OS</span>)، التحديثات والترقيعات الأمنية، برمجيات التشغيل الوسيطة (<span class="term-en">Middleware</span>)، قواعد البيانات، والتطبيقات والبيانات.</li>
+                    <li><strong>الفئة المستهدفة:</strong> مهندسو الشبكات، مديرو الأنظمة (<span class="term-en">System Administrators</span>)، ومعماريو السحابة.</li>
+                    <li><strong>أمثلة شهيرة:</strong> <span class="term-en">Amazon EC2</span>، و <span class="term-en">Microsoft Azure Virtual Machines</span>، و <span class="term-en">Google Compute Engine (GCE)</span>.</li>
+                    <li><strong>مثال واقعي تطبيقي:</strong> شركة محاسبة تحتاج إلى خادم لتخزين ومزامنة قاعدة بياناتها المالية، فتستأجر خادم EC2 بنظام Windows Server وتثبت عليه برنامجها المخصص، وتدفع مقابل ساعات التشغيل فقط.</li>
+                </ul>
+
+                <!-- 1.2 PaaS -->
+                <h3>1.2 المنصة كخدمة (Platform as a Service – PaaS)</h3>
+                <p>
+                    <strong>المفهوم والتعريف:</strong> هي خدمة سحابية توفر <strong>بيئة تطوير وتشغيل واختبار متكاملة للتطبيقات عبر الإنترنت</strong>، دون أن يتدخل المستخدم أو يشغل نفسه بإدارة الخوادم، أو تثبيت أنظمة التشغيل، أو تحديثات الأمان للطبقات الدنيا.
+                </p>
+                <div class="info-box success-box">
+                    <h4>🚀 كيف تمكن PaaS المطورين من الإبداع السريع؟</h4>
+                    <p style="margin-bottom:0;">
+                        المزود يقدم لك بيئة تشغيل جاهزة (<span class="term-en">Runtime Environment</span>) مثل محرك Python أو Node.js أو Java أو .NET، وقواعد بيانات مدارة تلقائياً. كل ما يفعله المطور هو كتابة الشيفرة البرمجية (<span class="term-en">Code</span>) ورفعها للسحابة، وتتولى المنصة تلقائياً استضافة التطبيق، وضبط الحمل، وتوفير التوافرية العالية.
+                    </p>
+                </div>
+                <ul class="content-list">
+                    <li><strong>ماذا يدير مزود الخدمة (CSP)؟</strong> كل شيء في IaaS بالإضافة إلى: نظام التشغيل، برمجيات الخوادم (مثل Apache, Nginx)، محركات اللغات، وتحديثات الأمان للنظام.</li>
+                    <li><strong>ماذا يدير المستخدم (المطور)؟</strong> التطبيق المكتوب (<span class="term-en">Application Code</span>) والبيانات الخاصة بالتطبيق (<span class="term-en">Data</span>).</li>
+                    <li><strong>الفئة المستهدفة:</strong> مطورو ومبرمجو التطبيقات (<span class="term-en">Software Developers</span>) وفرق الـ DevOps.</li>
+                    <li><strong>أمثلة شهيرة:</strong> <span class="term-en">Google App Engine</span>، و <span class="term-en">Microsoft Azure App Service</span>، و <span class="term-en">AWS Elastic Beanstalk</span>، و <span class="term-en">Heroku</span>.</li>
+                    <li><strong>مثال واقعي تطبيقي:</strong> مبرمج يريد إنشاء نظام بوابات إلكترونية ومحاسبية للجامعة؛ بدلاً من قضاء أيام في تنصيب خادم وإعداد جدران الحماية، يستخدم Azure App Service لرفع كوده وتشغيله خلال دقائق معدودة.</li>
+                </ul>
+
+                <!-- 1.3 SaaS -->
+                <h3>1.3 البرمجيات كخدمة (Software as a Service – SaaS)</h3>
+                <p>
+                    <strong>المفهوم والتعريف:</strong> هي خدمة تتيح للمستخدم النهائي استخدام <strong>برامج وتطبيقات جاهزة بالكامل تعمل على السحابة</strong> مباشرة عبر متصفح الإنترنت أو تطبيق الجوال، دون الحاجة إلى تثبيت أي برنامج على الجهاز الشخصي ودون إدارة أي بنية تحتية أو منصات.
+                </p>
+                <div class="info-box security-box" style="background-color:var(--info-bg);">
+                    <h4>💻 SaaS: الجاهزية المطلقة للمستخدم النهائي</h4>
+                    <p style="margin-bottom:0;">
+                        الشركة المزودة تتولى المسؤولية بنسبة 100% عن تشغيل البرنامج، وإصلاح العيوب البرمجية، وإجراء التحديثات السلسة، وإدارة النسخ الاحتياطي والأمان. العميل يكتفي بفتح المتصفح، وإدخال اسم المستخدم وكلمة المرور، والبدء في استهلاك الخدمة.
+                    </p>
+                </div>
+                <ul class="content-list">
+                    <li><strong>ماذا يدير مزود الخدمة (CSP)؟</strong> السلسلة التقنية بأكملها: من العتاد، والشبكة، ونظام التشغيل، حتى الشيفرة البرمجية للتطبيق والواجهات التفاعلية.</li>
+                    <li><strong>ماذا يدير المستخدم (المستهلك)؟</strong> إعدادات الحساب والمستخدمين، وإدخال وإدارة بياناته الخاصة داخل التطبيق.</li>
+                    <li><strong>الفئة المستهدفة:</strong> المستخدمون النهائيون (<span class="term-en">End Users</span>)، الموظفون، المحاسبون، والشركات.</li>
+                    <li><strong>أمثلة شهيرة:</strong> <span class="term-en">Gmail</span>، و <span class="term-en">Google Docs</span>، و <span class="term-en">Microsoft 365</span>، و <span class="term-en">Dropbox</span>، و <span class="term-en">Salesforce</span>.</li>
+                    <li><strong>مثال واقعي تطبيقي:</strong> محاسب يستخدم نظاماً محاسبياً سحابياً جاهزاً (مثل QuickBooks Online أو Zoho Books) عبر المتصفح لإصدار الفواتير والتقارير المالية دون معرفة أين يقع الخادم أو كيف تم برمجته.</li>
+                </ul>
+
+                <div class="info-box warning-box">
+                    <h4>⚡ خلاصة الشريحة السابعة (المعادلة السريعة للحفظ):</h4>
+                    <p style="font-size:1.05rem; font-weight:bold; margin-bottom:0;">
+                        • IaaS = استئجار البنية التحتية (خوادم، تخزين، شبكات).<br>
+                        • PaaS = استئجار منصة لتطوير البرامج وتشغيلها.<br>
+                        • SaaS = استخدام برنامج جاهز عبر الإنترنت كخدمة مباشرة.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. التشبيهات لتفكيك التعقيد -->
+            <section id="analogies">
+                <span class="section-tag">تفكيك العقد بالتشبيه</span>
+                <h2>🍕 2. تفكيك العقد: تشبيه البيتزا ووسائل النقل المعياري</h2>
+                <p>
+                    أفضل وسيلة تعليمية في العالم لفهم الفرق الجذري بين البنية المحلية (<span class="term-en">On-Premises</span>) ونماذج الخدمات السحابية الثلاثة هي التشبيهات الواقعية:
+                </p>
+
+                <!-- تشبيه البيتزا -->
+                <h3>2.1 نموذج "البيتزا كخدمة" (Pizza as a Service)</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>العنصر / الطبقة</th>
+                                <th>تقليدي (On-Premises)<br>صناعة البيتزا في المنزل</th>
+                                <th>IaaS<br>عجينة مجمدة وتخبزها في فرنك</th>
+                                <th>PaaS<br>توصيل البيتزا الجاهزة للمنزل</th>
+                                <th>SaaS<br>تناول البيتزا داخل المطعم</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>العجين والمكونات</strong></td>
+                                <td>أنت تصنعه وتجهزه</td>
+                                <td>جاهز من البقالة (المزود)</td>
+                                <td>المطعم يجهزها (المزود)</td>
+                                <td>المطعم يجهزها (المزود)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الفرن والغاز</strong></td>
+                                <td>فرنك وغازك (أنت)</td>
+                                <td>فرنك وغازك (أنت)</td>
+                                <td>فرن المطعم (المزود)</td>
+                                <td>فرن المطعم (المزود)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>طاولة الطعام والأطباق</strong></td>
+                                <td>أنت تجهزها وتغسلها</td>
+                                <td>أنت تجهزها وتغسلها</td>
+                                <td>أنت تجهزها في بيتك</td>
+                                <td>المطعم يقدمها وينظفها (المزود)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المشروبات والخدمة</strong></td>
+                                <td>أنت تشتريها وتقدمها</td>
+                                <td>أنت تشتريها وتقدمها</td>
+                                <td>أنت تشتريها</td>
+                                <td>المطعم يقدمها لك (المزود)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المسؤولية النهائية</strong></td>
+                                <td><span class="tag-user">أنت مسؤول عن كل شيء</span></td>
+                                <td><span class="tag-user">أنت تطهو وتقدم</span></td>
+                                <td><span class="tag-user">أنت تتناول فقط في بيتك</span></td>
+                                <td><span class="tag-provider">المزود يدير كل شيء</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- تشبيه وسائل النقل -->
+                <h3>2.2 نموذج "المواصلات كخدمة" (Transportation as a Service)</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">A</div>
+                        <h4>امتلاك سيارة (On-Premises)</h4>
+                        <p>شراء السيارة، ترخيصها، دفع التأمين، تغيير الزيوت، تصليح الأعطال، وشراء البنزين وقيادتها بنفسك. (تحكم كامل + أعباء وتكاليف ضخمة).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">B</div>
+                        <h4>استئجار سيارة (IaaS)</h4>
+                        <p>تستأجر السيارة من وكالة تأجير (هم يملكون الهيكل والمحرك)، ولكنك تقودها بنفسك، تشتري البنزين، وتحدد مسار الرحلة وسرعتها.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">C</div>
+                        <h4>ركوب سيارة أجرة / أوبر (PaaS)</h4>
+                        <p>لا تقود السيارة ولا تفكر في البنزين أو الصيانة؛ أنت تطلب وسيلة النقل وتحدد الوجهة فقط، والسائق والمنصة يتكفلان بالوصول.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">D</div>
+                        <h4>ركوب القطار أو المترو السريع (SaaS)</h4>
+                        <p>وسيلة نقل جماعية جاهزة تماماً ومجدولة؛ تشتري التذكرة وتصعد مباشرة للاستفادة من الخدمة دون أي تدخل في المسار أو السائق.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. نماذج النشر السحابي -->
+            <section id="deployment-models">
+                <span class="section-tag">بيئات الاستضافة</span>
+                <h2>🌐 3. أنواع نماذج نشر الحوسبة السحابية (Cloud Deployment Models)</h2>
+                <p>
+                    تنقسم الحوسبة السحابية من حيث <strong>نماذج النشر</strong> إلى <strong>أربعة أنواع رئيسة</strong>. المعيار الجوهري للتصنيف يكمن في: <strong>من يمتلك البنية التحتية؟ ومن يديرها؟ ومن هم الجهات المسموح لها باستخدام والوصول إلى تلك الموارد؟</strong>
+                </p>
+
+                <!-- بطاقات نماذج النشر الأربعة -->
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color:#0284c7;">
+                        <div class="card-badge-num">1</div>
+                        <h4>السحابة العامة (Public Cloud)</h4>
+                        <p><strong>المفهوم:</strong> خدمات سحابية يقدمها مزود تجاري خارجي عبر شبكة الإنترنت العامة، وتكون مواردها مشتركة بين عملاء متعددين (<span class="term-en">Multi-tenant Architecture</span>)، مع عزل برمجي وافتراضي تام لبيانات كل عميل.</p>
+                        <p><strong>أمثلة:</strong> AWS، Microsoft Azure، Google Cloud Platform.</p>
+                        <p><strong>الميزة الأبرز:</strong> انعدام تكاليف الشراء الأولية، ومرونة توسع هائلة وفورية، والدفع حسب الاستخدام الدقيق.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color:#10b981;">
+                        <div class="card-badge-num">2</div>
+                        <h4>السحابة الخاصة (Private Cloud)</h4>
+                        <p><strong>المفهوم:</strong> بيئة سحابية مخصصة <strong>حصرياً لمؤسسة واحدة فقط</strong> (<span class="term-en">Single-tenant</span>). يمكن استضافتها داخل مركز بيانات المؤسسة المحلي أو لدى مزود خارجي، وتمنح تحكماً مطلقاً في الأمن والبيانات.</p>
+                        <p><strong>أمثلة:</strong> سحابة داخلية لوزارة الدفاع، بنك ينشئ مركز بيانات سحابي خاص لمعاملاته.</p>
+                        <p><strong>الميزة الأبرز:</strong> أقصى درجات الخصوصية، والامتثال الصارم للتشريعات القانونية، والتحكم في العتاد.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color:#f59e0b;">
+                        <div class="card-badge-num">3</div>
+                        <h4>السحابة الهجينة (Hybrid Cloud)</h4>
+                        <p><strong>المفهوم:</strong> نموذج تكاملي يجمع بين السحابة العامة والسحابة الخاصة (أو البنية المحلية)، مع وجود تقنيات ربط قياسية وشبكات مشفرة (<span class="term-en">VPN / Direct Connect</span>) تتيح تبادل البيانات ونقل التطبيقات بسلاسة.</p>
+                        <p><strong>مثال:</strong> جامعة تحتفظ ببيانات ودرجات الطلاب الحساسة في سحابة خاصة، وتستخدم السحابة العامة لبوابة الموقع العام ومحاضرات الفيديو لتتحمل ملايين الزيارات.</p>
+                        <p><strong>الميزة الأبرز:</strong> الجمع بين أمان السحابة الخاصة ومرونة وتوفير السحابة العامة.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color:#8b5cf6;">
+                        <div class="card-badge-num">4</div>
+                        <h4>السحابة المجتمعية (Community Cloud)</h4>
+                        <p><strong>المفهوم:</strong> بيئة سحابية <strong>مشتركة بين مجموعة من المؤسسات التي تجمعها أهداف مشتركة</strong>، أو متطلبات تنظيمية وقانونية وأمنية موحدة، وتتحمل هذه الجهات تكاليف وإدارة البنية التحتية المشتركة.</p>
+                        <p><strong>أمثلة:</strong> شبكة من الجامعات تتشارك منصة سحابية للأبحاث وإدارة المقررات، أو تجمع للمستشفيات لتبادل السجلات الطبية وفق معايير موحدة.</p>
+                        <p><strong>الميزة الأبرز:</strong> تقاسم التكاليف بين المؤسسات مع الحفاظ على متطلبات أمنية وقطاعية متخصصة.</p>
+                    </div>
+                </div>
+
+                <!-- مصفوفة مقارنة نماذج النشر -->
+                <h3>مصفوفة المقارنة الأكاديمية الشاملة بين نماذج النشر السحابي:</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>السحابة العامة (Public)</th>
+                                <th>السحابة الخاصة (Private)</th>
+                                <th>السحابة الهجينة (Hybrid)</th>
+                                <th>السحابة المجتمعية (Community)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>الملكية والتشغيل</strong></td>
+                                <td>مزود خدمة خارجي تجاري</td>
+                                <td>المؤسسة نفسها أو طرف متخصص</td>
+                                <td>مزيج بين المؤسسة والمزود</td>
+                                <td>تحالف المؤسسات المشتركة</td>
+                            </tr>
+                            <tr>
+                                <td><strong>تعدد المستأجرين</strong></td>
+                                <td>مشتركة (<span class="term-en">Multi-tenant</span>)</td>
+                                <td>مؤسسة واحدة (<span class="term-en">Single-tenant</span>)</td>
+                                <td>خاصة للبيانات الحساسة وعامة لغيرها</td>
+                                <td>مقتصرة على المجتمع المحدد</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التكلفة الأولية (CapEx)</strong></td>
+                                <td>منعدمة (صفر تكلفة عتاد)</td>
+                                <td>مرتفعة جداً (شراء عتاد وتجهيزات)</td>
+                                <td>متوسطة إلى مرتفعة</td>
+                                <td>مشتركة وموزعة بين المؤسسات</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مستوى التحكم والأمن</strong></td>
+                                <td>تحكم محدود بالبنية التحتية</td>
+                                <td>تحكم وسيطرة مطلقة وكاملة</td>
+                                <td>تحكم كامل بالجزء الخاص ومرونة بالعام</td>
+                                <td>تحكم مشترك خاضع لاتفاقية المجتمع</td>
+                            </tr>
+                            <tr>
+                                <td><strong>أفضل حالة استخدام</strong></td>
+                                <td>الشركات الناشئة، وتطبيقات الويب</td>
+                                <td>البنوك، الوزارات، والمؤسسات الحساسة</td>
+                                <td>المؤسسات المتنامية ذات البيانات المتباينة</td>
+                                <td>اتحادات الجامعات والمستشفيات</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 4. نموذج المسؤولية المشتركة -->
+            <section id="shared-responsibility">
+                <span class="section-tag">أمن السحابة الجوهري</span>
+                <h2>🛡️ 4. نموذج المسؤولية المشتركة (Shared Responsibility Model)</h2>
+                <p>
+                    أحد أهم أسئلة المحاضرة (السؤال الثالث في الشريحة 8): <strong>"إذا تعرض أحد الخوادم السحابية لهجوم أدى لتسريب بيانات، فمن المسؤول: المزود أم المؤسسة؟"</strong><br>
+                    الإجابة الأكاديمية والمهنية القاطعة هي: <strong>الأمان في السحابة مسؤولية مشتركة، والمسؤولية تتحدد بحسب نوع نموذج الخدمة ومستوى الخلل!</strong>
+                </p>
+
+                <div class="info-box security-box" style="background-color:var(--info-bg);">
+                    <h4>⚖️ المبدأ المعياري العالمي لأمن السحابة:</h4>
+                    <p>
+                        <strong>1. أمن السحابة نفسها (Security OF the Cloud):</strong> مسؤولية مزود الخدمة السحابية (CSP)، وتشمل أمان مراكز البيانات، السيرفرات الفيزيائية، شبكات التوصيل، التبريد، والـ Hypervisor.<br>
+                        <strong>2. الأمن داخل السحابة (Security IN the Cloud):</strong> مسؤولية العميل والمؤسسة، وتشمل أمان البيانات، التشفير، إدارة الهويات، صلاحيات الموظفين، وترقيع نظام التشغيل والتطبيقات.
+                    </p>
+                </div>
+
+                <!-- مصفوفة المسؤولية التفاعلية -->
+                <h3>مصفوفة تقسيم المسؤوليات بين العميل ومزود الخدمة عبر النماذج:</h3>
+                <div class="matrix-grid">
+                    <div class="matrix-cell matrix-header">الطبقة التقنية / المكون</div>
+                    <div class="matrix-cell matrix-header">التقليدي (On-Prem)</div>
+                    <div class="matrix-cell matrix-header">IaaS</div>
+                    <div class="matrix-cell matrix-header">PaaS</div>
+                    <div class="matrix-cell matrix-header">SaaS</div>
+
+                    <!-- Row 1 -->
+                    <div class="matrix-cell matrix-layer-name">1. البيانات وتصنيفها (Data)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+
+                    <!-- Row 2 -->
+                    <div class="matrix-cell matrix-layer-name">2. إدارة الهويات والصلاحيات (IAM)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+
+                    <!-- Row 3 -->
+                    <div class="matrix-cell matrix-layer-name">3. كود التطبيقات (Applications)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+
+                    <!-- Row 4 -->
+                    <div class="matrix-cell matrix-layer-name">4. نظام التشغيل (Operating System)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+
+                    <!-- Row 5 -->
+                    <div class="matrix-cell matrix-layer-name">5. بيئة التشغيل الوسيطة (Runtime/Middleware)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+
+                    <!-- Row 6 -->
+                    <div class="matrix-cell matrix-layer-name">6. المحاكاة الافتراضية (Hypervisor)</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+
+                    <!-- Row 7 -->
+                    <div class="matrix-cell matrix-layer-name">7. الخوادم والعتاد والتخزين الفيزيائي</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+
+                    <!-- Row 8 -->
+                    <div class="matrix-cell matrix-layer-name">8. الشبكة الفيزيائية والمباني والتبريد</div>
+                    <div class="matrix-cell"><span class="tag-user">العميل</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                    <div class="matrix-cell"><span class="tag-provider">المزود</span></div>
+                </div>
+
+                <div class="info-box danger-box">
+                    <h4>⚠️ استنتاج حاسم للأمن السيبراني:</h4>
+                    <p style="margin-bottom:0;">
+                        لاحظ أن <strong>البيانات (Data)</strong> و<strong>إدارة صلاحيات الوصول (IAM)</strong> تقع دائماً وبلا استثناء على عاتق <strong>المستخدم/العميل</strong> في جميع النماذج السحابية الثلاثة! حتى في نموذج SaaS، إذا اختار موظف كلمة مرور ضعيفة أو منح صلاحيات لغير مستحق، فإن العميل هو المخطئ والمسؤول قانونياً وليس مزود الخدمة.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 5. تحديات السحابة التقنية والأمنية -->
+            <section id="challenges-tech">
+                <span class="section-tag">تحليل التهديدات والمعوقات</span>
+                <h2>⚡ 5. تحديات الحوسبة السحابية التقنية والأمنية (8 تحديات)</h2>
+                <p>
+                    رغم المزايا التنافسية الهائلة للحوسبة السحابية (خفض التكاليف، التوسع السريع، الوصول العالمي)، إلا أن الانتقال إليها يفرض تحديات تقنية وأمنية بالغة الحساسية، استعرضتها المحاضرة في ثمانية محاور:
+                </p>
+
+                <div class="cards-grid">
+                    <!-- 1 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>أمن المعلومات (Data Security)</h4>
+                        <p><strong>التحدي:</strong> صعوبة حماية البيانات المخزنة في بيئة سحابية خارجية من الاختراق والسرقة أو الوصول غير المصرح به نتيجة هجمات الفضاء السيبراني أو ضعف التشفير.</p>
+                        <p><strong>مثال:</strong> اختراق حساب إداري على السحابة وتسريب ملايين أرقام البطاقات الائتمانية والبيانات الحساسة.</p>
+                    </div>
+
+                    <!-- 2 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>خصوصية البيانات (Data Privacy)</h4>
+                        <p><strong>التحدي:</strong> ضمان عدم استغلال البيانات الشخصية أو مشاركتها مع أطراف ثالثة دون إذن، والالتزام بالقوانين الصارمة لحماية خصوصية الأفراد.</p>
+                        <p><strong>مثال:</strong> مستشفى يرفع سجلات المرضى والملفات الصحية إلى سحابة تجارية دون تطبيق ضوابط إخفاء الهوية والتشفير المناسب.</p>
+                    </div>
+
+                    <!-- 3 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>الاعتماد على الإنترنت (Internet Dependency)</h4>
+                        <p><strong>التحدي:</strong> الخدمات السحابية تعمل عبر شبكة الإنترنت كشريان حياة وحيد؛ فأي انقطاع في الاتصال أو تذبذب في سرعة الشبكة يؤدي لشلل كامل وتعذر الوصول للأنظمة.</p>
+                        <p><strong>مثال:</strong> انقطاع كابل الإنترنت البحري عن الجامعة أثناء فترة تسجيل المقررات يؤدي لتعطل الطلاب عن التسجيل تماماً.</p>
+                    </div>
+
+                    <!-- 4 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">4</div>
+                        <h4>توقف الخدمة (Service Downtime)</h4>
+                        <p><strong>التحدي:</strong> تعرض مراكز بيانات المزود السحابي لأعطال برمجية، كوارث طبيعية، أو انقطاع كهرباء يؤدي إلى خروج السيرفرات والتطبيقات عن الخدمة مؤقتاً.</p>
+                        <p><strong>مثال:</strong> تعطل مركز بيانات المزود السحابي يؤدي لتوقف تطبيق البنك الإلكتروني وتعطل عمليات السحب والتحويل لآلاف العملاء.</p>
+                    </div>
+
+                    <!-- 5 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">5</div>
+                        <h4>الارتباط بمزود خدمة واحد (Vendor Lock-in)</h4>
+                        <p><strong>التحدي:</strong> صعوبة وتكلفة انتقال المؤسسة من مزود سحابي إلى مزود آخر بسبب استخدام تقنيات خاصة وبرمجيات مغلقة وتكاليف سحب البيانات (<span class="term-en">Egress Fees</span>).</p>
+                        <p><strong>مثال:</strong> شركة بنت كل قواعد بياناتها وتقنياتها على خدمات خاصة بـ AWS لمدة 5 سنوات، ثم وجدت استحالة لنقلها إلى Azure دون إعادة بناء النظام بالكامل.</p>
+                    </div>
+
+                    <!-- 6 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">6</div>
+                        <h4>إدارة التكاليف (Cost Management)</h4>
+                        <p><strong>التحدي:</strong> صدمة الفواتير السحابية (<span class="term-en">Bill Shock</span>)؛ حيث يؤدي سوء مراقبة الاستهلاك أو ترك خوادم تجريبية تعمل على مدار الساعة إلى تراكم تكاليف شهرية باهظة.</p>
+                        <p><strong>مثال:</strong> مهندس ينسى إيقاف 10 خوادم سحابية افتراضية عالية المواصفات بعد انتهاء الاختبار، فتصدر فاتورة نهاية الشهر بآلاف الدولارات غير المبررة.</p>
+                    </div>
+
+                    <!-- 7 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">7</div>
+                        <h4>نقل البيانات (Data Migration)</h4>
+                        <p><strong>التحدي:</strong> صعوبة وبطء نقل البيانات والأنظمة الضخمة من الخوادم المحلية إلى السحابة أو بين السحب المختلفة بسبب أحجام البيانات الهائلة واختلاف هياكل قواعد البيانات.</p>
+                        <p><strong>مثال:</strong> جامعة لديها 15 تيرابايت من السجلات الأكاديمية والوثائق تحتاج أشهراً لرفعها عبر الإنترنت ما لم يتم استخدام وسائل نقل متخصصة.</p>
+                    </div>
+
+                    <!-- 8 -->
+                    <div class="feature-card">
+                        <div class="card-badge-num">8</div>
+                        <h4>إدارة الأداء والتوسع (Performance & Scalability)</h4>
+                        <p><strong>التحدي:</strong> بطء استجابة التطبيقات واختناقها عند تدفق آلاف المستخدمين في لحظة واحدة إن لم تكن البنية مهيأة لزيادة الموارد آلياً وتوزيع الأحمال.</p>
+                        <p><strong>مثال:</strong> فتح بوابة نتائج الشهادة الثانوية أو تسجيل مقررات كلية المنار في وقت محدد يدخل فيه 20,000 طالب في نفس الدقيقة فينهار النظام لعدم كفاية السيرفرات.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. تحديات السحابة الإدارية والتنظيمية -->
+            <section id="challenges-admin">
+                <span class="section-tag">الحوكمة والإدارة</span>
+                <h2>📋 6. التحديات الإدارية والتنظيمية (4 تحديات حاسمة)</h2>
+                <p>
+                    نجاح الحوسبة السحابية لا يعتمد فقط على الجانب التقني، بل يواجه تحديات حوكمة وإدارة بشرية وتنظيمية بالغة الأثر:
+                </p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>التحدي الإداري</th>
+                                <th>المفهوم والأثر على المؤسسة</th>
+                                <th>مثال توضيحي واقعي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. نقص الخبرات والكفاءات<br>(<span class="term-en">Lack of Expertise</span>)</strong></td>
+                                <td>شح الموظفين والمهندسين الذين يمتلكون المعرفة العميقة في هندسة السحابة والأمن السحابي، مما يؤدي لسوء إدارة الموارد، ارتكاب أخطاء فادحة في الإعدادات، وإهدار الميزانيات.</td>
+                                <td>عدم قدرة فريق تقنية المعلومات في المؤسسة على ضبط جدران الحماية الافتراضية (<span class="term-en">Security Groups</span>) بكفاءة مما يترك قواعد البيانات مكشوفة للإنترنت.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. الالتزام القانوني والتنظيمي<br>(<span class="term-en">Legal & Compliance</span>)</strong></td>
+                                <td>ضرورة الامتثال لقوانين حماية البيانات والخصوصية الإقليمية والدولية (مثل نظام حماية البيانات الشخصية، و GDPR، واشتراطات البنوك المركزية) التي تمنع إخراج البيانات خارج حدود الدولة (<span class="term-en">Data Sovereignty</span>).</td>
+                                <td>حظر القانون الطبي تخزين الملفات الصحية لمرضى المستشفى في خوادم سحابية تقع خارج النطاق الجغرافي للدولة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. إدارة الصلاحيات والوصول<br>(<span class="term-en">Access Management</span>)</strong></td>
+                                <td>صعوبة تنظيم وإدارة هويات آلاف الموظفين وتحديد ما يحق لكل فرد الاطلاع عليه، مما يسبب منح صلاحيات زائدة غير مبررة تمثل ثغرة أمنية داخلية خطيرة.</td>
+                                <td>حصول موظف في قسم التسويق أو المحاسبة على صلاحية مسؤول كامل (<span class="term-en">Full Admin</span>) والاطلاع على بيانات رواتب الموظفين أو سجلات الدرجات دون حاجة وظيفية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. التعافي من الكوارث واستمرارية الأعمال<br>(<span class="term-en">Disaster Recovery - DR</span>)</strong></td>
+                                <td>الحاجة لخطة طوارئ معتمدة ومختبرة لضمان استعادة الأنظمة والبيانات والعمليات بسرعة بعد حدوث كوارث كبرى أو هجمات فدية دون توقف دائم للمؤسسة.</td>
+                                <td>تعرض خوادم الشركة لهجوم فدية وتشفير قواعد البيانات، والقدرة على استعادتها فوراً من نسخ احتياطية معزولة في منطقة جغرافية أخرى دون دفع فدية.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 7. استراتيجيات التغلب على التحديات -->
+            <section id="overcoming-challenges">
+                <span class="section-tag">الحلول الهندسية المعتمدة</span>
+                <h2>🛠️ 7. جدول التغلب على تحديات السحابة (Overcoming Challenges)</h2>
+                <p>
+                    لكل تحدٍ في عالم الحوسبة السحابية حلول هندسية وممارسات فضلى (<span class="term-en">Best Practices</span>) تضمن استقرار وأمن النظام، نلخصها في الجدول الأكاديمي الموسع:
+                </p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>التحدي (Challenge)</th>
+                                <th>استراتيجية التغلب عليه هندسياً</th>
+                                <th>مثال تطبيقي عملي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>أمن المعلومات<br>(Data Security)</strong></td>
+                                <td>تشفير البيانات أثناء التخزين (<span class="term-en">At-Rest</span>) وأثناء النقل (<span class="term-en">In-Transit</span>)، تفعيل المصادقة متعددة العوامل (<span class="term-en">MFA</span>)، ومراقبة السجلات المشبوهة عبر أنظمة SIEM.</td>
+                                <td>بنك يشفر بيانات حسابات العملاء بخوارزمية AES-256 ويشترط بصمة وتطبيق OTP لكل تسجيل دخول إداري.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>خصوصية البيانات<br>(Data Privacy)</strong></td>
+                                <td>تطبيق سياسات الخصوصية، تصنيف البيانات وحجب المعرفات الشخصية (<span class="term-en">Data Masking / Anonymization</span>)، وحصر الوصول وفق مبدأ الحاجة للعمل.</td>
+                                <td>منع موظفي التسجيل في الجامعة من رؤية التفاصيل المالية الدقيقة أو أرقام الهويات الوطنية لغير المخولين.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الاعتماد على الإنترنت<br>(Internet Dependency)</strong></td>
+                                <td>توفير خطوط اتصال متعددة واحتياطية من مزودين مختلفين (<span class="term-en">Redundant ISPs</span>)، واستخدام تقنيات التخزين المؤقت للعمل غير المتصل (<span class="term-en">Offline Caching</span>).</td>
+                                <td>تعاقد كلية المنار مع مزودي إنترنت في آن واحد (ألياف بصرية + اتصال لاسلكي احتياطي)، بحيث ينتقل النظام للخط البديل آلياً دون انقطاع.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>توقف الخدمة<br>(Service Downtime)</strong></td>
+                                <td>توزيع الأنظمة عبر عدة مناطق توافر جغرافية (<span class="term-en">Multi-AZ / Multi-Region</span>)، واستخدام خوادم احتياطية وموزعات أحمال (<span class="term-en">Load Balancers</span>).</td>
+                                <td>تشغيل خادم بنكي في داتا سنتر بألمانيا وآخر متطابق في إيرلندا؛ فإذا تعطل الأول يتولى الثاني الخدمة في أقل من ثانية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الارتباط بمزود واحد<br>(Vendor Lock-in)</strong></td>
+                                <td>استخدام الحاويات والتقنيات القياسية المفتوحة (<span class="term-en">Docker & Kubernetes</span>)، وتبني استراتيجية السحابة المتعددة (<span class="term-en">Multi-Cloud Strategy</span>).</td>
+                                <td>بناء تطبيق جامعي داخل حاوية Docker وتشغيل قاعدة بيانات PostgreSQL مفتوحة المصدر يسهل نقلها بين AWS و Azure دون تعديل برمجي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>إدارة التكاليف<br>(Cost Management)</strong></td>
+                                <td>تطبيق ممارسات <span class="term-en">FinOps</span>، تفعيل التنبيهات الآلية للميزانية (<span class="term-en">Budget Alerts</span>)، وجدولة إيقاف الموارد الخاملة وخوادم الاختبار بعد الدوام.</td>
+                                <td>إعداد قاعدة تطفئ خوادم التطوير البرمجي تلقائياً عند الساعة 5 مساءً وحتى 8 صباحاً، مما يخفض الفاتورة بنسبة 60%.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>نقل البيانات<br>(Data Migration)</strong></td>
+                                <td>التخطيط المسبق، أخذ نسخ احتياطية كاملة واختبار سلامتها، أو استخدام أجهزة النقل المادية الآمنة للبيانات الضخمة (مثل <span class="term-en">AWS Snowball</span>).</td>
+                                <td>نقل أرشيف سجلات الجامعة القديمة البالغ 20 تيرابايت عبر جهاز تخزين مشفر مادي بدلاً من استنزاف خط الإنترنت لأشهر.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأداء وقابلية التوسع<br>(Scalability)</strong></td>
+                                <td>تفعيل التوسع التلقائي الأفقي (<span class="term-en">Auto Scaling</span>)، واستخدام شبكات توصيل المحتوى (<span class="term-en">CDN</span>)، وموزعات الأحمال (<span class="term-en">Load Balancers</span>).</td>
+                                <td>إضافة خوادم ويب تلقائياً عند اقتراب استهلاك المعالج من 70% أثناء فترة تسجيل الطلاب ثم حذفها تلقائياً بعد انتهاء الذروة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>نقص الخبرات<br>(Lack of Expertise)</strong></td>
+                                <td>الاستثمار في برامج تدريب وتأهيل الكوادر الداخلية، ودعم حصولهم على الشهادات السحابية المهنية المعتمدة (AWS/Azure/GCP).</td>
+                                <td>ابتعاث مهندسي شبكات الكلية للحصول على شهادة AWS Certified Solutions Architect.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الالتزام القانوني<br>(Compliance)</strong></td>
+                                <td>اختيار مراكز بيانات سحابية داخل النطاق الجغرافي للدولة متوافقة مع الأنظمة الوطنية، وتوقيع اتفاقيات مستوى خدمة (<span class="term-en">SLA</span>) ملزمة.</td>
+                                <td>تخزين مستشفى حكومي للبيانات في السحابة المحلية المعتمدة داخل حدود الوطن امتثالاً للوائح الصحية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>إدارة الصلاحيات<br>(Access Management)</strong></td>
+                                <td>تطبيق مبدأ الامتياز الأقل (<span class="term-en">Least Privilege</span>)، والتحكم في الوصول المعتمد على الدور الوظيفي (<span class="term-en">RBAC</span>)، والمراجعة الدورية للصلاحيات.</td>
+                                <td>منح المحاسب صلاحية الوصول إلى جداول القيود المالية فقط، وحرمانه نهائياً من أي صلاحية تعديل على إعدادات السيرفر أو ملفات الطلاب.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التعافي من الكوارث<br>(Disaster Recovery)</strong></td>
+                                <td>أتمتة النسخ الاحتياطي في موقع جغرافي بعيد، وتحديد أهداف وقت الاستعادة (<span class="term-en">RTO</span>) ونقطة الاستعادة (<span class="term-en">RPO</span>)، وإجراء محاكاة كوارث دورية.</td>
+                                <td>إمكانية استعادة نظام الكلية بالكامل ببياناته خلال 30 دقيقة فقط من حدوث عطل شامل في الخادم الرئيسي.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 8. بنك الحلول لجميع الأسئلة التطبيقية -->
+            <section id="solutions-bank">
+                <span class="section-tag">التطبيقات والامتحانات</span>
+                <h2>🎯 8. بنك الحلول النموذجية الشاملة لجميع الأسئلة والسيناريوهات</h2>
+                <p>
+                    هنا تجد الحل النموذجي والمفصل مع التعليل الأكاديمي لجميع الأسئلة التي وردت في شرائح المحاضرة (الشرائح 7، 8، 14، 15، 24):
+                </p>
+
+                <!-- حل سؤال الشريحة 7 -->
+                <div class="scenario-card">
+                    <span class="scenario-badge">سؤال الشريحة 7: نماذج الخدمة</span>
+                    <h4>إذا استخدم المحاسب برنامجاً محاسبياً جاهزاً عبر الإنترنت دون تثبيته على جهازه، فما نوع الخدمة السحابية؟</h4>
+                    <p><strong>الإجابة النموذجية:</strong> <span class="term">البرمجيات كخدمة (SaaS - Software as a Service)</span>.</p>
+                    <p style="margin-bottom:0;"><strong>التعليل الأكاديمي:</strong> لأن المحاسب هنا يستهلك تطبيقاً نهائياً مكتملاً وجاهزاً ومستضافاً لدى مزود الخدمة عبر المتصفح، دون أن يتدخل في كتابة كود، أو إدارة بيئات تشغيل (PaaS)، أو تثبيت وإعداد خوادم وأنظمة تشغيل (IaaS).</p>
+                </div>
+
+                <!-- حل أسئلة الشريحة 8 -->
+                <h3 style="color:var(--primary); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem;">حل الأسئلة التطبيقية في الشريحة 8:</h3>
+                
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 8 - السؤال الأول</span>
+                    <h4>تريد شركة تقنية إنشاء تطبيق إلكتروني جديد، ولديها فريق من المبرمجين، لكنها لا ترغب في شراء خوادم أو إدارة أنظمة التشغيل. ما النموذج الأنسب؟ ولماذا؟</h4>
+                    <p><strong>النموذج الأنسب:</strong> <span class="term">المنصة كخدمة (PaaS - Platform as a Service)</span>.</p>
+                    <p style="margin-bottom:0;"><strong>التعليل:</strong> لأن فريق المبرمجين يحتاج إلى بيئة جاهزة ومحركات تشغيل لكتابة الشيفرة ورفعها واختبارها فوراً، ونموذج PaaS يعفيهم تماماً من الأعباء المعقدة لإدارة العتاد، وتنصيب أنظمة التشغيل وتحديثاتها الأمنية، مما يركز جهدهم على البرمجة والابتكار فقط.</p>
+                </div>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 8 - السؤال الثاني</span>
+                    <h4>تريد جامعة توفير نظام إلكتروني للطلاب يتيح لهم التسجيل في المقررات والاطلاع على النتائج عبر المتصفح دون تثبيت برامج على أجهزتهم. ما النموذج المناسب؟ وضح إجابتك بمثال.</h4>
+                    <p><strong>النموذج المناسب:</strong> <span class="term">البرمجيات كخدمة (SaaS - Software as a Service)</span> بالنسبة للطلاب والمستخدمين النهائيين.</p>
+                    <p style="margin-bottom:0;"><strong>التوضيح والمثال:</strong> لأن الخدمة تقدم وظائف إدارة المقررات والنتائج كبرنامج جاهز يعمل من خلال واجهة الويب مباشرة، بحيث يستطيع الطالب تسجيل الدخول من أي هاتف أو حاسوب دون أي متطلبات برمجية. <strong>مثال:</strong> استخدام نظام إدارة جامعي سحابي جاهز مثل <span class="term-en">Ellucian Banner Cloud</span> أو <span class="term-en">Blackboard Learn SaaS</span> أو تطبيقات إدارة المقررات والامتحانات المدارة كـ SaaS.</p>
+                </div>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 8 - السؤال الثالث</span>
+                    <h4>إذا تعرض أحد الخوادم السحابية لهجوم أدى لتسريب بيانات العملاء، فمن المسؤول: المزود أم المؤسسة؟ وضح إجابتك.</h4>
+                    <p><strong>الإجابة والتعليل الشامل:</strong> المسؤولية تحكمها <strong>قاعدة المسؤولية المشتركة (Shared Responsibility Model)</strong> ونوع نموذج الخدمة المعتمد وطبيعة الثغرة المستغلة:</p>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>إذا كان الخطأ في العتاد أو البنية التحتية أو نظام الـ Hypervisor:</strong> المسؤولية تقع بالكامل على <strong>مزود الخدمة السحابية (CSP)</strong>.</li>
+                        <li><strong>إذا كانت الخدمة IaaS والثغرة ناتجة عن إهمال ترقيع نظام التشغيل، أو عدم تشفير قاعدة البيانات، أو سوء إعداد جدار الحماية:</strong> المسؤولية تقع بنسبة 100% على <strong>المؤسسة المستأجرة</strong>.</li>
+                        <li><strong>إذا كانت الخدمة SaaS أو PaaS ولكن الاختراق تم بسبب سرقة حساب الموظف لعدم تفعيل التحقق بخطوتين (MFA) أو منح صلاحيات مفرطة:</strong> المسؤولية تقع على <strong>المؤسسة</strong> لأن حماية الهويات والبيانات مسؤولية العميل دائماً.</li>
+                    </ul>
+                </div>
+
+                <!-- حل أسئلة الشريحة 14 -->
+                <h3 style="color:var(--primary); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-top:2rem;">حل أسئلة الشريحة 14 (نماذج النشر):</h3>
+                
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 14 - س1 (البنوك)</span>
+                    <h4>بنك يريد إنشاء بيئة سحابية لتخزين بيانات ومعاملات العملاء مع تحكم كامل بالوصول. الأنسب؟</h4>
+                    <p><strong>الإجابة:</strong> <span class="term">السحابة الخاصة (Private Cloud)</span>.<br><strong>السبب:</strong> لأن البنوك تتعامل مع أموال وبيانات غاية في السرية تخضع للوائح مصرفية مشددة تمنع مشاركة البنية التحتية وتتطلب سيطرة وأماناً وتحكماً بنسبة 100%.</p>
+                </div>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 14 - س2 (الشركات الناشئة)</span>
+                    <h4>شركة ناشئة تريد خدمات سحابية دون شراء خوادم وتقليل التكاليف الأولية. الأنسب؟</h4>
+                    <p><strong>الإجابة:</strong> <span class="term">السحابة العامة (Public Cloud)</span>.<br><strong>السبب:</strong> لأنها لا تتطلب أي تكاليف رأسمالية أولية (Zero CapEx)، وتعتمد نموذج الدفع حسب الاستخدام، وتوفر مرونة هائلة تبدأ بخادم صغير وتتوسع مع نمو الشركة.</p>
+                </div>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 14 - س3 (الجامعات وأوقات الذروة)</span>
+                    <h4>جامعة تمتلك خوادم لبيانات الطلاب وتريد التوسع خارجياً عند زيادة عدد المستخدمين. الأنسب؟</h4>
+                    <p><strong>الإجابة:</strong> <span class="term">السحابة الهجينة (Hybrid Cloud)</span>.<br><strong>السبب:</strong> لأن الجامعة تحتفظ ببيانات الطلاب والامتحانات الحساسة في خوادمها الخاصة بأمان، وفي فترات الذروة (مثل تسجيل المواد وإعلان النتائج) تقوم بعمل تدفق سحابي (<span class="term-en">Cloud Bursting</span>) نحو السحابة العامة لاستيعاب الأحمال الزائدة ثم تقليصها.</p>
+                </div>
+
+                <div class="scenario-card">
+                    <span class="scenario-badge">الشريحة 14 - س4 (المستشفيات المشتركة)</span>
+                    <h4>مجموعة مستشفيات اتفقت على منصة مشتركة لتبادل المعلومات الطبية بضوابط موحدة. الأنسب؟</h4>
+                    <p><strong>الإجابة:</strong> <span class="term">السحابة المجتمعية (Community Cloud)</span>.<br><strong>السبب:</strong> لأنها تجمع مؤسسات تنتمي لنفس القطاع وتشترك في نفس الأهداف والمعايير الأمنية والاشتراطات الصحية والقانونية، فتتقاسم تكاليف الاستضافة والإدارة الموحدة.</p>
+                </div>
+
+                <!-- حل أسئلة الشريحة 15 -->
+                <h3 style="color:var(--primary); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-top:2rem;">حل أسئلة الاختيار من متعدد في الشريحة 15:</h3>
+                <ol class="content-list">
+                    <li>أي نموذج سحابي تكون فيه البنية مخصصة لمؤسسة واحدة؟ ← <strong>الإجابة الصحيحة: Private Cloud</strong>.</li>
+                    <li>أي نموذج يجمع بين السحابة العامة والخاصة؟ ← <strong>الإجابة الصحيحة: Hybrid Cloud</strong>.</li>
+                    <li>مجموعة جامعات تتشارك بيئة سحابية وفق متطلبات مشتركة؟ ← <strong>الإجابة الصحيحة: Community Cloud</strong>.</li>
+                    <li><strong>هل السحابة الخاصة محمية تماماً من الهجمات الإلكترونية؟</strong> ← <strong>الإجابة الصحيحة: لا، تحتاج إلى ضوابط وإدارة أمنية مستمرة!</strong> (لأن السحابة الخاصة معرضة للأخطاء البشرية، والهجمات الداخلية، وبرمجيات الفدية، وسوء تكوين الصلاحيات، فالأمان عملية مستمرة وليس منتجاً جاهزاً).</li>
+                </ol>
+
+                <!-- حل الأسئلة التطبيقية العشرة في الشريحة 24 -->
+                <h3 style="color:var(--primary); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-top:2rem;">حل الأسئلة التطبيقية العشرة لتحديات السحابة (الشريحة 24):</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>السيناريو المشكلة</th>
+                                <th>التحدي السحابي المعني</th>
+                                <th>الحل الهندسي الإجرائي للتغلب عليه</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>تعرضت شركة لاختراق أدى لتسريب بيانات عملائها.</td>
+                                <td><strong>أمن المعلومات وخصوصية البيانات</strong></td>
+                                <td>تشفير البيانات الحساسة (AES-256)، فرض المصادقة المتعددة (MFA)، عزل الشبكات وتفعيل نظام كشف التسلل (IDS/IPS).</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>انقطع الإنترنت عن جامعة تعتمد على نظام سحابي لتسجيل الطلاب.</td>
+                                <td><strong>الاعتماد على الإنترنت (Internet Dependency)</strong></td>
+                                <td>التعاقد مع مزود إنترنت احتياطي ثانٍ بمسار فيزيائي مستقل، واستخدام تقنيات SD-WAN للانتقال الآلي الفوري بين الخطين.</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>ارتفعت فاتورة السحابة لشركة بسبب استمرار تشغيل خوادم غير مستخدمة.</td>
+                                <td><strong>إدارة التكاليف (Cost Management)</strong></td>
+                                <td>تطبيق قواعد أتمتة لإيقاف الموارد الخاملة، واستخدام أدوات FinOps ومراقبة الميزانيات وتفعيل التنبيهات الاستباقية للحدود المالية.</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>أرادت مؤسسة الانتقال من AWS إلى Azure فواجهت صعوبة في نقل تطبيقاتها.</td>
+                                <td><strong>الارتباط بمزود خدمة واحد (Vendor Lock-in)</strong></td>
+                                <td>إعادة هيكلة التطبيقات بالاعتماد على الحاويات (Docker & Kubernetes) واستخدام قواعد بيانات ومعايير مفتوحة المصدر غير مقيدة.</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>تعطل الخادم السحابي لبنك فتوقفت الخدمات المصرفية.</td>
+                                <td><strong>توقف الخدمة (Service Downtime)</strong></td>
+                                <td>تصميم بنية تحتية عالية التوافر (High Availability) موزعة على عدة مناطق جغرافية (Multi-AZ) مع توزيع الأحمال وخوادم احتياطية جاهزة (Failover).</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>فقدت جامعة بعض بيانات الطلاب أثناء نقلها إلى السحابة.</td>
+                                <td><strong>نقل البيانات (Data Migration)</strong></td>
+                                <td>أخذ نسخ احتياطية كاملة قبل النقل، استخدام التشفير وقنوات نقل آمنة، وفحص سلامة التجزئة (Hash Verification) لمطابقة البيانات بدقة.</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>أصبح النظام بطيئاً جداً عندما دخل آلاف الطلاب في وقت واحد.</td>
+                                <td><strong>الأداء وقابلية التوسع (Scalability)</strong></td>
+                                <td>تفعيل التوسع التلقائي (Auto Scaling) لإضافة خوادم فوراً، واستخدام موزع الأحمال (Load Balancer) وشبكة توصيل المحتوى (CDN).</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>لا تمتلك مؤسسة موظفين لديهم خبرة في إدارة الخدمات السحابية.</td>
+                                <td><strong>نقص الخبرات (Lack of Expertise)</strong></td>
+                                <td>الاستثمار في تدريب المهندسين للحصول على شهادات معتمدة، أو الاستعانة بمزود خدمات سحابية مدارة (Managed Service Provider - MSP).</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>تمكن موظف من الاطلاع على ملفات لا تدخل ضمن اختصاص عمله.</td>
+                                <td><strong>إدارة الصلاحيات (Access Management)</strong></td>
+                                <td>تطبيق مبدأ الامتياز الأقل (Least Privilege) والتحكم في الوصول المعتمد على الأدوار الوظيفية (RBAC) ومراجعة الأذونات شهرياً.</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>حُذفت ملفات مهمة من السحابة ولم توجد نسخة احتياطية منها.</td>
+                                <td><strong>التعافي من الكوارث (Disaster Recovery)</strong></td>
+                                <td>جدولة النسخ الاحتياطي التلقائي المتكرر وتخزينه في موقع جغرافي مستقل غير قابل للحذف (Immutable Backup) واختبار الاستعادة دورياً.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 9. بطاقات الاستذكار السريعة -->
+            <section id="flashcards">
+                <span class="section-tag">المراجعة النشطة</span>
+                <h2>🗂️ 9. بطاقات الاستذكار السريعة (Interactive Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار حفظك وفهمك للمصطلحات والمفاهيم الجوهرية للمحاضرة:</p>
+
+                <div class="flashcards-grid">
+                    <!-- Card 1 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                IaaS<br>(البنية التحتية كخدمة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                استئجار الموارد التحتية الأساسية (خوادم، مساحات تخزين، شبكات) عبر الإنترنت، وتتولى أنت تثبيت نظام التشغيل والبرمجيات وإدارتها.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                PaaS<br>(المنصة كخدمة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                بيئة جاهزة لتطوير وتشغيل التطبيقات دون إدارة الخوادم أو أنظمة التشغيل؛ المزود يدير البنية والمنصة، والمطور يكتب الكود ويدير البيانات فقط.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                SaaS<br>(البرمجيات كخدمة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                برامج وتطبيقات نهائية مكتملة يتم الوصول إليها مباشرة عبر المتصفح أو التطبيق؛ المزود مسؤول عن كل شيء والمستخدم يكتفي باستهلاك الخدمة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Multi-tenancy<br>(تعدد المستأجرين)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                بنية معمارية في السحابة العامة حيث يتشارك عدة عملاء نفس العتاد الفيزيائي، مع عزل برمجي وافتراضي تام لبيانات ومعالجات كل عميل عن الآخر.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Private Cloud<br>(السحابة الخاصة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                بيئة سحابية مخصصة حصرياً لمؤسسة واحدة فقط، توفر أقصى درجات الخصوصية والتحكم في البنية والأمان والامتثال القانوني.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Hybrid Cloud<br>(السحابة الهجينة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                نموذج يدمج بين السحابة العامة والسحابة الخاصة مع ربط آمن بينهما، للاستفادة من أمان الخاصة ومرونة وتوفير السحابة العامة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Community Cloud<br>(السحابة المجتمعية)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                سحابة تشترك فيها عدة مؤسسات تجمعها أهداف مشتركة أو قطاع عمل واحد (مثل شبكة جامعات أو مستشفيات) لتقاسم التكاليف والمتطلبات.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Vendor Lock-in<br>(الارتباط بمزود واحد)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                صعوبة وتكلفة انتقال المؤسسة من مزود سحابي إلى آخر بسبب استخدام تقنيات احتكارية وتكاليف نقل البيانات الضخمة واختلاف الأنظمة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 9 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Auto Scaling<br>(التوسع التلقائي)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                ميزة سحابية تزيد أو تنقص الموارد الحوسبية (الخوادم والمعالجات) آلياً بحسب كثافة الاستخدام وحجم الزوار لضمان الأداء وتقليل التكاليف.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 10 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Shared Responsibility<br>(المسؤولية المشتركة)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                نموذج يحدد نطاق الأمان: المزود مسؤول عن أمان السحابة نفسها (العتاد والمبنى)، والعميل مسؤول عن الأمن داخل السحابة (البيانات والصلاحيات).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 11 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                RBAC & Least Privilege<br>(الصلاحيات وإدارتها)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                التحكم بالوصول بحسب الدور الوظيفي، ومنح المستخدم فقط الحد الأدنى من الصلاحيات الضرورية لإنجاز عمله دون أي صلاحيات إضافية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 12 -->
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                Disaster Recovery<br>(التعافي من الكوارث)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                الاستراتيجيات والنسخ الاحتياطية الموزعة جغرافياً التي تضمن استعادة الأنظمة السحابية والبيانات بسرعة بعد الأعطال الكبرى أو الهجمات.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. الاختبار التقييمي التفاعلي -->
+            <section id="interactive-quiz">
+                <span class="section-tag">التقييم الذاتي الفوري</span>
+                <h2>🏆 10. الاختبار التقييمي التفاعلي (Interactive Quiz)</h2>
+                <p>اختبر معلوماتك في موضوعات المحاضرة الثانية عبر هذا الكويز التفاعلي. اختر الإجابة الصحيحة لتحصل على التغذية الراجعة والدرجة النهائية:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- سيتم تحميل الأسئلة تفاعلياً بواسطة JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <div id="site-footer"></div>
+
+    <!-- سكربت التفاعل والكويز والوضع الليلي وشريط القراءة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const quizData = [
+            {
+                question: "1. ما هو نموذج الخدمة السحابية الذي يمنح المستخدم أقصى قدر من التحكم في نظام التشغيل وإعدادات الخادم الافتراضي؟",
+                options: ["SaaS (البرمجيات كخدمة)", "PaaS (المنصة كخدمة)", "IaaS (البنية التحتية كخدمة)", "DaaS (البيانات كخدمة)"],
+                correct: 2,
+                explanation: "نموذج IaaS يتيح للمستخدم استئجار الخادم الافتراضي وتثبيت واختيار نظام التشغيل والتحكم في إعدادات الشبكة والتطبيقات وقواعد البيانات بالكامل."
+            },
+            {
+                question: "2. مبرمج يريد رفع كود تطبيق ويب مكتوب بـ Python دون إضاعة الوقت في صيانة الخوادم وتحديثات نظام التشغيل، ما النموذج الأنسب له؟",
+                options: ["IaaS", "PaaS", "SaaS", "On-Premises"],
+                correct: 1,
+                explanation: "PaaS توفر بيئة تشغيل متكاملة للمطورين لكتابة الكود واختباره ونشره دون أي تدخل في إدارة السيرفرات أو أنظمة التشغيل."
+            },
+            {
+                question: "3. استخدام خدمة بريد إلكتروني مثل Gmail أو برامج تحرير المستندات Google Docs يُعد تطبيقاً مباشراً لنموذج:",
+                options: ["IaaS", "PaaS", "SaaS", "Private Cloud"],
+                correct: 2,
+                explanation: "Gmail و Google Docs هي تطبيقات برمجية جاهزة بالكامل تعمل عبر المتصفح دون تثبيت أو إدارة للبنية، وهي تندرج تحت SaaS."
+            },
+            {
+                question: "4. أي نموذج من نماذج النشر السحابي تكون بنيته مخصصة حصرياً لمؤسسة واحدة فقط وتوفر أعلى مستويات التحكم والخصوصية؟",
+                options: ["السحابة العامة (Public Cloud)", "السحابة الخاصة (Private Cloud)", "السحابة المجتمعية (Community Cloud)", "السحابة الهجينة (Hybrid Cloud)"],
+                correct: 1,
+                explanation: "السحابة الخاصة (Private Cloud) مخصصة لمؤسسة واحدة فقط (Single-tenant) سواء داخل مركز بياناتها أو لدى مزود خاص."
+            },
+            {
+                question: "5. جامعة تستضيف موقعها وبوابة محاضراتها على سحابة عامة، لكنها تحتفظ بسجلات درجات الطلاب وقواعد البيانات المالية في مركز بيانات خاص، هذا النموذج يسمى:",
+                options: ["السحابة الخاصة", "السحابة العامة", "السحابة الهجينة (Hybrid Cloud)", "السحابة المجتمعية"],
+                correct: 2,
+                explanation: "السحابة الهجينة تجمع بين السحابة العامة والسحابة الخاصة مع ربط تكاملي يتيح نقل وتوزيع البيانات والتطبيقات حسب حساسيتها."
+            },
+            {
+                question: "6. مجموعة من المستشفيات اتفقت على إنشاء منصة سحابية مشتركة لتبادل الملفات الطبية وفق معايير أمنية وقانونية موحدة، ما هو النموذج؟",
+                options: ["Public Cloud", "Private Cloud", "Community Cloud (السحابة المجتمعية)", "SaaS"],
+                correct: 2,
+                explanation: "السحابة المجتمعية (Community Cloud) هي بيئة مشتركة بين عدة مؤسسات تجمعها أهداف أو متطلبات مهنية وقانونية مشتركة."
+            },
+            {
+                question: "7. وفق نموذج المسؤولية المشتركة (Shared Responsibility Model)، من المسؤول دائماً عن حماية وتصنيف البيانات وإدارة صلاحيات المستخدمين في كل النماذج؟",
+                options: ["مزود الخدمة السحابية (CSP)", "المستخدم أو المؤسسة العميلة", "شركة الاتصالات ومزود الإنترنت", "مطور لغة البرمجة"],
+                correct: 1,
+                explanation: "البيانات (Data) وصلاحيات الوصول (IAM) تقع دائماً وبلا استثناء على عاتق المؤسسة العميلة في كافة النماذج (IaaS, PaaS, SaaS)."
+            },
+            {
+                question: "8. ما هو التحدي السحابي الذي يعبر عن صعوبة انتقال المؤسسة من مزود مثل AWS إلى Azure بسبب اختلاف التقنيات وتكاليف النقل؟",
+                options: ["Service Downtime", "Vendor Lock-in (الارتباط بمزود واحد)", "Data Migration", "Auto Scaling"],
+                correct: 1,
+                explanation: "Vendor Lock-in هو احتجاز المؤسسة لدى مزود واحد وصعوبة الانتقال لغيره بسبب التقنيات الخاصة والاعتمادية وتكاليف الترحيل."
+            },
+            {
+                question: "9. ما هي التقنية الهندسية التي تزيد وتخفض عدد الخوادم السحابية تلقائياً بناءً على حجم الضغط أثناء تسجيل آلاف الطلاب في آن واحد؟",
+                options: ["Load Balancing فقط", "Auto Scaling (التوسع التلقائي)", "Data Encryption", "Data Sovereignty"],
+                correct: 1,
+                explanation: "التوسع التلقائي (Auto Scaling) يقوم بإضافة موارد حوسبية إضافية آلياً عند ازدياد الأحمال وإلغائها عند انخفاضها."
+            },
+            {
+                question: "10. هل تعتبر السحابة الخاصة (Private Cloud) محمية تماماً وبشكل تلقائي من الهجمات الإلكترونية؟",
+                options: ["نعم، لأنها معزولة عن الإنترنت تماماً", "نعم، لأنها غير مشتركة مع عملاء آخرين", "لا، لأنها تتطلب إدارة وضوابط أمنية مستمرة وحماية من الهجمات الداخلية والخارجية", "نعم، بمجرد شرائها تصبح آمنة للأبد"],
+                correct: 2,
+                explanation: "السحابة الخاصة ليست آمنة تلقائياً، بل تتطلب إدارة أمنية وتشفير وتطبيق سياسات الصلاحيات وحماية من البرمجيات الخبيثة والأخطاء البشرية."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_cloud_lec02');
+    </script>
+</body>
+</html>

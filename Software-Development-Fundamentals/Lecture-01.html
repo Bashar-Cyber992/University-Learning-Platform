@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الأولى: بيئة التطوير الاحترافية وأدوات المطور | أساسيات تطوير البرمجيات</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="software-development-fundamentals">
+
+    <!-- الشريط العلوي ومسار التنقل -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">💻 بوابة أساسيات تطوير البرمجيات</a>
+                <span>/</span>
+                <span>المحاضرة الأولى</span>
+            </div>
+            <div class="lecture-nav-btns">
+                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
+                <a href="#quiz" class="nav-pill">الكوز التقييمي 🎯</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- ترويسة المحاضرة -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | قسمي الأمن السيبراني وشبكات &amp; تكنولوجيا المعلومات (المستوى الثالث - الترم الثاني)</div>
+        <h1>المحاضرة الأولى: بيئة التطوير الاحترافية وأدوات المطور</h1>
+        <p>مقدمة في تطوير البرمجيات وإعداد بيئة التطوير (<span style="font-family:monospace;">Professional Development Environment &amp; Tooling</span>) | إعداد: <strong>د. عبدالرزاق الأهدل</strong> &amp; <strong>أ. وليد الشراعي</strong></p>
+        <div class="header-golden-rule">💡 القاعدة الذهبية: «الأدوات المناسبة تصنع مطوراً محترفاً ومشاريع ناجحة — بيئة التطوير هي أساس نجاح المشروع البرمجي»</div>
+    </header>
+
+    <div class="container">
+        <!-- الفهرس الجانبي -->
+        <aside class="sidebar">
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro-objectives">0. المقدمة، الأهداف، وخريطة المحاضرة</a></li>
+                <li><a href="#topic-1">1. من كتابة الشيفرة إلى تطوير المنتج</a></li>
+                <li><a href="#topic-2">2. إعداد بيئة التطوير وإدارة التبعيات</a></li>
+                <li><a href="#topic-3">3. المحرر والطرفية وأدوات التصحيح</a></li>
+                <li><a href="#topic-4">4. تنظيم بنية المشروع و Git</a></li>
+                <li><a href="#topic-5">5. ملفات البيئة والإعدادات والأسرار</a></li>
+                <li><a href="#topic-6">6. بيئات التطوير والاختبار والإنتاج</a></li>
+                <li><a href="#topic-7">7. التطبيق العملي وتشخيص المشكلات</a></li>
+                <li><a href="#tools-references">8. الأدوات، القاموس، والمراجع</a></li>
+                <li><a href="#comprehensive-review">9. الأسئلة الشاملة والواجب (20 درجة)</a></li>
+                <li><a href="#flashcards">10. بطاقات الاستذكار (Flashcards)</a></li>
+                <li><a href="#quiz">11. الكوز التقييمي (7 أسئلة)</a></li>
+            </ul>
+        </aside>
+
+        <!-- المحتوى التعليمي الرئيسي -->
+        <main class="content-area">
+
+            <!-- 0. المقدمة والأهداف والخريطة -->
+            <section id="intro-objectives">
+                <span class="section-tag">مدخل المحاضرة التأسيسي</span>
+                <h2>🚀 0. المقدمة، أهداف التعلم، وخريطة الموضوعات</h2>
+
+                <div class="info-box">
+                    <h4>🎓 سيناريو الانطلاق: نظام إدارة شؤون الطلاب في كلية المنار</h4>
+                    <p>تخيّل أنك تريد بناء تطبيق إلكتروني متكامل لإدارة شؤون الطلاب في <strong>كلية المنار للعلوم والتكنولوجيا</strong>؛ بحيث يسمح بتسجيل الطلاب، وإضافة المقررات، وتسجيل الدرجات، واستخراج التقارير الرسمية.</p>
+                    <p><strong>هل يكفي أن تكتب بعض الأوامر البرمجية في ملف نصي حتى يصبح التطبيق جاهزاً للاستخدام الفعلي؟</strong></p>
+                    <p style="margin-bottom:0;"><strong>الإجابة القاطعة: لا!</strong> فكتابة الشيفرة البرمجية مجرد جزء واحد من عملية تطوير البرمجيات. يحتاج المطور إلى منظومة متكاملة من الأدوات والبرامج والإعدادات تُعرف بـ <span class="term">بيئة التطوير (Development Environment)</span> لتشغيل الشيفرة واختبارها واكتشاف أخطائها وتنظيم ملفاتها وإدارة مكتباتها وحماية أسرارها قبل وصولها للمستخدمين. فإذا كانت الشيفرة صحيحة منطقياً، لكنها تفتقد مكتبة مطلوبة أو تحتوي على كلمة مرور مكشوفة، فإن المشروع يفشل أو يتعرض للخطر!</p>
+                </div>
+
+                <p><strong>الهدف المحوري للمحاضرة:</strong> نقل الطالب من مرحلة التفكير التقليدي المتمثل في «كتابة برنامج عابر في ملف واحد» إلى التفكير الهندسي في «إعداد مشروع برمجي منظم، معزول التبعيات، محمي الإعدادات، قابل للتشغيل والاختبار والصيانة على أي جهاز».</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>📋 خريطة الموضوعات السبعة</h4>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>من كتابة الشيفرة إلى تطوير المنتج:</strong> مفهوم التطوير ومراحله ومخرجاته.</li>
+                            <li><strong>إعداد بيئة التطوير وإدارة التبعيات:</strong> اللغات والمكتبات والحزم والبيئات الافتراضية.</li>
+                            <li><strong>محرر الشيفرة والطرفية وأدوات التصحيح:</strong> الكتابة والتنفيذ ومراقبة الأخطاء وأنواعها.</li>
+                            <li><strong>تنظيم بنية المشروع وملفاته:</strong> المجلدات والمسؤوليات والتوثيق ومقدمة في Git.</li>
+                            <li><strong>ملفات البيئة والإعدادات والأسرار:</strong> فصل الإعدادات عن الشيفرة وحماية كلمات المرور.</li>
+                            <li><strong>بيئات التطوير والاختبار والإنتاج:</strong> رحلة انتقال البرنامج من جهاز المطور إلى المستخدم.</li>
+                            <li><strong>التطبيق العملي وتشخيص المشكلات:</strong> بناء مختبر Python وتشغيل الاختبارات وتوثيقه.</li>
+                        </ol>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>🎯 أهداف المحاضرة (9 مخرجات متوقعة)</h4>
+                        <p style="margin-bottom:0.4rem;">بنهاية المحاضرة، يُتوقع من الطالب أن يكون قادراً على:</p>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>شرح مفهوم بيئة التطوير الاحترافية وأهميتها.</li>
+                            <li>التمييز الدقيق بين كتابة الشيفرة وتطوير منتج برمجي متكامل.</li>
+                            <li>التعرف على محررات الشيفرة والطرفية والمصححات البرمجية.</li>
+                            <li>فهم المكتبات الخارجية والتبعيات وأدوات إدارة الحزم.</li>
+                            <li>إنشاء بنية مجلدات واضحة ومنظمة لمشروع برمجي.</li>
+                            <li>فهم ملفات الإعداد ومتغيرات البيئة وحماية الأسرار.</li>
+                            <li>التمييز بين بيئات التطوير والاختبار والتجهيز والإنتاج.</li>
+                            <li>تشغيل مشروع موجود وتشخيص المشكلات التي تمنع تشغيله.</li>
+                            <li>تطبيق ممارسات أولية لتنظيم المشروع وحماية بياناته.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. الموضوع الأول: من كتابة الشيفرة إلى تطوير المنتج البرمجي -->
+            <section id="topic-1">
+                <span class="section-tag">الموضوع الأول</span>
+                <h2>💻 1. من كتابة الشيفرة إلى تطوير منتج برمجي</h2>
+
+                <h3>1.1 ما المقصود بكتابة الشيفرة (Coding)؟</h3>
+                <p><strong>كتابة الشيفرة <span class="term-en">Coding</span>:</strong> هي عملية ترجمة أو تحويل الحل المنطقي الذي يفكر فيه المبرمج في ذهنه إلى تعليمات وأوامر نصية مكتوبة وفق قواعد لغة برمجة معينة يفهمها المترجم (<span class="term-en">Compiler</span>) أو المفسر (<span class="term-en">Interpreter</span>) أو بيئة التشغيل (<span class="term-en">Runtime</span>).</p>
+
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left">
+                            <span class="code-dots">
+                                <span class="code-dot" style="background:#ef4444;"></span>
+                                <span class="code-dot" style="background:#f59e0b;"></span>
+                                <span class="code-dot" style="background:#10b981;"></span>
+                            </span>
+                            <span>welcome.py — مثال بسيط على كتابة الشيفرة</span>
+                        </div>
+                        <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                    </div>
+                    <pre><span class="code-kw">print</span>(<span class="code-str">"مرحباً بكم في كلية المنار"</span>)</pre>
+                </div>
+                <p>عند تشغيل هذا السطر البرمجي، تظهر رسالة الترحيب على الشاشة فوراً. هذا مثال واضح على «كتابة الشيفرة»، لكنه بالطبع <strong>لا يكوّن تطبيقاً متكاملاً</strong> يصلح لإدارة بيانات الطلاب أو الدرجات أو المستخدمين في مؤسسة تعليمية.</p>
+
+                <h3>1.2 ما المقصود بتطوير البرمجيات (Software Development)؟</h3>
+                <p><strong>تطوير البرمجيات <span class="term-en">Software Development</span>:</strong> هو عملية هندسية وإدارية أوسع بكثير من مجرد كتابة الأوامر؛ فهي تشمل فهم المشكلة من جذورها، وتخطيط الحل، وتجهيز البيئة، وكتابة الشيفرة المقسمة، والاختبار، والتوثيق، والتسليم، ثم المتابعة والصيانة المستمرة.</p>
+                <div class="info-box dev-box">
+                    <h4>🏛️ ماذا يتطلب نظام إدارة الطلاب الفعلي في كلية المنار؟</h4>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>فهم الاحتياجات:</strong> تحديد متطلبات الكلية وأعضاء هيئة التدريس والطلاب بدقة.</li>
+                        <li><strong>التصميم:</strong> تصميم واجهات الاستخدام وهيكلة جداول قاعدة البيانات والعلاقات بينها.</li>
+                        <li><strong>اختيار التقنية:</strong> تحديد لغة البرمجة وإطار العمل والأدوات المناسبة للمشروع.</li>
+                        <li><strong>التنظيم والبرمجة:</strong> كتابة الشيفرة وتقسيمها إلى وحدات ومسؤوليات واضحة.</li>
+                        <li><strong>إدارة التبعيات:</strong> تثبيت المكتبات الخارجية المطلوبة وتحديد إصداراتها بدقة.</li>
+                        <li><strong>الاختبار والتأمين:</strong> التحقق من صحة الحسابات والمنطق وحماية حسابات المستخدمين وبياناتهم.</li>
+                        <li><strong>النشر والمراقبة:</strong> إتاحة النظام على الخادم الفعلي ومتابعة أدائه وأعطاله بعد الاستخدام.</li>
+                    </ul>
+                </div>
+
+                <h3>1.3 جدول المقارنة الأكاديمية: كتابة الشيفرة مقابل تطوير المنتج البرمجي</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>كتابة الشيفرة (<span style="font-family:monospace;">Coding</span>)</th>
+                                <th>تطوير المنتج البرمجي (<span style="font-family:monospace;">Software Development</span>)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>الهدف الأساسي</strong></td>
+                                <td>كتابة التعليمات البرمجية لتنفيذ مهمة محددة.</td>
+                                <td>إنتاج حل متكامل وموثوق لمشكلة واقعية في بيئة العمل.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأدوات المستخدمة</strong></td>
+                                <td>محرر نصوص أو بيئة كتابة بسيطة.</td>
+                                <td>منظومة أدوات: كتابة، إدارة حزم، اختبار، تصحيح، إدارة إصدارات، وتشغيل.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>هيكلة الملفات</strong></td>
+                                <td>قد يقتصر على ملف واحد أو ملفات قليلة متفرقة.</td>
+                                <td>مجلدات منظمة، ملفات إعداد، متغيرات بيئة، ووثائق تشغيل.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الاختبار والتحقق</strong></td>
+                                <td>قد يكون يدوياً سريعاً أو محدوداً لحالة واحدة.</td>
+                                <td>يشمل اختبارات آلية ومنهجية تغطي متطلبات المشروع والحالات الحدية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التوثيق (Docs)</strong></td>
+                                <td>قد لا يوجد أو يقتصر على تعليقات عابرة.</td>
+                                <td>توثيق واضح لطريقة التثبيت والتشغيل والاختبار والصيانة (<span class="term-en">README.md</span>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>النتيجة النهائية</strong></td>
+                                <td>شيفرة تنفذ مهمة محدودة غالباً على جهاز كاتبها.</td>
+                                <td>منتج قابل للنشر والتشغيل والمشاركة والصيانة والتطوير المستقبلي.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>1.4 مثال عملي: لماذا لا تكفي الشيفرة الصحيحة وحدها؟</h3>
+                <p>افترض أن مطوراً أنشأ برنامجاً بلغة Python لحساب وتلخيص درجات الطلاب، واختبره على جهازه الشخصي فعمل بنجاح تام. لكن بمجرد أن أرسل الملف إلى زميله أو نقله إلى جهاز المختبر ظهرت رسالة الفشل التالية:</p>
+
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left">
+                            <span class="code-dots">
+                                <span class="code-dot" style="background:#ef4444;"></span>
+                                <span class="code-dot" style="background:#f59e0b;"></span>
+                                <span class="code-dot" style="background:#10b981;"></span>
+                            </span>
+                            <span>Terminal Output — مشكلة شائعة عند نقل المشاريع</span>
+                        </div>
+                    </div>
+                    <pre><span class="code-err">Traceback (most recent call last):
+  File "grades_report.py", line 1, in &lt;module&gt;
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'</span></pre>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🔍 التفسير الهندسي للمشكلة (لماذا حدث ذلك رغم صحة الكود؟)</h4>
+                    <p>الشيفرة نفسها سليمة تماماً من حيث الصياغة والمنطق، ولكن عند التشغيل على الجهاز الثاني وقع أحد سببين بيئيين:</p>
+                    <ol class="content-list" style="margin-bottom:0.6rem;">
+                        <li>مكتبة <span class="term-en">pandas</span> غير مثبتة أصلاً على الجهاز الجديد.</li>
+                        <li>أو أن المشروع يعمل باستخدام بيئة Python مختلفة (مثل مفسّر النظام العام) غير البيئة التي ثُبتت فيها المكتبة مسبقاً.</li>
+                    </ol>
+                    <p style="margin-bottom:0;"><strong>الدرس الذهبي المستفاد:</strong> المطور المحترف لا يكتفي بأن «يعمل البرنامج على جهازي»؛ بل يوثق التبعيات وطريقة الإعداد والتشغيل بحيث يعاد تشغيل المشروع بسهولة على أي جهاز دون الاعتماد على إعدادات مخفية!</p>
+                </div>
+
+                <h3>1.5 مستكشف المراحل الست لتطوير المنتج البرمجي</h3>
+                <p>اضغط على كل مرحلة من مراحل دورة التطوير الست لاستعراض السؤال الجوهري والأنشطة والتطبيق العملي لكل مرحلة:</p>
+
+                <div class="stages-stepper">
+                    <button class="stage-btn active" onclick="showDevStage(0, this)">1. فهم المشكلة والمتطلبات</button>
+                    <button class="stage-btn" onclick="showDevStage(1, this)">2. التصميم والتخطيط</button>
+                    <button class="stage-btn" onclick="showDevStage(2, this)">3. تجهيز البيئة والبرمجة</button>
+                    <button class="stage-btn" onclick="showDevStage(3, this)">4. الاختبار والتصحيح</button>
+                    <button class="stage-btn" onclick="showDevStage(4, this)">5. النشر والتشغيل</button>
+                    <button class="stage-btn" onclick="showDevStage(5, this)">6. الصيانة والتطوير</button>
+                </div>
+                <div class="stage-panel" id="dev-stage-content">
+                    <!-- يمتلئ تلقائياً بالجافاسكربت -->
+                </div>
+                <p style="font-size:0.9rem; color:var(--text-muted);"><em>ملاحظة أكاديمية:</em> هذا المخطط تعليمي مبسط؛ وفي المشاريع الواقعية قد تتكرر مراحل التصميم والاختبار والتحسين في دورات متتابعة خلال عمر المشروع.</p>
+
+                <h3>1.6 لماذا نهتم بإعداد بيئة التطوير منذ البداية (7 فوائد عملية)؟</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><div class="card-badge-num">1</div><h4>تقليل أخطاء الإعدادات</h4><p>منع الأعطال المفاجئة الناتجة عن اختلاف الإصدارات أو غياب المكتبات بين أجهزة الفريق.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">2</div><h4>تسريع اكتشاف الأعطال</h4><p>وجود المصحح وسجلات التنفيذ والاختبارات يختصر ساعات طويلة من التخمين العشوائي.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">3</div><h4>تسريع العمل الجماعي</h4><p>يستطيع أي زميل جديد سحب المستودع وتجهيز مشروعه والبدء بالعمل خلال دقائق.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">4</div><h4>قابلية إعادة التشغيل</h4><p>ضمان تشغيل المشروع بالنتائج نفسها على جهاز المختبر وجهاز الأستاذ وخادم الكلية.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">5</div><h4>جودة الشيفرة وتنظيمها</h4><p>محررات الكود وأدوات الفحص تساعد على تنسيق الملفات وتقليل الأخطاء المبكرة.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">6</div><h4>حماية الأسرار والبيانات</h4><p>عزل ملفات <span class="term-en">.env</span> في <span class="term-en">.gitignore</span> يمنع تسرب كلمات المرور منذ اللحظة الأولى.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">7</div><h4>جاهزية الاختبار والنشر</h4><p>التفريق الواضح بين التطوير والاختبار والإنتاج يجعل التحديثات آمنة ومنضبطة.</p></div>
+                </div>
+
+                <!-- أسئلة الموضوع الأول -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الأول (انقر لعرض الأسئلة والإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>عرّف كتابة الشيفرة البرمجية:</strong> هي تحويل الحل الذي يفكر فيه المبرمج إلى تعليمات مكتوبة بلغة برمجية يفهمها المترجم أو المفسر أو بيئة التشغيل.</li>
+                            <li><strong>ما الفرق بين كتابة الشيفرة وتطوير المنتج البرمجي؟</strong> كتابة الشيفرة تركز على كتابة التعليمات لتنفيذ مهمة برمجية، بينما تطوير المنتج البرمجي عملية أوسع تشمل فهم المتطلبات، التصميم، تجهيز البيئة، كتابة الشيفرة، الاختبار، التوثيق، النشر، والصيانة لإنتاج حل متكامل قابل للتشغيل والتطوير.</li>
+                            <li><strong>اذكر أربع مراحل من مراحل تطوير البرمجيات:</strong> (1) فهم المشكلة والمتطلبات، (2) التصميم والتخطيط، (3) تجهيز البيئة وكتابة الشيفرة، (4) الاختبار والتصحيح (كما تليها مرحلتا النشر والتشغيل، والصيانة والتطوير).</li>
+                            <li><strong>لماذا قد يفشل مشروع يحتوي على شيفرة صحيحة؟</strong> لأن نجاح التشغيل لا يعتمد على صحة الشيفرة وحدها؛ فقد تنقصه مكتبة خارجية (<span class="term-en">ModuleNotFoundError</span>)، أو يختلف إصدار اللغة، أو تنقصه متغيرات إعداد مطلوبة في البيئة.</li>
+                            <li><strong>وضّح أهمية تجهيز بيئة التطوير قبل البدء في المشروع:</strong> يقلل أخطاء اختلاف الإعدادات، يسهل اكتشاف المشكلات، يسرّع التعاون الجماعي، يضمن إعادة التشغيل على أجهزة أخرى، يحافظ على جودة وتنظيم الشيفرة، يحمي الأسرار، ويجهز المشروع للاختبار والنشر.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. الموضوع الثاني: إعداد بيئة التطوير وإدارة التبعيات والمكتبات -->
+            <section id="topic-2">
+                <span class="section-tag">الموضوع الثاني</span>
+                <h2>📦 2. إعداد بيئة التطوير وإدارة التبعيات والمكتبات</h2>
+
+                <h3>2.1 ما المقصود ببيئة التطوير (Development Environment) ومكوناتها؟</h3>
+                <p><strong>بيئة التطوير <span class="term-en">Development Environment</span>:</strong> هي منظومة البرامج والأدوات والإعدادات التي يحتاج إليها المطور لكتابة مشروعه وتشغيله واختباره وتنظيم إصداراته. وتختلف تفاصيل هذه البيئة باختلاف اللغة ونوع المشروع؛ فما يحتاجه مشروع Python لتحليل البيانات يختلف عن بيئة PHP أو Java أو Node.js.</p>
+                <div class="info-box success-box">
+                    <h4>🧰 المكونات السبعة الأساسية لبيئة التطوير المتكاملة</h4>
+                    <ol class="content-list" style="margin-bottom:0;">
+                        <li>لغة البرمجة أو بيئة تشغيلها (مثل مفسّر Python أو بيئة Node.js أو JDK).</li>
+                        <li>محرر الشيفرة البرمجية أو بيئة التطوير المتكاملة (مثل Visual Studio Code).</li>
+                        <li>الطرفية (<span class="term-en">Terminal</span>) لتنفيذ الأوامر وتشغيل الأدوات.</li>
+                        <li>أدوات إدارة الحزم والمكتبات (<span class="term-en">Package Managers</span>).</li>
+                        <li>أدوات الاختبار الآلي والتصحيح (<span class="term-en">Testing &amp; Debugging Tools</span>).</li>
+                        <li>نظام إدارة الإصدارات (مثل <span class="term-en">Git</span>).</li>
+                        <li>إعدادات التشغيل وقاعدة البيانات المحلية عند الحاجة.</li>
+                    </ol>
+                </div>
+
+                <h3>2.2 ما المكتبة البرمجية (Library)؟</h3>
+                <p><strong>المكتبة البرمجية <span class="term-en">Library</span>:</strong> هي مجموعة من الشيفرات البرمجية الجاهزة والمنظمة التي توفر وظائف مختبرة يمكن للمطور استدعاؤها واستخدامها داخل مشروعه بدلاً من إعادة بناء كل وظيفة من الصفر.</p>
+                <p><strong>التشبيه الهندسي:</strong> تخيّل أنك تبني منزلاً؛ يمكنك نظرياً صناعة كل مطرقة ومنشار ومسمار بنفسك، لكنك ستوفر وقتاً وجهداً هائلين وتحصل على جودة أعلى إذا استخدمت أدوات جاهزة ومجربة! كذلك في البرمجة: لدينا مكتبات لمعالجة البيانات والصور، وإرسال طلبات الشبكة، والتحقق من المدخلات، وبناء الواجهات.</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card"><h4><span class="term-en">pandas</span></h4><p>مكتبة قوية في <strong>Python</strong> لمعالجة الجداول وتحليل البيانات الإحصائية والأكاديمية.</p></div>
+                    <div class="feature-card"><h4><span class="term-en">requests</span></h4><p>مكتبة شهيرة في <strong>Python</strong> لإرسال طلبات HTTP والاتصال بواجهات API بسهولة.</p></div>
+                    <div class="feature-card"><h4><span class="term-en">Express</span></h4><p>إطار ومكتبة خفيفة في <strong>Node.js</strong> لبناء تطبيقات وخوادم الويب وواجهات API.</p></div>
+                    <div class="feature-card"><h4><span class="term-en">React</span></h4><p>مكتبة <strong>JavaScript</strong> لبناء واجهات مستخدم تفاعلية ومقسمة إلى مكونات.</p></div>
+                    <div class="feature-card"><h4><span class="term-en">JUnit</span></h4><p>إطار معياري لكتابة وتنفيذ اختبارات الوحدة الآلية في مشاريع <strong>Java</strong>.</p></div>
+                </div>
+                <p style="font-size:0.9rem; color:var(--text-muted);"><em>تنبيه:</em> هذه أمثلة للتعريف والتوضيح وليست قائمة إلزامية لكل مشروع؛ فكل مشروع يختار المكتبات التي تناسب حاجته الفعلية فقط.</p>
+
+                <h3>2.3 ما المقصود بالتبعيات (Dependencies)؟</h3>
+                <p><strong>التبعيات <span class="term-en">Dependencies</span>:</strong> هي كل المكونات أو المكتبات أو الحزم التي يعتمد عليها المشروع لكي يعمل أو يؤدي وظائفه. وقد يعتمد مشروعك على مكتبة مباشرة (Direct Dependency)، وتعتمد تلك المكتبة بدورها على حزم أخرى (Transitive Dependencies).</p>
+
+                <!-- مخطط SVG شجرة التبعيات -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 640 230" style="max-width: 620px;">
+                        <defs>
+                            <marker id="arrDep" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#2b6cb0" />
+                            </marker>
+                        </defs>
+                        <!-- المشروع -->
+                        <rect x="200" y="15" width="240" height="52" rx="10" fill="#1a365d" />
+                        <text x="320" y="38" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">مشروع إدارة الطلاب</text>
+                        <text x="320" y="56" text-anchor="middle" font-size="11" fill="#bee3f8">Your Application Project</text>
+
+                        <!-- سهم -->
+                        <line x1="320" y1="67" x2="320" y2="95" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrDep)"/>
+
+                        <!-- التبعية المباشرة -->
+                        <rect x="180" y="98" width="280" height="48" rx="10" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2" />
+                        <text x="320" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a365d">التبعية المباشرة (Direct Dependency)</text>
+                        <text x="320" y="137" text-anchor="middle" font-size="11" fill="#2b6cb0">مثال: Express في الويب أو pandas في Python</text>
+
+                        <!-- أسهم للتبعيات الفرعية -->
+                        <line x1="250" y1="146" x2="155" y2="174" stroke="#2b6cb0" stroke-width="2" marker-end="url(#arrDep)"/>
+                        <line x1="320" y1="146" x2="320" y2="174" stroke="#2b6cb0" stroke-width="2" marker-end="url(#arrDep)"/>
+                        <line x1="390" y1="146" x2="485" y2="174" stroke="#2b6cb0" stroke-width="2" marker-end="url(#arrDep)"/>
+
+                        <!-- التبعيات الفرعية -->
+                        <rect x="55" y="176" width="160" height="40" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.8"/>
+                        <text x="135" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#9c4221">تبعية فرعية A (Sub-pkg)</text>
+
+                        <rect x="240" y="176" width="160" height="40" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.8"/>
+                        <text x="320" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#9c4221">تبعية فرعية B (Sub-pkg)</text>
+
+                        <rect x="425" y="176" width="160" height="40" rx="8" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.8"/>
+                        <text x="505" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#9c4221">تبعية فرعية C (Sub-pkg)</text>
+                    </svg>
+                    <div><span class="figure-caption">الشكل التوضيحي: علاقة المشروع بالتبعيات المباشرة والتبعيات الفرعية التي تعتمد عليها</span></div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>✅ لماذا نستخدم المكتبات الخارجية؟</h4>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li>توفير الوقت والجهد بدل إعادة اختراع العجلة.</li>
+                            <li>الاستفادة من حلول مختبرة على نطاق واسع عالمياً.</li>
+                            <li>تمكين المطور من بناء تطبيقات أكبر وأكثر تعقيداً.</li>
+                            <li>الاعتماد على توثيق قوي ومجتمع نشط لحل المشكلات.</li>
+                            <li>توحيد طريقة تنفيذ الوظائف الشائعة داخل المشروع.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--danger);">
+                        <h4>⚠️ ضوابط الحذر عند إضافة المكتبات</h4>
+                        <p>يجب عدم تثبيت أي مكتبة عشوائياً دون حاجة حقيقية؛ فقد تجلب للمشروع:</p>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li><strong>ثغرات أمنية:</strong> شيفرة غير موثوقة أو مخترقة.</li>
+                            <li><strong>عدم توافق:</strong> تعارض مع إصدار اللغة أو حزم أخرى.</li>
+                            <li><strong>توقف الصيانة:</strong> مكتبات مهجورة لا تتلقى إصلاحات.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2.4 ما مدير الحزم (Package Manager)؟</h3>
+                <p><strong>مدير الحزم <span class="term-en">Package Manager</span>:</strong> أداة برمجية مخصصة لمساعدة المطور على تثبيت الحزم البرمجية وإزالتها وتحديثها وحساب تبعياتها الفرعية وإدارة إصداراتها بدقة.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>اللغة أو البيئة</th>
+                                <th>مدير الحزم أو الأداة</th>
+                                <th>الاستخدام الأساسي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Python</strong></td><td><span class="term-en">pip</span></td><td>تثبيت وإدارة حزم ومكتبات Python.</td></tr>
+                            <tr><td><strong>JavaScript / Node.js</strong></td><td><span class="term-en">npm</span> (وأدوات مثل <span class="term-en">yarn / pnpm</span>)</td><td>إدارة حزم المشروع وأوامر التشغيل في <span class="term-en">package.json</span>.</td></tr>
+                            <tr><td><strong>PHP</strong></td><td><span class="term-en">Composer</span></td><td>إدارة التبعيات والتحميل التلقائي لمشاريع PHP.</td></tr>
+                            <tr><td><strong>Java</strong></td><td><span class="term-en">Maven</span> أو <span class="term-en">Gradle</span></td><td>إدارة التبعيات وبناء المشاريع وأتمتة الاختبارات.</td></tr>
+                            <tr><td><strong>C++</strong></td><td><span class="term-en">vcpkg</span> أو <span class="term-en">Conan</span></td><td>إدارة مكتبات C++ في المشاريع المدعومة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size:0.92rem; color:var(--text-muted);"><em>توضيح مهم:</em> مدير الحزم يدير مكتبات اللغة، لكنه <strong>لا يغني غالباً عن تثبيت لغة البرمجة أو بيئة التشغيل نفسها</strong> على النظام أولاً (فمثلاً تحتاج لتثبيت Python قبل تشغيل <span class="term-en">pip</span>).</p>
+
+                <h3>2.5 مثال عملي متكامل باستخدام Python والبيئات الافتراضية (<span style="font-family:monospace;">.venv</span>)</h3>
+                <p>لنفترض أن لدينا مشروعاً لتحليل درجات الطلاب يستخدم مكتبة <span class="term-en">pandas</span>. بعد التأكد من تثبيت Python و<span class="term-en">pip</span>، ننشئ أولاً <strong>بيئة افتراضية معزولة</strong> لكل مشروع؛ لأن تثبيت كل المكتبات عالمياً على النظام يؤدي إلى <span class="term">تعارض الإصدارات</span> إذا احتاج مشروع قديم إلى <span class="term-en">pandas 1.x</span> واحتاج مشروع حديث إلى <span class="term-en">pandas 2.x</span>!</p>
+
+                <div class="tabs-wrapper">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTab(event, 'venv-win', 'venv-group')">🪟 أوامر Windows PowerShell</button>
+                        <button class="tab-btn" onclick="openTab(event, 'venv-unix', 'venv-group')">🐧 أوامر Linux / macOS</button>
+                        <button class="tab-btn" onclick="openTab(event, 'venv-code', 'venv-group')">🐍 الشيفرة البرمجية main.py</button>
+                    </div>
+                    <div id="venv-win" class="tab-content active venv-group">
+                        <p>في مجلد المشروع على نظام Windows، ننشئ البيئة الافتراضية ثم نفعّلها ثم نثبت المكتبة داخلها:</p>
+                        <div class="code-window">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>PowerShell — Windows</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ الأوامر</button>
+                            </div>
+                            <pre><span class="code-comment"># 1. إنشاء بيئة افتراضية مستقلة باسم .venv</span>
+python -m venv .venv
+
+<span class="code-comment"># 2. تفعيل البيئة الافتراضية في Windows PowerShell</span>
+.venv\Scripts\Activate.ps1
+
+<span class="code-comment"># 3. تثبيت مكتبة pandas داخل البيئة النشطة</span>
+python -m pip install pandas</pre>
+                        </div>
+                    </div>
+                    <div id="venv-unix" class="tab-content venv-group">
+                        <p>في أنظمة Linux أو macOS، يُستخدم المسار <span class="term-en">bin/activate</span> لتفعيل البيئة الافتراضية:</p>
+                        <div class="code-window">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>Bash / Zsh — Linux &amp; macOS</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ الأوامر</button>
+                            </div>
+                            <pre><span class="code-comment"># 1. إنشاء البيئة الافتراضية</span>
+python3 -m venv .venv
+
+<span class="code-comment"># 2. تفعيل البيئة الافتراضية</span>
+source .venv/bin/activate
+
+<span class="code-comment"># 3. تثبيت المكتبة المطلوبة داخل البيئة المعزولة</span>
+python -m pip install pandas</pre>
+                        </div>
+                    </div>
+                    <div id="venv-code" class="tab-content venv-group">
+                        <p>بعد تفعيل البيئة وتثبيت المكتبة، نكتب ملف <span class="term-en">main.py</span> لتنظيم درجات الطلاب في جدول:</p>
+                        <div class="code-window">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>main.py</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                            </div>
+                            <pre><span class="code-kw">import</span> pandas <span class="code-kw">as</span> pd
+
+students = {
+    <span class="code-str">"name"</span>: [<span class="code-str">"أحمد"</span>, <span class="code-str">"سارة"</span>, <span class="code-str">"محمد"</span>],
+    <span class="code-str">"grade"</span>: [<span class="code-num">85</span>, <span class="code-num">92</span>, <span class="code-num">78</span>]
+}
+
+table = pd.DataFrame(students)
+<span class="code-kw">print</span>(table)</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>2.6 ملفات إدارة التبعيات وتوافق الإصدارات (<span style="font-family:monospace;">2.6 &amp; 2.7</span>)</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>📄 ملفات وصف التبعيات والقفل</h4>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li>في <strong>Python:</strong> يُستخدم ملف <span class="term-en">requirements.txt</span> لتسجيل أسماء الحزم وإصداراتها، وتُثبّت دفعة واحدة بالأمر: <span class="term-en">python -m pip install -r requirements.txt</span>.</li>
+                            <li>في <strong>Node.js:</strong> يُستخدم <span class="term-en">package.json</span> لتحديد معلومات المشروع وحزمه، بينما يسجل <span class="term-en">package-lock.json</span> شجرة الإصدارات الدقيقة المثبتة (<span class="term">ملف القفل Lockfile</span>).</li>
+                            <li><em>مهم:</em> لا يوجد ملف موحد لكل اللغات؛ فلكل لغة بيئتها وأدواتها وتقاليدها.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>🔒 قواعد الحفاظ على توافق الإصدارات</h4>
+                        <p style="margin-bottom:0.4rem;">تغير الإصدار المفاجئ قد يكسر عمل التطبيق؛ لذا نلتزم بالآتي:</p>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>توثيق جميع الحزم وإصداراتها في ملف المشروع.</li>
+                            <li>استخدام ملفات القفل (<span class="term-en">Lockfiles</span>) متى دعمتها البيئة.</li>
+                            <li>فحص التوافق وملاحظات الإصدار (<span class="term-en">Changelog</span>) قبل التحديث.</li>
+                            <li>إعادة تشغيل الاختبارات بعد أي ترقية أو تحديث.</li>
+                            <li>تجنب تثبيت حزم وإصدارات مجهولة المصدر.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- أسئلة الموضوع الثاني -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الثاني (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما المقصود ببيئة التطوير؟</strong> مجموعة البرامج والأدوات والإعدادات (اللغة، المحرر، الطرفية، مدير الحزم، أدوات التصحيح والاختبار، Git، الإعدادات) التي يحتاجها المطور لكتابة مشروعه وتشغيله واختباره.</li>
+                            <li><strong>عرّف المكتبة البرمجية والتبعية البرمجية:</strong> المكتبة هي شيفرات جاهزة توفر وظائف قابلة لإعادة الاستخدام؛ أما التبعية فهي أي مكون أو حزمة يعتمد عليها المشروع (مباشرة أو فرعياً) ليعمل.</li>
+                            <li><strong>ما وظيفة مدير الحزم؟</strong> تسهيل تثبيت الحزم البرمجية وإزالتها وتحديثها وإدارة إصداراتها وتبعياتها الفرعية.</li>
+                            <li><strong>اذكر مثالين على مديري الحزم واستخدام كل منهما:</strong> <span class="term-en">pip</span> لتثبيت وإدارة حزم Python، و<span class="term-en">npm</span> لإدارة حزم وأوامر مشاريع JavaScript / Node.js (أو Composer لـ PHP وMaven/Gradle لـ Java).</li>
+                            <li><strong>ما فائدة البيئة الافتراضية في Python؟</strong> عزل حزم وإصدارات كل مشروع عن المشاريع الأخرى وعن النظام الأساسي لمنع تعارض الإصدارات وتسهيل إعادة بناء البيئة نفسها.</li>
+                            <li><strong>لماذا يجب الاهتمام بإصدارات المكتبات؟</strong> لأن تحديث مكتبة إلى إصدار غير متوافق قد يغيّر سلوك الدوال أو يوقف البرنامج عن العمل، ولأن بعض الإصدارات القديمة قد تحتوي ثغرات أمنية.</li>
+                            <li><strong>ما الفرق بين تثبيت لغة البرمجة وتثبيت مكتبة تستخدمها؟</strong> اللغة (مثل Python أو Node.js) هي المحرك والمفسّر الأساسي لتشغيل الأوامر، بينما المكتبة (مثل pandas أو Express) هي حزمة وظائف إضافية تعمل فوق تلك اللغة بعد توفرها.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. الموضوع الثالث: استخدام محرر الشيفرة والطرفية وأدوات التصحيح -->
+            <section id="topic-3">
+                <span class="section-tag">الموضوع الثالث</span>
+                <h2>🛠️ 3. محرر الشيفرة والطرفية وأدوات التصحيح</h2>
+                <p>يعدّ هذا الموضوع العمود الفقري للعمل البرمجي اليومي؛ لأن المطور يقضي وقته متنقلاً بين ثلاث أدوات متكاملة تجيب كلٌ منها عن سؤال مختلف: <strong>أين أكتب؟</strong> (المحرر) ← <strong>كيف أنفّذ؟</strong> (الطرفية) ← <strong>لماذا حدث الخطأ؟</strong> (المصحح).</p>
+
+                <!-- مخطط SVG تفاعلي لثلاثي الأدوات -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 720 200" style="max-width: 700px;">
+                        <!-- محرر الشيفرة -->
+                        <rect x="490" y="20" width="210" height="155" rx="12" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2.5"/>
+                        <rect x="490" y="20" width="210" height="38" rx="10" fill="#2b6cb0"/>
+                        <text x="595" y="44" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">1. محرر الشيفرة (Editor)</text>
+                        <text x="595" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a365d">السؤال: أين أكتب؟</text>
+                        <text x="595" y="106" text-anchor="middle" font-size="11.5" fill="#2d3748">كتابة وتنظيم الملفات</text>
+                        <text x="595" y="126" text-anchor="middle" font-size="11.5" fill="#2d3748">تلوين الشيفرة والإكمال التلقائي</text>
+                        <text x="595" y="148" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6cb0">مثال: Visual Studio Code</text>
+
+                        <!-- الطرفية -->
+                        <rect x="255" y="20" width="210" height="155" rx="12" fill="#f0fff4" stroke="#38a169" stroke-width="2.5"/>
+                        <rect x="255" y="20" width="210" height="38" rx="10" fill="#38a169"/>
+                        <text x="360" y="44" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">2. الطرفية (Terminal)</text>
+                        <text x="360" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">السؤال: كيف أنفّذ؟</text>
+                        <text x="360" y="106" text-anchor="middle" font-size="11.5" fill="#2d3748">تشغيل البرامج والاختبارات</text>
+                        <text x="360" y="126" text-anchor="middle" font-size="11.5" fill="#2d3748">تثبيت المكتبات وأوامر Git</text>
+                        <text x="360" y="148" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f855a">مثال: Bash / PowerShell</text>
+
+                        <!-- المصحح -->
+                        <rect x="20" y="20" width="210" height="155" rx="12" fill="#fffaf0" stroke="#dd6b20" stroke-width="2.5"/>
+                        <rect x="20" y="20" width="210" height="38" rx="10" fill="#dd6b20"/>
+                        <text x="125" y="44" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">3. المصحح (Debugger)</text>
+                        <text x="125" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#9c4221">السؤال: لماذا حدث الخطأ؟</text>
+                        <text x="125" y="106" text-anchor="middle" font-size="11.5" fill="#2d3748">نقاط التوقف Breakpoints</text>
+                        <text x="125" y="126" text-anchor="middle" font-size="11.5" fill="#2d3748">مراقبة المتغيرات خطوة بخطوة</text>
+                        <text x="125" y="148" text-anchor="middle" font-size="11" font-weight="bold" fill="#c05621">مثال: VS Code Run &amp; Debug</text>
+                    </svg>
+                    <div><span class="figure-caption">الشكل التوضيحي: تكامل الأدوات الثلاث الأساسية في بيئة المطور</span></div>
+                </div>
+
+                <h3>3.1 محرر الشيفرة (<span style="font-family:monospace;">Code Editor</span>) — بنية Visual Studio Code</h3>
+                <p><strong>محرر الشيفرة:</strong> برنامج متخصص في كتابة الملفات البرمجية وتعديلها وتنظيمها. ومن أشهر المحررات المجانية والقياسية عالمياً <strong>Visual Studio Code</strong> الذي يدعم معظم اللغات عبر الإضافات (<span class="term-en">Extensions</span>).</p>
+
+                <!-- مخطط SVG لمحاكاة واجهة VS Code -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 700 320" style="max-width: 680px; background:#0f172a; border-color:#334155;">
+                        <!-- شريط العنوان -->
+                        <rect x="0" y="0" width="700" height="28" fill="#1e293b"/>
+                        <circle cx="18" cy="14" r="5" fill="#ef4444"/>
+                        <circle cx="34" cy="14" r="5" fill="#f59e0b"/>
+                        <circle cx="50" cy="14" r="5" fill="#10b981"/>
+                        <text x="350" y="18" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="monospace">main.py — software-development-lab — Visual Studio Code</text>
+
+                        <!-- شريط النشاط الأيسر -->
+                        <rect x="0" y="28" width="44" height="270" fill="#1e293b"/>
+                        <text x="22" y="56" text-anchor="middle" font-size="15" fill="#63b3ed">📁</text>
+                        <text x="22" y="90" text-anchor="middle" font-size="15" fill="#94a3b8">🔍</text>
+                        <text x="22" y="124" text-anchor="middle" font-size="15" fill="#94a3b8">🌿</text>
+                        <text x="22" y="158" text-anchor="middle" font-size="15" fill="#f6ad55">🐞</text>
+                        <text x="22" y="192" text-anchor="middle" font-size="15" fill="#94a3b8">🧩</text>
+
+                        <!-- مستكشف الملفات Explorer -->
+                        <rect x="44" y="28" width="150" height="270" fill="#162032" stroke="#334155" stroke-width="1"/>
+                        <text x="54" y="48" font-size="10.5" font-weight="bold" fill="#94a3b8" font-family="monospace">EXPLORER</text>
+                        <text x="54" y="72" font-size="11" fill="#cbd5e1" font-family="monospace">▾ src/</text>
+                        <rect x="46" y="80" width="146" height="22" fill="rgba(66,153,225,0.22)"/>
+                        <text x="66" y="95" font-size="11" fill="#93c5fd" font-family="monospace">🐍 main.py</text>
+                        <text x="54" y="118" font-size="11" fill="#cbd5e1" font-family="monospace">▸ tests/</text>
+                        <text x="54" y="138" font-size="11" fill="#cbd5e1" font-family="monospace">📄 README.md</text>
+                        <text x="54" y="158" font-size="11" fill="#cbd5e1" font-family="monospace">🙈 .gitignore</text>
+
+                        <!-- منطقة كتابة الكود Editor -->
+                        <rect x="194" y="28" width="506" height="170" fill="#0f172a"/>
+                        <rect x="194" y="28" width="115" height="26" fill="#1e293b"/>
+                        <text x="251" y="45" text-anchor="middle" font-size="11" fill="#93c5fd" font-family="monospace">main.py ×</text>
+                        <!-- نقطة توقف Breakpoint -->
+                        <circle cx="212" cy="112" r="5" fill="#ef4444"/>
+                        <text x="224" y="74" font-size="11.5" fill="#64748b" font-family="monospace">1</text>
+                        <text x="242" y="74" font-size="12" fill="#e2e8f0" font-family="monospace">price = <tspan fill="#fcd34d">100</tspan></text>
+                        <text x="224" y="94" font-size="11.5" fill="#64748b" font-family="monospace">2</text>
+                        <text x="242" y="94" font-size="12" fill="#e2e8f0" font-family="monospace">quantity = <tspan fill="#fcd34d">3</tspan></text>
+                        <rect x="220" y="101" width="465" height="20" fill="rgba(239, 68, 68, 0.14)"/>
+                        <text x="224" y="115" font-size="11.5" fill="#f87171" font-family="monospace">3</text>
+                        <text x="242" y="115" font-size="12" fill="#e2e8f0" font-family="monospace">total = price * quantity  <tspan fill="#94a3b8"># ← Breakpoint</tspan></text>
+                        <text x="224" y="136" font-size="11.5" fill="#64748b" font-family="monospace">4</text>
+                        <text x="242" y="136" font-size="12" fill="#93c5fd" font-family="monospace">print<tspan fill="#e2e8f0">(total)</tspan></text>
+
+                        <!-- لوحة الطرفية السفلية Terminal Panel -->
+                        <rect x="194" y="198" width="506" height="100" fill="#0b1120" stroke="#334155" stroke-width="1"/>
+                        <text x="210" y="216" font-size="10.5" fill="#64748b" font-family="monospace">PROBLEMS   OUTPUT   DEBUG CONSOLE   <tspan fill="#93c5fd" font-weight="bold">TERMINAL</tspan></text>
+                        <line x1="398" y1="221" x2="452" y2="221" stroke="#63b3ed" stroke-width="2"/>
+                        <text x="210" y="242" font-size="11.5" fill="#86efac" font-family="monospace">(.venv) $ python src/main.py</text>
+                        <text x="210" y="262" font-size="11.5" fill="#f8fafc" font-family="monospace">300</text>
+                        <text x="210" y="282" font-size="11" fill="#94a3b8" font-family="monospace">(.venv) $ ▌</text>
+
+                        <!-- شريط الحالة السفلي -->
+                        <rect x="0" y="298" width="700" height="22" fill="#2b6cb0"/>
+                        <text x="14" y="313" font-size="10.5" fill="#ffffff" font-family="monospace">🌿 main*   ⊗ 0  ⚠ 0</text>
+                        <text x="520" y="313" font-size="10.5" fill="#ffffff" font-family="monospace">Python 3.12 ('.venv')   UTF-8</text>
+                    </svg>
+                    <div><span class="figure-caption">مخطط تفاعلي لأجزاء Visual Studio Code: المستكشف، المحرر، نقطة التوقف، والطرفية المدمجة</span></div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>✨ أبرز 8 خدمات يقدمها محرر الشيفرة</h4>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li>تلوين الكلمات المفتاحية (<span class="term-en">Syntax Highlighting</span>) لتسهيل القراءة.</li>
+                            <li>الإكمال التلقائي للأوامر والمتغيرات (<span class="term-en">IntelliSense</span>).</li>
+                            <li>إظهار أرقام الأسطر لتتبع الرسائل والأخطاء.</li>
+                            <li>البحث والاستبدال المتقدم عبر كل ملفات المشروع.</li>
+                            <li>فتح وتقسيم عدة ملفات مترابطة في آنٍ واحد.</li>
+                            <li>التحليل الثابت واكتشاف أخطاء الصياغة قبل التشغيل.</li>
+                            <li>التكامل المباشر مع المصحح ونظام <span class="term-en">Git</span>.</li>
+                            <li>توسيع قدراته بإضافات اللغات ومنسقات الكود.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--warning);">
+                        <h4>⚠️ حدود محرر الشيفرة</h4>
+                        <p>يجب الانتباه إلى حقيقتين أساسيتين:</p>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>المحرر <strong>لا يكفي وحده لتشغيل الكود</strong>؛ بل يعتمد على وجود مفسّر أو مترجم اللغة (مثل Python) في البيئة.</li>
+                            <li>المحرر <strong>لا يكتشف الأخطاء المنطقية</strong>؛ فقد يكتب الطالب معادلة جمع بدل الضرب فتظل سليمة نحوياً دون أي خط أحمر!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>3.2 الطرفية (<span style="font-family:monospace;">Terminal</span>)</h3>
+                <p><strong>الطرفية:</strong> هي واجهة سطر الأوامر (<span class="term-en">Command Line Interface - CLI</span>) التي تسمح للمطور بكتابة أوامر نصية ينفذها النظام مباشرة. بدلاً من النقر على أزرار متفرقة، ينفّذ المطور عبر الطرفية البرامج، يثبّت الحزم، يدير <span class="term-en">Git</span>، ويشغّل الاختبارات الآلية.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>الأمر</th><th>الوظيفة</th><th>ملاحظة النظام</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="term-en">python --version</span></td><td>عرض إصدار Python المتاح في الطرفية.</td><td>قد يكون <span class="term-en">py</span> في Windows أو <span class="term-en">python3</span> في Linux/macOS.</td></tr>
+                            <tr><td><span class="term-en">python main.py</span></td><td>تشغيل الملف البرمجي <span class="term-en">main.py</span>.</td><td>تأكد أولاً من وجودك في المجلد الصحيح.</td></tr>
+                            <tr><td><span class="term-en">dir</span></td><td>عرض محتويات المجلد الحالي.</td><td>أساسي في موجّه أوامر Windows (<span class="term-en">CMD</span>).</td></tr>
+                            <tr><td><span class="term-en">ls</span></td><td>عرض محتويات المجلد الحالي.</td><td>أساسي في Linux وmacOS وGit Bash وPowerShell.</td></tr>
+                            <tr><td><span class="term-en">cd project</span></td><td>الانتقال إلى داخل مجلد باسم <span class="term-en">project</span>.</td><td><span class="term-en">cd ..</span> للرجوع مجلداً للأعلى.</td></tr>
+                            <tr><td><span class="term-en">git status</span></td><td>فحص حالة الملفات والتغييرات في مستودع Git.</td><td>أمر يومي للتأكد قبل الإيداع (<span class="term-en">commit</span>).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>🪜 خطوات تشغيل برنامج Python من الطرفية بانتظام (5 خطوات)</h4>
+                    <ol class="content-list" style="margin-bottom:0;">
+                        <li>افتح المجلد الرئيسي للمشروع داخل محرر الشيفرة.</li>
+                        <li>افتح الطرفية المدمجة داخل المجلد الصحيح (وفعّل <span class="term-en">.venv</span> إن وجدت).</li>
+                        <li>تحقق من توفر Python عبر <span class="term-en">python --version</span> (أو <span class="term-en">py --version</span>).</li>
+                        <li>نفّذ أمر التشغيل <span class="term-en">python main.py</span> (أو <span class="term-en">python src/main.py</span> حسب موضع الملف).</li>
+                        <li>اقرأ المخرجات أو رسالة الخطأ كاملة بهدوء لفهم السبب.</li>
+                    </ol>
+                </div>
+
+                <h3>3.3 المصحح البرمجي (<span style="font-family:monospace;">Debugger</span>) ومثال الخطأ المنطقي</h3>
+                <p><strong>المصحح (<span class="term-en">Debugger</span>):</strong> أداة تسمح لك بإيقاف البرنامج أثناء تنفيذه لحظة بلحظة لمراقبة ما يجري داخل الذاكرة واكتشاف مكان الخلل بالضبط. يتيح لك المصحح:</p>
+                <ul class="content-list">
+                    <li>وضع <strong>نقطة توقف (<span class="term-en">Breakpoint</span>)</strong> لإيقاف التنفيذ عند سطر محدد.</li>
+                    <li>تنفيذ الأوامر خطوة بخطوة (<span class="term-en">Step Over / Step Into / Step Out</span>).</li>
+                    <li>مراقبة القيم اللحظية للمتغيرات (<span class="term-en">Watch Variables</span>) ومكدس الاستدعاء (<span class="term-en">Call Stack</span>).</li>
+                    <li>تتبع مسار التنفيذ داخل الجمل الشرطية (<span class="term-en">if</span>) والحلقات (<span class="term-en">loops</span>) والدوال.</li>
+                </ul>
+
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>buggy_price.py — مثال خطأ منطقي في حساب المجموع</span></div>
+                    </div>
+                    <pre>price = <span class="code-num">100</span>
+quantity = <span class="code-num">3</span>
+total = price + quantity   <span class="code-err"># ⚠️ خطأ منطقي: استخدام الجمع (+) بدلاً من الضرب (*)</span>
+<span class="code-kw">print</span>(total)               <span class="code-comment"># الناتج: 103 بدلاً من 300 دون أن يتوقف البرنامج!</span></pre>
+                </div>
+                <p>هنا لا يظهر أي خطأ نحوي، لكن النتيجة خاطئة (<span class="term-en">103</span> بدلاً من <span class="term-en">300</span>). بوضع نقطة توقف عند سطر حساب <span class="term-en">total</span>، وفحص قيمتي <span class="term-en">price</span> و<span class="term-en">quantity</span> قبل وبعد السطر، نكتشف فوراً سبب الخلل ونعدله إلى <span class="term-en">price * quantity</span>.</p>
+
+                <h3>3.4 و 3.5 أنواع الأخطاء الأربعة + مصنّف الأخطاء التفاعلي</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>نوع الخطأ</th><th>المعنى الدقيق</th><th>مثال واقعي</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. خطأ نحوي (<span class="term-en">Syntax Error</span>)</strong></td><td>مخالفة قواعد كتابة لغة البرمجة فيمنع بدء التنفيذ.</td><td>نسيان قوس إغلاق <span class="term-en">)</span> أو نقطتين رأسيتين <span class="term-en">:</span> في Python.</td></tr>
+                            <tr><td><strong>2. خطأ وقت التشغيل (<span class="term-en">Runtime Error</span>)</strong></td><td>صياغة الكود سليمة لكن مشكلة تحدث أثناء التنفيذ فتوقفه.</td><td>القسمة على صفر (<span class="term-en">ZeroDivisionError</span>) أو فتح ملف غير موجود.</td></tr>
+                            <tr><td><strong>3. خطأ منطقي (<span class="term-en">Logic Error</span>)</strong></td><td>البرنامج يشتغل ويكتمل دون توقف لكن نتيجته خاطئة.</td><td>استخدام الجمع بدلاً من الضرب أو القسمة على عدد خاطئ.</td></tr>
+                            <tr><td><strong>4. خطأ في البيئة (<span class="term-en">Environment Error</span>)</strong></td><td>نقص أداة تشغيل أو مكتبة مستوردة أو إعداد بيئي مطلوب.</td><td>ظهور <span class="term-en">ModuleNotFoundError</span> أو عدم التعرف على أمر <span class="term-en">python</span>.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- مصنف الأخطاء التفاعلي -->
+                <div class="interactive-widget">
+                    <h4 style="margin-top:0; color:var(--primary);">🧪 مختبر تشخيص الأخطاء التفاعلي: جرّب تصنيف الرسائل التالية!</h4>
+                    <p style="margin-bottom:0.6rem;">اختر حالة خطأ مما يلي لتعرف تصنيفه العلمي والأداة المثلى لاكتشافه وإصلاحه:</p>
+                    <div class="sim-btn-row">
+                        <button class="sim-btn active" onclick="showErrCase(0, this)">SyntaxError: '(' was never closed</button>
+                        <button class="sim-btn" onclick="showErrCase(1, this)">ZeroDivisionError: division by zero</button>
+                        <button class="sim-btn" onclick="showErrCase(2, this)">يطبع 103 بدلاً من 300</button>
+                        <button class="sim-btn" onclick="showErrCase(3, this)">ModuleNotFoundError: 'pandas'</button>
+                    </div>
+                    <div class="sim-output" id="err-case-out">
+                        <!-- يُحقن بالجافاسكربت -->
+                    </div>
+                </div>
+
+                <!-- أسئلة الموضوع الثالث -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الثالث (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما وظيفة محرر الشيفرة؟</strong> كتابة الملفات البرمجية وتعديلها وتنظيمها عبر تلوين الكلمات، الإكمال التلقائي، أرقام الأسطر، البحث، وإضافات اللغات والتكامل مع الطرفية وGit.</li>
+                            <li><strong>ما المقصود بالطرفية؟ اذكر ثلاثة استخدامات لها:</strong> هي واجهة نصية لتنفيذ أوامر النظام. من استخداماتها: (1) تشغيل البرامج، (2) تثبيت وإدارة المكتبات عبر pip/npm، (3) تنفيذ الاختبارات وإدارة الإصدارات بـ Git.</li>
+                            <li><strong>ما وظيفة المصحح البرمجي؟</strong> تنفيذ البرنامج خطوة بخطوة مع نقاط التوقف ومراقبة قيم المتغيرات ومسار التنفيذ لتحديد سبب الخطأ بدقة.</li>
+                            <li><strong>ما الفرق بين الخطأ النحوي والخطأ المنطقي؟</strong> الخطأ النحوي يخالف قواعد اللغة فيمنع التشغيل أصلاً، أما الخطأ المنطقي فيسمح بتشغيل البرنامج وإنهائه لكن يعطي نتيجة غير صحيحة رياضياً أو منطقياً.</li>
+                            <li><strong>كيف تساعد نقطة التوقف على اكتشاف الخطأ؟</strong> توقف التنفيذ عند السطر المشكوك فيه فتُمكّن المطور من فحص القيم الفعلية للمتغيرات ومقارنتها بالمتوقع قبل وقوع الخلل أو بعده مباشرة.</li>
+                            <li><strong>هل يستطيع المحرر وحده ضمان خلو البرنامج من الأخطاء؟ وضح إجابتك:</strong> لا؛ لأن المحرر يكشف غالباً أخطاء الصياغة وبعض التحذيرات الثابتة، لكنه لا يفهم النية المنطقية للبرنامج ولا يضمن توفر كل مكتبات البيئة ولا يكشف أخطاء التشغيل المرتبطة بالبيانات الفعلية.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. الموضوع الرابع: تنظيم بنية المشروع وملفات الإعداد و Git -->
+            <section id="topic-4">
+                <span class="section-tag">الموضوع الرابع</span>
+                <h2>🗂️ 4. تنظيم بنية المشروع وملفاته وإدارة الإصدارات (<span style="font-family:monospace;">Git</span>)</h2>
+
+                <h3>4.1 لماذا نحتاج إلى تنظيم الملفات والمجلدات؟</h3>
+                <p>في التمارين الأولى قد تكتب كل الشيفرة في ملف واحد. لكن تخيّل مشروعاً حقيقياً يحتوي على <strong>80 ملفاً</strong> كلّها مبعثرة في مجلد واحد بأسماء مبهمة! يصبح تعديل ميزة أو البحث عن إعدادات قاعدة البيانات أو إضافة اختبار مهمة شاقة ومكلفة. لذا يُقسَّم المشروع إلى مجلدات ذات مسؤوليات واضحة (<span class="term">Separation of Concerns</span>).</p>
+
+                <h3>4.2 و 4.3 مستكشف بنية المشروع التفاعلي (<span style="font-family:monospace;">student-management/</span>)</h3>
+                <p>المخطط التالي مثال تعليمي لمشروع ويب (Node.js / JavaScript) — انقر على أي مجلد أو ملف في الشجرة على اليسار لقراءة مسؤوليته التفصيلية على اليمين:</p>
+
+                <div class="explorer-grid">
+                    <div class="tree-box">
+                        <div style="color:#94a3b8; font-size:0.78rem; margin-bottom:0.6rem; border-bottom:1px solid #334155; padding-bottom:0.4rem;">CLICK A FOLDER OR FILE TO INSPECT</div>
+                        <button class="tree-item active" onclick="inspectTree('root', this)">📁 student-management/</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('src', this)">📂 src/</button>
+                        <button class="tree-item tree-indent-2" onclick="inspectTree('controllers', this)">📂 controllers/</button>
+                        <button class="tree-item tree-indent-2" onclick="inspectTree('models', this)">📂 models/</button>
+                        <button class="tree-item tree-indent-2" onclick="inspectTree('routes', this)">📂 routes/</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('tests', this)">🧪 tests/</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('config', this)">⚙️ config/</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('env', this)">🔐 .env</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('gitignore', this)">🙈 .gitignore</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('pkg', this)">📦 package.json</button>
+                        <button class="tree-item tree-indent-1" onclick="inspectTree('readme', this)">📖 README.md</button>
+                    </div>
+                    <div class="tree-inspector" id="tree-inspector-panel">
+                        <!-- يُملأ عبر JS -->
+                    </div>
+                </div>
+
+                <h4>مثال توضيحي لمحتوى ملف <span class="term-en">package.json</span> ودور علامة <span class="term-en">^</span></h4>
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>package.json</span></div>
+                        <button class="copy-code-btn" onclick="copyCode(this)">نسخ JSON</button>
+                    </div>
+                    <pre>{
+  <span class="code-kw">"name"</span>: <span class="code-str">"student-management"</span>,
+  <span class="code-kw">"version"</span>: <span class="code-str">"1.0.0"</span>,
+  <span class="code-kw">"scripts"</span>: {
+    <span class="code-kw">"start"</span>: <span class="code-str">"node src/index.js"</span>
+  },
+  <span class="code-kw">"dependencies"</span>: {
+    <span class="code-kw">"express"</span>: <span class="code-str">"^5.0.0"</span>
+  }
+}</pre>
+                </div>
+                <p><strong>تنبيه مهم:</strong> الرمز <span class="term-en">^</span> في <span class="term-en">npm</span> يسمح بنطاق من الإصدارات المتوافقة، وليس تثبيت إصدار واحد بالضرورة؛ لذلك نعتمد على ملف القفل (<span class="term-en">package-lock.json</span>) لضمان تثبيت الشجرة الدقيقة نفسها في كل بيئة.</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>📖 ماذا يجب أن يتضمن <span class="term-en">README.md</span>؟</h4>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>ما وظيفة المشروع والهدف منه؟</li>
+                            <li>ما الأدوات واللغات والإصدارات المطلوبة؟</li>
+                            <li>كيف تُثبّت التبعيات؟</li>
+                            <li>كيف يُشغَّل المشروع خطوة بخطوة؟</li>
+                            <li>كيف تُنفّذ الاختبارات الآلية؟</li>
+                            <li>هل توجد متغيرات بيئة أو متطلبات خاصة؟</li>
+                        </ol>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>🧭 مبادئ التنظيم الجيد السبعة</h4>
+                        <ul class="content-list" style="margin-bottom:0;">
+                            <li>اختيار أسماء واضحة ومعبرة للملفات والمجلدات.</li>
+                            <li>فصل المسؤوليات والوظائف المختلفة قدر الإمكان.</li>
+                            <li>تجنب تكرار الشيفرة بدون داعٍ.</li>
+                            <li>إبعاد الملفات المؤقتة والمخرجات المولّدة عن الكود المصدري.</li>
+                            <li>توثيق خطوات التثبيت والتشغيل بوضوح.</li>
+                            <li>تضمين اختبارات تتحقق من الوظائف الحرجة.</li>
+                            <li>عدم خلط أسرار التشغيل بالملفات المشاركة علناً.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>4.5 مقدمة إلى إدارة الإصدارات (<span style="font-family:monospace;">Git</span>) ومنصة <span style="font-family:monospace;">GitHub</span></h3>
+                <p><strong>نظام إدارة الإصدارات (<span class="term-en">Version Control</span>):</strong> أداة تتبع كل تغيير يطرأ على ملفات المشروع مع التاريخ والسبب، وتتيح مقارنة التعديلات، الرجوع إلى نسخة سابقة سليمة عند وقوع خطأ، والعمل المتوازي على فروع (<span class="term-en">Branches</span>) مختلفة.</p>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>🌿 Git (الأداة المحلية)</h4>
+                        <p>برنامج إدارة الإصدارات الذي يعمل على جهازك لتسجيل التعديلات محلياً، مراجعة الفروقات، وإدارة الفروع دون الحاجة للإنترنت.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: #805ad5;">
+                        <h4>🐙 GitHub (منصة الاستضافة والتعاون)</h4>
+                        <p>منصة سحابية لاستضافة مستودعات Git، ومشاركة الشيفرة مع الفريق، ومراجعة التعديلات (<span class="term-en">Pull Requests</span>)، وإدارة المهام.</p>
+                    </div>
+                </div>
+
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>Git Basic Workflow</span></div>
+                        <button class="copy-code-btn" onclick="copyCode(this)">نسخ الأوامر</button>
+                    </div>
+                    <pre><span class="code-kw">git init</span>                               <span class="code-comment"># إنشاء مستودع Git محلي جديد</span>
+<span class="code-kw">git status</span>                             <span class="code-comment"># فحص حالة الملفات المعدلة وغير المتتبعة</span>
+<span class="code-kw">git add .</span>                              <span class="code-comment"># تجهيز التغييرات للإيداع التالي</span>
+<span class="code-kw">git commit -m</span> <span class="code-str">"Initial project setup"</span>  <span class="code-comment"># تسجيل اللقطة (Commit) برسالة وصفية</span></pre>
+                </div>
+
+                <div class="info-box danger-box">
+                    <h4>🚨 تحذير حرج حول <span class="term-en">git add .</span> وملف <span class="term-en">.gitignore</span></h4>
+                    <p style="margin-bottom:0;">الأمر <span class="term-en">git add .</span> يجهز <strong>جميع</strong> الملفات غير المستثناة للإيداع! لذلك يجب إنشاء وتهيئة ملف <span class="term-en">.gitignore</span> <strong>قبل</strong> أول <span class="term-en">git add .</span> (لإدراج <span class="term-en">.env</span> و<span class="term-en">.venv/</span> و<span class="term-en">node_modules/</span>)، ومراجعة ناتج <span class="term-en">git status</span> قبل التنفيذ. كما أن إضافة ملف إلى <span class="term-en">.gitignore</span> لاحقاً <strong>لا تحذف سراً سبق إيداعه ورفعه إلى تاريخ Git</strong>!</p>
+                </div>
+
+                <!-- أسئلة الموضوع الرابع -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الرابع (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>لماذا نقسم المشروع إلى مجلدات؟</strong> لفصل المسؤوليات، تسهيل قراءة الشيفرة والعثور على الملفات، تقليل الأخطاء عند التعديل، تسهيل الاختبار، وتسهيل تعاون أكثر من مطور في آنٍ واحد.</li>
+                            <li><strong>ما وظيفة مجلد <span class="term-en">tests/</span>؟</strong> يضم ملفات الاختبارات الآلية التي تتحقق من صحة منطق البرنامج وحالاته الحدية (مثل منع تسجيل درجة أكبر من الحد الأعلى).</li>
+                            <li><strong>ما المعلومات التي ينبغي أن يتضمنها <span class="term-en">README.md</span>؟</strong> هدف المشروع ووظيفته، الأدوات والإصدارات المطلوبة، خطوات تثبيت التبعيات، أوامر التشغيل، طريقة تنفيذ الاختبارات، وأي إعدادات خاصة.</li>
+                            <li><strong>ما وظيفة ملف <span class="term-en">package.json</span> في مشروع Node.js؟</strong> يصف بيانات المشروع الأساسية، وأوامر التشغيل في قسم <span class="term-en">scripts</span>، والتبعيات والحزم التي يعتمد عليها.</li>
+                            <li><strong>ما المقصود بإدارة الإصدارات؟</strong> نظام يتتبع التغييرات على ملفات المشروع عبر الزمن، ويسمح بالمراجعة والرجوع لإصدارات سابقة والعمل المتوازي على فروع تطوير دون ضياع العمل.</li>
+                            <li><strong>ما الفرق بين Git وGitHub؟</strong> Git أداة/برنامج محلي لإدارة الإصدارات على جهازك، بينما GitHub منصة استضافة سحابية لمستودعات Git للتعاون ومراجعة الشيفرة ومشاركتها.</li>
+                            <li><strong>لماذا لا يكفي إنشاء ملف <span class="term-en">.gitignore</span> وحده لحماية سر سبق رفعه إلى المستودع؟</strong> لأن <span class="term-en">.gitignore</span> يمنع فقط تتبع الملفات غير المسجلة مستقبلاً، لكن أي سر سبق عمل Commit وPush له يظل محفوظاً في تاريخ الإصدارات (<span class="term-en">Git History</span>)؛ لذا يجب تغييره/إلغاؤه فوراً وتنظيف التاريخ إذا لزم.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. الموضوع الخامس: ملفات البيئة وإعدادات التشغيل وحماية الأسرار -->
+            <section id="topic-5">
+                <span class="section-tag">الموضوع الخامس</span>
+                <h2>🔐 5. ملفات البيئة وإعدادات التشغيل وحماية الأسرار</h2>
+
+                <h3>5.1 و 5.2 و 5.3 إعدادات التطبيق ومتغيرات البيئة وفصلها عن الشيفرة</h3>
+                <p><strong>إعدادات التطبيق (<span class="term-en">Application Configuration</span>):</strong> هي القيم التي تحدد تفاصيل تشغيل البرنامج وتختلف من جهاز لآخر أو من بيئة لأخرى، مثل: عنوان خادم قاعدة البيانات، رقم المنفذ (<span class="term-en">Port</span>)، نوع البيئة (<span class="term-en">APP_ENV</span>)، روابط الخدمات الخارجية، وكلمات المرور ومفاتيح الوصول.</p>
+                <p><strong>متغيرات البيئة (<span class="term-en">Environment Variables</span>):</strong> هي قيم نصية يوفّرها نظام التشغيل أو بيئة تشغيل التطبيق للبرنامج وقت التنفيذ. وبفضل فصل هذه القيم في متغيرات بيئية أو ملف <span class="term-en">.env</span> محلي، نستطيع تشغيل الكود نفسه على جهاز الطالب، ثم على خادم الاختبار، ثم على خادم الكلية الفعلي <strong>دون تعديل حرف واحد في الشيفرة المصدرية</strong>، ودون كشف كلمات المرور للعامة!</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>🔒 ملف <span class="term-en">.env</span> (محلي — لا يُرفع لـ Git)</h4>
+                        <p>يحتوي على القيم الفعلية والأسرار الخاصة بجهازك أو بالخادم؛ ويُمنع رفعه لمستودع الشيفرة:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar"><span>.env (تُدرج في .gitignore)</span></div>
+                            <pre>APP_ENV=development
+PORT=3000
+DB_HOST=localhost
+DB_PORT=5432
+DB_PASSWORD=<span class="code-err">MyActualStrongSecret!92</span></pre>
+                        </div>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>📋 ملف <span class="term-en">.env.example</span> (قالب آمن يُرفع لـ Git)</h4>
+                        <p>يحتوي على أسماء المتغيرات المطلوبة مع قيم توضيحية غير حقيقية ليعرف الزميل ما يلزمه:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar"><span>.env.example (آمن للمشاركة)</span></div>
+                            <pre>APP_ENV=development
+PORT=3000
+DB_HOST=localhost
+DB_USER=<span class="code-str">your_database_user</span>
+DB_PASSWORD=<span class="code-str">replace_with_a_local_secret</span></pre>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:0.92rem; color:var(--text-muted);"><em>ملاحظة تقنية:</em> الأسماء المذكورة (<span class="term-en">APP_ENV, PORT, DB_HOST</span>) شائعة اصطلاحاً وليست إلزامية بكل لغة؛ كما أن مجرد وجود ملف <span class="term-en">.env</span> لا يجعله يُقرأ تلقائياً ما لم تكن بيئة التشغيل أو مكتبة الإعدادات (مثل <span class="term-en">python-dotenv</span> أو دعم Node الحديث) مهيأة لتحميله.</p>
+
+                <h3>5.4 ما الأسرار البرمجية (<span style="font-family:monospace;">Secrets</span>)؟ والممارسات الذهبية لحمايتها</h3>
+                <p><strong>الأسرار (<span class="term-en">Secrets</span>):</strong> أي معلومة حساسة تمنح صلاحية وصول أو تفويض يجب ألا يطلع عليها غير المصرح لهم، وأبرزها: (1) كلمات مرور قواعد البيانات، (2) مفاتيح واجهات الخدمات (<span class="term-en">API Keys</span>)، (3) رموز الوصول (<span class="term-en">Access Tokens</span>)، (4) المفاتيح الخاصة للتشفير والتوقيع الرقمي.</p>
+
+                <div class="info-box warning-box">
+                    <h4>🛡️ 7 ممارسات أساسية لحماية الأسرار + فحص صحة الإعدادات</h4>
+                    <ol class="content-list" style="margin-bottom:0.6rem;">
+                        <li>عدم كتابة كلمات المرور أو المفاتيح الحقيقية مباشرة داخل ملفات الشيفرة أبداً.</li>
+                        <li>عدم رفع ملف <span class="term-en">.env</span> المحتوي على أسرار إلى مستودع Git العام.</li>
+                        <li>إضافة <span class="term-en">.env</span> والملفات الحساسة إلى <span class="term-en">.gitignore</span> قبل تتبعها بـ Git.</li>
+                        <li>توفير قالب آمن باسم <span class="term-en">.env.example</span> يوضح المتغيرات اللازمة.</li>
+                        <li>تقييد صلاحيات الوصول إلى الأسرار وفق مبدأ أقل صلاحية.</li>
+                        <li>استخدام مدير أسرار (<span class="term-en">Secrets Manager</span>) في الأنظمة الإنتاجية الكبيرة.</li>
+                        <li><strong>إلغاء وتدوير السر فوراً إذا انكشف:</strong> حذفه من آخر نسخة ظاهرة لا يمحوه من تاريخ Git!</li>
+                    </ol>
+                    <p style="margin-bottom:0;"><strong>✅ التحقق المبكر عند التشغيل:</strong> يجب على التطبيق فحص وجود المتغيرات الأساسية وصحتها قبل بدء العمل وإظهار رسالة خطأ واضحة عند غيابها بدلاً من العمل بإعدادات افتراضية خاطئة.</p>
+                </div>
+
+                <!-- مخطط SVG تدفق الإعدادات + مختبر فحص الأسرار -->
+                <div class="figure-box">
+                    <svg viewBox="0 0 680 120" style="max-width: 660px;">
+                        <defs>
+                            <marker id="arrEnv" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#2b6cb0" />
+                            </marker>
+                        </defs>
+                        <!-- مصدر الإعدادات -->
+                        <rect x="460" y="20" width="200" height="75" rx="10" fill="#fffaf0" stroke="#dd6b20" stroke-width="2"/>
+                        <text x="560" y="48" text-anchor="middle" font-size="13" font-weight="bold" fill="#9c4221">1. مصدر الإعدادات</text>
+                        <text x="560" y="68" text-anchor="middle" font-size="11" fill="#2d3748">متغيرات البيئة / .env / Secrets</text>
+
+                        <line x1="460" y1="57" x2="430" y2="57" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrEnv)"/>
+
+                        <!-- قراءة والتحقق -->
+                        <rect x="235" y="20" width="190" height="75" rx="10" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2"/>
+                        <text x="330" y="48" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a365d">2. التطبيق يقرأ ويتحقق</text>
+                        <text x="330" y="68" text-anchor="middle" font-size="11" fill="#2b6cb0">فحص وجود القيم قبل التشغيل</text>
+
+                        <line x1="235" y1="57" x2="205" y2="57" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrEnv)"/>
+
+                        <!-- الاتصال والتشغيل -->
+                        <rect x="15" y="20" width="185" height="75" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                        <text x="107" y="48" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">3. التشغيل والتكيّف</text>
+                        <text x="107" y="68" text-anchor="middle" font-size="11" fill="#2f855a">اتصال آمن بكل بيئة</text>
+                    </svg>
+                    <div><span class="figure-caption">5.5 كيف يتعامل التطبيق مع ملفات البيئة والإعدادات بشكل آمن ومنظم</span></div>
+                </div>
+
+                <!-- أسئلة الموضوع الخامس -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع الخامس (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما المقصود بمتغيرات البيئة؟</strong> قيم نصية يوفرها نظام التشغيل أو بيئة تشغيل التطبيق ليقرأها البرنامج وقت التنفيذ دون تثبيتها داخل الكود المصدري.</li>
+                            <li><strong>لماذا نفصل الإعدادات عن الشيفرة؟</strong> لتسهيل نقل وتشغيل التطبيق بين بيئات مختلفة (التطوير، الاختبار، الإنتاج) دون تعديل الشيفرة نفسها، ولحماية الأسرار من الانكشاف عند مشاركة الكود.</li>
+                            <li><strong>اذكر أربعة أمثلة على الأسرار البرمجية:</strong> (1) كلمات مرور قواعد البيانات، (2) مفاتيح API Keys، (3) رموز الوصول Access Tokens، (4) المفاتيح الخاصة للتشفير والتوقيع.</li>
+                            <li><strong>ما الفرق بين ملف <span class="term-en">.env</span> وملف <span class="term-en">.env.example</span>؟</strong> <span class="term-en">.env</span> يحتوي القيم الفعلية والأسرار المحلية ويُمنع رفعه لـ Git؛ أما <span class="term-en">.env.example</span> فهو قالب آمن يحتوي أسماء المتغيرات وقيم نموذجية وهمية ويُرفع للمستودع ليشرح للمطورين ما يجب إعداده.</li>
+                            <li><strong>هل يكفي حذف كلمة مرور مكشوفة من أحدث نسخة من الشيفرة؟ ولماذا؟</strong> لا؛ لأنها تبقى مسجلة ومكشوفة داخل سجل الإيداعات السابق (<span class="term-en">Git History</span>).</li>
+                            <li><strong>ما وظيفة ملف <span class="term-en">.gitignore</span>؟</strong> إخبار Git بالملفات والمجلدات التي يجب تجاهلها وعدم تتبعها أو رفعها للمستودع (مثل <span class="term-en">.env</span> و<span class="term-en">.venv</span> و<span class="term-en">node_modules</span>).</li>
+                            <li><strong>ماذا ينبغي أن يفعل المطور عند اكتشاف أن مفتاحاً سرياً قد نُشر علناً؟</strong> تغييره أو إلغاؤه وتوليد مفتاح جديد فوراً، وفحص سجلات الاستخدام لاكتشاف أي استغلال سابق، ثم منع تكرار التسريب عبر <span class="term-en">.gitignore</span>.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. الموضوع السادس: الفرق بين بيئات التطوير والاختبار والإنتاج -->
+            <section id="topic-6">
+                <span class="section-tag">الموضوع السادس</span>
+                <h2>🌐 6. الفرق بين بيئات التطوير والاختبار والإنتاج</h2>
+                <p>لا ينتقل التعديل البرمجي مباشرة من حاسوب المبرمج إلى قاعدة البيانات الفعلية التي يستخدمها الطلاب والموظفون؛ بل يمرّ بسلسلة بيئات معزولة لكلٍ منها هدفها وضوابطها:</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>💻 6.1 بيئة التطوير (<span class="term-en">Development</span>)</h4>
+                        <p>البيئة المحلية على جهاز المطور لبناء الوظائف وتعديلها وتجربتها بحرية، وتضم أدوات التصحيح (<span class="term-en">Debugger</span>) وبيانات تجريبية وقاعدة بيانات محلية.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--warning);">
+                        <h4>🧪 6.2 بيئة الاختبار (<span class="term-en">Testing</span>)</h4>
+                        <p>بيئة معزولة للتحقق من مطابقة السلوك للمتطلبات عبر اختبارات آلية ويدوية وبيانات اختبار مضبوطة (مثل اختبار رفض تسجيل طالب برقم جامعي مكرر). وقد تتبعها بيئة <strong>التجهيز قبل الإنتاج (<span class="term-en">Staging</span>)</strong> لمحاكاة بيئة التشغيل الحقيقية.</p>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>🚀 6.3 بيئة الإنتاج (<span class="term-en">Production</span>)</h4>
+                        <p>البيئة الفعلية الحية التي يعتمد عليها الطلاب والموظفون لإدارة البيانات الحقيقية؛ وتتطلب أقصى درجات الأمان، التحكم في الصلاحيات، النسخ الاحتياطي، المراقبة، وخطط التراجع عند الأعطال.</p>
+                    </div>
+                </div>
+
+                <h3>6.4 جدول المقارنة الشاملة بين البيئات الثلاث</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>العنصر</th>
+                                <th>التطوير (<span style="font-family:monospace;">Development</span>)</th>
+                                <th>الاختبار (<span style="font-family:monospace;">Testing</span>)</th>
+                                <th>الإنتاج (<span style="font-family:monospace;">Production</span>)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>الغرض الأساسي</strong></td><td>بناء الوظائف الجديدة وتعديلها.</td><td>التحقق من صحة السلوك واكتشاف الأخطاء.</td><td>تقديم الخدمة الفعلية للمستفيدين.</td></tr>
+                            <tr><td><strong>المستخدمون</strong></td><td>المطورون.</td><td>المختبرون والفريق الفني.</td><td>المستخدمون والعملاء الفعليون.</td></tr>
+                            <tr><td><strong>نوع البيانات</strong></td><td>بيانات تجريبية غالباً.</td><td>بيانات اختبار مضبوطة (وهمية أو منقحة).</td><td>بيانات تشغيل حقيقية وحساسة.</td></tr>
+                            <tr><td><strong>أدوات التصحيح</strong></td><td>متاحة على نطاق واسع (رسائل تفصيلية).</td><td>مفعّلة وفق سياسة الاختبار.</td><td>محدودة ومحكومة بعناية حتى لا تكشف تفاصيل داخلية.</td></tr>
+                            <tr><td><strong>وتيرة التغييرات</strong></td><td>متكررة وسريعة طوال اليوم.</td><td>مضبوطة ومتحقق منها.</td><td>تخضع لمراجعة واعتماد وإجراءات نشر صارمة.</td></tr>
+                            <tr><td><strong>ضوابط الأمان</strong></td><td>مطلوب (حماية الأسرار).</td><td>مطلوب (عزل عن الإنتاج).</td><td>ضوابط تشغيلية وأمنية صارمة للغاية.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>6.5 رحلة التغيير البرمجي بين البيئات</h3>
+                <div class="figure-box">
+                    <svg viewBox="0 0 740 120" style="max-width: 720px;">
+                        <defs>
+                            <marker id="arrEnvFlow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L8,3 z" fill="#1a365d" />
+                            </marker>
+                        </defs>
+                        <!-- Dev -->
+                        <rect x="570" y="20" width="155" height="75" rx="10" fill="#ebf8ff" stroke="#2b6cb0" stroke-width="2.2"/>
+                        <text x="647" y="47" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a365d">1. Development</text>
+                        <text x="647" y="68" text-anchor="middle" font-size="11" fill="#2b6cb0">التطوير وبناء الشيفرة</text>
+
+                        <line x1="570" y1="57" x2="544" y2="57" stroke="#1a365d" stroke-width="2" marker-end="url(#arrEnvFlow)"/>
+
+                        <!-- Test -->
+                        <rect x="385" y="20" width="155" height="75" rx="10" fill="#fffaf0" stroke="#dd6b20" stroke-width="2.2"/>
+                        <text x="462" y="47" text-anchor="middle" font-size="13" font-weight="bold" fill="#9c4221">2. Testing</text>
+                        <text x="462" y="68" text-anchor="middle" font-size="11" fill="#c05621">فحص الوظائف والمتطلبات</text>
+
+                        <line x1="385" y1="57" x2="359" y2="57" stroke="#1a365d" stroke-width="2" marker-end="url(#arrEnvFlow)"/>
+
+                        <!-- Staging -->
+                        <rect x="200" y="20" width="155" height="75" rx="10" fill="#faf5ff" stroke="#805ad5" stroke-width="2.2" stroke-dasharray="5,3"/>
+                        <text x="277" y="47" text-anchor="middle" font-size="13" font-weight="bold" fill="#553c9a">3. Staging (اختياري)</text>
+                        <text x="277" y="68" text-anchor="middle" font-size="11" fill="#6b46c1">محاكاة بيئة النشر الفعلية</text>
+
+                        <line x1="200" y1="57" x2="174" y2="57" stroke="#1a365d" stroke-width="2" marker-end="url(#arrEnvFlow)"/>
+
+                        <!-- Prod -->
+                        <rect x="15" y="20" width="155" height="75" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="2.5"/>
+                        <text x="92" y="47" text-anchor="middle" font-size="13" font-weight="bold" fill="#22543d">4. Production</text>
+                        <text x="92" y="68" text-anchor="middle" font-size="11" fill="#2f855a">إتاحة النسخة للمستخدمين</text>
+                    </svg>
+                    <div><span class="figure-caption">مخطط انتقال التعديل البرمجي بأمان من التطوير حتى بيئة الإنتاج الفعلية</span></div>
+                </div>
+
+                <h3>6.6 لماذا لا نجرّب التعديلات مباشرة على الإنتاج؟</h3>
+                <div class="info-box danger-box">
+                    <h4>🚫 مثال كارثي: تجربة وظيفة «حذف سجل» على قاعدة البيانات الفعلية!</h4>
+                    <p>تخيّل أن مطوراً يجرب وظيفة لحذف السجلات القديمة، لكنه اختبرها متصلاً بقاعدة بيانات الكلية الحقيقية بدلاً من قاعدة اختبار! قد يؤدي خطأ صغير في شرط <span class="term-en">WHERE</span> إلى ضياع سجلات الطلاب الفعلية أو تعطيل التسجيل على الجميع.</p>
+                    <p style="margin-bottom:0;"><strong>خطوات النشر الآمن الست:</strong> (1) التطوير في بيئة Development، (2) الاختبار على بيانات اختبار وهمية أو منقحة (لا شخصية حقيقية!)، (3) مراجعة الأثر الأمني والتشغيلي، (4) تجهيز خطة نشر وخطة تراجع (<span class="term-en">Rollback Plan</span>)، (5) التطبيق المنضبط في الإنتاج، (6) مراقبة النظام والسجلات بعد الإطلاق مباشرة.</p>
+                </div>
+
+                <!-- أسئلة الموضوع السادس -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع السادس (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>عرّف بيئات التطوير والاختبار والإنتاج:</strong> التطوير لبناء الكود وتجربته محلياً؛ الاختبار للتحقق المنظم من مطابقة البرنامج للمتطلبات واكتشاف الأخطاء؛ الإنتاج هي البيئة الحية التي تخدم المستخدمين الفعليين وبياناتهم الحقيقية.</li>
+                            <li><strong>لماذا نفصل بين بيئة الاختبار وبيئة الإنتاج؟</strong> لحماية بيانات المستخدمين الحقيقية واستمرارية الخدمة من أي أخطاء أو تجارب برمجية غير مكتملة، ولاستخدام بيانات اختبار مضبوطة دون المساس بالعمل الفعلي.</li>
+                            <li><strong>ما المقصود ببيئة Staging؟</strong> بيئة تجهيز ما قبل الإنتاج تحاكي مواصفات وإعدادات بيئة الإنتاج الحقيقية لتجربة التحديثات وإجراءات النشر قبل الإطلاق النهائي.</li>
+                            <li><strong>اذكر ثلاثة مخاطر لاختبار التغييرات على بيانات الإنتاج:</strong> (1) حذف أو إتلاف البيانات الحقيقية، (2) تعطل النظام وتوقف الخدمة عن المستفيدين، (3) تعريض بيانات شخصية حساسة للاختراق أو التسريب أثناء التجربة.</li>
+                            <li><strong>هل يجب أن تكون جميع البيئات متطابقة تماماً؟ وضّح إجابتك:</strong> يفضل أن تتقارب في إصدارات اللغة والتبعيات لتجنب مفاجآت النشر، لكن تختلف في سعة الموارد، والبيانات (وهمية بالاختبار مقابل حقيقية بالإنتاج)، ومستوى التشديد الأمني وتفاصيل رسائل التصحيح.</li>
+                            <li><strong>ما الخطوات التي ينبغي تنفيذها قبل نشر تحديث على النظام الفعلي؟</strong> تطويره في بيئة التطوير، اختباره في بيئة الاختبار ببيانات مناسبة، مراجعته أمنياً، وجود نسخ احتياطي وخطة تراجع، ثم النشر المنضبط والمراقبة اللاحقة.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. الموضوع السابع: التطبيق العملي المتكامل وتشخيص مشكلات التشغيل -->
+            <section id="topic-7">
+                <span class="section-tag">الموضوع السابع — المختبر العملي</span>
+                <h2>🧪 7. التطبيق العملي المتكامل وتشخيص مشكلات التشغيل</h2>
+                <p>نطبّق الآن جميع مفاهيم المحاضرة عملياً عبر مشروع Python مصغر لحساب متوسط درجات الطلاب، باستخدام <strong>Visual Studio Code</strong> و<strong>Python</strong> و<strong>Git</strong> (اختياري للتجربة الأساسية):</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>الخطوة 1: إنشاء بنية المشروع</h4>
+                        <p>أنشئ مجلداً رئيسياً باسم <span class="term-en">software-development-lab</span> ورتّب بداخله البنية التالية:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar"><span>Project Tree</span></div>
+                            <pre>software-development-lab/
+├── src/
+│   └── main.py
+├── tests/
+│   └── test_average.py
+├── README.md
+└── .gitignore</pre>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <h4>الخطوة 2 و 3: الشيفرة والتحقق والتشغيل</h4>
+                        <p>اكتب في <span class="term-en">src/main.py</span> دالة <span class="term-en">calculate_average</span> مع حماية حالة القائمة الفارغة:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span>src/main.py</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                            </div>
+                            <pre><span class="code-kw">def</span> calculate_average(grades):
+    <span class="code-kw">if not</span> grades:
+        <span class="code-kw">return</span> <span class="code-num">0</span>
+    <span class="code-kw">return</span> sum(grades) / len(grades)
+
+<span class="code-kw">if</span> __name__ == <span class="code-str">"__main__"</span>:
+    grades = [<span class="code-num">85</span>, <span class="code-num">90</span>, <span class="code-num">75</span>]
+    average = calculate_average(grades)
+    <span class="code-kw">print</span>(<span class="code-str">"Student grades:"</span>, grades)
+    <span class="code-kw">print</span>(<span class="code-str">"Average:"</span>, average)</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-window">
+                    <div class="code-window-bar">
+                        <div class="code-bar-left"><span>Terminal — التحقق من Python وتشغيل البرنامج</span></div>
+                        <button class="copy-code-btn" onclick="copyCode(this)">نسخ الأوامر</button>
+                    </div>
+                    <pre>$ python --version
+Python 3.12.x
+
+$ python src/main.py
+<span class="code-str">Student grades: [85, 90, 75]
+Average: 83.33333333333333</span></pre>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🐞 الخطوة 4: تجربة اكتشاف الخطأ المنطقي</h4>
+                    <p style="margin-bottom:0.4rem;">جرّب تعديل السطر الرابع مؤقتاً إلى: <span class="term-en">return sum(grades) / (len(grades) + 1)</span> ثم أعد تشغيل البرنامج!</p>
+                    <p style="margin-bottom:0;"><strong>الملاحظة الجوهرية:</strong> البرنامج يعمل دون أي رسالة خطأ حمراء، لكنه يعطي ناتجاً خاطئاً (<span class="term-en">62.5</span> بدلاً من <span class="term-en">83.33</span>)! لذا فإن خلو البرنامج من أخطاء الصياغة لا يعني أبداً أن نتائجه سليمة — ولهذا نحتاج للاختبارات الآلية! أعد السطر إلى <span class="term-en">return sum(grades) / len(grades)</span>.</p>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: var(--success);">
+                        <h4>🧪 الخطوة 5: إضافة الاختبار الآلي</h4>
+                        <p>أنشئ ملف <span class="term-en">tests/test_average.py</span> للتحقق من الحالات العادية والفارغة:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span>tests/test_average.py</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ الاختبار</button>
+                            </div>
+                            <pre><span class="code-kw">import</span> unittest
+<span class="code-kw">import</span> sys
+<span class="code-kw">from</span> pathlib <span class="code-kw">import</span> Path
+
+sys.path.insert(<span class="code-num">0</span>, str(Path(__file__).resolve().parents[<span class="code-num">1</span>] / <span class="code-str">"src"</span>))
+<span class="code-kw">from</span> main <span class="code-kw">import</span> calculate_average
+
+<span class="code-kw">class</span> TestAverage(unittest.TestCase):
+    <span class="code-kw">def</span> test_average(self):
+        self.assertEqual(calculate_average([<span class="code-num">80</span>, <span class="code-num">90</span>, <span class="code-num">100</span>]), <span class="code-num">90</span>)
+
+    <span class="code-kw">def</span> test_empty_grades(self):
+        self.assertEqual(calculate_average([]), <span class="code-num">0</span>)
+
+<span class="code-kw">if</span> __name__ == <span class="code-str">"__main__"</span>:
+    unittest.main()</pre>
+                        </div>
+                        <p style="margin-top:0.6rem; margin-bottom:0; font-size:0.88rem;">أمر التشغيل من المجلد الرئيسي: <span class="term-en">python -m unittest discover -s tests -v</span></p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📖 الخطوة 6: توثيق المشروع في <span class="term-en">README.md</span></h4>
+                        <p>ضع توثيقاً واضحاً لكي يتمكن أي زميل أو أستاذ من تشغيل واختبار مشروعك فوراً:</p>
+                        <div class="code-window" style="margin:0.6rem 0 0;">
+                            <div class="code-window-bar">
+                                <div class="code-bar-left"><span>README.md</span></div>
+                                <button class="copy-code-btn" onclick="copyCode(this)">نسخ التوثيق</button>
+                            </div>
+                            <pre># Software Development Lab
+
+## Description
+A simple Python program to calculate a grade average.
+
+## Requirements
+- Python 3
+
+## Run
+python src/main.py
+
+## Test
+python -m unittest discover -s tests -v</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>7.9 المنهجية القياسية ذات الخطوات الخمس لتشخيص مشكلات التشغيل</h3>
+                <p>عندما يتعثر مشروع قائم، <strong>لا تغيّر الملفات عشوائياً</strong>! اتبع التسلسل الهندسي المنظم الآتي، وجرّب المشخّص التفاعلي لتطبيق الخطوات على أعطال واقعية:</p>
+
+                <div class="interactive-widget">
+                    <h4 style="margin-top:0; color:var(--primary);">🔧 مدرب تشخيص مشكلات التشغيل (Troubleshooting Simulator)</h4>
+                    <p style="margin-bottom:0.6rem;">اختر المشكلة التي واجهتك في المختبر لتطبيق خطوات التشخيص الخمس (قراءة الخطأ ← التحقق من الأدوات ← مراجعة التبعيات والإعدادات ← إعادة الإنتاج والمصحح ← المعالجة وإعادة الاختبار):</p>
+                    <div class="sim-btn-row">
+                        <button class="sim-btn active" onclick="showTroubleshoot(0, this)">'python' غير معرّف في الطرفية</button>
+                        <button class="sim-btn" onclick="showTroubleshoot(1, this)">المكتبة مثبتة لكن ModuleNotFoundError</button>
+                        <button class="sim-btn" onclick="showTroubleshoot(2, this)">فشل اختبار AssertionError: 67.5 != 90</button>
+                        <button class="sim-btn" onclick="showTroubleshoot(3, this)">تعذر فتح src/main.py (No such file)</button>
+                    </div>
+                    <div class="sim-output" id="troubleshoot-out">
+                        <!-- يمتلئ تلقائياً بالجافاسكربت -->
+                    </div>
+                </div>
+
+                <!-- أسئلة الموضوع السابع -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية الموضوع السابع (انقر لعرض الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما الملفات والمجلدات التي أنشأناها في التطبيق العملي؟</strong> مجلد <span class="term-en">src/</span> وبداخله <span class="term-en">main.py</span>، مجلد <span class="term-en">tests/</span> وبداخله <span class="term-en">test_average.py</span>، ملف <span class="term-en">README.md</span>، وملف <span class="term-en">.gitignore</span>.</li>
+                            <li><strong>ما وظيفة الدالة <span class="term-en">calculate_average</span>؟</strong> تستقبل قائمة من الدرجات، وتتحقق أولاً من عدم كونها فارغة (لتفادي القسمة على صفر وتُرجع 0)، ثم تحسب المتوسط الحسابي بقسمة المجموع على عدد الدرجات.</li>
+                            <li><strong>كيف يمكن تشغيل ملف Python من الطرفية؟</strong> نفتح الطرفية داخل المجلد الرئيسي للمشروع ونتأكد من Python ثم ننفذ <span class="term-en">python src/main.py</span> (أو <span class="term-en">py</span> / <span class="term-en">python3</span> حسب النظام).</li>
+                            <li><strong>ما الفرق بين فشل التشغيل والحصول على نتيجة منطقية خاطئة؟</strong> فشل التشغيل يوقف البرنامج ويطبع رسالة خطأ (نحوي أو وقت تشغيل أو بيئي)، أما الخطأ المنطقي فيجعل البرنامج يكمل التنفيذ بنجاح ظاهري لكنه ينتج أرقاماً أو قرارات غير صحيحة.</li>
+                            <li><strong>لماذا أنشأنا ملفاً للاختبارات؟</strong> للتحقق الآلي السريع من صحة الحسابات والحالات الحدية (مثل القائمة الفارغة) ومنع عودة الأخطاء عند تعديل الشيفرة مستقبلاً.</li>
+                            <li><strong>ما المعلومات التي ينبغي توثيقها في <span class="term-en">README.md</span>؟</strong> وصف المشروع، المتطلبات (مثل Python 3)، أمر التشغيل، وأمر تنفيذ الاختبارات.</li>
+                            <li><strong>اذكر الترتيب المناسب لتشخيص مشكلة تمنع تشغيل مشروع:</strong> (1) قراءة رسالة الخطأ، (2) التحقق من الأدوات والإصدارات، (3) مراجعة التبعيات والإعدادات، (4) إعادة إنتاج المشكلة وفحصها بالمصحح، (5) معالجة السبب المحدد ثم إعادة الاختبارات.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. التطبيقات والأدوات، القاموس، والمراجع -->
+            <section id="tools-references">
+                <span class="section-tag">الأدوات والقاموس والمراجع</span>
+                <h2>🧰 8. الأدوات المقترحة للمحاضرة، قاموس المصطلحات، والمراجع الموثوقة</h2>
+
+                <h3>8.1 التطبيقات والأدوات الست المقترحة للتعلم العملي</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><h4>1. Visual Studio Code</h4><p>محرر الشيفرة لكتابة الكود، تنظيم المجلدات، تشغيل المصحح، واستخدام الإضافات.</p></div>
+                    <div class="feature-card"><h4>2. Python</h4><p>لغة برمجة وبيئة تشغيل مثالية لتطبيق أمثلة المحاضرة وإدارة <span class="term-en">.venv</span> والاختبارات.</p></div>
+                    <div class="feature-card"><h4>3. Git</h4><p>أداة إدارة الإصدارات لتسجيل التغييرات ومراجعة تاريخ التعديلات والرجوع للإصدارات.</p></div>
+                    <div class="feature-card"><h4>4. GitHub</h4><p>منصة استضافة المستودعات والتعاون الجماعي ومراجعة التغييرات (<span class="term-en">Code Review</span>).</p></div>
+                    <div class="feature-card"><h4>5. Docker</h4><p>تشغيل التطبيقات داخل حاويات (<span class="term-en">Containers</span>) لضمان اتساق بيئة التشغيل بين أجهزة المطورين والخوادم (موضوع متقدم يُتوسع فيه لاحقاً).</p></div>
+                    <div class="feature-card"><h4>6. Postman</h4><p>أداة اختبار واجهات برمجة التطبيقات (<span class="term-en">API</span>) عبر إرسال طلبات HTTP وفحص الردود في تطبيقات الويب.</p></div>
+                </div>
+
+                <h3>8.2 قاموس مصطلحات المحاضرة الأولى</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>English Term</th><th>المصطلح العربي</th><th>English Term</th><th>المصطلح العربي</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="term-en">Development Environment</span></td><td>بيئة التطوير</td><td><span class="term-en">Virtual Environment (.venv)</span></td><td>البيئة الافتراضية المعزولة</td></tr>
+                            <tr><td><span class="term-en">Coding vs. Development</span></td><td>كتابة الشيفرة مقابل تطوير المنتج</td><td><span class="term-en">Code Editor</span></td><td>محرر الشيفرة</td></tr>
+                            <tr><td><span class="term-en">Library</span></td><td>المكتبة البرمجية</td><td><span class="term-en">Terminal / CLI</span></td><td>الطرفية / سطر الأوامر</td></tr>
+                            <tr><td><span class="term-en">Dependencies</span></td><td>التبعيات البرمجية</td><td><span class="term-en">Debugger &amp; Breakpoint</span></td><td>المصحح ونقطة التوقف</td></tr>
+                            <tr><td><span class="term-en">Package Manager</span></td><td>مدير الحزم (pip, npm)</td><td><span class="term-en">Syntax / Runtime / Logic Error</span></td><td>خطأ نحوي / وقت تشغيل / منطقي</td></tr>
+                            <tr><td><span class="term-en">Version Control (Git)</span></td><td>نظام إدارة الإصدارات</td><td><span class="term-en">Environment Variables &amp; Secrets</span></td><td>متغيرات البيئة والأسرار</td></tr>
+                            <tr><td><span class="term-en">Dev / Testing / Staging / Prod</span></td><td>بيئات التطوير والاختبار والتجهيز والإنتاج</td><td><span class="term-en">Unit Test</span></td><td>اختبار الوحدة الآلي</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>8.3 مراجع رسمية موثوقة للتوسع الأكاديمي</h3>
+                <ul class="content-list" style="margin-bottom:0;">
+                    <li><strong>Pro Git Book:</strong> المرجع المجاني الرسمي لإتقان إدارة الإصدارات والعمل بالمستودعات (<span class="term-en">git-scm.com/book</span>).</li>
+                    <li><strong>Python Official Docs — Virtual Environments &amp; Packages:</strong> الشرح الرسمي لعمل <span class="term-en">venv</span> و<span class="term-en">pip</span>.</li>
+                    <li><strong>npm Official Documentation — package.json:</strong> توثيق ملفات الحزم وأوامر التشغيل والـ <span class="term-en">SemVer</span>.</li>
+                    <li><strong>Visual Studio Code Documentation:</strong> المرجع العملي لإعداد المحرر واستخدام المصحح والإضافات.</li>
+                </ul>
+            </section>
+
+            <!-- 9. الأسئلة الشاملة والواجب والتلخيص -->
+            <section id="comprehensive-review">
+                <span class="section-tag">المراجعة والتكليفات والتلخيص</span>
+                <h2>📚 9. بنك الأسئلة الشاملة (20 سؤالاً)، الواجب العملي، والتلخيص</h2>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📖 القسم الأول: أسئلة التعريف والفهم (7 أسئلة مع الإرشادات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>عرّف بيئة التطوير الاحترافية واذكر خمسة من مكوناتها:</strong> هي منظومة متكاملة من الأدوات والإعدادات لكتابة وتشغيل واختبار وتنظيم المشاريع؛ مكوناتها: لغة البرمجة/بيئة التشغيل، محرر الشيفرة، الطرفية، مدير الحزم، المصحح وأدوات الاختبار، وGit.</li>
+                            <li><strong>وضح الفرق بين كتابة الشيفرة وتطوير منتج برمجي متكامل:</strong> كتابة الشيفرة جزء تنفيذي لكتابة التعليمات فقط، بينما تطوير المنتج عملية شاملة تبدأ من فهم المتطلبات والتصميم وتمتد للتنفيذ والاختبار والتوثيق والنشر والصيانة.</li>
+                            <li><strong>ما المقصود بالتبعيات البرمجية؟ ولماذا يحتاج المشروع إليها؟</strong> حزم ومكتبات يعتمد عليها المشروع ليعمل، ونحتاجها لتوفير الوقت والاستفادة من حلول مجربة وموثقة وتسهيل بناء مشاريع كبيرة.</li>
+                            <li><strong>وضح وظيفة كل من محرر الشيفرة والطرفية والمصحح:</strong> المحرر للكتابة والتعديل والتنظيم، الطرفية لتنفيذ الأوامر والتشغيل والتثبيت، المصحح لتتبع التنفيذ خطوة بخطوة ومراقبة المتغيرات لكشف سبب الخلل.</li>
+                            <li><strong>ما المقصود ببنية المشروع؟ ولماذا يجب تنظيم الملفات؟</strong> توزيع ملفات المشروع على مجلدات بمسؤوليات واضحة (<span class="term-en">src, tests, config</span>)، لتسهيل الفهم والصيانة والاختبار والعمل الجماعي عند نمو المشروع.</li>
+                            <li><strong>ما الفرق بين متغيرات البيئة والأسرار البرمجية؟</strong> متغيرات البيئة قيم نصية عامة لضبط تشغيل التطبيق حسب البيئة (كالمنفذ أو نوع البيئة)، بينما الأسرار هي القيم الحساسة (ككلمات المرور ومفاتيح API) التي قد يُمرر بعضها عبر متغيرات البيئة ولكنها تحتاج حماية صارمة ومنع الكشف.</li>
+                            <li><strong>اشرح الفرق بين بيئات التطوير والاختبار والإنتاج:</strong> التطوير لبناء وتعديل الكود محلياً، الاختبار لفحص المتطلبات على بيانات مضبوطة، الإنتاج لتقديم الخدمة الفعلية للمستخدمين ببيانات حقيقية وضوابط أمنية صارمة.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>⚖️ القسم الثاني: أسئلة المقارنة والتحليل (7 أسئلة مع الإجابات)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>قارن بين المكتبة البرمجية ومدير الحزم:</strong> المكتبة شيفرة جاهزة توفر وظائف للمشروع، أما مدير الحزم (<span class="term-en">pip / npm</span>) فهو الأداة المسؤولة عن تنزيل وتثبيت وتحديث وإدارة إصدارات تلك المكتبات.</li>
+                            <li><strong>قارن بين الخطأ النحوي وخطأ وقت التشغيل والخطأ المنطقي:</strong> النحوي مخالفة لقواعد اللغة يمنع بدء التشغيل؛ وقت التشغيل يحدث أثناء التنفيذ فيوقف البرنامج (كالقسمة على صفر)؛ المنطقي لا يوقف البرنامج لكنه يخرج نتيجة غير صحيحة.</li>
+                            <li><strong>ما الفرق بين <span class="term-en">package.json</span> و<span class="term-en">.gitignore</span>؟</strong> الأول يوثق بيانات المشروع وأوامر التشغيل وحزم المشروع المعتمدة في Node.js؛ أما الثاني فيخبر Git بالملفات الواجب تجاهلها وعدم رفعها للمستودع.</li>
+                            <li><strong>قارن بين Git وGitHub:</strong> Git نظام محلي لإدارة الإصدارات وتاريخ التغييرات، وGitHub خدمة سحابية تستضيف مستودعات Git وتسهل التعاون ومراجعة الشيفرة.</li>
+                            <li><strong>لماذا قد يعمل مشروع على جهاز المطور ولا يعمل على جهاز زميله؟</strong> لاختلاف البيئة: غياب مكتبة خارجية، اختلاف إصدار اللغة/المكتبة، عدم تفعيل البيئة الافتراضية، أو نقص ملف الإعدادات المحلي <span class="term-en">.env</span>.</li>
+                            <li><strong>ما المخاطر الناتجة عن وضع كلمات المرور داخل ملفات الشيفرة؟</strong> انكشافها عند مشاركة المشروع أو رفعه لمستودع عام، إمكانية استغلالها لاختراق قواعد البيانات والخدمات، وصعوبة تغييرها عند الانتقال بين البيئات.</li>
+                            <li><strong>ما أهمية ملف <span class="term-en">README.md</span> في المشروعات الجماعية؟</strong> يمثّل بطاقة التعريف ودليل التشغيل السريع الذي يمكّن أي عضو جديد من فهم المشروع وتثبيته وتشغيل اختباراته دون الاعتماد على الشرح الشفهي.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🛠️ القسم الثالث: أسئلة التطبيق وحل المشكلات (6 أسئلة محلولة)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ثبّت طالب مكتبة Python لكنه ما زال يرى رسالة عدم العثور عليها؛ خطوات التشخيص:</strong> قراءة اسم المكتبة الدقيق بالخطأ، فحص أي مفسّر Python يستخدمه المحرر مقابل الطرفية (<span class="term-en">which python / where python</span>)، التأكد من تفعيل البيئة الافتراضية الصحيحة (<span class="term-en">.venv</span>)، والتثبيت عبر <span class="term-en">python -m pip install</span> داخل البيئة النشطة نفسها.</li>
+                            <li><strong>يعمل البرنامج دون أخطاء لكنه يحسب متوسط الدرجات خطأً؛ الأسلوب المناسب:</strong> استخدام المصحح (<span class="term-en">Debugger</span>) بوضع نقطة توقف عند حساب المتوسط ومراقبة قيم المجموع والعدد، وكتابة اختبارات وحدة (<span class="term-en">unittest</span>) تثبّت الإصلاح.</li>
+                            <li><strong>رفع مطور ملف <span class="term-en">.env</span> يحتوي كلمة مرور حقيقية لمستودع عام؛ الإجراءات:</strong> (1) تغيير وإلغاء كلمة المرور/المفتاح فوراً، (2) فحص السجلات لاكتشاف أي دخول غير مصرح، (3) إضافة <span class="term-en">.env</span> إلى <span class="term-en">.gitignore</span> وتوفير <span class="term-en">.env.example</span>، (4) تنظيف تاريخ Git إذا لزم مع بقاء التدوير هو الإجراء الإلزامي.</li>
+                            <li><strong>اقترح بنية مجلدات مناسبة لنظام إدارة الطلاب:</strong> <span class="term-en">src/</span> (للمنطق، <span class="term-en">controllers/</span>, <span class="term-en">models/</span>, <span class="term-en">routes/</span>)، <span class="term-en">tests/</span> (للاختبارات)، <span class="term-en">config/</span> (لتحميل الإعدادات غير السرية)، مع <span class="term-en">.gitignore</span> و<span class="term-en">.env.example</span> و<span class="term-en">README.md</span>.</li>
+                            <li><strong>كيف تنقل تعديلاً برمجياً من التطوير إلى الإنتاج بأمان؟</strong> إكماله واختباره محلياً في <span class="term-en">Development</span> ← دمجه وإجراء الاختبارات في <span class="term-en">Testing / Staging</span> ببيانات غير حقيقية ← مراجعته ← تأمين نسخ احتياطي وخطة تراجع ← النشر المنضبط والمراقبة في <span class="term-en">Production</span>.</li>
+                            <li><strong>قائمة تحقق من 5 خطوات لتشغيل مشروع قائم على جهاز جديد:</strong> (1) توفر اللغة وإصدارها المطلوب، (2) إنشاء وتفعيل البيئة الافتراضية، (3) تثبيت التبعيات من <span class="term-en">requirements.txt</span> أو <span class="term-en">package.json</span>، (4) نسخ <span class="term-en">.env.example</span> إلى <span class="term-en">.env</span> وتعبئة الإعدادات المحلية، (5) تشغيل الاختبارات ثم تشغيل نقطة الدخول الموثقة في <span class="term-en">README.md</span>.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="info-box dev-box">
+                    <h4>📋 الواجب العملي الشامل للمحاضرة الأولى (الدرجة المقترحة: 20 درجة)</h4>
+                    <p><strong>المهمة:</strong> تجهيز مشروع برمجي منظم وقابل للتشغيل (بأي لغة درستها: Python أو Java أو C++ أو PHP) لإدارة بيانات الطلاب أو حساب درجاتهم.</p>
+                    <ol class="content-list">
+                        <li>إنشاء مجلد رئيسي للمشروع بأسماء واضحة.</li>
+                        <li>إنشاء ملف برمجي يحتوي وظيفة مفيدة وقابلة للتشغيل.</li>
+                        <li>تحديد الأدوات واللغة وإصداراتها المستخدمة في المشروع.</li>
+                        <li>إعداد التبعيات المطلوبة إن وجدت وتوثيق طريقة تثبيتها.</li>
+                        <li>تنظيم الملفات إلى مجلدات مناسبة بحسب مسؤولياتها (<span class="term-en">src/, tests/</span>).</li>
+                        <li>إعداد ملف <span class="term-en">README.md</span> يشرح هدف المشروع ومتطلبات وأوامر التشغيل.</li>
+                        <li>كتابة <strong>اختبارين على الأقل</strong> للتحقق من صحة وظائف المشروع.</li>
+                        <li>إعداد ملف إعدادات نموذجي (<span class="term-en">.env.example</span>) دون وضع أي أسرار حقيقية فيه.</li>
+                        <li>تشغيل المشروع واختبار حالة صحيحة وحالة خاطئة/حدّية.</li>
+                        <li>كتابة تقرير قصير يشرح مشكلة واجهتك أثناء التجهيز أو التشغيل وكيف عالجتها.</li>
+                    </ol>
+                    <p style="margin-bottom:0;"><strong>🗣️ أسئلة مناقشة الواجب:</strong> ما المشكلة التي يحلها مشروعك؟ ما الأدوات التي احتجت إليها؟ كيف يشغّله طالب آخر على جهازه؟ ما الاختبارات التي أجريتها؟ وما التحسينات المستقبلية لو كبر المشروع؟</p>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>📝 تلخيص المحاضرة في 11 نقطة ذهبية + الخاتمة</h4>
+                    <ol class="content-list" style="margin-bottom:0.8rem;">
+                        <li>بيئة التطوير الاحترافية تجمع الأدوات والإعدادات اللازمة لبناء البرامج وتشغيلها واختبارها.</li>
+                        <li>كتابة الشيفرة ليست سوى جزء واحد من عملية تطوير البرمجيات.</li>
+                        <li>المكتبات تقدم وظائف جاهزة، ومديرو الحزم يديرون تثبيت التبعيات وإصداراتها.</li>
+                        <li>محرر الشيفرة للكتابة والتنظيم، الطرفية لتنفيذ الأوامر، والمصحح لفحص التنفيذ.</li>
+                        <li>تقسيم المشروع إلى مجلدات وملفات واضحة يسهل الفهم والاختبار والصيانة.</li>
+                        <li>ملفات التوثيق مثل <span class="term-en">README.md</span> تشرح كيفية إعداد المشروع وتشغيله.</li>
+                        <li>ملفات الإعداد ومتغيرات البيئة تساعد على تكييف التطبيق مع بيئات التشغيل المختلفة.</li>
+                        <li>يجب حماية كلمات المرور والمفاتيح السرية، وعدم رفعها أبداً إلى المستودعات العامة.</li>
+                        <li>بيئة التطوير للبناء والتعديل، وبيئة الاختبار للتحقق، وبيئة الإنتاج لتقديم الخدمة الفعلية.</li>
+                        <li>يجب تشخيص الأخطاء بطريقة منظمة ثم إعادة الاختبارات بعد إجراء الإصلاحات.</li>
+                        <li>إدارة الإصدارات والتوثيق والاختبار ليست إضافات شكلية؛ بل جوهر إنتاج برمجيات موثوقة.</li>
+                    </ol>
+                    <p style="margin-bottom:0;"><strong>خاتمة:</strong> المطور الناجح لا يُقاس بعدد أسطر الكود فقط، بل بقدرته على بناء مشروع منظم، فهم أدواته، تشخيص مشكلاته، حماية بياناته، وتجهيزه ليعمل بموثوقية على أي بيئة مناسبة.</p>
+                </div>
+            </section>
+
+            <!-- 10. بطاقات الاستذكار Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">تثبيت المفاهيم النشط</span>
+                <h2>🗂️ 10. بطاقات الاستذكار التفاعلية (12 بطاقة)</h2>
+                <p>انقر على أي بطاقة لقلبها ومراجعة المصطلحات الأساسية للمحاضرة الأولى:</p>
+
+                <div class="flashcards-grid">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Development Environment<br>(بيئة التطوير)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">مجموعة البرامج والأدوات والإعدادات (اللغة، المحرر، الطرفية، مدير الحزم، المصحح، Git) اللازمة لبناء وتشغيل واختبار المشروع.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Coding vs. Software Dev<br>(الشيفرة مقابل التطوير)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>Coding:</strong> كتابة تعليمات برمجية.<br><strong>Development:</strong> عملية هندسية شاملة تشمل المتطلبات والتصميم والبيئة والاختبار والتوثيق والنشر والصيانة.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Library &amp; Dependencies<br>(المكتبة والتبعيات)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>المكتبة:</strong> شيفرة جاهزة توفر وظائف متكررة.<br><strong>التبعيات:</strong> الحزم المباشرة والفرعية التي يعتمد عليها المشروع ليعمل.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Package Manager<br>(مدير الحزم)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">أداة لتثبيت الحزم البرمجية وتحديثها وإزالتها وإدارة إصداراتها وتبعياتها، مثل <strong>pip</strong> (Python) و<strong>npm</strong> (Node.js) و<strong>Composer</strong> (PHP).</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Virtual Environment (.venv)<br>(البيئة الافتراضية)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">بيئة Python مستقلة ومعزولة لكل مشروع تمنع تعارض إصدارات المكتبات بين المشاريع المختلفة على نفس الجهاز.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Editor / Terminal / Debugger<br>(ثلاثي أدوات المطور)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>المحرر:</strong> أين أكتب الشيفرة؟<br><strong>الطرفية:</strong> كيف أنفّذ الأوامر؟<br><strong>المصحح:</strong> لماذا حدث الخطأ؟</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Breakpoint<br>(نقطة التوقف)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">علامة يضعها المطور على سطر محدد لإيقاف البرنامج أثناء التصحيح (<span class="term-en">Debugging</span>) وفحص قيم المتغيرات خطوة بخطوة.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Syntax vs. Runtime vs. Logic<br>(أنواع الأخطاء)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>النحوي:</strong> يخالف قواعد اللغة.<br><strong>وقت التشغيل:</strong> يوقف البرنامج أثناء التنفيذ.<br><strong>المنطقي:</strong> يعمل لكن يعطي نتيجة خاطئة.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">package.json &amp; requirements.txt<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">ملفات توثيق التبعيات: <span class="term-en">requirements.txt</span> في Python و<span class="term-en">package.json</span> في Node.js (مع ملف القفل <span class="term-en">package-lock.json</span>).</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Git vs. GitHub<br>(إدارة الإصدارات)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>Git:</strong> نظام محلي لتتبع تغييرات الملفات والعودة لإصدارات سابقة.<br><strong>GitHub:</strong> منصة سحابية لاستضافة مستودعات Git والتعاون الفريقي.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">.env vs. .env.example<br>(ملفات البيئة والأسرار)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back"><strong>.env:</strong> يحفظ الإعدادات والأسرار الفعلية محلياً ويُمنع رفعه لـ Git.<br><strong>.env.example:</strong> قالب آمن بلا أسرار حقيقية يُشارك في المستودع.</div>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">Dev → Testing → Staging → Prod<br>(بيئات التشغيل)<small>انقر لقلب البطاقة ↺</small></div>
+                            <div class="flashcard-back">مسار آمن لانتقال البرمجيات: البناء (<span class="term-en">Dev</span>) ← التحقق (<span class="term-en">Test</span>) ← المحاكاة (<span class="term-en">Staging</span>) ← الإتاحة للجمهور (<span class="term-en">Prod</span>).</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 11. الكوز التقييمي الشامل (7 أسئلة) -->
+            <section id="quiz">
+                <span class="section-tag">الكوز الرسمي للمحاضرة — 7 أسئلة</span>
+                <h2>✅ 11. اختبر فهمك (Quiz — 7 أسئلة)</h2>
+                <p>أجب عن الأسئلة السبعة التالية لاختبار استيعابك لمفاهيم المحاضرة الأولى؛ ويتم حفظ أعلى نتيجة تلقائياً في متصفحك:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- يُحقن عبر الجافاسكربت -->
+                </div>
+            </section>
+
+            <!-- التنقل السفلي -->
+            <div class="lecture-footer-nav">
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">📚 العودة لفهرس مقرر أساسيات تطوير البرمجيات</a>
+                <a href="../index.html" class="quiz-btn" style="text-decoration:none; margin:0;">🏠 البوابة الرئيسية للمنصة</a>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="site-footer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const devStages = [
+            {
+                title: "1. فهم المشكلة والمتطلبات (Problem & Requirements)",
+                q: "ماذا يريد المستخدمون من النظام؟",
+                desc: "تحديد المشكلة الواقعية وأهداف النظام والأدوار الوظيفية (مثل الطالب، المدرس، مسؤول التسجيل) وتحديد المتطلبات الأساسية قبل كتابة أي سطر شيفرة.",
+                example: "تحديد أن نظام كلية المنار يجب أن يسجل الطلاب ويضيف المقررات ويرصد الدرجات ويصدر التقارير.",
+                output: "قائمة واضحة بمتطلبات النظام وحالات استخدامه."
+            },
+            {
+                title: "2. التصميم والتخطيط (Design & Planning)",
+                q: "كيف سنبني الحل ونقسمه؟",
+                desc: "تخطيط بنية المجلدات والبيانات، تصميم قاعدة البيانات والواجهات، اختيار لغة البرمجة المناسبة، وتحديد التبعيات والحدود الأمنية الأولية.",
+                example: "تقسيم المشروع إلى وحدات للتوجيه والنماذج والتحكم، وتصميم جدول الدرجات وعلاقاته.",
+                output: "مخطط معماري وبنية مجلدات وخطة تقنية."
+            },
+            {
+                title: "3. تجهيز البيئة وكتابة الشيفرة (Setup & Coding)",
+                q: "كيف نهيئ الأدوات وننفذ التصميم؟",
+                desc: "إعداد البيئة الافتراضية (<span class='term-en'>.venv</span>)، تثبيت الحزم عبر مدير الحزم، تهيئة <span class='term-en'>.gitignore</span> و<span class='term-en'>.env</span>، ثم كتابة الشيفرة المنظمة داخل <span class='term-en'>src/</span>.",
+                example: "إنشاء البيئة الافتراضية في Python، تثبيت الحزم، وكتابة دوال حساب الدرجات.",
+                output: "شيفرة برمجية منظمة وبيئة عمل قابلة لإعادة الإنشاء."
+            },
+            {
+                title: "4. الاختبار والتصحيح (Testing & Debugging)",
+                q: "هل يعمل النظام بدقة حتى في الحالات الحدية؟",
+                desc: "كتابة وتشغيل اختبارات آلية (مثل <span class='term-en'>unittest</span>)، واستخدام المصحح (<span class='term-en'>Debugger</span>) ونقاط التوقف لاكتشاف الأخطاء المنطقية وأخطاء التشغيل وإصلاحها.",
+                example: "اختبار دالة المتوسط مع درجات صحيحة ومع قائمة فارغة للتأكد من عدم ظهور خطأ قسمة على صفر.",
+                output: "تقارير اختبارات ناجحة وخلو الوظائف الأساسية من الأعطال."
+            },
+            {
+                title: "5. النشر والتشغيل (Deployment & Operations)",
+                q: "كيف نتيح المنتج للمستخدمين بأمان؟",
+                desc: "تجهيز إعدادات بيئة الإنتاج (<span class='term-en'>Production</span>) ومتغيرات البيئة الآمنة، نشر النسخة المعتمدة، والتحقق من استمرار الخدمة والمراقبة.",
+                example: "ربط التطبيق بقاعدة بيانات الكلية الحقيقية عبر متغيرات بيئة الخادم وليس إعدادات جهاز الطالب.",
+                output: "نظام حي جاهز لاستخدام المستفيدين الفعليين."
+            },
+            {
+                title: "6. الصيانة والتطوير (Maintenance & Evolution)",
+                q: "كيف نحافظ على موثوقية المنتج بعد الإطلاق؟",
+                desc: "متابعة الأخطاء والأعطال التي تظهر لاحقاً، تحديث المكتبات مع فحص التوافق الأمني، إعادة الهيكلة، وإضافة ميزات جديدة وفق دورات تطوير متكررة.",
+                example: "إضافة ميزة استخراج كشف درجات بصيغة PDF وتحديث المكتبات الأمنية مع إعادة الاختبارات.",
+                output: "تحديثات مستمرة مستقرة وتوثيق محدث."
+            }
+        ];
+
+        function showDevStage(idx, btnEl) {
+            document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            const st = devStages[idx];
+            document.getElementById('dev-stage-content').innerHTML = `
+                <h4 style="margin-top:0; color:var(--primary); font-size:1.2rem;">${st.title}</h4>
+                <p><strong>❓ السؤال الجوهري:</strong> <span class="term">${st.q}</span></p>
+                <p><strong>🛠️ ما الذي نفعله هنا؟</strong> ${st.desc}</p>
+                <p><strong>🏫 مثال من كلية المنار:</strong> ${st.example}</p>
+                <p style="margin-bottom:0;"><strong>📄 المخرج المتوقع:</strong> <span class="term-en">${st.output}</span></p>
+            `;
+        }
+        showDevStage(0, document.querySelector('.stage-btn'));
+
+        // 6. Topic 3 Interactive Error Classifier
+        const errorCases = [
+            {
+                badge: "خطأ نحوي — Syntax Error",
+                color: "var(--danger)",
+                why: "مخالفة صريحة لقواعد كتابة لغة Python (نسيان إغلاق القوس أو النقطتين)، فيرفض المفسّر أصلاً بدء تشغيل البرنامج.",
+                tool: "محرر الشيفرة (VS Code) يلوّن الموضع بخط متموج أحمر ويوضح رقم السطر والعمود فور الكتابة.",
+                fix: "أكمل قوس الإغلاق <span class='term-en'>)</span> أو النقطتين <span class='term-en'>:</span> في السطر المشار إليه أو السطر الذي يسبقه مباشرة."
+            },
+            {
+                badge: "خطأ وقت التشغيل — Runtime Error",
+                color: "var(--warning)",
+                why: "صياغة الكود سليمة نحوياً، لكن عند تمرير قائمة درجات فارغة تصبح <span class='term-en'>len(grades) == 0</span> فتحدث عملية قسمة على صفر تتسبب في إيقاف التنفيذ.",
+                tool: "الطرفية تعرض تتبع المكدس (<span class='term-en'>Traceback</span>)، والمصحح (<span class='term-en'>Debugger</span>) يقف عند لحظة الاستثناء.",
+                fix: "إضافة شرط وقائي قبل القسمة: <span class='term-en'>if not grades: return 0</span> للتحقق من الحالات الحدية."
+            },
+            {
+                badge: "خطأ منطقي — Logic Error",
+                color: "#805ad5",
+                why: "البرنامج يعمل ويكتمل بدون أي رسالة خطأ، لأن عملية الجمع <span class='term-en'>price + quantity</span> سليمة نحوياً؛ لكن النية الهندسية كانت الضرب <span class='term-en'>*</span>!",
+                tool: "المصحح البرمجي (<span class='term-en'>Debugger</span>) بوضع <span class='term-en'>Breakpoint</span> لمراقبة المتغيرات + اختبارات الوحدة (<span class='term-en'>Unit Tests</span>) لكشف اختلاف الناتج.",
+                fix: "تعديل المعادلة إلى <span class='term-en'>price * quantity</span> ثم تثبيت اختبار آلي يؤكد الناتج <span class='term-en'>300</span>."
+            },
+            {
+                badge: "خطأ في البيئة — Environment Error",
+                color: "var(--secondary)",
+                why: "الكود صحيح تماماً، لكن الجهاز الحالي يفتقر لمكتبة <span class='term-en'>pandas</span> أو أن الطرفية/المحرر يشغّل مفسّر Python مختلفاً عن البيئة التي ثُبّتت فيها المكتبة.",
+                tool: "الطرفية (<span class='term-en'>Terminal</span>) لفحص المفسّر النشط وحزمة <span class='term-en'>pip list</span>.",
+                fix: "تفعيل البيئة الافتراضية <span class='term-en'>.venv</span> وتثبيت التبعيات عبر <span class='term-en'>python -m pip install pandas</span> أو <span class='term-en'>requirements.txt</span>."
+            }
+        ];
+
+        function showErrCase(idx, btn) {
+            btn.parentElement.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const c = errorCases[idx];
+            document.getElementById('err-case-out').innerHTML = `
+                <div style="display:inline-block; background:${c.color}; color:#fff; padding:0.25rem 0.85rem; border-radius:20px; font-weight:700; font-size:0.86rem; margin-bottom:0.7rem;">${c.badge}</div>
+                <p style="margin-bottom:0.5rem;"><strong>🔍 لماذا حدث؟</strong> ${c.why}</p>
+                <p style="margin-bottom:0.5rem;"><strong>🛠️ الأداة المناسبة للكشف:</strong> ${c.tool}</p>
+                <p style="margin-bottom:0;"><strong>✅ كيفية المعالجة الصحيحة:</strong> ${c.fix}</p>
+            `;
+        }
+        showErrCase(0, document.querySelector('#topic-3 .sim-btn'));
+
+        // 7. Topic 4 Project Structure Interactive Inspector
+        const treeData = {
+            root: {
+                title: "📁 المجلد الرئيسي للمشروع: student-management/",
+                role: "الجذر العام للمشروع (Project Root)",
+                desc: "يحتوي كل مجلدات الشيفرة والاختبارات والتوثيق وملفات الإعداد على مستوى المشروع. تنظيمه بوضوح هو أول ما يراه أي مطور عند فتح المشروع.",
+                example: "عند فتح المشروع في VS Code، يجب فتح هذا المجلد الجذري مباشرة لكي تعمل المسارات والاختبارات بصورة سليمة."
+            },
+            src: {
+                title: "📂 مجلد الشيفرة الأساسية: src/",
+                role: "Source Code Directory",
+                desc: "يضم شيفرة التطبيق الفعلية ومنطقه البرمجي (Source)، ويُفصل داخله كل دور وظيفي في مجلد فرعي مناسب لحجم المشروع.",
+                example: "في نظام إدارة الطلاب أو مختبر Python، نضع ملفات المنطق الرئيسي مثل main.py أو controllers/ وmodels/ داخله."
+            },
+            controllers: {
+                title: "📂 المتحكمات: src/controllers/",
+                role: "تنسيق التعامل مع الطلبات والردود",
+                desc: "تستقبل طلبات المستخدمين (مثل طلب تسجيل طالب أو تعديل درجة)، وتنسّق التحقق والاستدعاء مع النماذج (Models) ثم تعيد الرد المناسب.",
+                example: "studentController.js يعالج طلب إضافة طالب جديد ويتأكد من المدخلات قبل الحفظ."
+            },
+            models: {
+                title: "📂 النماذج: src/models/",
+                role: "تمثيل البيانات وقواعدها",
+                desc: "تمثّل كيانات النظام (مثل الطالب، المقرر، الدرجة) وتحدد حقولها وقواعد التعامل معها ومع قاعدة البيانات وفق تصميم المشروع.",
+                example: "StudentModel يعرّف خصائص الطالب مثل الرقم الجامعي والاسم والمستوى."
+            },
+            routes: {
+                title: "📂 المسارات: src/routes/",
+                role: "تحديد مسارات الطلبات (API Routes)",
+                desc: "تربط عناوين الروابط والطلبات (مثل GET /students أو POST /grades) بدوال المتحكمات المناسبة لها.",
+                example: "studentRoutes.js يربط كل رابط بالعملية المسؤولة عنه في controller."
+            },
+            tests: {
+                title: "🧪 مجلد الاختبارات: tests/",
+                role: "الاختبارات الآلية (Automated Tests)",
+                desc: "يحتوي ملفات الاختبار المستقلة التي تتحقق من سلوك البرنامج وحساباته وحالاته الحدية آلياً دون خلطها بشيفرة الإنتاج داخل src/.",
+                example: "اختبار أن النظام يرفض درجة طالب أكبر من 100، واختبار حالة القائمة الفارغة في test_average.py."
+            },
+            config: {
+                title: "⚙️ مجلد الإعدادات: config/",
+                role: "الإعدادات غير السرية وآليات التحميل",
+                desc: "يحتوي ملفات تنظيم قراءة الإعدادات والثوابت غير الحساسة. ويُمنع وضع كلمات المرور الفعلية داخله إذا كان يُرفع لـ Git.",
+                example: "ملف يقرأ قيم متغيرات البيئة ويتحقق من وجودها عند إقلاع التطبيق."
+            },
+            env: {
+                title: "🔐 ملف البيئة المحلي: .env",
+                role: "إعدادات محلية وقد تتضمن أسراراً",
+                desc: "يخزّن القيم المتغيرة حسب الجهاز أو البيئة (عنوان قاعدة البيانات، المنفذ، كلمات المرور، المفاتيح السرية). يُضاف دوماً إلى .gitignore ولا يُرفع أبداً!",
+                example: "PORT=3000 و DB_HOST=localhost مع توفير قالب .env.example آمن لبقية الفريق."
+            },
+            gitignore: {
+                title: "🙈 ملف التجاهل: .gitignore",
+                role: "تحديد الملفات المستبعدة من تتبع Git",
+                desc: "يمنع Git من تتبع أو رفع الملفات السرية (.env) والمكتبات القابلة لإعادة التثبيت (node_modules/, .venv/) والملفات المؤقتة.",
+                example: "إدراج .env و __pycache__/ و .venv/ في سطور .gitignore قبل أول git add ."
+            },
+            pkg: {
+                title: "📦 ملف التبعيات: package.json",
+                role: "بيانات المشروع والحزم وأوامر التشغيل (Node.js)",
+                desc: "يصف اسم المشروع وإصداره، وأوامر التشغيل والاختبار (scripts)، وقائمة التبعيات (dependencies) (يعادله requirements.txt أو pyproject.toml في Python).",
+                example: "تحديد \"start\": \"node src/index.js\" والاعتماد على Express مع ملف القفل package-lock.json."
+            },
+            readme: {
+                title: "📖 ملف التوثيق: README.md",
+                role: "الواجهة التعريفية ودليل التشغيل",
+                desc: "يشرح لأي زميل أو أستاذ: ما وظيفة المشروع؟ ما متطلباته؟ كيف تُثبّت التبعيات؟ وكيف يُشغَّل ويُختبر خطوة بخطوة؟",
+                example: "كتابة أوامر python src/main.py و python -m unittest discover -s tests -v بوضوح."
+            }
+        };
+
+        function inspectTree(key, btn) {
+            document.querySelectorAll('.tree-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const item = treeData[key];
+            document.getElementById('tree-inspector-panel').innerHTML = `
+                <h4 style="margin-top:0; color:var(--primary); font-size:1.18rem;">${item.title}</h4>
+                <p><strong>🏷️ الدور الهندسي:</strong> <span class="term-en">${item.role}</span></p>
+                <p><strong>📝 الشرح التفصيلي:</strong> ${item.desc}</p>
+                <div class="info-box" style="margin:0.8rem 0 0; padding:0.9rem 1.1rem;">
+                    <strong>💡 مثال تطبيقي:</strong> ${item.example}
+                </div>
+            `;
+        }
+        inspectTree('root', document.querySelector('.tree-item'));
+
+        // 8. Topic 7 Troubleshooting Simulator
+        const troubleshootCases = [
+            {
+                title: "مشكلة 1: رسالة 'python' is not recognized / command not found",
+                steps: [
+                    "1. قراءة رسالة الخطأ: النظام لا يجد ملف تشغيل Python في مسار الأوامر (PATH).",
+                    "2. التحقق من الأدوات والإصدارات: جرّب <span class='term-en'>py --version</span> على Windows أو <span class='term-en'>python3 --version</span> على Linux/macOS.",
+                    "3. مراجعة الإعدادات: تأكد من تثبيت Python وإضافة خيار Add Python to PATH أثناء التثبيت.",
+                    "4. إعادة الإنتاج: أغلق الطرفية وأعد فتحها بعد ضبط المسار ثم جرّب الأمر مجدداً.",
+                    "5. المعالجة والتحقق: شغّل <span class='term-en'>python src/main.py</span> (أو <span class='term-en'>py src/main.py</span>) للتأكد من نجاح الناتج."
+                ]
+            },
+            {
+                title: "مشكلة 2: الطالب ثبّت المكتبة لكن يظهر ModuleNotFoundError",
+                steps: [
+                    "1. قراءة رسالة الخطأ: لاحظ اسم المكتبة المفقودة بالضبط في السطر الأخير.",
+                    "2. التحقق من الأدوات: تحقّق من مفسّر Python النشط في الطرفية مقارنة بالمفسّر المختار أسفل يمين VS Code.",
+                    "3. مراجعة التبعيات: تأكد من تفعيل البيئة الافتراضية (<span class='term-en'>.venv</span>)؛ فربما ثُبتت المكتبة خارجها أو بـ pip آخر.",
+                    "4. إعادة الإنتاج: نفّذ <span class='term-en'>python -m pip list</span> للتأكد من وجود المكتبة داخل البيئة الحالية.",
+                    "5. المعالجة والتحقق: ثبّتها بـ <span class='term-en'>python -m pip install -r requirements.txt</span> ثم أعد التشغيل والاختبارات."
+                ]
+            },
+            {
+                title: "مشكلة 3: فشل الاختبار الآلي AssertionError: 67.5 != 90.0",
+                steps: [
+                    "1. قراءة رسالة الخطأ: الاختبار <span class='term-en'>test_average</span> توقع القيمة <span class='term-en'>90</span>، لكن الدالة أرجعت <span class='term-en'>67.5</span>!",
+                    "2. التحقق من الأدوات: البيئة تعمل سليمة، فالخلل إذاً <strong>خطأ منطقي</strong> في دالة <span class='term-en'>calculate_average</span>.",
+                    "3. مراجعة الشيفرة: افحص سطر حساب المتوسط داخل <span class='term-en'>src/main.py</span>.",
+                    "4. إعادة الإنتاج بالمصحح: ضع <span class='term-en'>Breakpoint</span> على جملة <span class='term-en'>return</span> ولاحظ قيمة <span class='term-en'>sum(grades)=270</span> والمقسوم عليه <span class='term-en'>4</span> بدل <span class='term-en'>3</span>!",
+                    "5. المعالجة والتحقق: أصلح المعادلة إلى <span class='term-en'>sum(grades) / len(grades)</span> ثم شغّل <span class='term-en'>python -m unittest discover -s tests -v</span> للتأكد من نجاح كل الاختبارات (OK)."
+                ]
+            },
+            {
+                title: "مشكلة 4: FileNotFoundError / can't open file 'src/main.py'",
+                steps: [
+                    "1. قراءة رسالة الخطأ: Python لم يجد المسار <span class='term-en'>src/main.py</span> انطلاقاً من مكانك الحالي.",
+                    "2. التحقق من الموضع الحالي: نفّذ <span class='term-en'>pwd</span> أو لاحظ مسار الطرفية ومحتوياته بـ <span class='term-en'>ls</span> أو <span class='term-en'>dir</span>.",
+                    "3. مراجعة البنية: غالباً أنت داخل مجلد فرعي (مثل <span class='term-en'>src/</span> نفسه) أو خارج مجلد المشروع الجذري.",
+                    "4. إعادة الإنتاج: انتقل للمجلد الصحيح عبر <span class='term-en'>cd software-development-lab</span>.",
+                    "5. المعالجة والتحقق: نفّذ <span class='term-en'>python src/main.py</span> من المجلد الرئيسي وتأكد من ظهور الدرجات والمتوسط."
+                ]
+            }
+        ];
+
+        function showTroubleshoot(idx, btn) {
+            btn.parentElement.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const c = troubleshootCases[idx];
+            document.getElementById('troubleshoot-out').innerHTML = `
+                <h4 style="margin-top:0; color:var(--primary);">${c.title}</h4>
+                <ul class="content-list" style="margin-bottom:0;">
+                    ${c.steps.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+            `;
+        }
+        showTroubleshoot(0, document.querySelector('#topic-7 .sim-btn'));
+
+        // 9. Official 7-Question Lecture Quiz (from Lecture 01 docx)
+
+const quizData = [
+            {
+                question: "1. ما الأداة التي تساعد على تنفيذ البرنامج خطوة بخطوة ومراقبة المتغيرات؟",
+                options: ["مدير الحزم (Package Manager)", "المصحح البرمجي (Debugger)", "ملف README.md", "منصة GitHub"],
+                correct: 1,
+                explanation: "المصحح البرمجي (Debugger) يتيح إيقاف التنفيذ عند نقاط التوقف (Breakpoints) وتتبع الأوامر خطوة بخطوة ومراقبة قيم المتغيرات."
+            },
+            {
+                question: "2. ما وظيفة مدير الحزم (Package Manager)؟",
+                options: ["تصميم شعار المشروع", "حذف جميع الأخطاء المنطقية تلقائياً", "إدارة تثبيت الحزم وإصداراتها وتحديثها", "استبدال لغة البرمجة نفسها"],
+                correct: 2,
+                explanation: "مدير الحزم مثل pip و npm يدير تثبيت الحزم والمكتبات وإزالتها وتحديثها وإدارة إصداراتها وتبعياتها."
+            },
+            {
+                question: "3. أي ملف يُستخدم عادةً لتحديد الحزم وأوامر التشغيل في مشروع Node.js؟",
+                options: ["package.json", "main.png", "index.pdf", "desktop.ini"],
+                correct: 0,
+                explanation: "ملف package.json يصف معلومات مشروع Node.js وأوامر التشغيل (scripts) والتبعيات المطلوبة."
+            },
+            {
+                question: "4. ما البيئة المخصصة للتحقق من صحة التطبيق قبل الاستخدام الفعلي؟",
+                options: ["بيئة الإنتاج فقط (Production)", "بيئة الاختبار (Testing Environment)", "مجلد التنزيلات", "محرر النصوص وحده"],
+                correct: 1,
+                explanation: "بيئة الاختبار (Testing Environment) مخصصة للتحقق من سلوك التطبيق ومطابقته للمتطلبات قبل وصوله للمستخدمين في بيئة الإنتاج."
+            },
+            {
+                question: "5. ما التصرف الصحيح عند تسريب كلمة مرور قاعدة بيانات في مستودع عام؟",
+                options: ["تغيير اسم الملف فقط", "تجاهل المشكلة", "تغيير السر أو إلغاؤه فوراً والتحقق من التعرض", "نقل كلمة المرور إلى ملف آخر مع رفعه علناً"],
+                correct: 2,
+                explanation: "بمجرد انكشاف سر برمجي يجب تغييره أو إلغاؤه فوراً وفحص التعرض في السجلات؛ لأن حذفه من آخر نسخة لا يمسحه من تاريخ Git."
+            },
+            {
+                question: "6. إذا أعطى البرنامج نتيجة خاطئة دون أن يتوقف، فما نوع الخطأ المحتمل؟",
+                options: ["خطأ منطقي (Logic Error)", "خطأ في اسم المجلد فقط", "لا يمكن أن يكون هناك خطأ", "خطأ في تثبيت المحرر بالضرورة"],
+                correct: 0,
+                explanation: "الخطأ المنطقي (Logic Error) لا يخالف قواعد اللغة فلا يوقف التنفيذ، لكنه ينتج حساباً أو قراراً غير صحيح (مثل الجمع بدلاً من الضرب)."
+            },
+            {
+                question: "7. ما الوظيفة الأساسية لأداة Git؟",
+                options: ["استبدال نظام التشغيل", "إدارة الإصدارات وتتبع تغييرات الملفات", "تشغيل جميع اللغات دون بيئات تشغيل", "حماية كل الملفات السرية تلقائياً دون إعداد"],
+                correct: 1,
+                explanation: "Git هو نظام إدارة الإصدارات (Version Control) المسؤول عن تسجيل تغييرات الملفات ومراجعتها والعودة إلى إصدارات سابقة والعمل بالفروع."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_sfd_lec01');
+    </script>
+</body>
+</html>

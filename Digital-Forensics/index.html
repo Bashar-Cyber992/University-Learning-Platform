@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة مقرر: التحقيق الجنائي الرقمي | Digital Forensics & Incident Response</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="digital-forensics" data-course-id="forensics">
+
+    <!-- ==============================================================================
+         شريط التنقل العلوي الموحد (Sticky Navigation Bar)
+         ============================================================================== -->
+    <nav class="site-navbar" id="mainNavbar">
+        <div class="site-navbar-inner">
+            
+            <!-- الهوية والشعار الأكاديمي -->
+            <a href="../index.html" class="brand-link" title="المنصة الأكاديمية - كلية المنار">
+                <div class="brand-logo-icon">🎓</div>
+                <div class="brand-text-col">
+                    <span class="brand-name">كلية المنار للعلوم والتكنولوجيا</span>
+                    <span class="brand-sub">بوابة مقرر: التحقيق الجنائي الرقمي • M.C.S.T</span>
+                </div>
+            </a>
+
+            <!-- روابط التنقل الرئيسية (سطح المكتب) -->
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">🏠 الرئيسية</a></li>
+                <li><a href="../courses.html" class="nav-link active">📚 المقررات الدراسية</a></li>
+                <li><a href="../index.html#departments" class="nav-link">🏛️ الأقسام والتخصصات</a></li>
+                <li><a href="../index.html#stats" class="nav-link">📊 الإحصائيات</a></li>
+                <li><a href="../index.html#features" class="nav-link">⚡ مميزات المنصة</a></li>
+            </ul>
+
+            <!-- إجراءات شريط التنقل -->
+            <div class="nav-actions">
+                <!-- شارة المشرف / الطالب -->
+                <div class="nav-user-badge" title="عضو اللجنة العلمية في القسمين">
+                    <div class="user-avatar-circle">ب</div>
+                    <span>م. بشار زبله</span>
+                </div>
+
+                <!-- زر الوضع الليلي / النهاري -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل المظهر">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">الوضع الليلي</span>
+                </button>
+
+                <!-- زر القائمة للأجهزة الذكية (Mobile Hamburger) -->
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="فتح القائمة الرئيسية" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- القائمة الجانبية للأجهزة الذكية (Mobile Off-canvas Drawer) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
+        <div class="mobile-drawer-header">
+            <div class="brand-link">
+                <div class="brand-logo-icon" style="width:34px; height:34px; font-size:1.1rem;">🎓</div>
+                <span style="font-weight:800; font-size:0.95rem; color:var(--primary);">كلية المنار M.C.S.T</span>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
+        </div>
+
+        <ul class="mobile-nav-links">
+            <li><a href="../index.html"><span>🏠</span> المنصة الرئيسية</a></li>
+            <li><a href="../courses.html" class="active"><span>📚</span> دليل المقررات الدراسية</a></li>
+            <li><a href="../index.html#departments"><span>🏛️</span> الأقسام والتخصصات</a></li>
+            <li><a href="../index.html#stats"><span>📊</span> الإحصائيات الأكاديمية</a></li>
+            <li><a href="../index.html#features"><span>⚡</span> مميزات المنصة الذكية</a></li>
+        </ul>
+
+        <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:var(--space-3);">
+            <div class="nav-user-badge" style="justify-content:center;">
+                <div class="user-avatar-circle">ب</div>
+                <span>إعداد: م. بشار زبله</span>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin:0;">
+                المستوى الثالث — الترم الثاني (2026)
+            </p>
+        </div>
+    </aside>
+
+    <!-- ==============================================================================
+         القسم الرئيسي لمعلومات المقرر (Course Hero Header)
+         ============================================================================== -->
+    <header class="course-hero-header">
+        <div class="course-hero-inner">
+            
+            <!-- مسار التنقل (Breadcrumbs) -->
+            <nav class="breadcrumbs-trail" aria-label="مسار التصفح">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span class="breadcrumbs-sep">/</span>
+                <a href="../courses.html">📚 دليل المقررات</a>
+                <span class="breadcrumbs-sep">/</span>
+                <span class="breadcrumbs-current">التحقيق الجنائي الرقمي</span>
+            </nav>
+
+            <!-- شارة الكلية والمستوى -->
+            <div class="course-hero-badge">
+                <span>🏛️</span>
+                <span>كلية المنار للعلوم والتكنولوجيا • المستوى الثالث (الترم الثاني)</span>
+            </div>
+
+            <!-- عناوين المقرر -->
+            <h1 class="course-hero-title">التحقيق الجنائي الرقمي</h1>
+            <h2 class="course-hero-subtitle">Digital Forensics & Incident Response (DFIR)</h2>
+
+            <!-- وسوم بيانات المقرر -->
+            <div class="course-hero-meta-row">
+                <div class="course-meta-pill">
+                    <span>👨‍🏫</span>
+                    <span>أستاذ المقرر: <strong>د. ضياء الحق القدمي</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>🏛️</span>
+                    <span>مقرر مشترك: <strong>الأمن السيبراني وشبكات & IT</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>📚</span>
+                    <span>المحاضرات: <strong>محاضرة متاحة + محاضرتان قيد الإعداد</strong></span>
+                </div>
+                <div class="course-meta-pill">
+                    <span>⚖️</span>
+                    <span>المعايير: <strong>سلسلة الحيازة وإجراءات الأدلة القانونية</strong></span>
+                </div>
+            </div>
+
+            <!-- أزرار الإجراء السريع والتنقل بين المحاضرات -->
+            <div class="course-hero-actions">
+                <a href="Lecture-01.html" class="btn btn-primary" style="background:#ffffff; color:var(--course-theme-deep, #1e293b); font-weight:800;">
+                    <span>ابدأ دراسة المحاضرة 1</span>
+                    <span>⬅️</span>
+                </a>
+                <a href="../courses.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4); color:#ffffff;">
+                    <span>📚 كل المقررات</span>
+                </a>
+                <div class="quick-jump-pills">
+                    <span style="font-size:var(--text-xs); color:rgba(255,255,255,0.8); font-weight:700; margin-left:var(--space-1);">الوصول السريع:</span>
+                    <a href="Lecture-01.html" class="quick-jump-pill">المحاضرة 01 (متاحة)</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ==============================================================================
+         محتوى بوابة المقرر الرئيسي
+         ============================================================================== -->
+    <main class="course-portal-container">
+
+        <!-- إحصائيات المقرر الأكاديمية الحقيقية -->
+        <section class="stats-summary-grid" aria-label="إحصائيات المقرر">
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(225, 29, 72, 0.1); color:var(--accent);">
+                    <span>🔎</span>
+                </div>
+                <div class="stat-details">
+                    <h4>جمع الأدلة الجنائية</h4>
+                    <p>سلسلة الحيازة وضمان عدم التلاعب</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(59, 130, 246, 0.1); color:#3b82f6;">
+                    <span>💾</span>
+                </div>
+                <div class="stat-details">
+                    <h4>Disk & Memory</h4>
+                    <p>تحليل الذاكرة المؤقتة والأقراص الصلبة</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(16, 185, 129, 0.1); color:#10b981;">
+                    <span>⚖️</span>
+                </div>
+                <div class="stat-details">
+                    <h4>المعايير القانونية</h4>
+                    <p>التوثيق الجنائي والتقارير الفنية المقبولة</p>
+                </div>
+            </div>
+
+            <div class="stat-card-modern">
+                <div class="stat-icon-wrapper" style="background:rgba(168, 85, 247, 0.1); color:#a855f7;">
+                    <span>🧪</span>
+                </div>
+                <div class="stat-details">
+                    <h4>الاستحواذ الموثق</h4>
+                    <p>Bitstream Image وخوارزميات Hashing</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- التنويه الأكاديمي المعتمد -->
+        <div class="notice-banner-modern">
+            <div class="notice-icon">⏳</div>
+            <div>
+                <strong>تنويه أكاديمي معتمد:</strong>
+                <p>يجري حالياً تحضير ومراجعة بقية المحاضرات التفاعلية والمختبرات التطبيقية للتحقيق الجنائي الرقمي من قِبل اللجنة العلمية، وسيتم نشرها تباعاً لطلاب القسمين.</p>
+            </div>
+        </div>
+
+        <!-- أهداف ومفردات المقرر -->
+        <section class="overview-grid" aria-label="نظرة عامة على المقرر">
+            <div class="overview-box">
+                <h3><span>🎯</span> أهداف المقرر ومخرجات التعلم</h3>
+                <ul class="objectives-list">
+                    <li>استيعاب المراحل الأساسية للتحقيق الجنائي الرقمي (Identification, Preservation, Analysis, Reporting).</li>
+                    <li>تطبيق إجراءات حفظ الأدلة وضمان عدم العبث بها عبر خوارزميات التجزئة (MD5, SHA-256).</li>
+                    <li>إتقان أخذ الصور الجنائية (Forensic Imaging) دون تعديل وسائط التخزين الأصلية.</li>
+                    <li>تحليل الذاكرة العشوائية (RAM Forensics) باستخدام أدوات متقدمة مثل Volatility لكشف البرمجيات الخبيثة.</li>
+                    <li>كتابة التقارير الجنائية التقنية المقبولة أمام الجهات القانونية والمهنية.</li>
+                </ul>
+            </div>
+
+            <div class="overview-box">
+                <h3><span>📑</span> المحاور والمفردات الدراسية المعتمدة</h3>
+                <div class="syllabus-tags">
+                    <span class="s-tag done">✓ مبادئ التحقيق الجنائي الرقمي والتعريفات</span>
+                    <span class="s-tag done">✓ سلسلة الحيازة (Chain of Custody)</span>
+                    <span class="s-tag done">✓ الاستحواذ الجنائي (Bitstream Copy) والتجزئة Hashing</span>
+                    <span class="s-tag">File Systems & File Carving</span>
+                    <span class="s-tag">Memory Forensics (Volatility Framework)</span>
+                    <span class="s-tag">Network Traffic & Log Forensics</span>
+                    <span class="s-tag">إعداد التقارير الفنية والشهادة القانونية</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================================================
+             قسم محاضرات المقرر الأساسية
+             ============================================================================== -->
+        <section class="course-lectures-section" aria-label="محاضرات المقرر">
+            
+            <div class="section-header">
+                <h2>
+                    <span>📚 محاضرات المقرر</span>
+                    <span class="lecture-count-badge" id="lectureCountLabel">(محاضرة متاحة + 2 قيد الإعداد)</span>
+                </h2>
+            </div>
+
+            <!-- شريط أدوات البحث وتصفية المحاضرات -->
+            <div class="lecture-toolbar">
+                <div class="lecture-search-wrapper">
+                    <input type="text" id="lectureSearch" class="lecture-search-input" placeholder="ابحث في عناوين وموضوعات المحاضرات..." aria-label="بحث في محاضرات المقرر">
+                    <span class="lecture-search-icon">🔍</span>
+                </div>
+
+                <div class="lecture-filters">
+                    <button class="lecture-filter-btn active" onclick="filterLectures('all', this)">جميع المحاضرات (3)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('available', this)">متاحة للدراسة (1)</button>
+                    <button class="lecture-filter-btn" onclick="filterLectures('pending', this)">قيد الإعداد (2)</button>
+                </div>
+            </div>
+
+            <!-- قائمة بطاقات المحاضرات -->
+            <div class="lectures-list" id="lecturesList">
+                
+                <!-- المحاضرة الأولى (متاحة) -->
+                <a href="Lecture-01.html" class="lecture-card available" data-status="available">
+                    <div class="lecture-info">
+                        <div class="lecture-number">01</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية</h3>
+                            <p>مفهوم التحقيق الجنائي الرقمي، سلسلة الحفظ (Chain of Custody)، معضلة البيانات المتقلبة في الرام، الاستحواذ الجنائي (Bitstream Copy)، خوارزميات التجزئة (MD5, SHA-256)، وبنك الأسئلة التفاعلي.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🔎 علم الأدلة الجنائية</span>
+                                <span class="lecture-feature-pill">⛓️ Chain of Custody</span>
+                                <span class="lecture-feature-pill">📝 بنك أسئلة واختبار</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-available">🟢 متاحة الآن للدراسة</span>
+                        <span class="lecture-enter-btn">ابدأ دراسة المحاضرة ⬅️</span>
+                    </div>
+                </a>
+
+                <!-- المحاضرة الثانية (قيد التجهيز) -->
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">02</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثانية: الاستحواذ الجنائي وتحليل وسائط التخزين</h3>
+                            <p>تقنيات أخذ النسخ الجنائية الموثقة (Bit-stream Image)، أدوات منع الكتابة (Write Blockers)، والتحقق من سلامة الأدلة الرقمية عبر مطابقة قيم التجزئة.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">💾 Forensic Imaging</span>
+                                <span class="lecture-feature-pill">🛡️ Write Blockers</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد التجهيز الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+                <!-- المحاضرة الثالثة (قيد التجهيز) -->
+                <div class="lecture-card pending" data-status="pending">
+                    <div class="lecture-info">
+                        <div class="lecture-number">03</div>
+                        <div class="lecture-details">
+                            <h3>المحاضرة الثالثة: التحقيق الجنائي في الذاكرة العشوائية (Live Response & RAM)</h3>
+                            <p>ترتيب التطاير (Order of Volatility)، جمع الأدلة الحية من الأنظمة النشطة، وتحليل العمليات والاتصالات المشبوهة عبر إطار عمل Volatility.</p>
+                            <div class="lecture-topics">
+                                <span class="lecture-feature-pill">🧠 Memory Forensics</span>
+                                <span class="lecture-feature-pill">⚡ Live Response</span>
+                                <span class="lecture-feature-pill">⏳ قيد الإعداد الأكاديمي</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lecture-action">
+                        <span class="status-badge status-pending">⏳ قيد التجهيز الأكاديمي</span>
+                        <span class="lecture-enter-btn" style="opacity:0.6; cursor:not-allowed;">غير متاحة حالياً</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- رسالة عند عدم وجود نتائج للبحث -->
+            <div id="noLecturesMsg" class="empty-state" style="display:none; text-align:center; padding:var(--space-8); background:var(--surface); border:1px solid var(--border-color); border-radius:var(--radius-xl); margin-top:var(--space-4);">
+                <div style="font-size:2.5rem; margin-bottom:var(--space-2);">🔍</div>
+                <h4 style="color:var(--primary); margin-bottom:var(--space-2);">لم يتم العثور على محاضرات مطابقة</h4>
+                <p style="color:var(--text-muted); font-size:var(--text-sm); margin-bottom:var(--space-4);">يرجى تجربة كلمات بحث أخرى أو الضغط على زر استعراض جميع المحاضرات.</p>
+                <button onclick="document.getElementById('lectureSearch').value=''; filterLectures('all');" class="btn btn-primary" style="font-size:var(--text-xs);">عرض كل المحاضرات</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- التذييل الموحد المركزي -->
+    <div id="site-footer"></div>
+
+    <!-- البرمجيات المشتركة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../components/header.js"></script>
+    <script src="../components/footer.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/course-portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+/**
+ * ==============================================================================
+ * MANAR UNIVERSITY LEARNING PLATFORM - MASTER STYLESHEET (main.css)
+ * Central Hub Importing Modular Design System Stylesheets
+ * ==============================================================================
+ */
+
+@import url("variables.css");
+@import url("reset.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("lecture-widgets.css");
+@import url("responsive.css");

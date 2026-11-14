@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة | أساسيات تطوير البرمجيات</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="software-development-fundamentals">
+
+    <!-- الشريط العلوي ومسار التنقل -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الرئيسية</a>
+                <span>/</span>
+                <a href="index.html">💻 بوابة أساسيات تطوير البرمجيات</a>
+                <span>/</span>
+                <span>المحاضرة الثانية</span>
+            </div>
+            <div class="lecture-nav-btns">
+                <a href="Lecture-01.html" class="nav-pill">المحاضرة السابقة (1)</a>
+                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
+                <a href="#quiz" class="nav-pill">الكوز التقييمي 🎯</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- ترويسة المحاضرة -->
+    <header class="lecture-header">
+        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | قسمي الأمن السيبراني وشبكات &amp; تكنولوجيا المعلومات (المستوى الثالث - الترم الثاني)</div>
+        <h1>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة</h1>
+        <p>كتابة شيفرة مقروءة ومعيارية وتحسين بنيتها دون إفساد سلوكها (<span style="font-family:monospace;">Clean Code &amp; Refactoring</span>) | إعداد: <strong>د. عبدالرزاق الأهدل</strong> &amp; <strong>أ. وليد الشراعي</strong></p>
+        <div class="header-golden-rule">💡 القاعدة الذهبية: «أي مطور يستطيع كتابة شيفرة يفهمها الحاسوب، لكن المطور المحترف يكتب شيفرة يفهمها البشر!»</div>
+    </header>
+
+    <div class="container">
+        <!-- الفهرس الجانبي -->
+        <aside class="sidebar">
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro-objectives">0. المقدمة والأهداف (1–9)</a></li>
+                <li><a href="#topic-1">1. الشيفرة النظيفة (Clean Code)</a></li>
+                <li><a href="#topic-2">2. معايير التسمية (Naming)</a></li>
+                <li><a href="#topic-3">3. مبدأ DRY وتقليل التعقيد</a></li>
+                <li><a href="#topic-4">4. المسؤولية الواحدة (SRP)</a></li>
+                <li><a href="#topic-5">5. الدوال الصغيرة والواضحة</a></li>
+                <li><a href="#topic-6">6. الروائح البرمجية (Code Smells)</a></li>
+                <li><a href="#topic-7">7. إعادة الهيكلة الآمنة (Refactoring)</a></li>
+                <li><a href="#topic-8">8. التعليقات والتوثيق (Docs)</a></li>
+                <li><a href="#practical-lab">9. المختبر العملي وعيادة التنقيح</a></li>
+                <li><a href="#tools-references">10. الأدوات والمصطلحات والمراجع</a></li>
+                <li><a href="#comprehensive-review">11. الأسئلة الشاملة والواجب</a></li>
+                <li><a href="#flashcards">12. بطاقات الاستذكار (12)</a></li>
+                <li><a href="#quiz">13. الكوز التقييمي (10 أسئلة)</a></li>
+            </ul>
+        </aside>
+
+        <!-- المحتوى التعليمي الرئيسي -->
+        <main class="content-area">
+
+            <!-- 0. المقدمة والأهداف -->
+            <section id="intro-objectives">
+                <span class="section-tag">مدخل المحاضرة التأسيسي</span>
+                <h2>🚀 0. المقدمة العامة، دورة العمل، وأهداف التعلم</h2>
+
+                <div class="info-box">
+                    <h4>🎓 سيناريو المقارنة: مبرمجان لنظام درجات الطلاب بعد شهر واحد!</h4>
+                    <p>تخيّل أن مطورَين بنيا نظاماً لحساب درجات الطلاب وأخرجا النتيجة الصحيحة نفسها في اليوم الأول. بعد شهر واحد طلب القسم إضافة: <strong>حساب المعدل التراكمي، وترتيب الطلاب، وطباعة تقارير متعددة</strong>:</p>
+                    <ul class="content-list" style="margin-bottom:0.5rem;">
+                        <li><strong>المبرمج الأول:</strong> كتب بأسماء معبّرة، ودوال صغيرة واضحة المسؤولية، وبنية منظمة؛ فأضاف الميزات الجديدة بسرعة ودون كسر أي وظيفة قديمة.</li>
+                        <li><strong>المبرمج الثاني:</strong> استخدم أسماء مبهمة (<span class="term-en">a, x, f</span>)، وكرّر الحسابات، وجمع كل شيء في دالة عملاقة؛ فاضطر لقضاء ضعف الوقت في فهم شيفرته وظهرت أعطال متتالية عند كل تعديل!</li>
+                    </ul>
+                    <p style="margin-bottom:0;"><strong>الخلاصة الهندسية:</strong> تُقرأ الشيفرة وتُصان مرات أكثر بكثير مما تُكتب أول مرة؛ لذا فإن جودة البرنامج لا تُقاس بمجرد إخراج النتيجة اليوم، بل بقدرته على التطور والتوسع دون أخطاء متسلسلة.</p>
+                </div>
+
+                <h3>🔄 مستكشف مراحل دورة العمل البرمجية المتكررة (5 مراحل مترابطة)</h3>
+                <p>لا تمثل جودة الشيفرة خطوة تُنفّذ لمرة واحدة وتنتهي، بل هي حلقة تكرارية مستمرة تتعزز مع كل ميزة وتعديل:</p>
+
+                <div class="stages-stepper" id="lifecycle-stepper">
+                    <button class="stage-btn active" onclick="showLifecycleStage(0, this)">1. كتابة الشيفرة</button>
+                    <button class="stage-btn" onclick="showLifecycleStage(1, this)">2. اختبار الشيفرة</button>
+                    <button class="stage-btn" onclick="showLifecycleStage(2, this)">3. تنظيف الشيفرة</button>
+                    <button class="stage-btn" onclick="showLifecycleStage(3, this)">4. إعادة الهيكلة</button>
+                    <button class="stage-btn" onclick="showLifecycleStage(4, this)">5. الصيانة والتطوير</button>
+                </div>
+                <div class="stage-panel" id="lifecycle-panel"></div>
+
+                <div class="figure-box">
+                    <svg viewBox="0 0 820 230" width="820" height="230" role="img" aria-label="دورة حياة الشيفرة النظيفة ذات المراحل الخمس">
+                        <defs>
+                            <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6 Z" fill="#2b6cb0"/>
+                            </marker>
+                            <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L8,3 L0,6 Z" fill="#ed8936"/>
+                            </marker>
+                        </defs>
+                        <g transform="translate(655,48)">
+                            <rect width="135" height="72" rx="10" fill="#1a365d"/>
+                            <text x="67" y="30" fill="#ffffff" text-anchor="middle" font-size="14" font-weight="bold">1. كتابة الشيفرة</text>
+                            <text x="67" y="52" fill="#bfdbfe" text-anchor="middle" font-size="11">Implement</text>
+                        </g>
+                        <line x1="655" y1="84" x2="625" y2="84" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+
+                        <g transform="translate(495,48)">
+                            <rect width="125" height="72" rx="10" fill="#2b6cb0"/>
+                            <text x="62" y="30" fill="#ffffff" text-anchor="middle" font-size="14" font-weight="bold">2. اختبار الشيفرة</text>
+                            <text x="62" y="52" fill="#dbeafe" text-anchor="middle" font-size="11">Test</text>
+                        </g>
+                        <line x1="495" y1="84" x2="465" y2="84" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+
+                        <g transform="translate(335,48)">
+                            <rect width="125" height="72" rx="10" fill="#38a169"/>
+                            <text x="62" y="30" fill="#ffffff" text-anchor="middle" font-size="14" font-weight="bold">3. تنظيف الشيفرة</text>
+                            <text x="62" y="52" fill="#c6f6d5" text-anchor="middle" font-size="11">Clean</text>
+                        </g>
+                        <line x1="335" y1="84" x2="305" y2="84" stroke="#2b6cb0" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+
+                        <g transform="translate(170,48)">
+                            <rect width="130" height="72" rx="10" fill="#ed8936"/>
+                            <text x="65" y="30" fill="#ffffff" text-anchor="middle" font-size="14" font-weight="bold">4. إعادة الهيكلة</text>
+                            <text x="65" y="52" fill="#fffaf0" text-anchor="middle" font-size="11">Refactor</text>
+                        </g>
+                        <line x1="170" y1="84" x2="140" y2="84" stroke="#ed8936" stroke-width="2.5" marker-end="url(#arrowOrange)"/>
+
+                        <g transform="translate(15,48)">
+                            <rect width="120" height="72" rx="10" fill="#6b46c1"/>
+                            <text x="60" y="30" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">5. الصيانة والتطوير</text>
+                            <text x="60" y="52" fill="#e9d8fd" text-anchor="middle" font-size="11">Maintain</text>
+                        </g>
+
+                        <path d="M 75 120 L 75 178 L 722 178 L 722 128" fill="none" stroke="#ed8936" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrowOrange)"/>
+                        <text x="410" y="200" fill="#dd6b20" text-anchor="middle" font-size="13" font-weight="bold">تعمل المراحل بتكرار مستمر عند كل ميزة جديدة — وليست خطوة منتهية</text>
+                    </svg>
+                    <div class="figure-caption">شكل (1): المراحل الخمس المترابطة لكتابة شيفرة قابلة للنمو والصيانة</div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>📋 خريطة المحاور الثمانية</h4>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>مفهوم <span class="term-en">Clean Code</span> والفرق بين الوضوح والقصر.</li>
+                            <li>معايير التسمية (<span class="term-en">Variables, Functions, Classes</span>).</li>
+                            <li>تقليل التكرار بمبدأ <span class="term-en">DRY</span> وحالات عدم الدمج.</li>
+                            <li>مبدأ المسؤولية الواحدة <span class="term-en">SRP</span> وفصل الاهتمامات.</li>
+                            <li>بناء الدوال الصغيرة المحددة وكشف العيوب الخفية.</li>
+                            <li>الروائح البرمجية الخمس (<span class="term-en">Code Smells</span>) وأولوياتها.</li>
+                            <li>إعادة الهيكلة الآمنة (<span class="term-en">Refactoring</span>) وشبكة الاختبارات.</li>
+                            <li>التعليقات الهادفة (<span class="term-en">Why</span>) والتوثيق (<span class="term-en">Docstrings</span>).</li>
+                        </ol>
+                    </div>
+                    <div class="feature-card" style="border-top-color: var(--accent);">
+                        <h4>🎯 أهداف المحاضرة (9 مخرجات تعلم)</h4>
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li>تحديد مفهوم الشيفرة النظيفة وأثرها على الصيانة.</li>
+                            <li>تطبيق معايير التسمية الواضحة للمتغيرات والدوال والفئات.</li>
+                            <li>تقليل التكرار والتعقيد باستخدام مبدأ <span class="term-en">DRY</span>.</li>
+                            <li>فهم مبدأ المسؤولية الواحدة (<span class="term-en">SRP</span>) وتطبيقه.</li>
+                            <li>كتابة دوال واضحة ومتماسكة ومحددة المسؤولية.</li>
+                            <li>اكتشاف الروائح البرمجية الشائعة ومعالجتها.</li>
+                            <li>تنفيذ إعادة هيكلة تدريجية دون تغيير السلوك الوظيفي.</li>
+                            <li>التمييز بين التعليقات المفيدة والتعليقات الزائدة.</li>
+                            <li>التحقق من حفظ السلوك بعد التعديل عبر اختبارات الوحدة.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 1. المحور الأول -->
+            <section id="topic-1">
+                <span class="section-tag">المحور الأول</span>
+                <h2>✨ 1. ما المقصود بالشيفرة النظيفة (Clean Code)؟</h2>
+
+                <p><strong>الشيفرة النظيفة <span class="term-en">Clean Code</span>:</strong> هي شيفرة مصدرية مكتوبة بأسلوب واضح ومنظم وبسيط، يستطيع أي مطور آخر (أو أنت نفسه بعد أشهر) قراءتها وفهم غرضها وتعديلها واختبارها بسرعة وبأقل قدر من الغموض.</p>
+
+                <div class="info-box warning-box">
+                    <h4>⚖️ تنبيه منهجي: لا يوجد رقم سحري واحد للنظافة!</h4>
+                    <p style="margin-bottom:0;">لا يوجد مقياس رقمي عالمي موحد يعرّف الشيفرة النظيفة بنسبة 100%؛ بل هي مجموعة مبادئ وممارسات هندسية راسخة يُنظر إليها في سياق لغة البرمجة وحجم المشروع واتفاق الفريق.</p>
+                </div>
+
+                <h3>1.1 مثال تطبيقي بلغة Python: قبل التنقيح وبعده</h3>
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left">
+                                <span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span>
+                                <span>❌ قبل: شيفرة تعمل لكنها مبهمة (Python)</span>
+                            </div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">def</span> c(a, b, d):
+    <span class="code-kw">return</span> a * b - d
+
+x = c(<span class="code-num">10</span>, <span class="code-num">5</span>, <span class="code-num">3</span>)
+<span class="code-kw">print</span>(x)  <span class="code-comment"># Output: 47</span></pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left">
+                                <span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span>
+                                <span>✅ بعد: شيفرة نظيفة تشرح نفسها (Python)</span>
+                            </div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">def</span> calculate_total(price, quantity, discount):
+    <span class="code-kw">return</span> price * quantity - discount
+
+total = calculate_total(<span class="code-num">10</span>, <span class="code-num">5</span>, <span class="code-num">3</span>)
+<span class="code-kw">print</span>(total)  <span class="code-comment"># Output: 47</span></pre>
+                    </div>
+                </div>
+                <p>المخرجان متطابقان (<span class="term-en">47</span>)، لكن في النسخة الثانية تتضح المعادلة فوراً دون تخمين معنى <span class="term-en">c, a, b, d, x</span>.</p>
+
+                <h3>1.2 الفوائد الست للشيفرة النظيفة</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><div class="card-badge-num">1</div><h4>سهولة القراءة</h4><p>فهم منطق البرنامج وسياقه خلال دقائق بلا ألغاز.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">2</div><h4>سهولة الصيانة</h4><p>تعديل الأجزاء المعنية بأقل آثار جانبية غير متوقعة.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">3</div><h4>سهولة الاختبار</h4><p>الدوال المنظمة والمركزة تسهل بناء اختبارات الوحدة الآلية.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">4</div><h4>تقليل الأخطاء</h4><p>الوضوح يكشف الثغرات المنطقية مبكراً أثناء المراجعة.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">5</div><h4>سهولة العمل الجماعي</h4><p>اندماج المطورين الجدد في الفريق بسرعة وسلاسة.</p></div>
+                    <div class="feature-card"><div class="card-badge-num">6</div><h4>تقليل التكلفة مستقبلاً</h4><p>انخفاض زمن التطوير وإضافة الميزات على مدى عمر المشروع.</p></div>
+                </div>
+
+                <h3>1.3 تنبيه شائع: الشيفرة النظيفة ≠ الشيفرة القصيرة</h3>
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ مختصرة لكنها غامضة (JS)</span></div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">const</span> r = a =&gt; a.filter(x =&gt; x &gt; <span class="code-num">50</span>).length;</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ أوضح وأسهل للفريق (JS)</span></div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">function</span> countPassingGrades(grades) {
+    <span class="code-kw">return</span> grades.filter(grade =&gt; grade &gt; <span class="code-num">50</span>).length;
+}</pre>
+                    </div>
+                </div>
+                <p>الهدف هو <strong>الوضوح والبساطة المناسبة</strong> لا مجرد تقليص عدد الأسطر أو حروف الأسماء.</p>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الأول (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>إذا كان البرنامج يعمل اليوم، فلماذا أهتم بنظافة الشيفرة؟</strong> لأن معظم التكلفة الزمنية في عمر البرمجيات تذهب لقراءة الشيفرة وفهمها وتعديلها لاحقاً لا لكتابتها أول مرة.</li>
+                            <li><strong>هل تعني النظافة تقليل عدد الأسطر بأقصى ما يمكن؟</strong> لا؛ الاختزال المفرط يضر بالوضوح. المهم البساطة المفهومة.</li>
+                            <li><strong>كيف أقيس وضوح الشيفرة عملياً؟</strong> بمدى سرعة مطور آخر في فهم وظيفتها وموضع التعديل المطلوب دون سؤال كاتبها.</li>
+                            <li><strong>هل تؤخر الكتابة النظيفة المبرمج؟</strong> قد تستغرق دقائق إضافية للتسمية والتنظيم، لكنها توفر ساعات وأياماً في التصحيح والتطوير اللاحق.</li>
+                            <li><strong>هل تتغير المبادئ باختلاف لغة البرمجة؟</strong> الجوهر واحد (الوضوح، التسمية، عدم التكرار، صغر المسؤولية) مع اختلاف الأعراف الشكلية للغة.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. المحور الثاني -->
+            <section id="topic-2">
+                <span class="section-tag">المحور الثاني</span>
+                <h2>🏷️ 2. معايير تسمية المتغيرات والدوال والفئات (Naming)</h2>
+
+                <p>تخيّل كتاباً تعليمياً بلا عناوين فصول، وكل شخصياته تحمل أرقاماً مثل <span class="term">شخصية 1</span> و<span class="term">شخصية 2</span>! التسمية في الشيفرة هي أسرع طريق للفهم أو للارتباك. يجب أن يجيب الاسم عن: <strong>ما هذا؟ لماذا وُجد؟ وكيف يُستخدم؟</strong></p>
+
+                <h3>2.1 تسمية المتغيرات (أسماء دالة على المعلومة)</h3>
+                <p>تجنب الرموز العامة مثل <span class="term-en">x = 25</span> واختر اسماً يعكس السياق مثل <span class="term-en">student_count = 25</span> أو <span class="term-en">product_price = 25</span>.</p>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>الاسم الغامض ❌</th><th>الاسم الواضح ✅</th><th>لماذا الاسم الجديد أفضل؟</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="term-en">x</span></td><td><span class="term-en">student_count</span></td><td>يوضح فوراً أن القيمة تمثل عدد الطلاب.</td></tr>
+                            <tr><td><span class="term-en">d</span></td><td><span class="term-en">discount_amount</span></td><td>يميز مبلغ الخصم عن التاريخ (<span class="term-en">date</span>) أو البيانات (<span class="term-en">data</span>).</td></tr>
+                            <tr><td><span class="term-en">n</span></td><td><span class="term-en">customer_name</span></td><td>يؤكد أنه اسم نصي وليس رقماً (<span class="term-en">number</span>).</td></tr>
+                            <tr><td><span class="term-en">v</span></td><td><span class="term-en">invoice_total</span></td><td>يحدد بوضوح أنه إجمالي الفاتورة المالية.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <h4>ℹ️ استثناء مقبول</h4>
+                    <p style="margin-bottom:0;">استخدام أسماء مختصرة مثل <span class="term-en">i</span> أو <span class="term-en">x</span> مقبول فقط في المعادلات الرياضية المعروفة أو عدادات الحلقات القصيرة جداً (<span class="term-en">for i in range(5)</span>) حيث يكون السياق بديهياً.</p>
+                </div>
+
+                <h3>2.2 تسمية الدوال (أفعال) والفئات (أسماء كيانات)</h3>
+                <p>تبدأ <strong>الدوال</strong> بأفعال تصف عملها (<span class="term-en">calculate_average()</span>، <span class="term-en">validate_email()</span>، <span class="term-en">send_notification()</span>، <span class="term-en">get_student_by_id()</span>)، بينما تحمل <strong>الفئات</strong> أسماء كيانات (<span class="term-en">Student</span>، <span class="term-en">Invoice</span>، <span class="term-en">PaymentProcessor</span>، <span class="term-en">StudentReport</span>).</p>
+
+                <div class="code-compare-grid">
+                    <div class="code-window good-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>Java — دالة بفعل واضح وحماية القسمة</span></div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">public static double</span> calculateAverage(<span class="code-kw">double</span> totalGrades, <span class="code-kw">int</span> studentCount) {
+    <span class="code-kw">if</span> (studentCount == <span class="code-num">0</span>) {
+        <span class="code-kw">return</span> <span class="code-num">0</span>;
+    }
+    <span class="code-kw">return</span> totalGrades / studentCount;
+}</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar">
+                            <div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>C++ — فئة باسم كيان (أفضل من Data)</span></div>
+                            <button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button>
+                        </div>
+                        <pre><span class="code-kw">class</span> Student {
+<span class="code-kw">public</span>:
+    string name;
+    <span class="code-kw">double</span> grade;
+};</pre>
+                    </div>
+                </div>
+
+                <h3>2.4 أعراف الكتابة الشائعة و 2.5 تجنب الأسماء المضللة</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><h4><span class="term-en">snake_case</span></h4><p>شائع في متغيرات ودوال <strong>Python</strong> (مثال: <span class="term-en">calculate_total</span>).</p></div>
+                    <div class="feature-card"><h4><span class="term-en">camelCase</span></h4><p>شائع لمتغيرات ودوال <strong>Java</strong> و<strong>JavaScript</strong> (مثال: <span class="term-en">calculateAverage</span>).</p></div>
+                    <div class="feature-card"><h4><span class="term-en">PascalCase</span></h4><p>شائع لأسماء الفئات في <strong>Java</strong> و<strong>C#</strong> وغيرها (مثال: <span class="term-en">StudentReport</span>).</p></div>
+                </div>
+                <p>هذه أعراف شائعة وليست قواعد جامدة عابرة لكل اللغات؛ والمهم اتباع دليل أسلوب المشروع (<span class="term-en">Style Guide</span>). واحذر <strong>الأسماء المضللة</strong> لأن الاسم الخاطئ يخدع المطور أكثر من الاسم المختصر!</p>
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ اسم مضلل (نص في اسم عددي)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre>student_count = <span class="code-str">"أحمد"</span></pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ اسم صادق ومطابق للبيانات</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre>student_name = <span class="code-str">"أحمد"</span></pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الثاني (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>متى يُسمح باستخدام حروف مثل i أو x؟</strong> في الحلقات القصيرة جداً أو المعادلات الرياضية المعروفة فقط.</li>
+                            <li><strong>لماذا تبدأ الدوال بأفعال؟</strong> لأن الدالة تمثل إجراءً أو حساباً يُنفَّذ، بينما المتغير والفئة يمثلان بيانات أو كيانات.</li>
+                            <li><strong>ما خطورة الاسم المضلل؟</strong> يزرع فهماً خاطئاً بثقة زائفة فيقود لتعديلات وافتراضات خاطئة.</li>
+                            <li><strong>هل اختيار أسلوب التسمية يؤثر على المترجم؟</strong> غالباً لا يمنع التشغيل، لكنه يلتزم بعرف اللغة ودليل المشروع ليسهل الفهم المشترك.</li>
+                            <li><strong>كيف أوحد أسماء مشروع غير منسق؟</strong> عبر اعتماد <span class="term-en">Style Guide</span> واضح في التسمية والالتزام به في كل إضافة وتنقيح.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. المحور الثالث -->
+            <section id="topic-3">
+                <span class="section-tag">المحور الثالث</span>
+                <h2>🔁 3. تقليل التكرار والتعقيد: مبدأ DRY</h2>
+
+                <p>ينص مبدأ <span class="term-en">DRY — Don't Repeat Yourself</span> على ألا يتكرر المنطق أو المعرفة دون حاجة بحيث يكون لها <strong>مصدر واحد واضح</strong> (ولا يُقصد به حظر أي تشابه لفظي عابر). لاحظ التوفير في <span class="term-en">Python</span> و<span class="term-en">JavaScript</span>:</p>
+
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ 3.1 المشكلة: تكرار معادلة 15%</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre>price1 = <span class="code-num">100</span>
+total1 = price1 + (price1 * <span class="code-num">0.15</span>)
+<span class="code-kw">print</span>(total1)
+
+price2 = <span class="code-num">200</span>
+total2 = price2 + (price2 * <span class="code-num">0.15</span>)
+<span class="code-kw">print</span>(total2)
+
+price3 = <span class="code-num">300</span>
+total3 = price3 + (price3 * <span class="code-num">0.15</span>)
+<span class="code-kw">print</span>(total3)</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ 3.2 الحل: Python (نسبة 15% مثال افتراضي)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> calculate_total_with_tax(price):
+    tax_rate = <span class="code-num">0.15</span>
+    <span class="code-kw">return</span> price + (price * tax_rate)
+
+<span class="code-kw">print</span>(calculate_total_with_tax(<span class="code-num">100</span>))  <span class="code-comment"># 115.0</span>
+<span class="code-kw">print</span>(calculate_total_with_tax(<span class="code-num">200</span>))  <span class="code-comment"># 230.0</span>
+<span class="code-kw">print</span>(calculate_total_with_tax(<span class="code-num">300</span>))  <span class="code-comment"># 345.0</span></pre>
+                    </div>
+                </div>
+
+                <div class="code-window good-code">
+                    <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ نفس المبدأ بلغة JavaScript</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                    <pre><span class="code-kw">function</span> calculateTotalWithTax(price) {
+    <span class="code-kw">const</span> taxRate = <span class="code-num">0.15</span>;
+    <span class="code-kw">return</span> price + (price * taxRate);
+}
+
+console.log(calculateTotalWithTax(<span class="code-num">100</span>)); <span class="code-comment">// 115</span>
+console.log(calculateTotalWithTax(<span class="code-num">200</span>)); <span class="code-comment">// 230</span>
+console.log(calculateTotalWithTax(<span class="code-num">300</span>)); <span class="code-comment">// 345</span></pre>
+                </div>
+
+                <h3>3.3 تقليل التداخل والتعقيد الشرطي و 3.4 متى لا ندمج المتشابه؟</h3>
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ تداخل شرطي زائد</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> can_register(age, has_permission):
+    <span class="code-kw">if</span> age &gt;= <span class="code-num">18</span>:
+        <span class="code-kw">if</span> has_permission:
+            <span class="code-kw">return True</span>
+        <span class="code-kw">else</span>:
+            <span class="code-kw">return False</span>
+    <span class="code-kw">else</span>:
+        <span class="code-kw">return False</span></pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ تبسيط مباشر (عند تطابق قاعدة العمل)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> can_register(age, has_permission):
+    <span class="code-kw">return</span> age &gt;= <span class="code-num">18</span> <span class="code-kw">and</span> has_permission</pre>
+                    </div>
+                </div>
+
+                <div class="info-box danger-box">
+                    <h4>⚠️ متى يكون توحيد الشيفرة المتشابهة قراراً خاطئاً؟ (3.4)</h4>
+                    <p style="margin-bottom:0;">إذا تشابهت معادلة <strong>خصم الطالب</strong> و<strong>خصم الموظف</strong> اليوم (10% مثلاً)، فلا تدمجهما قسراً في دالة واحدة بعلم شرطي! لأن كل منهما يمثل <strong>سياسة عمل مستقلة</strong> قد تتغير منفصلة مستقبلاً، ودمجهما يخلق اقتراناً ضاراً وتعقيداً غير مبرر.</p>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الثالث (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>هل يعني DRY منع تكرار أي حرف أو جملة؟</strong> لا؛ بل منع تكرار المنطق والقواعد التي يجب أن يكون لها مصدر موثوق واحد.</li>
+                            <li><strong>ما خطر نسخ نفس المعادلة في أكثر من مكان؟</strong> نسيان تحديث بعض النسخ عند تغير القاعدة فتظهر نتائج متناقضة.</li>
+                            <li><strong>متى أترك شيفرتين متشابهتين منفصلتين؟</strong> عند اختلاف سبب تغيرهما وقواعد العمل الخاصة بكل منهما (مثل خصم الطالب مقابل خصم الموظف).</li>
+                            <li><strong>هل اختصار الشرط إلى سطر واحد أفضل دائماً؟</strong> فقط إذا بقي واضحاً ومباشراً؛ فالوضوح أولى من الاختصار الزائد.</li>
+                            <li><strong>كيف يدعم DRY الاختبار وإعادة الاستخدام؟</strong> تجميع المنطق في دالة واحدة يتيح اختبارها وإعادة استدعائها بأمان.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. المحور الرابع -->
+            <section id="topic-4">
+                <span class="section-tag">المحور الرابع</span>
+                <h2>🧩 4. مبدأ المسؤولية الواحدة (Single Responsibility Principle - SRP)</h2>
+
+                <p>يُعد مبدأ <span class="term-en">SRP</span> أول مبادئ <span class="term-en">SOLID</span>: ينبغي أن يكون لكل وحدة أو فئة <strong>مسؤولية واضحة محددة وسبب منطقي واحد للتغيير</strong> (وللدوال: مهمة رئيسية واضحة). تخيّل موظفاً واحداً يمسك المحاسبة + الاستقبال + الصيانة + الرواتب؛ أي تغيير في أحدها يربك كل البقية!</p>
+
+                <div class="figure-box">
+                    <svg viewBox="0 0 820 230" width="820" height="230" role="img" aria-label="تطبيق مبدأ المسؤولية الواحدة SRP">
+                        <rect x="480" y="32" width="310" height="162" rx="12" fill="#fff5f5" stroke="#e53e3e" stroke-width="2"/>
+                        <text x="635" y="62" fill="#c53030" text-anchor="middle" font-size="15" font-weight="bold">قبل: StudentManager (فئة متضخمة)</text>
+                        <rect x="505" y="80" width="260" height="28" rx="6" fill="#fed7d7"/>
+                        <text x="635" y="99" fill="#742a2a" text-anchor="middle" font-size="12" font-weight="bold">حساب المتوسط + إرسال بريد + حفظ تقرير</text>
+                        <text x="635" y="136" fill="#9b2c2c" text-anchor="middle" font-size="12">3 أسباب مختلفة للتغيير في مكان واحد</text>
+                        <text x="635" y="160" fill="#9b2c2c" text-anchor="middle" font-size="12">ترابط مرتفع وصعوبة في الاختبار</text>
+
+                        <line x1="470" y1="115" x2="395" y2="115" stroke="#38a169" stroke-width="4"/>
+                        <polygon points="395,107 378,115 395,123" fill="#38a169"/>
+                        <text x="428" y="98" fill="#2f855a" text-anchor="middle" font-size="13" font-weight="bold">تفكيك SRP</text>
+
+                        <g transform="translate(20,22)">
+                            <rect width="340" height="52" rx="9" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                            <text x="170" y="23" fill="#1a365d" text-anchor="middle" font-size="13" font-weight="bold">GradeCalculator — حساب الدرجات</text>
+                            <text x="170" y="41" fill="#2b6cb0" text-anchor="middle" font-size="11">سبب التغيير: سياسة الحساب فقط</text>
+                        </g>
+                        <g transform="translate(20,89)">
+                            <rect width="340" height="52" rx="9" fill="#f0fff4" stroke="#38a169" stroke-width="2"/>
+                            <text x="170" y="23" fill="#22543d" text-anchor="middle" font-size="13" font-weight="bold">EmailService — الإشعارات البريدية</text>
+                            <text x="170" y="41" fill="#2f855a" text-anchor="middle" font-size="11">سبب التغيير: مزود أو صيغة البريد</text>
+                        </g>
+                        <g transform="translate(20,156)">
+                            <rect width="340" height="52" rx="9" fill="#faf5ff" stroke="#805ad5" stroke-width="2"/>
+                            <text x="170" y="23" fill="#44337a" text-anchor="middle" font-size="13" font-weight="bold">ReportRepository — حفظ التقارير</text>
+                            <text x="170" y="41" fill="#6b46c1" text-anchor="middle" font-size="11">سبب التغيير: آلية التخزين / القاعدة</text>
+                        </g>
+                    </svg>
+                    <div class="figure-caption">شكل (2): التحول من فئة متعددة المهام إلى 3 وحدات متماسكة وفق SRP</div>
+                </div>
+
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ قبل: StudentManager (خلط مسؤوليات)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">class</span> StudentManager:
+    <span class="code-kw">def</span> calculate_average(self, grades):
+        <span class="code-kw">return</span> sum(grades) / len(grades)  <span class="code-comment"># ينهار على []!</span>
+
+    <span class="code-kw">def</span> send_email(self, email, message):
+        <span class="code-kw">print</span>(f<span class="code-str">"Sending email to {email}: {message}"</span>)
+
+    <span class="code-kw">def</span> save_report(self, report):
+        <span class="code-kw">print</span>(<span class="code-str">"Saving report:"</span>, report)</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ بعد: 3 فئات متخصصة + حماية القائمة الفارغة</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">class</span> GradeCalculator:
+    <span class="code-kw">def</span> calculate_average(self, grades):
+        <span class="code-kw">if not</span> grades:
+            <span class="code-kw">return</span> <span class="code-num">0</span>
+        <span class="code-kw">return</span> sum(grades) / len(grades)
+
+<span class="code-kw">class</span> EmailService:
+    <span class="code-kw">def</span> send_email(self, email, message):
+        <span class="code-kw">print</span>(f<span class="code-str">"Sending email to {email}: {message}"</span>)
+
+<span class="code-kw">class</span> ReportRepository:
+    <span class="code-kw">def</span> save_report(self, report):
+        <span class="code-kw">print</span>(<span class="code-str">"Saving report:"</span>, report)</pre>
+                    </div>
+                </div>
+
+                <div class="info-box dev-box">
+                    <h4>✨ الفوائد الخمس لتطبيق SRP وتنبيه الاعتدال</h4>
+                    <p>يمنحك SRP: (1) تقليل الترابط (<span class="term-en">Coupling</span>)، (2) اختبارات مركزة في عزلة، (3) تعديلات أكثر أماناً، (4) وضوح مكان الميزات الجديدة، (5) سهولة تقسيم العمل بين الفريق.</p>
+                    <p style="margin-bottom:0;"><strong>ملاحظة:</strong> أوامر الطباعة هنا للتبسيط التعليمي (في الإنتاج توجد اتصالات بريدية وقواعد بيانات ومعالجة أخطاء)، كما يجب تجنب الإفراط في تقسيم كل سطر إلى فئة مستقلة.</p>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الرابع (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>هل تضم الفئة في SRP دالة واحدة فقط؟</strong> لا؛ بل كل الدوال المرتبطة بالمسؤولية المتماسكة نفسها.</li>
+                            <li><strong>ما المقصود بسبب واحد للتغيير؟</strong> تغير الفئة استجابةً لجهة أو سياسة عمل واحدة فقط دون تأثرها ببقية الطبقات.</li>
+                            <li><strong>ما أضرار المبالغة في تفكيك الفئات؟</strong> تشتيت المنطق وكثرة الملفات وتعقيد التتبع بلا فائدة حقيقية.</li>
+                            <li><strong>كيف يسرّع SRP كتابة اختبارات الوحدة؟</strong> يُمكّنك من اختبار الحساب المالي أو الدرجات دون الحاجة لتهيئة خادم بريد أو قاعدة بيانات.</li>
+                            <li><strong>ما موقع SRP ضمن SOLID؟</strong> هو الحرف الأول S وأساس التنظيم الكائني النظيف.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. المحور الخامس -->
+            <section id="topic-5">
+                <span class="section-tag">المحور الخامس</span>
+                <h2>⚡ 5. كتابة دوال واضحة ومحددة المسؤولية</h2>
+
+                <p>الدالة الواضحة تؤدي مهمة محددة، تفصل المنطق الحسابي عن الطباعة والتخزين، وتكشف أي خلل منطقي مخفي. تأمل المثال التالي لحساب طلب شراء:</p>
+
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ دالة متضخمة + ثغرة منطقية خفية</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> process_order(order):
+    total = <span class="code-num">0</span>
+    <span class="code-kw">for</span> item <span class="code-kw">in</span> order[<span class="code-str">"items"</span>]:
+        total += item[<span class="code-str">"price"</span>] * item[<span class="code-str">"qty"</span>]
+    <span class="code-kw">if</span> order[<span class="code-str">"customer_type"</span>] == <span class="code-str">"student"</span>:
+        total = total * <span class="code-num">0.90</span>
+    <span class="code-kw">if</span> order[<span class="code-str">"total"</span>] &gt; <span class="code-num">500</span>:  <span class="code-err"># ⚠️ خطأ: تفحص order["total"] لا total!</span>
+        total = total * <span class="code-num">0.95</span>
+    <span class="code-kw">print</span>(<span class="code-str">"Saving order to database..."</span>)
+    <span class="code-kw">print</span>(<span class="code-str">"Sending confirmation email..."</span>)
+    <span class="code-kw">return</span> total</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ بعد: دوال مقسمة بمسؤوليات صافية</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> calculate_subtotal(items):
+    <span class="code-kw">return</span> sum(item[<span class="code-str">"price"</span>] * item[<span class="code-str">"qty"</span>] <span class="code-kw">for</span> item <span class="code-kw">in</span> items)
+
+<span class="code-kw">def</span> apply_student_discount(total, customer_type):
+    <span class="code-kw">return</span> total * <span class="code-num">0.90</span> <span class="code-kw">if</span> customer_type == <span class="code-str">"student"</span> <span class="code-kw">else</span> total
+
+<span class="code-kw">def</span> apply_large_order_discount(total):
+    <span class="code-kw">return</span> total * <span class="code-num">0.95</span> <span class="code-kw">if</span> total &gt; <span class="code-num">500</span> <span class="code-kw">else</span> total
+
+<span class="code-kw">def</span> calculate_order_total(order):
+    subtotal = calculate_subtotal(order[<span class="code-str">"items"</span>])
+    after_student = apply_student_discount(subtotal, order[<span class="code-str">"customer_type"</span>])
+    <span class="code-kw">return</span> apply_large_order_discount(after_student)</pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🔎 دقة هندسية: الخلل المنطقي الخفي وسياسة الخصم المتسلسل</h4>
+                    <p style="margin-bottom:0.5rem;">في الدالة الأولى كان السطر <span class="term-en">order["total"] &gt; 500</span> يفحص قيمة قديمة مخزنة في القاموس لا <span class="term-en">total</span> المحسوب! وبعد التفكيك طُبقت سياسة الخصم المتسلسل بوضوح (حساب خصم الطلب الكبير على المبلغ بعد خصم الطالب) مع عزل أوامر الطباعة والحفظ.</p>
+                    <p style="margin-bottom:0;">كما تُعد دالة <span class="term-en">calculateAverage(double total, int count)</span> في Java (بإرجاع <span class="term-en">0</span> عند <span class="term-en">count &lt;= 0</span>) مثالاً تبسيطياً، بينما قد ترفع الأنظمة الحقيقية استثناءً للمدخلات السالبة.</p>
+                </div>
+
+                <h3>🚨 5 علامات تحذيرية تدل أن الدالة أكبر من اللازم</h3>
+                <ul class="content-list">
+                    <li>تجمع بين مهام غير مترابطة (حساب + طباعة + تخزين + بريد).</li>
+                    <li>تحوي تداخلات شرطية وحلقات متعددة المستويات.</li>
+                    <li>تحتاج لتعليقات داخلية مثل "الجزء الأول..." و"الجزء الثاني..." لتقسيمها نظرياً.</li>
+                    <li>يصعب اختبار خطوة حسابية واحدة منها بمعزل عن البقية.</li>
+                    <li>تضم كتلاً يمكن استخراجها لدوال بأسماء واضحة (دون التقيد برقم أسطر جامد).</li>
+                </ul>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الخامس (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>هل يوجد عدد أسطر ثابت لا يجوز تجاوزه في الدالة؟</strong> لا؛ المعيار هو التماسك والوضوح وتحديد المسؤولية.</li>
+                            <li><strong>لماذا نفصل الحساب عن الطباعة والتخزين؟</strong> لإمكانية إعادة استخدام منطق الحساب في الاختبارات أو واجهات مختلفة.</li>
+                            <li><strong>كيف أختار ما أستخرجه لدالة جديدة؟</strong> كل خطوة فرعية لها هدف مستقل يمكن تسميتها بفعل معبّر يرفع وضوح الدالة الأم.</li>
+                            <li><strong>ما أثر الإفراط في تقطيع الدوال السطرية؟</strong> يصبح القارئ مضطراً للقفز بين عشرات الدوال لتتبع خطوة تافهة.</li>
+                            <li><strong>ما فائدة فحص <span class="term-en">count &lt;= 0</span> في أول الدالة؟</strong> حماية البرنامج من القسمة على صفر وتوضيح الحالات الحدية مبكراً.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. المحور السادس -->
+            <section id="topic-6">
+                <span class="section-tag">المحور السادس</span>
+                <h2>👃 6. اكتشاف الروائح البرمجية (Code Smells)</h2>
+
+                <p><strong>الرائحة البرمجية <span class="term-en">Code Smell</span>:</strong> تشبه الشق الظاهر على جدار مبنى سليم ظاهرياً؛ لا تعني وجود خطأ نحوي يوقف التشغيل الآن، لكنها تشير إلى ضعف محتمل في البنية والتصميم يضاعف صعوبة الصيانة مستقبلاً.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>الرائحة البرمجية</th><th>المظهر</th><th>المشكلة المترتبة</th><th>العلاج المقترح</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. الدالة الطويلة</strong><br><span class="term-en">Long Method</span></td><td>دالة تؤدي مهام متفرقة كثيرة.</td><td>صعوبة الفهم والاختبار الجزئي.</td><td>استخراج دوال صغيرة مركزة.</td></tr>
+                            <tr><td><strong>2. الشيفرة المكررة</strong><br><span class="term-en">Duplicated Code</span></td><td>نسخ نفس المنطق في مواضع عدة.</td><td>خطأ التعديل وتناقض السلوك.</td><td>التوحيد في دالة مشتركة (<span class="term-en">DRY</span>).</td></tr>
+                            <tr><td><strong>3. كثرة المعاملات</strong><br><span class="term-en">Long Parameter List</span></td><td>استقبال الدالة 6–10 معاملات.</td><td>نسيان الترتيب وصعوبة الاستدعاء.</td><td>التجميع في كائن أو تقسيم الواجهة.</td></tr>
+                            <tr><td><strong>4. الفئة المتضخمة</strong><br><span class="term-en">Large Class</span></td><td>فئة تجمع مسؤوليات متباعدة.</td><td>تضخم الترابط وهشاشة التعديلات.</td><td>توزيع المهام وفق <span class="term-en">SRP</span>.</td></tr>
+                            <tr><td><strong>5. التداخل العميق</strong><br><span class="term-en">Deep Nesting</span></td><td>شروط وحلقات متراكمة للداخل.</td><td>إرهاق ذهني وفقدان المسار.</td><td>العودة المبكرة (<span class="term-en">Guard Clauses</span>).</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="figure-box">
+                    <svg viewBox="0 0 820 195" width="820" height="195" role="img" aria-label="أبرز 5 روائح برمجية وحلولها">
+                        <rect x="18" y="20" width="144" height="155" rx="10" fill="#fff5f5" stroke="#e53e3e" stroke-width="1.8"/>
+                        <text x="90" y="48" fill="#c53030" text-anchor="middle" font-size="13" font-weight="bold">Long Method</text>
+                        <text x="90" y="75" fill="#2d3748" text-anchor="middle" font-size="12">دالة طويلة جداً</text>
+                        <line x1="34" y1="95" x2="146" y2="95" stroke="#feb2b2"/>
+                        <text x="90" y="122" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">الحل:</text>
+                        <text x="90" y="144" fill="#22543d" text-anchor="middle" font-size="11">Extract Function</text>
+
+                        <rect x="178" y="20" width="144" height="155" rx="10" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.8"/>
+                        <text x="250" y="48" fill="#c05621" text-anchor="middle" font-size="13" font-weight="bold">Duplicated Code</text>
+                        <text x="250" y="75" fill="#2d3748" text-anchor="middle" font-size="12">منطق مكرر</text>
+                        <line x1="194" y1="95" x2="306" y2="95" stroke="#fbd38d"/>
+                        <text x="250" y="122" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">الحل:</text>
+                        <text x="250" y="144" fill="#22543d" text-anchor="middle" font-size="11">تطبيق مبدأ DRY</text>
+
+                        <rect x="338" y="20" width="144" height="155" rx="10" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.8"/>
+                        <text x="410" y="48" fill="#2b6cb0" text-anchor="middle" font-size="13" font-weight="bold">Long Params</text>
+                        <text x="410" y="75" fill="#2d3748" text-anchor="middle" font-size="12">كثرة المعاملات</text>
+                        <line x1="354" y1="95" x2="466" y2="95" stroke="#bee3f8"/>
+                        <text x="410" y="122" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">الحل:</text>
+                        <text x="410" y="144" fill="#22543d" text-anchor="middle" font-size="11">تجميع في كائن</text>
+
+                        <rect x="498" y="20" width="144" height="155" rx="10" fill="#faf5ff" stroke="#805ad5" stroke-width="1.8"/>
+                        <text x="570" y="48" fill="#6b46c1" text-anchor="middle" font-size="13" font-weight="bold">Large Class</text>
+                        <text x="570" y="75" fill="#2d3748" text-anchor="middle" font-size="12">فئة متضخمة</text>
+                        <line x1="514" y1="95" x2="626" y2="95" stroke="#d6bcfa"/>
+                        <text x="570" y="122" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">الحل:</text>
+                        <text x="570" y="144" fill="#22543d" text-anchor="middle" font-size="11">فصل وفق SRP</text>
+
+                        <rect x="658" y="20" width="144" height="155" rx="10" fill="#f0fff4" stroke="#38a169" stroke-width="1.8"/>
+                        <text x="730" y="48" fill="#2f855a" text-anchor="middle" font-size="13" font-weight="bold">Deep Nesting</text>
+                        <text x="730" y="75" fill="#2d3748" text-anchor="middle" font-size="12">تداخل شرطي عميق</text>
+                        <line x1="674" y1="95" x2="786" y2="95" stroke="#9ae6b4"/>
+                        <text x="730" y="122" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">الحل:</text>
+                        <text x="730" y="144" fill="#22543d" text-anchor="middle" font-size="11">Early Return</text>
+                    </svg>
+                    <div class="figure-caption">شكل (3): خارطة الروائح البرمجية الخمس الشائعة وكيفية معالجتها</div>
+                </div>
+
+                <h3>6.2 تسطيح التداخل العميق بالعودة المبكرة (<span class="term-en">Early Return</span>) في JavaScript</h3>
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ تداخل شرطي عميق (JS)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">function</span> canAccess(user) {
+    <span class="code-kw">if</span> (user) {
+        <span class="code-kw">if</span> (user.isActive) {
+            <span class="code-kw">if</span> (user.isAdmin) {
+                <span class="code-kw">return true</span>;
+            }
+        }
+    }
+    <span class="code-kw">return false</span>;
+}</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ مسطح via Guard Clauses (JS)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">function</span> canAccess(user) {
+    <span class="code-kw">if</span> (!user) <span class="code-kw">return false</span>;
+    <span class="code-kw">if</span> (!user.isActive) <span class="code-kw">return false</span>;
+    <span class="code-kw">return Boolean</span>(user.isAdmin);
+}</pre>
+                    </div>
+                </div>
+                <p style="font-size:0.9rem; color:var(--text-muted);"><em>ملاحظة أمنية:</em> المثال مبسط لتوضيح بنية <span class="term-en">Early Return</span>؛ التحقق الإنتاجي يعتمد سياسة صلاحيات متكاملة.</p>
+
+                <div class="interactive-widget">
+                    <h4 style="margin-top:0; color:var(--primary);">🕵️‍♂️ مختبر تفاعلي: كاشف الروائح البرمجية (اختبر تشخيصك)</h4>
+                    <div id="smell-detector-app"></div>
+                </div>
+
+                <div class="info-box">
+                    <h4>🎯 6.3 أولوية المعالجة (Prioritization)</h4>
+                    <p style="margin-bottom:0;">نُوازن بين <strong>الأثر الفعلي وتكلفة الإصلاح</strong>: فالشيفرة القديمة المستقرة التي لا تتغير ولا تسبب أعطالاً أولويتها منخفضة مقارنة بالوحدات كثيرة التعديل وتكرار الأخطاء.</p>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور السادس (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>هل الرائحة البرمجية خطأ يوقف التشغيل؟</strong> لا؛ يعمل البرنامج لكنها مؤشر ضعف بنيوي يصعب الصيانة.</li>
+                            <li><strong>لماذا يتعب التداخل العميق القارئ؟</strong> لأنه يُلزم الذهن بالاحتفاظ بعدة شروط متداخلة معاً لفهم شرط التنفيذ.</li>
+                            <li><strong>كيف تعالج العودة المبكرة الشروط؟</strong> تستبعد الحالات المستثناة في الأعلى فيسير المسار السليم بشكل مستقيم.</li>
+                            <li><strong>كيف نحل كثرة المعاملات؟</strong> نجمع المترابط منها في كائن <span class="term-en">Parameter Object</span> أو نقسم الدالة.</li>
+                            <li><strong>ما معيار ترتيب أولوية التنظيف؟</strong> البدء بالشيفرة كثيرة التعديل والأعطال بدلاً من الشيفرة الثابتة غير المستخدمة في التطوير الحالي.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. المحور السابع -->
+            <section id="topic-7">
+                <span class="section-tag">المحور السابع</span>
+                <h2>🛠️ 7. إعادة الهيكلة دون تغيير السلوك الوظيفي (Refactoring)</h2>
+
+                <p><strong>إعادة الهيكلة <span class="term-en">Refactoring</span>:</strong> تحسين التصميم الداخلي للشيفرة لتصبح أوضح وأسهل في الصيانة <strong>مع الحفاظ على السلوك الخارجي المقصود نفسه</strong>.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>العملية</th><th>الهدف الرئيسي</th><th>هل يتغير السلوك الوظيفي؟</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>إعادة الهيكلة (Refactoring)</strong></td><td>تحسين التصميم والبنية الداخلية</td><td>لا يتغير السلوك المقصود.</td></tr>
+                            <tr><td><strong>إصلاح الأخطاء (Bug Fixing)</strong></td><td>تصحيح خلل أو مخرج خاطئ</td><td>نعم، يتبدل الخاطئ إلى صحيح.</td></tr>
+                            <tr><td><strong>إضافة ميزة (Feature)</strong></td><td>تقديم وظيفة جديدة</td><td>نعم، تتوسع قدرات النظام.</td></tr>
+                            <tr><td><strong>إعادة الكتابة (Rewrite)</strong></td><td>استبدال النظام كلياً من الصفر</td><td>قد يتغير جذرياً ومخاطره عالية.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ قبل: لا تحمي [] ووظيفتها مدمجة</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> get_average(grades):
+    <span class="code-kw">return</span> sum(grades) / len(grades)</pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ بعد: استخراج المجموع + معالجة الفراغ</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-kw">def</span> calculate_total(grades):
+    <span class="code-kw">return</span> sum(grades)
+
+<span class="code-kw">def</span> calculate_average(grades):
+    <span class="code-kw">if not</span> grades:
+        <span class="code-kw">return</span> <span class="code-num">0</span>
+    <span class="code-kw">return</span> calculate_total(grades) / len(grades)
+
+<span class="code-kw">print</span>(calculate_average([<span class="code-num">80</span>, <span class="code-num">90</span>, <span class="code-num">100</span>]))  <span class="code-comment"># Output: 90.0</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box dev-box">
+                    <h4>🎓 ملاحظة علمية دقيقة: الفصل بين البنية والسلوك الحدي</h4>
+                    <p style="margin-bottom:0;">لاحظ أن إرجاع <span class="term-en">0</span> للقائمة الفارغة <span class="term-en">[]</span> بدل الانهيار يُعد <strong>تحسيناً سلوكياً لحالة حدية</strong> مدمجاً مع <strong>إعادة الهيكلة البنيوية</strong> (فصل <span class="term-en">calculate_total</span>). هندسياً يُفضَّل عزل خطوة تعديل السلوك عن خطوة إعادة الهيكلة الصرفة.</p>
+                </div>
+
+                <h3>🔄 محاكي خطوات إعادة الهيكلة الآمنة الخمس</h3>
+                <div class="stages-stepper" id="refactor-stepper">
+                    <button class="stage-btn active" onclick="showRefStep(0, this)">1. فهم الشيفرة</button>
+                    <button class="stage-btn" onclick="showRefStep(1, this)">2. كتابة الاختبارات</button>
+                    <button class="stage-btn" onclick="showRefStep(2, this)">3. خطوة صغيرة</button>
+                    <button class="stage-btn" onclick="showRefStep(3, this)">4. تشغيل الاختبارات</button>
+                    <button class="stage-btn" onclick="showRefStep(4, this)">5. المراجعة والتثبيت</button>
+                </div>
+                <div class="stage-panel" id="refactor-panel"></div>
+
+                <div class="figure-box">
+                    <svg viewBox="0 0 820 190" width="820" height="190" role="img" aria-label="خطوات إعادة الهيكلة الآمنة الخمس">
+                        <defs><marker id="arrRef" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#38a169"/></marker></defs>
+                        <g transform="translate(650,35)"><rect width="145" height="70" rx="10" fill="#1a365d"/><text x="72" y="28" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">1. فهم الشيفرة</text><text x="72" y="48" fill="#bfdbfe" text-anchor="middle" font-size="11">Understand</text></g>
+                        <line x1="650" y1="70" x2="625" y2="70" stroke="#38a169" stroke-width="2.5" marker-end="url(#arrRef)"/>
+                        <g transform="translate(495,35)"><rect width="125" height="70" rx="10" fill="#2b6cb0"/><text x="62" y="28" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">2. كتابة اختبارات</text><text x="62" y="48" fill="#dbeafe" text-anchor="middle" font-size="11">Write Tests</text></g>
+                        <line x1="495" y1="70" x2="470" y2="70" stroke="#38a169" stroke-width="2.5" marker-end="url(#arrRef)"/>
+                        <g transform="translate(335,35)"><rect width="130" height="70" rx="10" fill="#ed8936"/><text x="65" y="28" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">3. تعديل صغير</text><text x="65" y="48" fill="#fffaf0" text-anchor="middle" font-size="11">Small Step</text></g>
+                        <line x1="335" y1="70" x2="310" y2="70" stroke="#38a169" stroke-width="2.5" marker-end="url(#arrRef)"/>
+                        <g transform="translate(175,35)"><rect width="130" height="70" rx="10" fill="#38a169"/><text x="65" y="28" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">4. تشغيل الاختبار</text><text x="65" y="48" fill="#c6f6d5" text-anchor="middle" font-size="11">Run Tests</text></g>
+                        <line x1="175" y1="70" x2="150" y2="70" stroke="#38a169" stroke-width="2.5" marker-end="url(#arrRef)"/>
+                        <g transform="translate(15,35)"><rect width="130" height="70" rx="10" fill="#6b46c1"/><text x="65" y="28" fill="#ffffff" text-anchor="middle" font-size="13" font-weight="bold">5. مراجعة وتثبيت</text><text x="65" y="48" fill="#e9d8fd" text-anchor="middle" font-size="11">Commit</text></g>
+                        <path d="M 240 105 L 240 150 L 400 150 L 400 113" fill="none" stroke="#38a169" stroke-width="2.5" stroke-dasharray="5,4" marker-end="url(#arrRef)"/>
+                        <text x="410" y="172" fill="#2f855a" text-anchor="middle" font-size="12" font-weight="bold">كرر الخطوات 3 ← 4 بحجم صغير لضمان الأمان قبل تثبيت Git</text>
+                    </svg>
+                    <div class="figure-caption">شكل (4): حلقة إعادة الهيكلة الآمنة المدعومة باختبارات الوحدة</div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور السابع (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>ما الشرط الجوهري لإعادة الهيكلة؟</strong> حفظ السلوك الخارجي المقصود مع تحسين البنية الداخلية.</li>
+                            <li><strong>لماذا ننفذها بخطوات صغيرة؟</strong> لسهولة اكتشاف سبب أي تعطل فور وقوعه والتراجع الفوري.</li>
+                            <li><strong>متى نعيد الهيكلة؟</strong> قبل إضافة ميزة جديدة في وحدة معقدة أو بعد ملاحظة رائحة برمجية مؤثرة.</li>
+                            <li><strong>ما مخاطرة إعادة الهيكلة بلا اختبارات؟</strong> ارتفاع احتمال إدخال أخطاء صامتة دون كاشف سريع.</li>
+                            <li><strong>بماذا تختلف عن إعادة كتابة النظام؟</strong> التحسين التدريجي يُبقي النظام عاملاً بأمان، عكس الهدم والبناء من الصفر.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. المحور الثامن -->
+            <section id="topic-8">
+                <span class="section-tag">المحور الثامن</span>
+                <h2>📝 8. التعليقات والتوثيق: متى ولماذا نكتبهما؟</h2>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr><th>وجه المقارنة</th><th>التعليق (<span class="term-en">Comment</span>)</th><th>التوثيق (<span class="term-en">Documentation</span>)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>الموضع</strong></td><td>ملاحظة قصيرة داخل الكود (<span class="term-en">#</span> أو <span class="term-en">//</span>).</td><td>نصوص منظمة (<span class="term-en">Docstring</span>، <span class="term-en">README.md</span>، وثائق API).</td></tr>
+                            <tr><td><strong>الهدف الأساسي</strong></td><td>يوضح <strong>لماذا (<span class="term-en">Why</span>)</strong> كُتب هذا القرار أو التنبيه.</td><td>يوضح <strong>ماذا</strong> تفعل الوحدة، معاملاتها، وطريقة الاستخدام.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="code-compare-grid">
+                    <div class="code-window bad-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ تعليق زائد يكرر البديهيات</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-comment"># Add 1 to age</span>
+age = age + <span class="code-num">1</span></pre>
+                    </div>
+                    <div class="code-window good-code">
+                        <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ تعليق مفيد يشرح السبب (Why)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                        <pre><span class="code-comment"># نحتفظ بآخر محاولة فاشلة لأغراض التدقيق الأمني</span>
+record_failed_login_attempt(user_id)</pre>
+                    </div>
+                </div>
+
+                <div class="info-box danger-box">
+                    <h4>⚠️ تحذير: التعليق المتقادم أسوأ من غيابه!</h4>
+                    <p style="margin-bottom:0;">تعديل الشيفرة دون تحديث التعليق القديم فوقها يضلل المطور القادم! وتضم <span class="term-en">Python Docstrings</span> توثيقاً نظيفاً يُستعلم عنه مباشرة:</p>
+                </div>
+
+                <div class="code-window good-code">
+                    <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>Python Docstring — توثيق الدالة من الداخل</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                    <pre><span class="code-kw">def</span> calculate_average(grades):
+    <span class="code-str">"""احسب متوسط قائمة الدرجات. تعيد صفراً إذا كانت القائمة فارغة."""</span>
+    <span class="code-kw">if not</span> grades:
+        <span class="code-kw">return</span> <span class="code-num">0</span>
+    <span class="code-kw">return</span> sum(grades) / len(grades)</pre>
+                </div>
+
+                <h3>📋 6 أشياء يُنصح بتوثيقها في المشروع</h3>
+                <ol class="content-list">
+                    <li>الهدف العام للمشروع والمشكلة التي يعالجها.</li>
+                    <li>متطلبات التثبيت والبيئة والمكتبات.</li>
+                    <li>أوامر التشغيل والاختبار الأساسية.</li>
+                    <li>أغراض الدوال العامة ومعاملاتها ومخرجاتها (<span class="term-en">Docstrings</span>).</li>
+                    <li>الافتراضات والقيود والحالات الخاصة (مثل القائمة الفارغة).</li>
+                    <li>أسباب القرارات غير البديهية أو الأمنية والأدائية.</li>
+                </ol>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📌 أسئلة متوقعة في نهاية المحور الثامن (5 أسئلة وإجاباتها النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>هل كل تعليق داخل الكود مفيد؟</strong> لا؛ تكرار الكلام الواضح يُحدث ضوضاء بصرية.</li>
+                            <li><strong>ما أهم قاعدة لكتابة التعليق؟</strong> ركز على <em>لماذا</em> اتُّخذ القرار لا على ترجمة الجملة.</li>
+                            <li><strong>كيف أستغني عن تعليقات التقسيم داخل الدالة؟</strong> استخرج كل جزء إلى دالة صغيرة تحمل الاسم نفسه!</li>
+                            <li><strong>بماذا يختلف الـ Docstring عن #؟</strong> Docstring يوثق الدالة لبرمجيات التوثيق و<span class="term-en">help()</span>.</li>
+                            <li><strong>متى يجب حذف التعليق؟</strong> عند تعديل الشيفرة إذا لم يعد التعليق يصف الحقيقة أو أصبحت الشيفرة واضحة بذاتها.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. المختبر العملي -->
+            <section id="practical-lab">
+                <span class="section-tag">المختبر التطبيقي متعدد اللغات</span>
+                <h2>🧪 9. المختبر العملي المتكامل وعيادة تنقيح الشيفرة</h2>
+                <p>نطبق الآن جميع مبادئ المحاضرة على برنامج درجات، نكتب اختبارات الوحدة الآلية (<span class="term-en">unittest</span>)، ونستعرض المكافئات بلغات <span class="term-en">JavaScript</span> و<span class="term-en">Java</span> بجانب عيادة من 7 حالات سريعة:</p>
+
+                <div class="tabs-wrapper">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTab(event, 'lab-py', 'lab-group')">1. Python + unittest</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lab-js', 'lab-group')">2. JavaScript</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lab-java', 'lab-group')">3. Java</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lab-clinic', 'lab-group')">4. عيادة 7 حالات</button>
+                    </div>
+
+                    <div id="lab-py" class="tab-content lab-group active">
+                        <div class="code-compare-grid">
+                            <div class="code-window bad-code">
+                                <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>❌ الشيفرة الأولية المربكة</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                                <pre><span class="code-kw">def</span> f(x):
+    s = <span class="code-num">0</span>
+    <span class="code-kw">for</span> i <span class="code-kw">in</span> x:
+        s += i
+    a = s / len(x)
+    <span class="code-kw">if</span> a &gt;= <span class="code-num">50</span>:
+        <span class="code-kw">print</span>(<span class="code-str">"Pass"</span>)
+    <span class="code-kw">else</span>:
+        <span class="code-kw">print</span>(<span class="code-str">"Fail"</span>)
+    <span class="code-kw">return</span> a
+
+f([<span class="code-num">80</span>, <span class="code-num">70</span>, <span class="code-num">90</span>])</pre>
+                            </div>
+                            <div class="code-window good-code">
+                                <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ الملف المنقح: grades.py</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                                <pre><span class="code-kw">def</span> calculate_average(grades):
+    <span class="code-str">"""احسب متوسط قائمة الدرجات، وتعيد 0 إذا كانت فارغة."""</span>
+    <span class="code-kw">if not</span> grades:
+        <span class="code-kw">return</span> <span class="code-num">0</span>
+    <span class="code-kw">return</span> sum(grades) / len(grades)
+
+<span class="code-kw">def</span> determine_result(average):
+    <span class="code-str">"""حدد النتيجة: Pass إذا كان المتوسط 50 فأكثر."""</span>
+    <span class="code-kw">return</span> <span class="code-str">"Pass"</span> <span class="code-kw">if</span> average &gt;= <span class="code-num">50</span> <span class="code-kw">else</span> <span class="code-str">"Fail"</span>
+
+<span class="code-kw">def</span> main():
+    grades = [<span class="code-num">80</span>, <span class="code-num">70</span>, <span class="code-num">90</span>]
+    average = calculate_average(grades)
+    result = determine_result(average)
+    <span class="code-kw">print</span>(<span class="code-str">"Average:"</span>, average)  <span class="code-comment"># Average: 80.0</span>
+    <span class="code-kw">print</span>(<span class="code-str">"Result:"</span>, result)    <span class="code-comment"># Result: Pass</span>
+
+<span class="code-kw">if</span> __name__ == <span class="code-str">"__main__"</span>:
+    main()</pre>
+                            </div>
+                        </div>
+
+                        <div class="code-window good-code">
+                            <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>✅ ملف اختبارات الوحدة: test_grades.py (التشغيل: python -m unittest -v)</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                            <pre><span class="code-kw">import</span> unittest
+<span class="code-kw">from</span> grades <span class="code-kw">import</span> calculate_average, determine_result
+
+<span class="code-kw">class</span> TestGrades(unittest.TestCase):
+    <span class="code-kw">def</span> test_average(self):
+        self.assertEqual(calculate_average([<span class="code-num">80</span>, <span class="code-num">70</span>, <span class="code-num">90</span>]), <span class="code-num">80</span>)
+
+    <span class="code-kw">def</span> test_empty_grades(self):
+        self.assertEqual(calculate_average([]), <span class="code-num">0</span>)
+
+    <span class="code-kw">def</span> test_pass(self):
+        self.assertEqual(determine_result(<span class="code-num">80</span>), <span class="code-str">"Pass"</span>)
+
+    <span class="code-kw">def</span> test_fail(self):
+        self.assertEqual(determine_result(<span class="code-num">40</span>), <span class="code-str">"Fail"</span>)
+
+<span class="code-kw">if</span> __name__ == <span class="code-str">"__main__"</span>:
+    unittest.main()</pre>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>🧪 تذكير منهجي حول الاختبارات</h4>
+                            <p style="margin-bottom:0;">نجاح الاختبارات الأربعة يؤكد عمل الحالات المختبرة فقط؛ أما في المشاريع الحقيقية فيضاف التحقق من صحة المدخلات (رفض القيم السالبة أو المتجاوزة للنطاق).</p>
+                        </div>
+                    </div>
+
+                    <div id="lab-js" class="tab-content lab-group">
+                        <div class="code-window good-code">
+                            <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>grades.js — التطبيق النظيف في JavaScript</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                            <pre><span class="code-kw">function</span> calculateAverage(grades) {
+    <span class="code-kw">if</span> (!grades || grades.length === <span class="code-num">0</span>) {
+        <span class="code-kw">return</span> <span class="code-num">0</span>;
+    }
+    <span class="code-kw">const</span> total = grades.reduce((sum, grade) =&gt; sum + grade, <span class="code-num">0</span>);
+    <span class="code-kw">return</span> total / grades.length;
+}
+
+<span class="code-kw">function</span> determineResult(average) {
+    <span class="code-kw">return</span> average &gt;= <span class="code-num">50</span> ? <span class="code-str">"Pass"</span> : <span class="code-str">"Fail"</span>;
+}
+
+<span class="code-kw">const</span> grades = [<span class="code-num">80</span>, <span class="code-num">70</span>, <span class="code-num">90</span>];
+<span class="code-kw">const</span> average = calculateAverage(grades);
+console.log(<span class="code-str">"Average:"</span>, average);               <span class="code-comment">// 80</span>
+console.log(<span class="code-str">"Result:"</span>, determineResult(average)); <span class="code-comment">// Pass</span></pre>
+                        </div>
+                    </div>
+
+                    <div id="lab-java" class="tab-content lab-group">
+                        <div class="code-window good-code">
+                            <div class="code-window-bar"><div class="code-bar-left"><span class="code-dots"><span class="code-dot" style="background:#ef4444;"></span><span class="code-dot" style="background:#f59e0b;"></span><span class="code-dot" style="background:#10b981;"></span></span><span>GradeCalculator.java — التطبيق النظيف في Java</span></div><button class="copy-code-btn" onclick="copyCode(this)">نسخ الشيفرة</button></div>
+                            <pre><span class="code-kw">public class</span> GradeCalculator {
+    <span class="code-kw">public static double</span> calculateAverage(<span class="code-kw">double</span>[] grades) {
+        <span class="code-kw">if</span> (grades == <span class="code-kw">null</span> || grades.length == <span class="code-num">0</span>) {
+            <span class="code-kw">return</span> <span class="code-num">0</span>;
+        }
+        <span class="code-kw">double</span> total = <span class="code-num">0</span>;
+        <span class="code-kw">for</span> (<span class="code-kw">double</span> grade : grades) {
+            total += grade;
+        }
+        <span class="code-kw">return</span> total / grades.length;
+    }
+
+    <span class="code-kw">public static</span> String determineResult(<span class="code-kw">double</span> average) {
+        <span class="code-kw">return</span> average &gt;= <span class="code-num">50</span> ? <span class="code-str">"Pass"</span> : <span class="code-str">"Fail"</span>;
+    }
+
+    <span class="code-kw">public static void</span> main(String[] args) {
+        <span class="code-kw">double</span>[] grades = {<span class="code-num">80</span>, <span class="code-num">70</span>, <span class="code-num">90</span>};
+        <span class="code-kw">double</span> avg = calculateAverage(grades);
+        System.out.println(<span class="code-str">"Average: "</span> + avg);
+        System.out.println(<span class="code-str">"Result: "</span> + determineResult(avg));
+    }
+}</pre>
+                        </div>
+                    </div>
+
+                    <div id="lab-clinic" class="tab-content lab-group">
+                        <p><strong>عيادة الأمثلة السريعة (7 حالات تحويل مباشر):</strong> اضغط على أي بطاقة لمعاينة الكود السيئ ← التشخيص ← النسخة النظيفة.</p>
+                        <div class="sim-btn-row" id="clinic-btn-row"></div>
+                        <div class="sim-output" id="clinic-panel"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. الأدوات والقاموس والمراجع -->
+            <section id="tools-references">
+                <span class="section-tag">الأدوات والقاموس والمراجع</span>
+                <h2>🧰 10. الأدوات المساندة، قاموس المصطلحات، والمراجع العلمية</h2>
+
+                <h3>10.1 الأدوات الخمس المساعدة لجودة الشيفرة</h3>
+                <div class="cards-grid">
+                    <div class="feature-card"><h4>1. VS Code (<span class="term-en">code.visualstudio.com</span>)</h4><p>إعادة تسمية الرموز الذكية (<span class="term-en">F2</span>) والتنقل بين الدوال واستضافة الإضافات.</p></div>
+                    <div class="feature-card"><h4>2. Git (<span class="term-en">git-scm.com</span>)</h4><p>حفظ نقاط أمان (<span class="term-en">Commits</span>) قبل وبعد كل خطوة إعادة هيكلة للتراجع الفوري عند اللزوم.</p></div>
+                    <div class="feature-card"><h4>3. Ruff &amp; Prettier</h4><p>التنسيق التلقائي الموحد وكشف المتغيرات غير المستخدمة في Python وJavaScript.</p></div>
+                    <div class="feature-card"><h4>4. SonarQube for IDE (SonarLint)</h4><p>تنبيه فوري للتكرار، الدوال المعقدة، والروائح البرمجية داخل المحرر.</p></div>
+                    <div class="feature-card"><h4>5. pytest &amp; JUnit</h4><p>كتابة وتشغيل اختبارات الوحدة السريعة لضمان سلامة السلوك بعد التحسينات.</p></div>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>⚠️ حدود الأدوات التلقائية</h4>
+                    <p style="margin-bottom:0;">تساعد الأدوات المبرمج في السرعة والاتساق، لكنها <strong>لا تثبت صحة التصميم المعماري</strong> ولا تغني عن التفكير الهندسي أو الاختبارات الحقيقية.</p>
+                </div>
+
+                <h3>10.2 قاموس مصطلحات المحاضرة</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead><tr><th>English Term</th><th>المعنى العربي</th><th>English Term</th><th>المعنى العربي</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="term-en">Clean Code</span></td><td>الشيفرة النظيفة</td><td><span class="term-en">Refactoring</span></td><td>إعادة الهيكلة</td></tr>
+                            <tr><td><span class="term-en">DRY Principle</span></td><td>عدم تكرار المنطق دون حاجة</td><td><span class="term-en">SRP (SOLID)</span></td><td>مبدأ المسؤولية الواحدة</td></tr>
+                            <tr><td><span class="term-en">Code Smells</span></td><td>الروائح البرمجية</td><td><span class="term-en">Guard Clause / Early Return</span></td><td>شرط الحماية / العودة المبكرة</td></tr>
+                            <tr><td><span class="term-en">Docstring</span></td><td>توثيق الدالة أو الفئة من الداخل</td><td><span class="term-en">Unit Test</span></td><td>اختبار الوحدة الآلي</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>10.3 المراجع العلمية المعتمدة</h3>
+                <ul class="content-list" style="margin-bottom:0;">
+                    <li><strong>Clean Code:</strong> Robert C. Martin — المرجع الأساسي لممارسات كتابة الشيفرة النظيفة.</li>
+                    <li><strong>Refactoring:</strong> Martin Fowler — الدليل المرجعي لتحسين تصميم الشيفرة القائمة.</li>
+                    <li><strong>Geeks4Academy:</strong> شروحات تطبيقية لمبادئ الشيفرة النظيفة والاختبار.</li>
+                    <li><strong>Python Official Documentation:</strong> التوثيق الرسمي لوحدة <span class="term-en">unittest</span> ومعايير <span class="term-en">PEP 8</span>.</li>
+                </ul>
+            </section>
+
+            <!-- 11. الأسئلة الشاملة والواجب -->
+            <section id="comprehensive-review">
+                <span class="section-tag">المراجعة والتكليفات والتلخيص</span>
+                <h2>📚 11. بنك الأسئلة الشاملة (21 سؤالاً)، الواجب العملي، والتلخيص</h2>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>📖 القسم الأول: الأسئلة النظرية (10 أسئلة مع الإجابات النموذجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>عرّف الشيفرة النظيفة:</strong> شيفرة منظمة وواضحة وبسيطة يسهل قراءتها وفهمها وتعديلها واختبارها.</li>
+                            <li><strong>لماذا لا يكفي عمل البرنامج حالياً؟</strong> لأن البرمجيات تتطور، والغموض يجعل الصيانة مكلفة ومليئة بالأعطال الجانبية.</li>
+                            <li><strong>الفرق بين الشيفرة النظيفة والقصيرة جداً:</strong> النظيفة توازن البساطة مع الوضوح، بينما المبالغة في القصر تخفي المعنى.</li>
+                            <li><strong>أثر التسمية المعبرة:</strong> تقلل الحاجة لتخمين المتغيرات والدوال وتجعل الكود مقروءاً تلقائياً.</li>
+                            <li><strong>مبدأ DRY ومحاذير المبالغة فيه:</strong> توحيد المنطق في مصدر واحد، مع الحذر من دمج سياسات عمل مستقلة تتغير منفصلة.</li>
+                            <li><strong>مبدأ SRP:</strong> لكل وحدة أو فئة مسؤولية واضحة محددة وسبب منطقي واحد للتغيير.</li>
+                            <li><strong>اذكر 3 روائح برمجية وضررها:</strong> الدالة الطويلة، الكود المكرر، والتداخل العميق؛ وجميعها تبطئ الفهم وتزيد احتمالية الخطأ.</li>
+                            <li><strong>الفرق بين Refactoring و Bug Fixing:</strong> إعادة الهيكلة تحسن البنية مع حفظ السلوك، أما الإصلاح فيبدل سلوكاً خاطئاً بصحيح.</li>
+                            <li><strong>لماذا نشغّل الاختبارات بعد إعادة الهيكلة؟</strong> للتحقق السريع من استمرار السلوك والنتائج المتوقعة.</li>
+                            <li><strong>الفرق بين التعليق الزائد والمفيد:</strong> الزائد يكرر ما هو واضح، والمفيد يفسر <em>لماذا Why</em> اتُّخذ القرار غير البديهي.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>🛠️ القسم الثاني: الأسئلة التطبيقية (6 أسئلة محلولة)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>اقترح أسماء أوضح لـ <span class="term-en">t, st, avg, fn1, clsA</span>:</strong> <span class="term-en">invoice_total, student, average_grade, calculate_final_price(), StudentAccount</span>.</li>
+                            <li><strong>إزالة تكرار خصم 10% لـ 3 فواتير:</strong> استخراج <span class="term-en">apply_discount(amount, rate=0.10)</span> واستدعاؤها ثلاث مرات.</li>
+                            <li><strong>فصل فئة UserManager حسب SRP:</strong> <span class="term-en">UserRepository</span> للتخزين، <span class="term-en">EmailService</span> للبريد، و<span class="term-en">UserReportGenerator</span> للتقارير.</li>
+                            <li><strong>تبسيط شروط الرصيد + التفعيل + العنوان:</strong> باستخدام <span class="term-en">Guard Clauses</span> (عودة مبكرة عند فقد أي شرط).</li>
+                            <li><strong>استبدال تعليق بديهي بشيفرة تشرح نفسها:</strong> نقل حلقة الجمع تحت دالة باسم <span class="term-en">calculate_total_price(prices)</span> وحذف التعليق الزائد.</li>
+                            <li><strong>4 اختبارات وحدة بعد التعديل:</strong> حالة طبيعية، حالة حدية (صفر)، حالة فراغ/قسمة على صفر، ومدخل سالب غير صالح.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>💬 القسم الثالث: أسئلة النقاش الفصلي (5 أسئلة استنتاجية)</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <ol class="content-list" style="margin-bottom:0;">
+                            <li><strong>لماذا لا يلتزم البعض بالشيفرة النظيفة رغم معرفتهم بأهميتها؟</strong> بسبب ضغط التسليم السريع وتراكم الدَّين التقني وغياب المراجعة.</li>
+                            <li><strong>متى تكون إعادة الهيكلة ضرورية جداً؟</strong> قبل توسعة وحدة معقدة أو في مواطن الأعطال المتكررة؛ وتؤجل في الأجزاء المستقرة غير المتغيرة.</li>
+                            <li><strong>هل يضر الإفراط في التقسيم؟</strong> نعم (<span class="term-en">Over-engineering</span>)، فيشتت التدفق بين عشرات الملفات والدوال التافهة.</li>
+                            <li><strong>كيف نوازن بين السرعة والجودة؟</strong> بتطبيق عادات سريعة يومية (التسمية وتجنب النسخ) بدلاً من تراكم فوضى مكلفة.</li>
+                            <li><strong>هل تكفي أدوات مثل Ruff/SonarLint للحكم على النظافة؟</strong> لا؛ تكشف الشكل وبعض الأنماط لكنها لا تقيم سلامة المعمارية وسياق الأسماء.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="info-box dev-box">
+                    <h4>📋 الواجب المنزلي: تحسين برنامج إدارة درجات الطلاب (10 مهام + مشروع التحدي)</h4>
+                    <p>استخدم لغة <span class="term-en">Python</span> أو <span class="term-en">Java</span> أو <span class="term-en">C++</span> أو <span class="term-en">JavaScript</span> ونفّذ القائمة التفاعلية التالية:</p>
+                    <div id="hw-checklist">
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>1. إعداد نسخة أولية تحسب المتوسط وتحدد النجاح والرسوب.</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>2. تحسين جميع أسماء المتغيرات والدوال والفئات وتوحيد الأسلوب.</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>3. إزالة حالة تكرار أو تعقيد شرطي واحد على الأقل (DRY).</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>4. تقسيم أي دالة متعددة المسؤوليات إلى دوال واضحة (SRP).</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>5. توثيق 3 روائح برمجية مكتشفة وشرح سبب ضررها.</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>6. تنفيذ إعادة الهيكلة تدريجياً مع الحفاظ على السلوك المتوقع.</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>7. كتابة 5 اختبارات وحدة على الأقل (المتوسط، النجاح، الرسوب، الفراغ، وحالة حدية).</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>8. كتابة توثيق واضح (<span class="term-en">Docstring/README</span>) وتعليقات توضح السبب فقط.</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>9. استخدام أداة مساعدة واحدة على الأقل (مثل <span class="term-en">Ruff / Prettier / SonarLint</span>).</span></label>
+                        <label class="checklist-item"><input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)"><span>10. تسليم الشيفرة قبل وبعد مع تقرير موجز يشرح التحسينات ونتائج الاختبار.</span></label>
+                    </div>
+                    <p style="margin-bottom:0;"><strong>🏆 مشروع التحدي الإضافي:</strong> أعد هيكلة برنامج مبعثر لنظام تسجيل طالب أو متجر إلكتروني وسلمه موثقاً ومختبراً بـ <span class="term-en">unittest</span> أو <span class="term-en">pytest</span>.</p>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>📝 تلخيص المحاضرة في 8 نقاط ذهبية + الخاتمة</h4>
+                    <ol class="content-list" style="margin-bottom:0.8rem;">
+                        <li>الشيفرة النظيفة ضرورة هندسية تخفض أخطاء الصيانة وتسرّع العمل الجماعي.</li>
+                        <li>التسمية المعبرة تجعل الكود مفهوماً دون تخمين وتمنع الأخطاء المضللة.</li>
+                        <li>مبدأ <span class="term-en">DRY</span> يوحد المنطق مع الحذر من دمج سياسات عمل مختلفة.</li>
+                        <li>مبدأ <span class="term-en">SRP</span> يمنح كل وحدة مسؤولية واضحة وسبب تغيير واحد.</li>
+                        <li>الدوال الصغيرة تفصل الحساب عن الطباعة والتخزين وتسهل الاختبار.</li>
+                        <li>الروائح البرمجية (<span class="term-en">Code Smells</span>) تنبهنا لضعف التصميم قبل تضخمه.</li>
+                        <li>إعادة الهيكلة تحسن البنية دون تغيير السلوك وتحميها اختبارات الوحدة.</li>
+                        <li>التعليق الجيد يوضح <em>لماذا</em> بينما التوثيق يشرح الاستخدام والقيود.</li>
+                    </ol>
+                    <p style="margin-bottom:0;"><strong>خاتمة:</strong> أي مطور يستطيع كتابة شيفرة يفهمها الحاسوب، لكن المطور المحترف يكتب شيفرة يفهمها البشر!</p>
+                </div>
+            </section>
+
+            <!-- 12. بطاقات الاستذكار -->
+            <section id="flashcards">
+                <span class="section-tag">تثبيت المفاهيم النشط</span>
+                <h2>🗂️ 12. بطاقات الاستذكار التفاعلية (12 بطاقة)</h2>
+                <p>انقر على أي بطاقة لقلبها ومراجعة المصطلحات الأساسية للمحاضرة الثانية:</p>
+                <div class="flashcards-grid" id="flashcards-grid"></div>
+            </section>
+
+            <!-- 13. الكوز التقييمي -->
+            <section id="quiz">
+                <span class="section-tag">الكوز الرسمي للمحاضرة — 10 أسئلة</span>
+                <h2>✅ 13. اختبر فهمك (Quiz — 10 أسئلة)</h2>
+                <p>أجب عن الأسئلة العشرة الرسمية للمحاضرة الثانية؛ ويتم حفظ أعلى نتيجة تلقائياً في متصفحك:</p>
+
+                <div class="quiz-container" id="quiz-app"></div>
+            </section>
+
+            <!-- التنقل السفلي -->
+            <div class="lecture-footer-nav">
+                <a href="Lecture-01.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">👉 المحاضرة السابقة: 01 بيئة التطوير الاحترافية</a>
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0; background:var(--secondary);">📚 العودة لفهرس مقرر أساسيات تطوير البرمجيات</a>
+                <a href="../index.html" class="quiz-btn" style="text-decoration:none; margin:0;">🏠 البوابة الرئيسية للمنصة</a>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="site-footer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+const lifecycleStages = [
+            { title: '1. كتابة الشيفرة (Implementing)', desc: 'تحويل المتطلبات إلى شيفرة أولية واضحة البنية وبأسماء مفهومة منذ البداية.' },
+            { title: '2. اختبار الشيفرة (Testing)', desc: 'بناء اختبارات الوحدة (unittest / pytest / JUnit) للتحقق من النتائج وتثبيت السلوك قبل التعديل.' },
+            { title: '3. تنظيف الشيفرة (Cleaning)', desc: 'تنقيح الأسماء، حذف الحشو والتعليقات الزائدة، وتطبيق أسلوب تنسيق موحد.' },
+            { title: '4. إعادة الهيكلة (Refactoring)', desc: 'تحسين البنية الداخلية (فصل المسؤوليات، إزالة التكرار، تسطيح التداخل) مع بقاء الاختبارات ناجحة.' },
+            { title: '5. الصيانة والتطوير (Maintenance)', desc: 'إضافة ميزات جديدة ومعالجة المتطلبات الطارئة بأقل تكلفة وعودة منتظمة إلى الدورة.' }
+        ];
+
+        function showLifecycleStage(idx, btn) {
+            document.querySelectorAll('#lifecycle-stepper .stage-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            const s = lifecycleStages[idx];
+            document.getElementById('lifecycle-panel').innerHTML =
+                `<h4 style="margin-top:0; color:var(--primary); font-size:1.15rem;">${s.title}</h4>` +
+                `<p style="margin-bottom:0;">${s.desc}</p>`;
+        }
+        showLifecycleStage(0, document.querySelector('#lifecycle-stepper .stage-btn'));
+
+        // 6. Refactoring Safe 5-Step Stepper
+        const refSteps = [
+            { title: '1. فهم الشيفرة الحالية', desc: 'اقرأ الدالة وحدد مدخلاتها ومخرجاتها والحالات الحدية قبل تعديل أي سطر.' },
+            { title: '2. كتابة الاختبارات أولاً', desc: 'وفّر شبكة أمان من اختبارات الوحدة الآلية التي تتحقق من النتيجة الصحيحة.' },
+            { title: '3. تنفيذ خطوة صغيرة', desc: 'أجرِ تحسيناً واحداً صغيراً (تغيير اسم، استخراج دالة، أو تبسيط شرط).' },
+            { title: '4. تشغيل الاختبارات للتحقق', desc: 'شغّل الاختبارات فوراً بعد كل خطوة للتأكد من عدم حدوث أي عطل أو تراجع.' },
+            { title: '5. مراجعة الشيفرة وتثبيتها', desc: 'راجع وضوح النتيجة وثبّت التغيير في Git برسالة Commit واضحة.' }
+        ];
+
+        function showRefStep(idx, btn) {
+            document.querySelectorAll('#refactor-stepper .stage-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            const s = refSteps[idx];
+            document.getElementById('refactor-panel').innerHTML =
+                `<h4 style="margin-top:0; color:var(--primary); font-size:1.15rem;">${s.title}</h4>` +
+                `<p style="margin-bottom:0;">${s.desc}</p>`;
+        }
+        showRefStep(0, document.querySelector('#refactor-stepper .stage-btn'));
+
+        // 7. Interactive Code Smell Detector
+        const smellCases = [
+            {
+                code: 'def register(name, email, phone, age, city, country, zip_code, role):\n    ...',
+                question: 'ما الرائحة البرمجية الأبرز في تعريف هذه الدالة؟',
+                choices: ['كثرة المعاملات (Long Parameter List)', 'الفئة المتضخمة (Large Class)', 'تكرار الشيفرة'],
+                correct: 0,
+                explain: 'وجود 8 معاملات يصعّب الاستدعاء؛ يُعالج بتجميع البيانات المترابطة في كائن UserData.'
+            },
+            {
+                code: 'if user:\n    if user.active:\n        if user.verified:\n            if user.balance > 0:\n                approve()',
+                question: 'ما المشكلة التصميمية الظاهرة هنا؟',
+                choices: ['اسم مضلل', 'التداخل العميق (Deep Nesting)', 'نقص التوثيق'],
+                correct: 1,
+                explain: 'أربعة مستويات من الشروط المتداخلة؛ تُسطّح فوراً باستخدام العودة المبكرة (Guard Clauses).'
+            },
+            {
+                code: 'class AppSystem:\n    def auth(): ...\n    def send_sms(): ...\n    def calc_tax(): ...\n    def export_pdf(): ...',
+                question: 'ما الرائحة البرمجية التي تمثلها فئة AppSystem؟',
+                choices: ['قائمة فارغة', 'الفئة المتضخمة وخرق SRP', 'تعليق متقادم'],
+                correct: 1,
+                explain: 'الفئة تجمع 4 مسؤوليات منفصلة؛ تقسّم إلى فئات متخصصة حسب مبدأ SRP.'
+            }
+        ];
+        let smellIndex = 0;
+
+        function renderSmellDetector(feedbackHtml) {
+            const sc = smellCases[smellIndex];
+            const btns = sc.choices.map((c, i) =>
+                `<button class="sim-btn" onclick="checkSmell(${i})">${c}</button>`
+            ).join('');
+            document.getElementById('smell-detector-app').innerHTML =
+                `<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">` +
+                `<strong>سيناريو ${smellIndex + 1} من ${smellCases.length}</strong>` +
+                `<button class="sim-btn" onclick="nextSmell()">سيناريو آخر ↻</button></div>` +
+                `<div class="code-window"><pre>${sc.code}</pre></div>` +
+                `<div class="sim-output"><p style="font-weight:700; margin-bottom:0.6rem;">${sc.question}</p>` +
+                `<div class="sim-btn-row">${btns}</div>${feedbackHtml || ''}</div>`;
+        }
+
+        function checkSmell(choiceIdx) {
+            const sc = smellCases[smellIndex];
+            const isOk = choiceIdx === sc.correct;
+            const fb = isOk
+                ? `<div class="info-box success-box" style="margin:0.8rem 0 0;"><strong>✅ تشخيص صحيح!</strong> ${sc.explain}</div>`
+                : `<div class="info-box danger-box" style="margin:0.8rem 0 0;"><strong>❌ راجع التشخيص:</strong> ${sc.explain}</div>`;
+            renderSmellDetector(fb);
+        }
+
+        function nextSmell() {
+            smellIndex = (smellIndex + 1) % smellCases.length;
+            renderSmellDetector('');
+        }
+        renderSmellDetector('');
+
+        // 8. 7-Case Quick Code Clinic
+        const clinicCases = [
+            { label: '1. تسمية دالة', bad: 'def c(x, y):\n    return (x + y) * 2', good: 'def calculate_double_sum(first, second):\n    return (first + second) * 2', note: 'استبدال الحروف المبهمة باسم يصف العملية والمعاملات بوضوح.' },
+            { label: '2. تسمية متغير', bad: 'd = get(a)', good: 'discount = get_discount(amount)', note: 'الاسم الكامل يمنع التباس d بين التاريخ أو الخصم أو البيانات.' },
+            { label: '3. مبدأ DRY', bad: 't1 = p1 + p1 * 0.15\nt2 = p2 + p2 * 0.15', good: 'def add_tax(price):\n    return price + price * 0.15', note: 'مركزية معادلة الضريبة في دالة واحدة يمنع التناقض عند التحديث.' },
+            { label: '4. مبدأ SRP', bad: 'class Manager:\n    def calculate(self): ...\n    def send_email(self): ...', good: 'class Calculator:\n    def calculate(self): ...\n\nclass EmailService:\n    def send_email(self): ...', note: 'فصل الحساب المالي عن خدمة البريد بحيث يكون لكل فئة سبب تغيير واحد.' },
+            { label: '5. تفكيك دالة', bad: 'def big_function():\n    # step 1 logic\n    # step 2 logic\n    # step 3 logic', good: 'def process_workflow():\n    step1()\n    step2()\n    step3()', note: 'استخراج الكتل المنطقية إلى دوال مستقلة بأسماء واضحة.' },
+            { label: '6. تسطيح الشروط', bad: 'if a:\n    if b:\n        if c:\n            execute()', good: 'if not (a and b and c):\n    return\nexecute()', note: 'تقليص التداخل عبر جملة الحماية المبكرة.' },
+            { label: '7. Docstring', bad: 'def calc(x):\n    return x * 2', good: 'def double_value(value):\n    """أعد ضعف القيمة الرقمية المدخلة."""\n    return value * 2', note: 'توثيق الدالة بالاسم الواضح مع Docstring مختصر ودقيق.' }
+        ];
+
+        function showClinicCase(idx) {
+            const row = document.getElementById('clinic-btn-row');
+            row.innerHTML = clinicCases.map((c, i) =>
+                `<button class="sim-btn ${i === idx ? 'active' : ''}" onclick="showClinicCase(${i})">${c.label}</button>`
+            ).join('');
+            const c = clinicCases[idx];
+            document.getElementById('clinic-panel').innerHTML =
+                `<div class="code-compare-grid">` +
+                `<div class="code-window bad-code"><div class="code-window-bar"><div class="code-bar-left"><span>❌ قبل</span></div></div><pre>${c.bad}</pre></div>` +
+                `<div class="code-window good-code"><div class="code-window-bar"><div class="code-bar-left"><span>✅ بعد</span></div></div><pre>${c.good}</pre></div>` +
+                `</div><p style="margin:0.8rem 0 0;"><strong>التحسين:</strong> ${c.note}</p>`;
+        }
+        showClinicCase(0);
+
+        // 9. Flashcards (12 Cards)
+        const flashcardsData = [
+            { q: 'Clean Code<br>(الشيفرة النظيفة)', a: 'شيفرة منظمة وواضحة وبسيطة يسهل قراءتها وفهمها وصيانتها واختبارها من أي مطور.' },
+            { q: 'Clean ≠ Short<br>(النظافة مقابل القِصَر)', a: 'القصر المفرط على حساب الوضوح يفسد القراءة؛ الهدف البساطة المفهومة لا تقليص الأسطر.' },
+            { q: 'Naming Conventions<br>(قواعد التسمية)', a: 'المتغير اسم دال على المعلومة، الدالة فعل يصف العملية، والفئة اسم يمثل كياناً.' },
+            { q: 'snake / camel / Pascal', a: '<span class="term-en">snake_case</span> في Python، و<span class="term-en">camelCase</span> لدوال ومتغيرات Java/JS، و<span class="term-en">PascalCase</span> للفئات.' },
+            { q: 'DRY Principle<br>(عدم التكرار)', a: 'Don\'t Repeat Yourself: توحيد مصدر المنطق والمعرفة وعدم تكرارها بلا حاجة.' },
+            { q: 'DRY Misuse<br>(متى نمتنع عن الدمج؟)', a: 'عند تشابه سطرين شكلاً حالياً بينما يتبعان سياسات عمل مستقلة تتغير لأسباب مختلفة.' },
+            { q: 'SRP Principle<br>(المسؤولية الواحدة)', a: 'لكل وحدة أو فئة مسؤولية واضحة محددة وسبب منطقي واحد للتغيير فقط.' },
+            { q: 'Small Functions<br>(الدوال الواضحة)', a: 'تؤدي غرضاً متماسكاً وتفصل الحساب المنطقي عن الطباعة والتخزين.' },
+            { q: 'Code Smells<br>(الروائح البرمجية)', a: 'مؤشر بنيوي على ضعف تصميمي ينذر بصعوبة الصيانة حتى وإن عمل البرنامج حالياً.' },
+            { q: 'Guard Clauses<br>(العودة المبكرة)', a: 'استبعاد الحالات الخاصة مبكراً في أعلى الدالة لإزالة التداخل الشرطي العميق.' },
+            { q: 'Refactoring<br>(إعادة الهيكلة)', a: 'تحسين التصميم الداخلي وجعله أنظف مع الحفاظ على السلوك الوظيفي المقصود.' },
+            { q: 'Comments vs. Docs<br>(التعليق مقابل التوثيق)', a: 'التعليق يوضح <strong>لماذا (Why)</strong> اتُّخذ القرار؛ التوثيق (<span class="term-en">Docstring/README</span>) يشرح الغرض والاستخدام.' }
+        ];
+
+        document.getElementById('flashcards-grid').innerHTML = flashcardsData.map(c =>
+            `<div class="flashcard" onclick="this.classList.toggle('flipped')">` +
+            `<div class="flashcard-inner">` +
+            `<div class="flashcard-front">${c.q}<small>انقر لقلب البطاقة ↺</small></div>` +
+            `<div class="flashcard-back">${c.a}</div>` +
+            `</div></div>`
+        ).join('');
+
+        // 10. Official 10-Question Lecture Quiz (saved under quiz_sfd_lec02)
+
+const quizData = [
+            {
+                question: '1. ما الهدف الأساسي من كتابة شيفرة نظيفة؟',
+                options: ['زيادة عدد الأسطر في البرنامج', 'تسهيل القراءة والصيانة والتطوير', 'منع المستخدم من تشغيل البرنامج', 'إلغاء الحاجة إلى المتغيرات'],
+                correct: 1,
+                explanation: 'الهدف الأساسي هو تسهيل فهم الشيفرة وصيانتها واختبارها وتقليل تكلفة التطوير المستقبلي.'
+            },
+            {
+                question: '2. أي الأسماء الآتية هو الأوضح لتخزين عدد الطلاب؟',
+                options: ['x', 'n1', 'student_count', 'val'],
+                correct: 2,
+                explanation: 'الاسم student_count يوضح القيمة ومعناها فوراً دون حاجة للتخمين.'
+            },
+            {
+                question: '3. ماذا يعني مبدأ DRY في تطوير البرمجيات؟',
+                options: ['تجنب تكرار المنطق والمعرفة دون حاجة', 'كتابة كل البرنامج في دالة واحدة', 'منع استخدام الدوال', 'حذف التعليقات بالكامل'],
+                correct: 0,
+                explanation: 'DRY تعني Don\'t Repeat Yourself — أي توحيد المنطق والمعرفة في مصدر واحد واضح.'
+            },
+            {
+                question: '4. ما المقصود بمبدأ المسؤولية الواحدة (SRP)؟',
+                options: ['أن يحتوي الملف على سطر واحد فقط', 'أن يعمل البرنامج على جهاز واحد فقط', 'أن تكون لكل وحدة مسؤولية واضحة وسبب محدد للتغيير', 'أن تُكتب كل البرامج بلغة واحدة'],
+                correct: 2,
+                explanation: 'SRP يعني اختصاص كل فئة أو وحدة بمسؤولية واضحة يترتب عليها سبب واحد للتغيير.'
+            },
+            {
+                question: '5. أي الحالات الآتية تمثل رائحة برمجية محتملة (Code Smell)؟',
+                options: ['استخدام اسم واضح للدالة', 'كتابة اختبارات وحدة', 'دالة طويلة كثيرة المسؤوليات', 'فصل المنطق المتكرر في دالة'],
+                correct: 2,
+                explanation: 'الدالة الطويلة المتشعبة المسؤوليات (Long Method) من أشهر الروائح البرمجية.'
+            },
+            {
+                question: '6. ما المقصود بإعادة الهيكلة (Refactoring)؟',
+                options: ['إضافة ميزات جديدة فقط', 'تحسين التصميم الداخلي مع الحفاظ على السلوك المقصود', 'حذف كل الاختبارات', 'تغيير لغة البرمجة بالكامل'],
+                correct: 1,
+                explanation: 'إعادة الهيكلة تحسّن البنية والوضوح الداخلي مع الإبقاء على السلوك الخارجي المقصود نفسه.'
+            },
+            {
+                question: '7. لماذا نُشغّل الاختبارات بعد إعادة الهيكلة؟',
+                options: ['لزيادة حجم الملف', 'للتأكد من استمرار النتائج والسلوك المتوقعين', 'لتعطيل الدوال القديمة', 'لإزالة أسماء المتغيرات'],
+                correct: 1,
+                explanation: 'تعمل الاختبارات كشبكة أمان تثبت سريعاً أن تحسين البنية لم يكسر السلوك المتوقع.'
+            },
+            {
+                question: '8. أي التعليقات الآتية أكثر فائدة؟',
+                options: ['تعليق يكرر معنى اسم متغير واضح', 'تعليق يصف عملية حسابية بديهية جداً', 'تعليق يوضح سبب قرار غير واضح', 'تعليق قديم لم يعد يطابق الشيفرة'],
+                correct: 2,
+                explanation: 'التعليق المفيد يوضح سبب القرار أو القيد غير البديهي (Why) لا ماذا يفعل السطر الواضح.'
+            },
+            {
+                question: '9. أي أداة من الآتية تُستخدم لكتابة وتشغيل الاختبارات في Python؟',
+                options: ['pytest', 'Prettier', 'Git', 'VS Code'],
+                correct: 0,
+                explanation: 'أداة pytest (بجانب unittest المدمجة) مخصصة لاختبارات Python، أما Prettier فلتنسيق الكود.'
+            },
+            {
+                question: '10. أي العبارات الآتية صحيحة تماماً؟',
+                options: ['الشيفرة الأقصر هي الأنظف دائماً', 'كل تشابه بسيط يعني ضرورة دمجه فوراً', 'التعليقات تغني عن الأسماء الواضحة', 'قد يعمل البرنامج رغم وجود شيفرة صعبة الصيانة'],
+                correct: 3,
+                explanation: 'قد يعمل الكود الفوضوي اليوم ويخرج نتائج صحيحة، لكنه يصبح هشاً ومكلفاً عند الصيانة والتطوير غداً.'
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_sfd_lec02');
+    </script>
+</body>
+</html>

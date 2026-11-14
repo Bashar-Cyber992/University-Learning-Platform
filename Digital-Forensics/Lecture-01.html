@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية | التحقيق الجنائي الرقمي</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="digital-forensics">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الجامعية</a>
+                <span>←</span>
+                <a href="index.html">🔎 التحقيق الجنائي الرقمي</a>
+                <span>←</span>
+                <span>المحاضرة 01: مقدمة علم الأدلة الجنائية الرقمية</span>
+            </div>
+            <div class="top-controls">
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="lecture-header">
+        <div class="header-badge">كلية المنار للعلوم والتكنولوجيا | المستوى الثالث (الترم الثاني)</div>
+        <h1>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية</h1>
+        <p>التأسيس الأكاديمي والعملي لعلم الأدلة الجنائية الرقمية (Digital Forensics)، سلسلة الحفظ (Chain of Custody)، استخلاص البيانات المتقلبة، النسخ الجنائي الدقيق (Bitstream Copy)، خوارزميات التجزئة المشفرة (Hashing)، ديناميكية الأدلة وتجنب الأخطاء القاتلة في مسرح الجريمة.</p>
+        <div class="header-meta-box">
+            <div class="header-meta-item">👨‍🏫 <strong>أستاذ المقرر:</strong> د. ضياء الحق القدمي (Dr. Dheya Al-Haq Al-Qadami)</div>
+            <div class="header-meta-item">👥 <strong>القسم:</strong> الأمن السيبراني وشبكات & تقنية المعلومات</div>
+            <div class="header-meta-item">📑 <strong>المصدر المعتمد:</strong> السلايدات الرسمية (31 شريحة) + إعداد م. بشار زبله</div>
+        </div>
+        <div class="header-golden-rule">
+            ⭐ القاعدة الذهبية للأدلة الرقمية: «الدليل الرقمي حساس كبصمة الإصبع.. أي لمسة خاطئة تدمره للأبد. العمل دائماً على نسخة، واستخدام أدوات معتمدة، والحفاظ على كل ذرة من البيانات الأصلية».
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro-expectations">🚀 المقدمة وتوقعات المقرر</a></li>
+                <li><a href="#topic-1">🔬 1. ما هو علم الأدلة الجنائية الرقمية؟</a></li>
+                <li><a href="#topic-2">⚖️ 2. الجرائم الإلكترونية وتصنيف الأجهزة</a></li>
+                <li><a href="#topic-3">📂 3. ماهية وطبيعة الأدلة الرقمية</a></li>
+                <li><a href="#topic-4">🔌 4. البيانات المتقلبة (Volatile Data) والمعضلة</a></li>
+                <li><a href="#topic-5">📜 5. سلسلة الحفظ (Chain of Custody)</a></li>
+                <li><a href="#topic-6">💾 6. الاستحواذ الجنائي والنسخ الدقيق (Bitstream)</a></li>
+                <li><a href="#topic-7">🔐 7. خوارزميات التجزئة للمصادقة (Hashing)</a></li>
+                <li><a href="#topic-8">🔍 8. مراحل التحليل الجنائي وإعداد التقارير</a></li>
+                <li><a href="#topic-9">⚠️ 9. ديناميكية الأدلة وتأثير المتدخلين والأخطاء</a></li>
+                <li><a href="#topic-10">🌐 10. تتبع الأثر الإلكتروني وتحديات السحابة</a></li>
+                <li><a href="#topic-11">🧪 11. محاكي التحقق من سلامة الأدلة (Hash Integrity)</a></li>
+                <li><a href="#topic-12">📚 12. الأسئلة الشاملة والواجب الأكاديمي</a></li>
+                <li><a href="#topic-13">📖 13. معجم المصطلحات والمراجع المعتمدة</a></li>
+                <li><a href="#flashcards">🗂️ 14. بطاقات الاستذكار التفاعلية</a></li>
+                <li><a href="#quiz">✅ 15. الكوز التقييمي الشامل (10 أسئلة)</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- Section 0: Expectations & Intro -->
+            <section id="intro-expectations">
+                <span class="section-tag">خارطة الطريق الأكاديمية | الشرائح 1 - 2</span>
+                <h2>🚀 المقدمة، منهجية التعلم، والتوقعات (Expectations)</h2>
+                <p>أهلاً بكم يا شباب في المحاضرة الأولى لمقرر <strong>التحقيق الجنائي والتحليل الرقمي (Digital Forensics)</strong> تحت إشراف أستاذنا القدير <strong>د. ضياء الحق القدمي</strong>. هذا المقرر يمثل أحد أهم وأخطر المقررات التخصصية لمهندسي الأمن السيبراني وتكنولوجيا المعلومات؛ فهو العلم الذي يقف عند نقطة التقاطع بين التكنولوجيا الرقمية والقانون والعدالة الجنائية.</p>
+
+                <div class="info-box success-box">
+                    <h4>🎯 منهجية المقرر وتوقعات الأستاذ (Expectations - شريحة 2)</h4>
+                    <ul class="content-list">
+                        <li><strong>النهج العملي المباشر (<span class="term-en">Practical, hands-on approach</span>):</strong> لن نكتفي بالدراسة النظرية للمفاهيم، بل سنمارس التحقيق خطوة بخطوة.</li>
+                        <li><strong>تحقيقات واقعية متقدمة (<span class="term-en">Detailed, highly realistic investigations</span>):</strong> الشرح والتدريب من خلال محاكاة قضايا جنائية حقيقية حدثت في مسارح جرائم فعلية.</li>
+                        <li><strong>التطبيقات المعملية والمختبرات (<span class="term-en">Perform lab exercises</span>):</strong> تدريب عملي مكثف على أدوات الاستحواذ الجنائي وتحليل الذواكر والأنظمة.</li>
+                        <li><strong>المشروع النهائي (<span class="term-en">Final Project - TBD</span>):</strong> تنفيذ سيناريو تحقيق جنائي كامل واستخراج الأدلة وكتابة تقرير جنائي معتمد يصلح لتقديمه للمحكمة.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 1: What is Digital Forensics -->
+            <section id="topic-1">
+                <span class="section-tag">المفهوم والتأسيس العلمي | الشريحة 3</span>
+                <h2>🔬 1. ما هو علم الأدلة الجنائية الرقمية؟ (What is Digital Forensics)</h2>
+                <p>يُعرف هذا العلم بأسماء متعددة: <span class="term-en">Digital Forensics</span>، أو <span class="term-en">Computer Forensics</span>، أو <span class="term-en">Cyber Forensics</span>. وضعت الشريحة رقم 3 التعريف الأكاديمي الحاسم:</p>
+
+                <div class="info-box">
+                    <h4>📖 التعريف العلمي المعتمد</h4>
+                    <p style="font-style: italic; font-size:1.05rem; direction:ltr; text-align:left; margin-bottom:0.5rem;">
+                        "Digital forensics is the science of collecting, preserving, analyzing, and reporting of digital evidence."
+                    </p>
+                    <hr style="margin: 0.8rem 0; border:0; border-top:1px dashed #cbd5e1;">
+                    <p style="font-weight:700; margin-bottom:0;">
+                        «علم الأدلة الجنائية الرقمية هو علم جمع الأدلة الرقمية، وحفظها، وتحليلها، وإعداد التقارير عنها لتقديمها بشكل قانوني معتمد».
+                    </p>
+                </div>
+
+                <h3>🎯 الغاية الكبرى والتطبيق القضائي (Hypothesis Testing)</h3>
+                <p>كما أكدت المحاضرة: <em>"The most common application is to support or refute a hypothesis before criminal or civil courts."</em></p>
+                <p>يتمثل التطبيق الأكثر شيوعاً لهذا العلم في <strong>دعم (Support)</strong> أو <strong>دحض (Refute)</strong> فرضية محددة أمام المحاكم الجنائية أو المدنية. فالمحقق الجنائي الرقمي ليس طرفاً يختلق التهم، بل خبير محايد يستخرج الحقائق الرقمية المجردة ليثبت هل المتهم هو من ارتكب الفعل فعلاً أم أن جهازه تم اختراقه أو التلاعب به.</p>
+            </section>
+
+            <!-- Section 2: Digital Crime and Device Roles -->
+            <section id="topic-2">
+                <span class="section-tag">تصنيف الجرائم وأدوار الأجهزة | الشرائح 4 - 5</span>
+                <h2>⚖️ 2. الجرائم الإلكترونية وتصنيف دور الجهاز الرقمي في مسرح الجريمة</h2>
+                <p>في عصرنا الحالي، أصبحت كل جريمة تقريباً تنطوي على <strong>بُعد رقمي (<span class="term-en">Digital dimension</span>)</strong>. فالمجرمون والشبكات الإجرامية المنظمة (<span class="term-en">Organized criminals</span>) يستخدمون التكنولوجيا لتسهيل ارتكاب الجرائم، الاحتفاظ بالسجلات، التواصل المشفر، أو محاولة تجنب القبض عليهم. حددت المحاضرة (في الشريحة 4) ثلاث حالات رئيسية يتواجد فيها الدليل على الجهاز الرقمي:</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: #e11d48;">
+                        <div class="card-badge-num">1</div>
+                        <h4>الجهاز أداة لارتكاب الجريمة</h4>
+                        <p class="term-en">Device used to conduct crime</p>
+                        <p>الجهاز هو السلاح أو الأداة المباشرة التي استخدمها الجاني لتنفيذ الجرم:</p>
+                        <ul class="content-list" style="margin:0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>إرسال رسائل التهديد والابتزاز (<span class="term-en">Threatening letters</span>)</li>
+                            <li>جرائم الاحتيال المالي الإلكتروني (<span class="term-en">Fraud</span>)</li>
+                            <li>الاختلاس والتلاعب بالقيود (<span class="term-en">Embezzlement</span>)</li>
+                            <li>سرقة الملكية الفكرية والبيانات (<span class="term-en">Theft of IP</span>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #3b82f6;">
+                        <div class="card-badge-num">2</div>
+                        <h4>الجهاز هو هدف وضحية الجريمة</h4>
+                        <p class="term-en">Device is the target of crime</p>
+                        <p>الجهاز ذاته هو الضحية التي تعرضت للهجوم والتخريب والاختراق:</p>
+                        <ul class="content-list" style="margin:0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>الخروقات الأمنية والاختراقات (<span class="term-en">Security Breach</span>)</li>
+                            <li>هجمات الفدية وتعطيل الخدمات (<span class="term-en">Ransomware / DoS</span>)</li>
+                            <li>استجابة فرق الطوارئ للحوادث (<span class="term-en">Incident Response</span>) لتحديد كيف تم اقتحام الخادم.</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #10b981;">
+                        <div class="card-badge-num">3</div>
+                        <h4>الجهاز وسيلة لدعم الجريمة</h4>
+                        <p class="term-en">Device is used to support crime</p>
+                        <p>الجريمة تمت في العالم الواقعي (سرقة، تجارة ممنوعات، تهريب)، لكن الجهاز استُخدم كداعم لوجستي:</p>
+                        <ul class="content-list" style="margin:0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>حفظ سجلات الحسابات والعملاء للمنظمات الإجرامية</li>
+                            <li>تنسيق المواعيد واللقاءات عبر تطبيقات المراسلة</li>
+                            <li>تخزين خرائط وصور مسارح الجرائم</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Nature of Digital Evidence -->
+            <section id="topic-3">
+                <span class="section-tag">خصائص الدليل الرقمي | الشرائح 6 - 9</span>
+                <h2>📂 3. ماهية وطبيعة الأدلة الرقمية (Digital Evidence)</h2>
+                <p>عُرّف الدليل الرقمي في الشريحة 6 بأنه: <strong>البيانات المخزنة أو المنقولة رقمياً والتي استُخدمت لأغراض غير قانونية (<span class="term-en">Data stored or transmitted – used for illegal purposes</span>)</strong>.</p>
+
+                <div class="info-box warning-box">
+                    <h4>🧩 خاصية "يمكن أن يكون أي شيء!" (Can be anything! - شريحة 7)</h4>
+                    <p>يتميز الدليل الرقمي عن الأدلة الجنائية التقليدية (كالسلاح أو المقذوف) بأنه غير مرئي بالعين المجردة ومتنوع الأحجام والصيغ:</p>
+                    <ul class="content-list">
+                        <li><strong>صغير جداً:</strong> قد يكون مجرد بضعة بايتات (<span class="term-en">A few bytes</span>) كقيمة متغير في سجل النظام.</li>
+                        <li><strong>ملفات كاملة:</strong> مستند وورد، فيديو، صورة، قاعدة بيانات (قد تكون كاملة، أو محذوفة <span class="term-en">Deleted</span>، أو مشفرة <span class="term-en">Encrypted</span>).</li>
+                        <li><strong>أجزاء وبقايا ملفات مجزأة (<span class="term-en">Fragments of files</span>):</strong> بضع كلمات، جملتان، أو بقايا فقرات في الذاكرة العشوائية أو مساحات القرص غير المخصصة.</li>
+                        <li><strong>إدخالات السجلات والمفاتيح:</strong> مدخلات سجل النظام (<span class="term-en">Windows Registry entries</span>)، وسجلات الأحداث (<span class="term-en">Event logs</span>).</li>
+                    </ul>
+                </div>
+
+                <h3>💾 أوعية ومصادر البيانات الرقمية (Types of Digital Data - شرائح 8 و 9)</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>نوع الوعاء أو الوسط التخزيني</th>
+                                <th>الأدلة الرقمية التي يحتويها (Forensic Artifacts)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>الأقراص الصلبة (Hard Disks)</strong></td>
+                                <td>الملفات العادية بامتداداتها، البيانات الوصفية (<span class="term-en">Metadata</span>)، أزمنة MAC (<span class="term-en">Modification, Access, Creation</span>)، الملفات المحذوفة، المساحات الشاغرة والمهدرة (<span class="term-en">Slack space & Free space</span>)، والملفات المشفرة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأجهزة المحمولة (Mobile Devices)</strong></td>
+                                <td>شريحة SIM، ذاكرة الهاتف الداخلية، بطاقات الذاكرة (MicroSD)، الإحداثيات الجغرافية في الصور (<span class="term-en">GPS in pictures</span>)، وسجلات المكالمات والرسائل (<span class="term-en">Call detail records</span>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الوسائط القابلة للإزالة والوسائط البصرية</strong></td>
+                                <td>محركات الفلاش USB، الكاميرات الرقمية، وأقراص DVD و CD والأقراص المرنة (Floppy disks).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>صيغ البيانات الرقمية الحيوية</strong></td>
+                                <td>النصوص، الصور الرقمية، رسائل البريد الإلكتروني، والبرمجيات الخبيثة (<span class="term-en">Malware artifacts</span>).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 4: Volatile Data Dilemma -->
+            <section id="topic-4">
+                <span class="section-tag">معضلة مسرح الجريمة الكبرى | الشريحة 10</span>
+                <h2>🔌 4. البيانات المتقلبة والمعضلة الكبرى: هل نسحب قابس الكهرباء أم لا؟ (Pull or Not to Pull the Plug?)</h2>
+                <p>تعد الشريحة رقم 10 من أخطر شرائح التحقيق الجنائي الميداني؛ إذ تطرح السؤال التاريخي الذي يواجه المحقق فور دخوله غرفة مسرح الجريمة وجهاز الحاسوب قيد التشغيل:</p>
+
+                <div class="info-box danger-box">
+                    <h4>❓ المعضلة: هل نسحب سلك الكهرباء فوراً أم نتركه يعمل؟</h4>
+                    <p><strong>إذا سحبت القابس (<span class="term-en">Pull the plug</span>):</strong> تحمي القرص الصلب من التعديل وتمنع برامج التدمير الذاتي الخبيثة عن بعد، <em>ولكنك ستفقد فوراً وإلى الأبد كافة البيانات المتقلبة في ذاكرة الوصول العشوائي (RAM)!</em></p>
+                    <p><strong>إذا لم تسحب القابس:</strong> يمكنك سحب محتويات الذاكرة الحية، ولكنك تخاطر بإمكانية قيام الجاني بحذف الملفات عن بُعد أو تفشي برمجية فدية تشفر القرص.</p>
+                </div>
+
+                <h3>⚡ ما هي البيانات المتقلبة (Volatile Data) التي تفقد عند انقطاع التيار؟</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>1. ذاكرة الوصول العشوائي (RAM)</h4>
+                        <p>تحتوي على العمليات الجارية حالياً ومفاتيح التشفير وكلمات المرور المكتوبة صراحة قبل تشفيرها في القرص.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. محركات الأقراص المشفرة (BitLocker)</h4>
+                        <p>إذا كان القرص مشفراً، فمفتاح فك التشفير يكون حياً في الرام؛ سحب القابس يعني قفل القرص واستحالة فتحه لاحقاً!</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. الاتصالات والشبكة (Network Connections)</h4>
+                        <p>عناوين الـ IP والمنافذ التي يتصل بها المتسلل حالياً بالخادم في تلك اللحظة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>4. الملفات المفتوحة وجلسات الدخول</h4>
+                        <p>الملفات التي كان الجاني يتصفحها، الحسابات المسجلة دخولاً، وتوقيت نظام التشغيل الدقيق (<span class="term-en">OS Time</span>).</p>
+                    </div>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>🛡️ الممارسة المهنية القياسية الحديثة</h4>
+                    <p>المحقق الجنائي الحديث يقوم بـ <strong>عزل الجهاز عن الشبكة فوراً (بفصل كابل الشبكة أو إيقاف Wi-Fi)</strong> لمنع التحكم عن بُعد، ثم يقوم <strong>بسحب صورة حية لذاكرة الرام (Live RAM Capture)</strong> باستخدام أدوات معتمدة قبل إيقاف تشغيل الجهاز أو سحب قابس الطاقة.</p>
+                </div>
+            </section>
+
+            <!-- Section 5: Chain of Custody -->
+            <section id="topic-5">
+                <span class="section-tag">حجر الزاوية القانوني | الشرائح 14 - 15</span>
+                <h2>📜 5. سلسلة الحفظ والحيازة (Chain of Custody)</h2>
+                <p>مهما كانت مهارة المحقق التقنية عبقرية، إذا فشل في إثبات <strong>سلسلة الحفظ (Chain of Custody)</strong>، فإن المحكمة سترفض الدليل بالكامل وتخرجه من القضية، وقد يفلت الجاني من العقاب!</p>
+
+                <div class="info-box">
+                    <h4>📖 تعريف وأهمية سلسلة الحفظ (شريحة 15)</h4>
+                    <p><strong>سلسلة الحفظ:</strong> هي سجل وتوثيق رسمي زمني صارم ومفصل يوضح بالتحديد كيفية التعامل مع الدليل الرقمي منذ لحظة تحريزه وجمعه في مسرح الجريمة وحتى لحظة تقديمه أمام قضاة المحكمة.</p>
+                    <p>ويجب أن يجيب هذا السجل دون أدنى شك عن الأسئلة الأربعة التالية:</p>
+                    <ul class="content-list">
+                        <li><strong>من يملك الدليل أو من استلمه؟ (<span class="term-en">Who owns / handled it</span>):</strong> توثيق اسم كل شخص لمس الجهاز أو وسيط التخزين ورتبته وصفته.</li>
+                        <li><strong>متى تم ذلك؟ (<span class="term-en">When</span>):</strong> التاريخ والوقت بالدقيقة والثانية.</li>
+                        <li><strong>الجدول الزمني للحركة (<span class="term-en">Timeline</span>):</strong> مسار انتقال الدليل من مسرح الجريمة إلى المختبر، ثم لخزينة الأدلة، ثم لقاعة المحكمة.</li>
+                        <li><strong>موقع تخزين الدليل (<span class="term-en">Location of evidence</span>):</strong> أين وُضع الدليل وكيف تم تخزينه في بيئة مقاومة للتلاعب (<span class="term-en">Stored in a tamper-proof manner</span>) مثل أكياس مكافحة الشحنات (<span class="term-en">Anti-static / Faraday bags</span>) مع ملصقات أمان مختومة برقم تسلسلي.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 6: Bitstream Copy & Forensics Imaging -->
+            <section id="topic-6">
+                <span class="section-tag">الاستحواذ الجنائي المعتمد | الشرائح 16 - 20</span>
+                <h2>💾 6. الاستحواذ الجنائي ونسخة تدفق البتات (Bitstream Copy)</h2>
+                <p>تنص الخطوة الثانية من إجراءات التحقيق (شريحة 16) على: <strong>احصل على الأدلة (Acquire the evidence)</strong>. ولكن كيف يحصل المحقق على نسخة من القرص الصلب؟</p>
+
+                <div class="info-box warning-box">
+                    <h4>⚠️ الكارثة الشائعة: النسخ العادي للملفات لا يصلح جنائياً!</h4>
+                    <p>استخدام أوامر النسخ العادية في أنظمة التشغيل مثل (<span class="term-en">cp, tar, cpio, dump, restore</span>) أو النسخ واللصق عبر Windows Explorer <strong>مرفوض تماماً في الأدلة الجنائية</strong>؛ لأن هذه الأدوات تقرأ فقط الملفات النشطة وتتوقف عند علامة نهاية الملف (<span class="term-en">End-of-File marker - EOF</span>)، ولا تنسخ أي بيانات محذوفة أو مساحات فارغة مهدرة!</p>
+                </div>
+
+                <h3>💎 ما هي نسخة تدفق البتات (Bitstream Copy / Forensic Image)؟</h3>
+                <p>تسمى أيضاً تصوير القرص الصلب (<span class="term-en">Hard drive imaging</span>) أو التصوير الجنائي (<span class="term-en">Forensic imaging</span>). وهي <strong>نسخة مطابقة قطاعاً بقطاع وبتاً ببت (Bit-for-bit copy of all sectors)</strong> لكامل القرص التخزيني.</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>1. تجاهل علامة نهاية الملف (Ignores EOF)</h4>
+                        <p>تتم على مستوى العتاد والقطاعات الفيزيائية للقرص، فتنسخ حتى القطاعات التي حذفها نظام التشغيل من فهرسه.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. نسخ المساحات غير المخصصة والمهدرة</h4>
+                        <p class="term-en">Slack space & Free space</p>
+                        <p>تنسخ المساحات الفارغة التي غالباً ما تحتوي على أسرار القضية والملفات المحذوفة التي ظن المجرم أنه تخلص منها.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. أدوات النسخ الجنائي المعتمدة (شريحة 20)</h4>
+                        <p>أداة يونكس الشهيرة <span class="term-en">dd</span>، جهاز وبرنامج <span class="term-en">FTK Imager</span>، وأجهزة الاستحواذ المادية وسلسلة <span class="term-en">Tableau</span> من Guidance Software المزودة بحواجب حظر الكتابة (<span class="term-en">Write Blockers</span>).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Cryptographic Hashes for Authentication -->
+            <section id="topic-7">
+                <span class="section-tag">إثبات النزاهة والمطابقة | الشرائح 21 - 24</span>
+                <h2>🔐 7. التحقق من صحة الأدلة وخوارزميات التجزئة التشفيرية (Cryptographic Hashes)</h2>
+                <p>يشترط القانون والقضاء أن تكون الأدلة الرقمية <strong>أصلية وغير معدلة (<span class="term-en">Authentic and unaltered</span>)</strong> وأن يتم الحفاظ عليها في حالتها الأولية. كيف يثبت المحقق للقاضي أن النسخة الجنائية التي بحوزته تطابق بالضبط قرص المشتبه به ولم يُضف إليها حرف واحد؟ الجواب هو: <strong>بصمة التجزئة المشفرة (<span class="term-en">Cryptographic Hash</span>)</strong>.</p>
+
+                <div class="info-box">
+                    <h4>📐 ما هي خوارزمية التجزئة المشفرة؟ (شريحة 22)</h4>
+                    <ul class="content-list">
+                        <li><strong>تشفير أحادي الاتجاه (<span class="term-en">One-way form of encryption</span>):</strong> من السهل حساب الهاش من الملف، ولكن من المستحيل رياضياً إعادة توليد الملف من الهاش.</li>
+                        <li><strong>ثبات المخرجات:</strong> تنتج دائماً نفس السلسلة من البتات لنفس المدخلات مهما تكررت العملية.</li>
+                        <li><strong>خالية ومانعة للتصادم (<span class="term-en">Collision free algorithm</span>):</strong> من المستحيل عملياً إنشاء ملفين مختلفين يحملان نفس قيمة التجزئة الهاشية. إذا تغير حرف واحد، تتغير البصمة بالكامل (<span class="term-en">Avalanche Effect</span>).</li>
+                    </ul>
+                </div>
+
+                <h3>🔢 أبرز خوارزميات الهاش المعتمدة جنائياً (شريحة 23)</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>اسم الخوارزمية</th>
+                                <th>طول المفتاح / البصمة</th>
+                                <th>الحالة والاستخدام الجنائي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>MD5 (Message Digest 5)</strong></td>
+                                <td>128 بت (128 bits)</td>
+                                <td>سريعة وشائعة جداً في التحقيقات، رغم ظهور تصادمات نظرية في أمن التشفير إلا أنها مستخدمة على نطاق واسع في مقارنة الملفات.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SHA-1 (Secure Hash Algorithm 1)</strong></td>
+                                <td>160 بت (160 bits)</td>
+                                <td>خوارزمية معتمدة من معهد المعايير الأمريكي NIST، أعلى أماناً من MD5.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>عائلة SHA-2 (SHA-256 / SHA-512)</strong></td>
+                                <td>256 أو 512 بت</td>
+                                <td>المعيار الذهبي الحالي للأمان السيبراني والتحقيق الجنائي الرقمي عالمياً، مقاومة تامة للتصادمات.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SHA-3</strong></td>
+                                <td>أطوال متعددة متغيرة</td>
+                                <td>أحدث معيار صادر عن NIST بتصميم معماري مبتكر (Keccak).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🎯 استخدامات دوال التجزئة لدى خبراء التحقيق (Three Ways - شريحة 24)</h3>
+                <ol class="content-list">
+                    <li><strong>الحفاظ على الدليل وإثبات نزاهته (<span class="term-en">Preserve evidence</span>):</strong> حساب هاش القرص الأصلي ومطابقته مع هاش النسخة المصورة للتأكد من سلامتها التامة (<span class="term-en">Integrity Verification</span>).</li>
+                    <li><strong>إجراء تحليل التجزئة ومطابقة الملفات (<span class="term-en">Conduct a hash analysis</span>):</strong> مقارنة هاشات ملفات النظام مع قواعد بيانات الهاشات العالمية (مثل مستودع NIST للملفات الآمنة، أو قواعد بيانات البرمجيات الخبيثة المعروفة لاستبعاد آلاف الملفات الطبيعية وتوفير وقت التحقيق).</li>
+                    <li><strong>التأكد القاطع من تلاعب أو تعديل ملف (<span class="term-en">Positively verify that a file has been altered</span>):</strong> إذا اختلف الهاش ولو في رقم واحد، فهذا دليل قاطع للمحكمة أن الملف تم العبث به بعد تاريخ الحادثة.</li>
+                </ol>
+            </section>
+
+            <!-- Section 8: Analysis & Reporting -->
+            <section id="topic-8">
+                <span class="section-tag">التنقيب وإعداد النتائج | الشرائح 25 - 26</span>
+                <h2>🔍 8. مراحل التحليل الجنائي وإعداد التقارير (Analysis & Reporting)</h2>
+                <p>بمجرد تأمين النسخة الجنائية ومطابقة بصمتها الهاشية، تبدأ مرحلة <strong>التحليل الجنائي (<span class="term-en">Analysis</span>)</strong> تليها مرحلة <strong>إعداد التقرير النهائي (<span class="term-en">Reporting</span>)</strong>.</p>
+
+                <div class="tabs-wrapper">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTab(event, 'ana-steps', 'ana-group')">🔬 خطوات التحليل الجنائي العامة (General Steps)</button>
+                        <button class="tab-btn" onclick="openTab(event, 'rep-steps', 'ana-group')">📑 أركان التقرير الجنائي المعتمد (Reporting)</button>
+                    </div>
+
+                    <div id="ana-steps" class="tab-content active ana-group">
+                        <h3 style="margin-top:0;">الخطوات العامة للتحليل (شريحة 25):</h3>
+                        <ul class="content-list">
+                            <li><strong>فحص جدول الأقسام (<span class="term-en">Partition Table</span>):</strong> فحص هيكل القرص للبحث عن أقسام مخفية (<span class="term-en">Hidden partitions</span>) أو غير مجهزة.</li>
+                            <li><strong>إنشاء خط زمني زمني مفصل (<span class="term-en">Generate a timeline</span>):</strong> ترتيب أحداث فتح وإنشاء وتعديل الملفات لمعرفة تسلسل تصرفات الجاني بدقة.</li>
+                            <li><strong>استعادة الملفات المحذوفة (<span class="term-en">Recover deleted files</span>):</strong> استخدام تقنيات نحت الملفات (<span class="term-en">File carving</span>) لاستخراج البيانات من المساحات الحرة.</li>
+                            <li><strong>فحص البيانات المخفية (<span class="term-en">Check for hidden data</span>):</strong> والبحث عن استخدام تقنيات إخفاء المعلومات داخل الصور (<span class="term-en">Steganography</span>).</li>
+                            <li><strong>تحليل التجزئة (<span class="term-en">Hash analysis</span>):</strong> وتصفية الملفات المعروفة سلفاً.</li>
+                            <li><strong>البحث بالكلمات المفتاحية (<span class="term-en">Keyword search</span>):</strong> التنقيب عن مصطلحات القضية وأسماء الضحايا أو الحسابات.</li>
+                            <li><strong>تحليل تواقيع الملفات (<span class="term-en">File signature analysis</span>):</strong> كشف الملفات التي قام الجاني بتغيير امتدادها عمداً للتمويه (مثلاً تغيير امتداد ملف تنفيذي خبيث .exe إلى .jpg).</li>
+                            <li><strong>تحليل وسائط نظام التشغيل (<span class="term-en">OS specific Media Analysis</span>):</strong> استخلاص الأدلة من سجلات الويندوز (<span class="term-en">Registry</span>) وفحص سلة المحذوفات (<span class="term-en">Recycle bin</span>) وملفات الكاش.</li>
+                        </ul>
+                    </div>
+
+                    <div id="rep-steps" class="tab-content ana-group">
+                        <h3 style="margin-top:0;">مكونات التقرير الجنائي القضائي (شريحة 26):</h3>
+                        <ol class="content-list">
+                            <li><strong>المهمة الموكلة وبيان واقعي (<span class="term-en">Task assigned & factual statement</span>):</strong> ملخص القضية وما طُلب من الخبير فحصه بالتحديد.</li>
+                            <li><strong>الخطوات والأدوات والمنهجيات المتبعة:</strong> ذكر البرامج والأجهزة وأرقام إصداراتها لضمان إمكانية تكرار التجربة من طرف خبير آخر (<span class="term-en">Reproducibility</span>).</li>
+                            <li><strong>الحقائق والبيانات المستخرجة:</strong> عرض الأدلة بوضوح وبيان ما إذا كانت <em>تدعم الفرضية</em> أم <em>ترفضها</em>.</li>
+                            <li><strong>النتائج والاستنتاجات النهائية المكتوبة:</strong> صياغة استنتاج موضوعي قابل للاستخدام في المحكمة أو داخل المؤسسة دون إصدار أحكام شخصية خارج نطاق الأدلة.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Evidence Dynamics & Errors -->
+            <section id="topic-9">
+                <span class="section-tag">الأخطاء القاتلة وديناميكية الأدلة | الشرائح 27 - 29</span>
+                <h2>⚠️ 9. ديناميكية الأدلة وتأثير المتدخلين (Evidence Dynamics & Error Introduction)</h2>
+                <p>الأدلة الرقمية هشة للغاية وعرضة للتلف أو التغيير السريع. سلطت المحاضرة (في الشرائح 28 و 29) الضوء على ظاهرة خطيرة تُسمى <strong>ديناميكية الأدلة (<span class="term-en">Evidence Dynamics</span>)</strong>: وهي التغييرات التي تطرأ على الدليل الرقمي بسبب تصرفات أشخاص غير مؤهلين وصلوا إلى مسرح الجريمة قبل وصول المحقق الرقمي المختص.</p>
+
+                <div class="info-box danger-box">
+                    <h4>💥 سيناريو واقعي لخطأ قاتل ارتكبه مسؤول نظام (Sysadmin Mistake - شريحة 28)</h4>
+                    <p>قام مسؤول نظام بحسن نية بمحاولة استعادة ملفات محذوفة من خادم مشتبه به، فقام بتثبيت برنامج استعادة ملفات على نفس الخادم، ثم قام بحفظ الملفات المستعادة على نفس القرص الصلب!</p>
+                    <p><strong>النتيجة الكارثية:</strong> كتابة البرنامج والملفات على نفس القرص أدت إلى <strong>تغيير حالة النظام (State was altered)</strong> وقامت بكتابة بيانات جديدة فوق المساحات الفارغة (<span class="term-en">Overwriting unallocated clusters</span>)، مما دمّر بشكل نهائي فرصة استعادة باقي الملفات المحذوفة الحقيقية وشوّه الدليل أمام المحكمة!</p>
+                </div>
+
+                <h3>🚫 ممارسات خاطئة تفتح باب الطعن في الدليل أمام المحكمة (شريحة 29)</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <p>❌ <strong>استخدام برامج مقرصنة أو غير مرخصة:</strong> تثبيت برامج تورنت أو كراكات في الفحص يسقط مصداقية المحقق قانونياً على الفور.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>❌ <strong>حذف حسابات المتسللين:</strong> قيام مسؤول النظام بحذف الحساب المخترق بدلاً من تعطيله يمسح سجلات الدخول والأنشطة المرتبطة به.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>❌ <strong>ضعف وأخطاء التوثيق:</strong> أي ثغرة في تواريخ أو أسماء سلسلة الحفظ تمنح محامي الدفاع فرصة ذهبية لإسقاط التهمة بالكامل.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Cybertrail & Cloud Challenges -->
+            <section id="topic-10">
+                <span class="section-tag">المطاردة الرقمية والتحديات الحديثة | الشرائح 30 - 31</span>
+                <h2>🌐 10. تتبع الأثر الإلكتروني (Cybertrail) وتحديات الحوسبة السحابية</h2>
+                <p>في ختام المحاضرة (الشرائح 30 و 31)، وضعت المادة فلسفة تتبع المجرم في الفضاء السيبراني:</p>
+
+                <div class="info-box">
+                    <h4>👣 تتبع الأثر الإلكتروني (Following the Cybertrail)</h4>
+                    <p>مهما كان المجرم محترفاً ومختبئاً وراء شاشته وشبكات التخفي، ففي كلا طرفي الإنترنت توجد <strong>معدات مادية وفيزيائية (<span class="term-en">Physical equipment</span>)</strong> تربط الأشخاص الحقيقيين (الضحايا والجناة) بالعالم الرقمي. شعور المجرم بأنه "غير مرئي" يدفعه لارتكاب أخطاء تكون هي الثغرة التي يسقطه من خلالها المحقق بمراقبة أنشطته الرقمية.</p>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>🕳️ ثغرات وعوائق مسار البيانات السحابية (Potholes in the Cybertrail)</h4>
+                    <p>أصبح التتبع الجنائي اليوم بالغ الصعوبة والتعقيد بسبب:</p>
+                    <ul class="content-list">
+                        <li><strong>التوزيع الجغرافي للبيانات:</strong> تجزئة وتوزيع الملفات عبر مئات الأقراص ومراكز البيانات حول العالم.</li>
+                        <li><strong>الحوسبة السحابية:</strong> صعوبة تحديد المكان الفيزيائي الفعلي للبيانات (<span class="term-en">Difficult to pinpoint where data is</span>) وقضايا الولاية القضائية العابرة للدول.</li>
+                    </ul>
+                    <p style="font-weight:700; color:#9f1239; margin-top:0.5rem;">
+                        «المسار الإلكتروني اليوم مثل نهر تحت الأرض.. ترى تأثيره على السطح، لكن تتبع مجراه الحقيقي يحتاج حفراً في أماكن متعددة وربط النقاط ببعضها. النجاح ليس في الوصول للنهاية، بل في عدم اليأس من البحث».
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 11: Interactive Hash Simulator -->
+            <section id="topic-11">
+                <span class="section-tag">مختبر المحاكاة الجنائية التفاعلي</span>
+                <h2>🧪 11. محاكي التحقق من سلامة الأدلة الرقمية (Hash Integrity Simulator)</h2>
+                <p>جرب بنفسك كيف تكتشف دوال التجزئة أقل تعديل يطرأ على الأدلة الرقمية حتى لو كان مسافة أو نقطة واحدة:</p>
+
+                <div class="interactive-widget" id="hash-widget">
+                    <div class="widget-controls">
+                        <div class="control-group">
+                            <label>محتوى ملف الدليل الجنائي الأصلي:</label>
+                            <input type="text" id="orig-text" value="اعتراف المتهم بتحويل مبلغ 5000 دولار" oninput="simHash()">
+                        </div>
+                        <div class="control-group">
+                            <label>محتوى الملف بعد الفحص أو الشك في التعديل:</label>
+                            <input type="text" id="check-text" value="اعتراف المتهم بتحويل مبلغ 5000 دولار" oninput="simHash()">
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1rem; margin-top:1.2rem;">
+                        <div class="calc-card" style="background:white; padding:1.2rem; border-radius:8px; border:2px solid var(--primary);">
+                            <h4 style="margin-top:0; color:var(--primary);">بصمة الدليل الأصلي (SHA-256 Hash)</h4>
+                            <div id="orig-hash" style="font-family:monospace; font-size:0.85rem; word-break:break-all; color:#0f172a; background:#f1f5f9; padding:0.6rem; border-radius:6px;">...</div>
+                        </div>
+
+                        <div class="calc-card" style="background:white; padding:1.2rem; border-radius:8px; border:2px solid var(--secondary);">
+                            <h4 style="margin-top:0; color:var(--secondary);">بصمة الملف المفحوص (SHA-256 Hash)</h4>
+                            <div id="check-hash" style="font-family:monospace; font-size:0.85rem; word-break:break-all; color:#0f172a; background:#f1f5f9; padding:0.6rem; border-radius:6px;">...</div>
+                        </div>
+                    </div>
+
+                    <div id="hash-status" style="margin-top:1.2rem; padding:1rem; border-radius:8px; text-align:center; font-weight:bold; font-size:1.05rem;">
+                        <!-- Evaluated dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 12: Questions & Academic Homework -->
+            <section id="topic-12">
+                <span class="section-tag">بنك الأسئلة والتقييم الأكاديمي</span>
+                <h2>📚 12. الأسئلة الشاملة للمحاضرة والواجب المنزلي (30 درجة)</h2>
+                <p>تضم هذه الفقرة بنك الأسئلة النموذجية المحلولة للمحاضرة الأولى وفق نمط الامتحانات الجامعية الأكاديمية (انقر على كل سؤال لإظهار إجابته المفككة):</p>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س1: ما هو علم الأدلة الجنائية الرقمية وما هي الغاية الأساسية لتطبيقه القضائي؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        هو علم جمع وحفظ وتحليل وإعداد التقارير عن الأدلة الرقمية. ويتمثل تطبيقه القضائي الأكثر شيوعاً في <strong>دعم (Support) أو دحض (Refute) فرضية معينة</strong> أمام المحاكم الجنائية أو المدنية بشكل محايد ومبني على البراهين الرقمية غير القابلة للشك.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س2: عدد الحالات الثلاث التي قد تجد فيها دليلاً على جهاز رقمي في مسرح الجريمة مع مثال لكل منها.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        1. <strong>الجهاز أداة لارتكاب الجريمة (<span class="term-en">Used to conduct crime</span>):</strong> كإرسال رسائل التهديد، الاحتيال المالي، أو سرقة الملكية الفكرية.<br>
+                        2. <strong>الجهاز هدف وضحية الجريمة (<span class="term-en">Target of crime</span>):</strong> كالخوادم التي تتعرض للاختراق الأمني وهجمات الفدية.<br>
+                        3. <strong>الجهاز وسيلة لدعم الجريمة (<span class="term-en">Used to support crime</span>):</strong> كالاحتفاظ بسجلات المنظمات الإجرامية أو التنسيق بين الجناة.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س3: لماذا يفشل النسخ العادي (مثل أمر cp) في الاستحواذ الجنائي؟ وما ميزة نسخة تدفق البتات (Bitstream Copy)؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        النسخ العادي يقف عند حدود الملفات النشطة ويتوقف عند علامة نهاية الملف (<span class="term-en">EOF</span>) ولا ينسخ الملفات المحذوفة أو المساحات المهدرة (<span class="term-en">Slack/Free space</span>). بينما تقوم <strong>نسخة تدفق البتات (Bitstream Copy)</strong> بعمل تصوير دقيق قطاعاً بقطاع وبتاً ببت (<span class="term-en">Bit-for-bit</span>) لكامل القرص التخزيني متجاهلة علامات نظام التشغيل، مما يسمح باستعادة الملفات المحذوفة والأدلة المخفية.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س4: ما هي أركان سلسلة الحفظ (Chain of Custody) الأربعة ولماذا يعد غيابها كارثياً في المحاكمة؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        الأركان الأربعة هي: <strong>من تعامل مع الدليل</strong>، و<strong>تاريخ ووقت التعامل (متى)</strong>، و<strong>الجدول الزمني لحركته</strong>، و<strong>موقع تخزينه بطريقة مقاومة للتلاعب</strong>. غياب أي ركن يتيح لمحامي الدفاع الطعن في سلامة الدليل واحتمالية العبث به، مما يؤدي إلى استبعاد الدليل بالكامل من المحكمة.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س5: اشرح معضلة "Pull or Not to pull the plug" عند التعامل مع البيانات المتقلبة في ذاكرة RAM.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        سحب القابس فوراً يحمي بيانات القرص من التدمير عن بعد، لكنه يدمر للأبد كافة البيانات الحيوية المتقلبة في ذاكرة RAM (مثل مفاتيح تشفير الأقراص BitLocker، العمليات الجارية، اتصالات الشبكة النشطة، وكلمات المرور). لذا، الإجراء الصحيح هو عزل الجهاز عن الشبكة فوراً ثم التقاط صورة حية للذاكرة (<span class="term-en">RAM Dump</span>) قبل فصل التيار.
+                    </div>
+                </div>
+
+                <!-- Assignment Box -->
+                <div class="info-box" style="margin-top:2rem; border-right-color:var(--accent);">
+                    <h4 style="color:var(--accent);">📝 تكليف منزلي تطبيقي (Homework Assignment)</h4>
+                    <p><strong>المطلوب:</strong> قم بإعداد نموذج فارغ لـ <strong>سلسلة الحفظ (Chain of Custody Form)</strong> يحتوي على كافة الحقول المهنية اللازمة لتحريز هاتف ذكي وقرص صلب مشتبه بهما، مع كتابة سيناريو افتراضي لحادثة اختراق شبكة وسلسلة الإجراءات المتبعة منذ لحظة وصولك لمقر الحادثة وحتى تسليم الدليل للمختبر الجنائي.</p>
+                </div>
+            </section>
+
+            <!-- Section 13: Glossary -->
+            <section id="topic-13">
+                <span class="section-tag">المعجم العلمي المعتمد</span>
+                <h2>📖 13. قاموس مصطلحات المحاضرة والمراجع الأكاديمية</h2>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المصطلح بالعربية</th>
+                                <th>المصطلح بالإنجليزية</th>
+                                <th>الشرح والدلالة الجنائية</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الأدلة الجنائية الرقمية</td>
+                                <td><span class="term-en">Digital Forensics</span></td>
+                                <td>علم استخراج وحفظ وتحليل الأدلة الرقمية لتقديمها للقضاء.</td>
+                            </tr>
+                            <tr>
+                                <td>سلسلة الحفظ والحيازة</td>
+                                <td><span class="term-en">Chain of Custody</span></td>
+                                <td>التوثيق القانوني الزمني المستمر لحركة الدليل من مسرح الجريمة للمحكمة.</td>
+                            </tr>
+                            <tr>
+                                <td>نسخة تدفق البتات</td>
+                                <td><span class="term-en">Bitstream Copy</span></td>
+                                <td>نسخ قطاع بقطاع لكامل وسيط التخزين بما فيه المساحات المحذوفة.</td>
+                            </tr>
+                            <tr>
+                                <td>البيانات المتقلبة</td>
+                                <td><span class="term-en">Volatile Data</span></td>
+                                <td>البيانات المؤقتة التي تضيع فوراً عند انقطاع التيار الكهربائي (مثل محتوى RAM).</td>
+                            </tr>
+                            <tr>
+                                <td>التصوير الجنائي</td>
+                                <td><span class="term-en">Forensic Imaging</span></td>
+                                <td>عملية إنشاء صورة مطابقة للأصل لوسيط التخزين مع حظر الكتابة عليه.</td>
+                            </tr>
+                            <tr>
+                                <td>خوارزمية التجزئة المشفرة</td>
+                                <td><span class="term-en">Cryptographic Hash</span></td>
+                                <td>دالة رياضية أحادية الاتجاه تنتج بصمة فريدة للملف لإثبات عدم تغييره.</td>
+                            </tr>
+                            <tr>
+                                <td>مساحة القرص المهدرة</td>
+                                <td><span class="term-en">Slack Space</span></td>
+                                <td>المساحة المتبقية غير المستغلة في نهاية الكتلة التخزينية (Cluster).</td>
+                            </tr>
+                            <tr>
+                                <td>ديناميكية الأدلة</td>
+                                <td><span class="term-en">Evidence Dynamics</span></td>
+                                <td>التغييرات التي تطرأ على الدليل بسبب مؤثرات خارجية أو أشخاص متدخلين.</td>
+                            </tr>
+                            <tr>
+                                <td>تتبع الأثر الإلكتروني</td>
+                                <td><span class="term-en">Following Cybertrail</span></td>
+                                <td>ملاحقة الأثر الرقمي وسجلات الربط بين الجاني والضحية عبر الشبكة.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success-box" style="margin-top:1.5rem;">
+                    <h4>📚 المراجع الأكاديمية المعتمدة للمحاضرة</h4>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>سلايدات المقرر الجامعي:</strong> "Introduction to Digital Forensics - Lecture 01" — إعداد وتقديم <strong>د. ضياء الحق القدمي (Dr. Dheya Al-Haq Al-Qadami)</strong>، كلية المنار للعلوم والتكنولوجيا.</li>
+                        <li><strong>المعيار الدولي للأدلة الرقمية:</strong> ISO/IEC 27037: <em>"Guidelines for identification, collection, acquisition and preservation of digital evidence"</em>.</li>
+                        <li><strong>إرشادات المعهد الوطني للمعايير:</strong> NIST SP 800-86: <em>"Guide to Integrating Forensic Techniques into Incident Response"</em>.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 14: Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">أداة المراجعة الذهنية السريعة</span>
+                <h2>🗂️ 14. بطاقات الاستذكار التفاعلية (Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار معلوماتك الجنائية في المفاهيم الأساسية للمحاضرة الأولى:</p>
+
+                <div class="flashcards-container">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">🔬</span>
+                                <h4>تعريف علم الأدلة الجنائية الرقمية</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>علم جمع، وحفظ، وتحليل، وإعداد التقارير عن الأدلة الرقمية؛ لدعم أو دحض فرضية أمام المحاكم الجنائية أو المدنية.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">📜</span>
+                                <h4>سلسلة الحفظ (Chain of Custody)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>سجل موثق يوضح مسار التعامل مع الدليل منذ لحظة تحريزه حتى المحكمة (من لمسه، متى، أين خُزن، ومسار حركته لمنع التلاعب به).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">💾</span>
+                                <h4>نسخة البتات (Bitstream Copy)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>نسخ دقيق قطاعاً بقطاع وبتاً ببت لكامل القرص التخزيني مع تجاهل علامة نهاية الملف (EOF)، لنسخ الملفات المحذوفة والمساحات المهدرة.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">⚡</span>
+                                <h4>البيانات المتقلبة (Volatile Data)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>بيانات ذاكرة RAM التي تفقد فور انقطاع الكهرباء وتضم مفاتيح تشفير الأقراص، اتصالات الشبكة الحية، والعمليات الجارية.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">🔐</span>
+                                <h4>خوارزمية التجزئة المشفرة (Hash)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>دالة تشفير أحادية الاتجاه خالية من التصادم تنتج بصمة فريدة للملف؛ إذا تغير حرف واحد يتغير الهاش تماماً لإثبات نزاهة الدليل.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">⚠️</span>
+                                <h4>ديناميكية الأدلة (Evidence Dynamics)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>التغييرات والتشوهات التي تصيب الدليل الرقمي نتيجة أخطاء أو تدخل أشخاص غير مؤهلين قبل بدء التحقيق الجنائي الرسمي.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 15: Interactive Quiz -->
+            <section id="quiz">
+                <span class="section-tag">الكوز الذاتي التفاعلي</span>
+                <h2>✅ 15. اختبر فهمك (Quiz — 10 أسئلة شاملة ومحلولة)</h2>
+                <p>أجب عن الأسئلة العشرة التالية لتقييم استيعابك للمحاضرة؛ ستحصل على تقييم وتصحيح فوري وشرح وافٍ مع حفظ نتيجتك في المتصفح تلقائياً:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- Dynamically loaded via JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+async function sha256(str) {
+            const buffer = new TextEncoder("utf-8").encode(str);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function simHash() {
+            const orig = document.getElementById('orig-text').value;
+            const chk = document.getElementById('check-text').value;
+
+            const h1 = await sha256(orig);
+            const h2 = await sha256(chk);
+
+            document.getElementById('orig-hash').innerText = h1;
+            document.getElementById('check-hash').innerText = h2;
+
+            const statusBox = document.getElementById('hash-status');
+            if (h1 === h2) {
+                statusBox.style.background = 'var(--success-bg)';
+                statusBox.style.border = '2px solid var(--success)';
+                statusBox.style.color = '#065f46';
+                statusBox.innerHTML = '✅ <strong>تطابق تام ومثالي للبصمة الهاشية!</strong> الدليل أصلي وغير معدل (Authentic and unaltered) ومقبول أمام المحكمة.';
+            } else {
+                statusBox.style.background = 'var(--danger-bg)';
+                statusBox.style.border = '2px solid var(--danger)';
+                statusBox.style.color = '#991b1b';
+                statusBox.innerHTML = '❌ <strong>تحذير جنائي: اختلاف البصمة الهاشية!</strong> تم تعديل أو التلاعب بالملف قطاراً أو حرفاً، والدليل سيسقط قانونياً بسبب كسر النزاهة.';
+            }
+        }
+        simHash();
+
+        // 5. Quiz Application Logic
+
+const quizData = [
+            {
+                question: "1. ما هو التعريف العلمي المعتمد للأدلة الجنائية الرقمية (Digital Forensics)؟",
+                options: [
+                    "علم برمجة الفيروسات واختراق المواقع الحكومية",
+                    "علم جمع وحفظ وتحليل وإعداد التقارير عن الأدلة الرقمية",
+                    "علم صيانة أجهزة الحاسوب وتغيير قطع الهاردوير التالفة",
+                    "علم تصميم البرمجيات المحاسبية للمؤسسات"
+                ],
+                correct: 1,
+                explanation: "المحاضرة تعرّف علم الأدلة الجنائية الرقمية نصاً في الشريحة 3 بأنه: 'the science of collecting, preserving, analyzing, and reporting of digital evidence'."
+            },
+            {
+                question: "2. ما هو التطبيق الأكثر شيوعاً لعلم الأدلة الجنائية الرقمية أمام القضاء؟",
+                options: [
+                    "تدمير الأجهزة المشتبه بها فوراً",
+                    "بيع بيانات الشركات في المزاد العلني",
+                    "دعم أو دحض فرضية معينة أمام المحاكم الجنائية أو المدنية",
+                    "إلغاء القوانين الجنائية المعمول بها"
+                ],
+                correct: 2,
+                explanation: "الهدف الجنائي هو اختبار الفرضيات بشكل محايد لدعم أو دحض فرضية الاتهام أو البراءة (Support or refute a hypothesis before courts)."
+            },
+            {
+                question: "3. عندما يُستخدم جهاز الحاسوب لإرسال رسائل ابتزاز أو تنفيذ احتيال مالي، فإن الجهاز يُصنف على أنه:",
+                options: [
+                    "ضحية وهدف الجريمة (Target of the crime)",
+                    "الجهاز المستخدم لارتكاب وتنفيذ الجريمة (Used to conduct the crime)",
+                    "جهاز خارج نطاق التحقيق تماماً",
+                    "جهاز حماية سيبرانية"
+                ],
+                correct: 1,
+                explanation: "في الشريحة 4، عندما تصدر التهديدات والاحتيال من الجهاز، فإنه يُصنف كأداة لارتكاب الجريمة (Device used to conduct the crime)."
+            },
+            {
+                question: "4. ما الذي يميز 'نسخة تدفق البتات' (Bitstream Copy) عن أوامر النسخ العادية كـ cp و tar؟",
+                options: [
+                    "أنها تنسخ فقط الملفات التي يقل حجمها عن 1 ميجابايت",
+                    "أنها نسخة قطاع بقطاع وبتاً ببت لكامل القرص وتتجاهل علامة نهاية الملف وتنسخ المحذوفات والمساحات المهدرة",
+                    "أنها تحذف كافة الأدلة من القرص الأصلي بمجرد نسخها",
+                    "أنها تتطلب توصيل الجهاز بالإنترنت السحابي للعمل"
+                ],
+                correct: 1,
+                explanation: "نسخة Bitstream (Forensic image) تقوم بنسخ بت-ببت لجميع قطاعات الوسيط متجاهلة علامة EOF وتنسخ البيانات المحذوفة و Slack space."
+            },
+            {
+                question: "5. أي من الأدوات التالية تُعد من الأدوات المعتمدة في التحقيق الجنائي لعمل نسخة Bitstream؟",
+                options: [
+                    "برنامج FTK Imager وأداة dd",
+                    "برنامج Microsoft Word",
+                    "مشغل الوسائط VLC Player",
+                    "متصفح Google Chrome"
+                ],
+                correct: 0,
+                explanation: "أداة dd في يونكس، وبرنامج FTK Imager، وأجهزة Tableau هي المعايير المعتمدة لنسخ الأدلة الجنائية (شريحة 20)."
+            },
+            {
+                question: "6. ما هي البيانات المتقلبة (Volatile Data) التي تفقد بمجرد فصل التيار الكهربائي عن الحاسوب؟",
+                options: [
+                    "الملفات المخزنة على أقراص DVD",
+                    "البيانات المحفورة على اللوحة الأم فيزياءً",
+                    "بيانات الذاكرة العشوائية RAM ومفاتيح تشفير الأقراص المفتوحة والاتصالات النشطة",
+                    "الكابلات والأسلاك النحاسية"
+                ],
+                correct: 2,
+                explanation: "البيانات المتقلبة في ذاكرة RAM تفقد فور انقطاع الكهرباء وتضم العمليات الحية، ومفاتيح التشفير، والاتصالات الشبكية المفتوحة (شريحة 10)."
+            },
+            {
+                question: "7. ما هي سلسلة الحفظ (Chain of Custody) في التحقيق الجنائي؟",
+                options: [
+                    "سلسلة حديدية لربط الحواسيب في مسرح الجريمة لمنع سرقتها",
+                    "سجل رسمي يوثق كيفية وتاريخ ومكان التعامل مع الدليل ومن استلمه منذ لحظة جمعه حتى تقديمه في المحكمة",
+                    "برنامج لتشفير كلمات المرور في المتصفح",
+                    "عقد عمل المحقق الجنائي مع الشركة"
+                ],
+                correct: 1,
+                explanation: "سلسلة الحفظ توثق حركة الدليل بالكامل وتضمن عدم التلاعب به (Maintain a record of how evidence has been handled)."
+            },
+            {
+                question: "8. ما فائدة خوارزميات التجزئة التشفيرية (Cryptographic Hashes) مثل SHA-256 للمحقق الجنائي؟",
+                options: [
+                    "تسريع سرعة معالج الحاسوب",
+                    "إثبات صحة ونزاهة الدليل (Authentication) والتأكد القاطع من عدم تعديله بعد التحريز",
+                    "طباعة التقارير الورقية أوتوماتيكياً",
+                    "إخفاء الملفات عن القاضي"
+                ],
+                correct: 1,
+                explanation: "الهاش ينتج بصمة فريدة مانعة للتصادم تستخدم لإثبات سلامة الدليل وتطابقه ومطابقة الملفات في قواعد البيانات الجنائية."
+            },
+            {
+                question: "9. ما الخطأ القاتل الذي ارتكبه مسؤول النظام في مثال الشريحة 28؟",
+                options: [
+                    "قام بمسح الغبار عن شاشة الحاسوب",
+                    "قام بتثبيت برنامج استعادة ملفات على جهاز الدليل وحفظ الملفات المستعادة عليه مما غير حالة النظام ودمر باقي المحذوفات",
+                    "قام بإطفاء إضاءة الغرفة قبل خروجه",
+                    "قام بكتابة تقرير مفصل للشرطة"
+                ],
+                correct: 1,
+                explanation: "تثبيت البرامج أو كتابة أي بيانات على القرص الدليل يؤدي إلى استبدال البيانات المحذوفة (Overwriting) وتشويه الدليل أمام المحكمة."
+            },
+            {
+                question: "10. ما هي 'القاعدة الذهبية' في التعامل مع الأدلة الرقمية؟",
+                options: [
+                    "العمل دائماً على القرص الأصلي مباشرة لتوفير الوقت",
+                    "الدليل الرقمي حساس كبصمة الإصبع.. العمل دائماً على نسخة، واستخدام أدوات معتمدة، والحفاظ على كل ذرة من البيانات الأصلية",
+                    "حذف كافة السجلات قبل فحص الجهاز",
+                    "تغيير كلمات مرور جميع الحسابات قبل تصوير القرص"
+                ],
+                correct: 1,
+                explanation: "القاعدة الذهبية (شريحة 28): الدليل الرقمي حساس كبصمة الإصبع.. العمل دائماً على نسخة واستخدام أدوات معتمدة والحفاظ على الأصل دون لمس."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_df_lec01');
+    </script>
+</body>
+</html>

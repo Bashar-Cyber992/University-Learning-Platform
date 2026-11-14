@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الأولى: مفاهيم وتأسيس الحوسبة السحابية | الحوسبة السحابية</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="cloud-computing">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="breadcrumb-nav">
+            <div class="breadcrumb-links">
+                <a href="../index.html">🏠 المنصة الجامعية</a>
+                <span>←</span>
+                <a href="index.html">☁️ الحوسبة السحابية</a>
+                <span>←</span>
+                <span>المحاضرة 01: مفاهيم وتأسيس الحوسبة السحابية</span>
+            </div>
+            <div class="top-controls">
+                <a href="index.html" class="nav-pill" style="text-decoration:none; color:var(--primary); font-weight:700; font-size:0.85rem; padding:0.35rem 0.8rem; border:1px solid var(--border-color); border-radius:20px;">📚 فهرس المقرر</a>
+                <a href="Lecture-02.html" class="nav-pill" style="text-decoration:none; color:var(--primary); font-weight:700; font-size:0.85rem; padding:0.35rem 0.8rem; border:1px solid var(--border-color); border-radius:20px;">المحاضرة التالية (2) ←</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
+                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                </button>
+            </div>
+        </div>
+        <div class="reading-progress-container">
+            <div class="reading-progress-bar" id="reading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="lecture-header">
+        <div class="header-badge">كلية المنار للعلوم والتكنولوجيا | المستوى الثالث (الترم الثاني)</div>
+        <h1>المحاضرة الأولى: مفاهيم وتأسيس الحوسبة السحابية</h1>
+        <p>التعريفات المعيارية (NIST & Microsoft)، تحليل صيغة Cloud + Computing، تطبيقات السحابة في المؤسسات، الفوائد والعيوب، والخصائص الجوهرية ونموذج الدفع حسب الاستخدام (Pay-Per-Use).</p>
+        <div class="header-meta-box">
+            <div class="header-meta-item">👨‍🏫 <strong>أستاذ المقرر:</strong> أ.د. عبده ناصر شويه (Prof. Abdo Nasser Shewia)</div>
+            <div class="header-meta-item">👥 <strong>القسم:</strong> الأمن السيبراني وشبكات & تقنية المعلومات</div>
+            <div class="header-meta-item">📑 <strong>المصدر المعتمد:</strong> السلايدات الرسمية (37 شريحة) + إعداد م. بشار زبله</div>
+        </div>
+        <div class="header-golden-rule">
+            💡 القاعدة الذهبية: «السحابة ليست مجرد كمبيوتر شخص آخر، بل نموذج خدمي يوفّر موارد مرنة حسب الطلب دون إدارة البنية التحتية الفيزيائية».
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h3>📑 محتويات المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro-objectives">🚀 المقدمة والأهداف التعليمية</a></li>
+                <li><a href="#topic-1">📖 1. تعريف الحوسبة السحابية (NIST & MS)</a></li>
+                <li><a href="#topic-2">🔍 2. تفكيك مصطلح Cloud + Computing</a></li>
+                <li><a href="#topic-3">💰 3. نموذج العمل الاقتصادي (Pay-Per-Use)</a></li>
+                <li><a href="#topic-4">📱 4. مجالات وتطبيقات الحوسبة السحابية</a></li>
+                <li><a href="#topic-5">🌟 5. فوائد الحوسبة السحابية بالتفصيل</a></li>
+                <li><a href="#topic-6">⚠️ 6. عيوب وتحديات السحابة والحلول</a></li>
+                <li><a href="#topic-7">⚙️ 7. الخصائص الجوهرية للحوسبة السحابية</a></li>
+                <li><a href="#topic-8">🏛️ 8. حالة دراسية: التحول السحابي لكلية المنار</a></li>
+                <li><a href="#topic-9">🧮 9. حاسبة مقارنة التكلفة (On-Premises vs Cloud)</a></li>
+                <li><a href="#topic-10">📚 10. الأسئلة الشاملة والواجب المنزلي</a></li>
+                <li><a href="#topic-11">📖 11. قاموس المصطلحات والمراجع الأكاديمية</a></li>
+                <li><a href="#flashcards">🗂️ 12. بطاقات الاستذكار التفاعلية</a></li>
+                <li><a href="#quiz">✅ 13. الكوز التقييمي الشامل (10 أسئلة)</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- Section 0: Objectives -->
+            <section id="intro-objectives">
+                <span class="section-tag">خارطة الطريق الأكاديمية</span>
+                <h2>🚀 المقدمة، موضوعات المحاضرة، وأهداف التعلم</h2>
+                <p>مرحباً بكم يا شباب في المحاضرة التأسيسية الأولى لمقرر <strong>الحوسبة السحابية (Cloud Computing)</strong> تحت إشراف <strong>أ.د. عبده ناصر شويه</strong>. تمثل هذه المحاضرة حجر الأساس المعرفي والتقني الذي ستبنى عليه كافة المحاضرات اللاحقة (من تقنيات المحاكاة الافتراضية Virtualization، الحاويات Containers، وحتى نماذج الخدمات IaaS, PaaS, SaaS وأمان السحابة Cloud Security).</p>
+                
+                <div class="info-box">
+                    <h4>🎯 الأهداف التعليمية للمحاضرة الأولى</h4>
+                    <p>بنهاية دراستك المتعمقة لهذه المحاضرة والتفاعل مع أدواتها، ستكون قادراً بإذن الله على:</p>
+                    <ul class="content-list">
+                        <li><strong>استيعاب وحفظ التعريفين الرسميين:</strong> تعريف المعهد الوطني للمعايير والتقنية (<span class="term-en">NIST</span>) وتعريف شركة مايكروسوفت (<span class="term-en">Microsoft</span>).</li>
+                        <li><strong>تفكيك المصطلح لغوياً وهندسياً:</strong> التمييز الدقيق بين كلمة <span class="term-en">Cloud</span> (الإنترنت والشبكة الممتدة) وكلمة <span class="term-en">Computing</span> (البنى التحتية والمعالجة والأنظمة).</li>
+                        <li><strong>استيعاب آلية العمل الاقتصادية:</strong> كيفية تحول تكاليف تكنولوجيا المعلومات من نفقات رأسمالية (<span class="term-en">CapEx</span>) إلى نفقات تشغيلية ونموذج دفع حسب الاستخدام (<span class="term-en">Pay-Per-Use / OpEx</span>).</li>
+                        <li><strong>تصنيف تطبيقات السحابة:</strong> في قطاعات التعليم الإلكتروني (<span class="term-en">E-Learning</span>)، تخطيط موارد المؤسسات (<span class="term-en">ERP</span>)، الحوكمة الإلكترونية (<span class="term-en">E-Governance</span>)، والتخزين والنسخ الاحتياطي.</li>
+                        <li><strong>التحليل النقدي المتوازن:</strong> الإلمام بجميع فوائد السحابة (التوسع، المرونة، الموثوقية، خفض التكاليف)، ومقابلة ذلك بفهم عميق للمخاطر والعيوب (التحديات الأمنية، انقطاع الخدمات، منحنى التعلم).</li>
+                        <li><strong>إتقان الخصائص الجوهرية (Essential Characteristics):</strong> الخدمة الذاتية عند الطلب، الوصول الشامل عبر الشبكة، تجميع الموارد، المرونة الفائقة، والخدمات المقاسة.</li>
+                    </ul>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>المفهوم والتأسيس</h4>
+                        <p>الانتقال الجذري من السيرفرات المحلية المادية (<span class="term-en">On-Premises</span>) إلى البنى التحتية الافتراضية المدارة سحابياً.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>الفوائد ونموذج العمل</h4>
+                        <p>توفير التكاليف، المرونة اللحظية، وصول الموظفين والطلاب من أي جهاز وفي أي وقت (<span class="term-en">Mobility</span>).</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>الخصائص والمخاطر</h4>
+                        <p>فهم كيفية عمل <span class="term-en">Elasticity</span> و <span class="term-en">Resource Pooling</span> ومواجهة تحديات أمن البيانات والمفاتيح.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1: Definitions -->
+            <section id="topic-1">
+                <span class="section-tag">المفاهيم التأسيسية | الشرائح 3 - 6</span>
+                <h2>📖 1. تعريف الحوسبة السحابية (Cloud Computing Definition)</h2>
+                <p>تعتبر الحوسبة السحابية التحول الأكبر في تاريخ تكنولوجيا المعلومات خلال العقدين الأخيرين. بدلاً من شراء خوادم باهظة الثمن ووضعها في غرف سيرفرات خاصة، يتم استئجار الموارد الحاسوبية كخدمة عبر شبكة الإنترنت. اعتمدت المادة الأكاديمية تعريفين رئيسيين:</p>
+
+                <!-- Tabs for Definitions -->
+                <div class="tabs-wrapper">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="openTab(event, 'def-nist', 'def-group')">🏛️ تعريف NIST (المعيار الدولي الأكاديمي)</button>
+                        <button class="tab-btn" onclick="openTab(event, 'def-ms', 'def-group')">🏢 تعريف Microsoft (المنظور الصناعي والتجاري)</button>
+                        <button class="tab-btn" onclick="openTab(event, 'def-offsite', 'def-group')">🌐 مفهوم الأنظمة خارج الموقع (Off-site Systems)</button>
+                    </div>
+
+                    <!-- NIST Tab -->
+                    <div id="def-nist" class="tab-content active def-group">
+                        <h3 style="margin-top:0;">تعريف المعهد الوطني للمعايير والتكنولوجيا (NIST Definition - SP 800-145)</h3>
+                        <div class="info-box success-box">
+                            <p style="font-style: italic; font-size:1.05rem; margin-bottom:0.5rem; direction:ltr; text-align:left;">
+                                "Cloud computing is a model for enabling convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction."
+                            </p>
+                            <hr style="margin: 0.8rem 0; border:0; border-top:1px dashed #a7f3d0;">
+                            <p style="font-weight:700; margin-bottom:0;">
+                                «الحوسبة السحابية هي نموذج لتمكين الوصول المريح، عند الطلب عبر الشبكة، إلى مجموعة مشتركة من موارد الحوسبة القابلة للتهيئة (مثل الشبكات، الخوادم، وسائط التخزين، التطبيقات، والخدمات) والتي يمكن توفيرها وإطلاقها بسرعة وبأقل جهد إداري أو تفاعل مع مزود الخدمة».
+                            </p>
+                        </div>
+                        <h4>🔑 تفكيك الكلمات المفتاحية لتعريف NIST:</h4>
+                        <ul class="content-list">
+                            <li><strong class="term">Model (نموذج):</strong> السحابة ليست جهازاً أو برنامجاً محدداً، بل طريقة معمارية وإدارية لتقديم واستهلاك تكنولوجيا المعلومات.</li>
+                            <li><strong class="term">Convenient, On-Demand (مريح وعند الطلب):</strong> يحصل المستخدم على المورد فور طلبه عبر لوحة تحكم دون انتظار أيام أو شهور لشراء سيرفر فيزيائي.</li>
+                            <li><strong class="term">Shared Pool (مجموعة مشتركة من الموارد):</strong> الآلاف من العملاء يتشاركون نفس العتاد الفيزيائي العملاق مع عزل افتراضي تام (<span class="term-en">Multi-tenancy</span>).</li>
+                            <li><strong class="term">Rapidly Provisioned & Released (سرعة التوفير والتحرير):</strong> القدرة على إنشاء 100 سيرفر في دقائق، وحذفهم فور انتهاء الحاجة دون خسائر.</li>
+                            <li><strong class="term">Minimal Management Effort (أقل جهد إداري):</strong> مزود السحابة يتكفل بالصيانة، التبريد، الكهرباء، والعتاد، ليتفرغ مهندس تكنولوجيا المعلومات لبرمجياته وبياناته.</li>
+                        </ul>
+                    </div>
+
+                    <!-- MS Tab -->
+                    <div id="def-ms" class="tab-content def-group">
+                        <h3 style="margin-top:0;">تعريف شركة مايكروسوفت (Microsoft Definition)</h3>
+                        <div class="info-box">
+                            <p style="font-style: italic; font-size:1.05rem; margin-bottom:0.5rem; direction:ltr; text-align:left;">
+                                "Cloud computing is the delivery of computing services – including servers, storage, databases, networking, software, analytics, and intelligence – over the Internet (“the cloud”) to offer faster innovation, flexible resources, and economies of scale."
+                            </p>
+                            <hr style="margin: 0.8rem 0; border:0; border-top:1px dashed #bae6fd;">
+                            <p style="font-weight:700; margin-bottom:0;">
+                                «الحوسبة السحابية هي تقديم خدمات الحوسبة - بما في ذلك الخوادم، والتخزين، وقواعد البيانات، والشبكات، والبرمجيات، والتحليلات، والذكاء الاصطناعي - عبر الإنترنت ("السحابة") لتقديم ابتكار أسرع، وموارد مرنة، واقتصادات الحجم الكبير».
+                            </p>
+                        </div>
+                        <h4>🔑 الركائز الثلاث في منظور مايكروسوفت الصناعي:</h4>
+                        <ol class="content-list">
+                            <li><strong>ابتكار أسرع (<span class="term-en">Faster Innovation</span>):</strong> سرعة بناء واختبار وتطوير البرمجيات دون تأخير لوجستي في العتاد.</li>
+                            <li><strong>موارد مرنة (<span class="term-en">Flexible Resources</span>):</strong> زيادة قوة السيرفر أو الرام لحظياً تماشياً مع نمو النشاط التجاري.</li>
+                            <li><strong>اقتصادات الحجم الكبير (<span class="term-en">Economies of Scale</span>):</strong> قدرة عمالقة السحابة على شراء وتوليد الطاقة والعتاد بكميات ضخمة، مما يجعل كلفة السيرفر على المستخدم أرخص بكثير مما لو اشتراه بنفسه.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Off-site Tab -->
+                    <div id="def-offsite" class="tab-content def-group">
+                        <h3 style="margin-top:0;">مفهوم الأنظمة خارج الموقع (Off-site Systems)</h3>
+                        <p>كما ورد في شريحة رقم (6)، الحوسبة السحابية تعني الاعتماد على أنظمة مستضافة <strong>خارج مقر المنشأة (Off-site)</strong> عبر الإنترنت بدلاً من الاعتماد على العتاد والأقراص الصلبة المحلية داخل أجهزتنا ومبانينا.</p>
+                        <div class="info-box warning-box">
+                            <h4>🔄 المقارنة بين On-Premises و Off-site Cloud</h4>
+                            <p><strong>المحلي (On-Premises):</strong> السيرفر في غرفتك أو مقر شركتك، أنت مسؤول عن صيانته، تبريده، انقطاع الكهرباء، وشراء قطع الغيار.</p>
+                            <p><strong>السحابي (Off-site):</strong> الموارد مستضافة في مراكز بيانات متطورة عالمية، وتصل إليها عبر شبكات اتصال آمنة وموثوقة.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Breakdown of Cloud + Computing -->
+            <section id="topic-2">
+                <span class="section-tag">التحليل المعماري واللغوي | الشريحة 7</span>
+                <h2>🔍 2. تفكيك مصطلح "Cloud" و "Computing"</h2>
+                <p>لفهم الحوسبة السحابية على مستوى هندسي عميق، حللت المحاضرة (في الشريحة 7) المصطلح إلى شقين أساسيين:</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: #0284c7;">
+                        <div class="card-badge-num">1</div>
+                        <h3>السحابة | "Cloud"</h3>
+                        <p><strong>المعنى الدقيق:</strong> شبكة الإنترنت العالمية والشبكات الممتدة الآمنة (<span class="term-en">The Internet</span>).</p>
+                        <p>سُميت سحابة تاريخياً لأن مهندسي الشبكات كانوا يرسمون الإنترنت على شكل سحابة في مخططات الشبكات للدلالة على أن تفاصيل الربط المعقدة مخفية وخارج نطاق اهتمام المستخدم المباشر.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #f59e0b;">
+                        <div class="card-badge-num">2</div>
+                        <h3>الحوسبة | "Computing"</h3>
+                        <p><strong>المعنى الدقيق:</strong> البنى التحتية، الخوادم، نظم التشغيل، وقوة المعالجة والذاكرة التي تمكن الحاسوب من تشغيل البرمجيات، بناء التطبيقات، والتفاعل مع البيانات.</p>
+                        <p class="term-en">Infrastructures and systems that allow a computer to run and build, deploy, or interact with information.</p>
+                    </div>
+                </div>
+
+                <div class="info-box success-box">
+                    <h4>💡 ماذا يعني الجمع بين الكلمتين هندسياً؟ (This means that)</h4>
+                    <p style="font-size:1.02rem;">
+                        بدلاً من استضافة البنية التحتية والبرمجيات وقواعد البيانات على قرصك الصلب المحلي (<span class="term-en">Local Hard Drive</span>) أو خادم محلي ثابت في الموقع (<span class="term-en">On-site Server</span>)، يتم استضافتها على <strong>خوادم افتراضية عبر الإنترنت (Virtual / Online Servers)</strong> تتصل بجهازك عبر قنوات وشبكات اتصال آمنة (<span class="term-en">Secure Networks</span>).
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3: Pay-Per-Use Business Model -->
+            <section id="topic-3">
+                <span class="section-tag">النموذج المالي والاقتصادي | الشريحة 5 و 34</span>
+                <h2>💰 3. نموذج العمل الاقتصادي: الدفع حسب الاستخدام (Pay-Per-Use)</h2>
+                <p>الحوسبة السحابية ليست مجانية، ولكن ما يميزها جذرياً هو نموذج الدفع المبتكر: <span class="term-en">Pay-Per-Use Business Model</span> أو <span class="term-en">Pay-As-You-Go</span>.</p>
+                
+                <div class="info-box">
+                    <h4>⚡ تشبيه عداد الكهرباء والماء (Utility Computing)</h4>
+                    <p>في منزلك، أنت لا تشتري محطة توليد كهرباء لكي تضيء مصباحاً، بل تدفع فقط عن الكيلوواط/ساعة الذي تستهلكه فعلياً في نهاية الشهر. هكذا تعمل السحابة بالضبط:</p>
+                    <ul class="content-list">
+                        <li>إذا شغلت خادماً قوياً لمدة 3 ساعات لإجراء تجربة حسابية، ستدفع فقط ثمن الـ 3 ساعات!</li>
+                        <li>إذا كان لديك متجر إلكتروني يشهد إقبالاً في العيد، ترفع طاقة السيرفر لأسبوع العيد، ثم تعيدها لطبيعتها وتنخفض فاتورتك فوراً.</li>
+                    </ul>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>النموذج التقليدي (On-Premises / CapEx)</th>
+                                <th>النموذج السحابي (Cloud / OpEx & Pay-Per-Use)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>طبيعة التكاليف</strong></td>
+                                <td>نفقات رأسمالية (<span class="term-en">CapEx</span>): شراء سيرفرات مقدماً بمبالغ طائلة.</td>
+                                <td>نفقات تشغيلية (<span class="term-en">OpEx</span>): رسوم شهرية أو بالساعة حسب الاستهلاك الفعلي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الهدر المالي</strong></td>
+                                <td>مرتفع جداً: يتم شراء سيرفرات بحجم الذروة وتظل غير مستغلة معظم أيام السنة.</td>
+                                <td>منعدم: تدفع فقط مقابل الثواني وسعات التخزين المستهلكة فعلياً (<span class="term-en">Pay only for what they use</span>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>سرعة البدء</strong></td>
+                                <td>بطيئة جداً (تتطلب أسابيع للشراء والتركيب والشحن).</td>
+                                <td>فورية (خلال ثوانٍ عبر لوحة تحكم السحابة وبضع نقرات).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الصيانة والإدارة</strong></td>
+                                <td>فريق تقني محلي، قطع غيار، صيانة تكييف، ومولدات طاقة.</td>
+                                <td>يتكفل مزود السحابة (<span class="term-en">Cloud Provider</span>) بكافة أعباء الصيانة والتشغيل.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 4: Applications of Cloud Computing -->
+            <section id="topic-4">
+                <span class="section-tag">التطبيقات والأمثلة العملية | الشرائح 8 - 14</span>
+                <h2>📱 4. مجالات وتطبيقات الحوسبة السحابية (Applications)</h2>
+                <p>تتغلغل الحوسبة السحابية اليوم في كل تفاصيل حياتنا اليومية والمهنية. حددت المحاضرة 3 مجالات رئيسية عريضة، ثم استعرضت جدولاً شاملاً للتطبيقات والخدمات السحابية:</p>
+
+                <!-- 3 Main Pillars -->
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: #10b981;">
+                        <div class="card-badge-num">A</div>
+                        <h4>1. التعليم الإلكتروني (E-Learning)</h4>
+                        <p>تمكين الطلاب، أعضاء هيئة التدريس، والباحثين من الاتصال بسحابة المؤسسة والوصول للموارد التعليمية في أي وقت ومن أي جهاز:</p>
+                        <ul class="content-list" style="margin: 0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>تسجيل المحاضرات والفصول الدراسية (<span class="term-en">Class recording</span>)</li>
+                            <li>الفصول الافتراضية (<span class="term-en">Virtual Classrooms</span>)</li>
+                            <li>المعامل والمختبرات الافتراضية (<span class="term-en">Virtual Labs</span>)</li>
+                            <li>الاستبيانات والبريد الإلكتروني الجامعي (<span class="term-en">Surveys & Email</span>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #0284c7;">
+                        <div class="card-badge-num">B</div>
+                        <h4>2. تخطيط موارد المؤسسات (ERP)</h4>
+                        <p>مع نمو الشركات، تصبح إدارة التطبيقات والموارد البشرية وكشوف المرتبات باهظة ومعقدة. تتيح السحابة تثبيت أنظمة ERP سحابية مركزية تربط:</p>
+                        <ul class="content-list" style="margin: 0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>إدارة المشاريع والموارد البشرية (<span class="term-en">Project & HR Management</span>)</li>
+                            <li>سلسلة التوريد والمخزون والموردين (<span class="term-en">Supply Chain & Vendors</span>)</li>
+                            <li>الإدارة المالية والمحاسبة المتكاملة (<span class="term-en">Finance & Accounting</span>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #f59e0b;">
+                        <div class="card-badge-num">C</div>
+                        <h4>3. الحوكمة الإلكترونية (E-Governance)</h4>
+                        <p>تحسين كفاءة الخدمات المقدمة للمواطنين والمؤسسات وتعزيز التعاون بين الجهات الحكومية المختلفة عبر بنية رقمية مشتركة:</p>
+                        <ul class="content-list" style="margin: 0.5rem 1rem 0 0; font-size:0.9rem;">
+                            <li>منصات حل الشكاوى وبلاغات المواطنين (<span class="term-en">Complaint resolution</span>)</li>
+                            <li>الشرطة الإلكترونية والمحاكم الرقمية (<span class="term-en">E-police & E-court</span>)</li>
+                            <li>نظم المدفوعات والضرائب (<span class="term-en">Payment & Tax systems</span>)</li>
+                            <li>إدارة الموظفين وقطاعات الصناعة والطاقة</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Comprehensive Applications Table (Slide 9 & 14) -->
+                <h3>📊 الجدول الشامل لتطبيقات الحوسبة السحابية (المعتمد في الشريحة 9)</h3>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>مجال التطبيق السحابي</th>
+                                <th>أبرز الأمثلة التقنية (Examples)</th>
+                                <th>الاستخدام والهدف الوظيفي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>التخزين السحابي</strong><br><span class="term-en">Cloud Storage</span></td>
+                                <td>Google Drive, OneDrive, Dropbox</td>
+                                <td>حفظ وتخزين الملفات الرقمية والوصول إليها ومشاركتها عبر الإنترنت من أي جهاز.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>البريد الإلكتروني السحابي</strong><br><span class="term-en">Cloud Email</span></td>
+                                <td>Gmail, Outlook, ProtonMail</td>
+                                <td>إرسال واستقبال الرسائل والملفات ومزامنتها على الهاتف والحاسوب فورياً.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>تطبيقات المكتب السحابية</strong><br><span class="term-en">Cloud Office Apps</span></td>
+                                <td>Google Docs, Office 365</td>
+                                <td>كتابة المستندات وجداول البيانات وتحريرها والتعاون الجماعي المتزامن في نفس اللحظة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>استضافة المواقع والخوادم</strong><br><span class="term-en">Cloud Hosting</span></td>
+                                <td>AWS (Amazon Web Services), Azure, GCP</td>
+                                <td>تشغيل المواقع وقواعد البيانات وتطبيقات الويب على خوادم افتراضية مرنة وموثوقة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التعليم الإلكتروني</strong><br><span class="term-en">E-Learning</span></td>
+                                <td>Google Classroom, Moodle, Blackboard</td>
+                                <td>إدارة الدروس الجامعية، الواجبات، الاختبارات والأنشطة الأكاديمية عن بُعد.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الاجتماعات المرئية</strong><br><span class="term-en">Video Conferencing</span></td>
+                                <td>Zoom, Microsoft Teams, Google Meet</td>
+                                <td>عقد الاجتماعات والمحاضرات التفاعلية المباشرة عبر الصوت والفيديو بجودة عالية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التجارة الإلكترونية</strong><br><span class="term-en">E-Commerce</span></td>
+                                <td>Shopify, Amazon, WooCommerce</td>
+                                <td>إنشاء المتاجر الإلكترونية السحابية وإدارة المنتجات والطلبات وعمليات الدفع بأمان.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الأمن السيبراني السحابي</strong><br><span class="term-en">Cloud Cybersecurity</span></td>
+                                <td>Microsoft Defender for Cloud, Cloudflare</td>
+                                <td>مراقبة التهديدات السيبرانية، جدران الحماية، وحماية الأنظمة والبيانات السحابية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>النسخ الاحتياطي السحابي</strong><br><span class="term-en">Cloud Backup</span></td>
+                                <td>Azure Backup, AWS Backup, Acronis</td>
+                                <td>حفظ نسخ احتياطية مشفرة من قواعد البيانات واستعادتها بسرعة فائقة عند الطوارئ.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>تخطيط موارد المؤسسات</strong><br><span class="term-en">Cloud ERP</span></td>
+                                <td>أنظمة ERP السحابية (SAP S/4HANA, Odoo Cloud)</td>
+                                <td>ربط العمليات المحاسبية وإدارة المخزون والمشتريات والموارد البشرية في منصة موحدة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الخدمات الحكومية الإلكترونية</strong><br><span class="term-en">E-Government</span></td>
+                                <td>البوابات والمنصات الحكومية الرقمية</td>
+                                <td>تقديم المعاملات الرسمية واستخراج الوثائق وتسهيل حياة المواطنين إلكترونياً.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Slide 14: What can cloud computing be used for -->
+                <h3>🎯 ماذا يمكننا أن نصنع بالسحابة أيضاً؟ (استخدامات متقدمة - الشريحة 14)</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <h4>1. إنشاء تطبيقات جديدة</h4>
+                        <p class="term-en">Creating new Applications</p>
+                        <p>بناء وتطوير ونشر تطبيقات الويب وتطبيقات الهواتف وتوسيع نطاقها (<span class="term-en">Scale</span>) بكل سهولة ومرونة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>2. تخزين واستعادة البيانات</h4>
+                        <p class="term-en">Store and Recover Data</p>
+                        <p>حماية البيانات بسعر اقتصادي للغاية مع إبقائها قابلة للوصول من أي مكان ونقلها لنسخ سحابي موثوق.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>3. البرمجيات كخدمة (SaaS)</h4>
+                        <p class="term-en">Software as a Service</p>
+                        <p>تزويد العملاء بأحدث إصدارات وتحديثات البرامج مباشرة دون الحاجة لقيام كل عميل بالتثبيت اليدوي على جهازه.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>4. اختبار وتطوير التطبيقات</h4>
+                        <p class="term-en">Test Applications</p>
+                        <p>توسيع بيئات الاختبار لأعلى أو لأسفل (<span class="term-en">Scale up or down</span>) باستخدام البنية السحابية الأساسية.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>5. تحليلات البيانات والذكاء الاصطناعي</h4>
+                        <p class="term-en">Analyze Data with AI & ML</p>
+                        <p>استغلال قوة التعلم الآلي والذكاء الاصطناعي في السحابة لتحليل بيانات المؤسسة الضخمة واتخاذ قرارات ذكية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Benefits of Cloud Computing -->
+            <section id="topic-5">
+                <span class="section-tag">المزايا التنافسية | الشرائح 15 - 25</span>
+                <h2>🌟 5. فوائد الحوسبة السحابية (Benefits of Cloud Computing)</h2>
+                <p>لماذا تتجه كبرى المؤسسات والجامعات والحكومات نحو الحوسبة السحابية؟ حللت المحاضرة بالتفصيل باقة من أهم المزايا التي جعلت السحابة المعيار العالمي الحديث:</p>
+
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <div class="card-badge-num">1</div>
+                        <h4>سعة تخزين غير محدودة</h4>
+                        <p class="term-en">Unlimited Storage</p>
+                        <p>توفر سعة تكاد تكون لا نهائية، مما يمنع الحاجة لترقية الأقراص الصلبة الفيزيائية أو استخدام ذواكر خارجية مكلفة ومعرضة للتلف.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">2</div>
+                        <h4>توفير التكاليف الفعال</h4>
+                        <p class="term-en">Cost Effective / Savings</p>
+                        <p>إلغاء تكاليف شراء العتاد (<span class="term-en">Hardware</span>)، المرافق والكهرباء والتبريد (<span class="term-en">Utilities</span>)، مباني ومساحات مراكز البيانات، فرق الصيانة المتفرغة، وتكاليف العقارات بوسط المدن.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">3</div>
+                        <h4>إمكانية التنقل والوصول الشامل</h4>
+                        <p class="term-en">Mobility & Accessibility</p>
+                        <p>الوصول من أي مكان ومن أي جهاز (<span class="term-en">Anywhere, anytime, on any device</span>). تتيح للموظفين العمل عن بُعد وخدمة العملاء بمرونة قصوى دون التقيد بمكتب الشركة.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">4</div>
+                        <h4>قابلية التوسع العالية</h4>
+                        <p class="term-en">Scalability & Elasticity</p>
+                        <p>يمتلك مزودو السحابة القدرة على إضافة عقد جديدة (<span class="term-en">Nodes</span>) وخدمات جديدة فورياً، والبنية التحتية مرنة للغاية للتوسع والانكماش مع تقلبات العمل.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">5</div>
+                        <h4>تشديد الأمان السيبراني</h4>
+                        <p class="term-en">Tightened Security</p>
+                        <p>يقدم مزودو السحابة سياسات أمنية وحزم حماية ومراقبة مدارة على مدار الساعة لا تستطيع الشركات الصغيرة توفيرها بمفردها.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">6</div>
+                        <h4>السرعة الفائقة في التوفير</h4>
+                        <p class="term-en">High Speed & Provisioning</p>
+                        <p>معظم الخدمات تعمل بنظام خدمة ذاتية عند الطلب (<span class="term-en">On-demand self-service</span>)، مما يتيح حجز الموارد وتجهيز السيرفرات في بضع ثوانٍ وبنقرات ماوس قليلة.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">7</div>
+                        <h4>زيادة إنتاجية فرق العمل</h4>
+                        <p class="term-en">Increased Productivity</p>
+                        <p>تزيل السحابة أعباء إعداد الأجهزة وتثبيت تحديثات البرامج ورقع الأمان (<span class="term-en">Software patching</span>)، مما يسمح لفرق تكنولوجيا المعلومات بالتركيز التام على أهداف وتطوير العمل التجاري.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-badge-num">8</div>
+                        <h4>الموثوقية واستمرارية الأعمال</h4>
+                        <p class="term-en">Reliability & Business Continuity</p>
+                        <p>أصبح النسخ الاحتياطي للبيانات والتعافي من الكوارث (<span class="term-en">Disaster Recovery</span>) سهلاً جداً ومضموناً بفضل تكرار البيانات عبر مراكز بيانات جغرافية متعددة ومحمية من عطل الأقراص المحلية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Disadvantages and Challenges -->
+            <section id="topic-6">
+                <span class="section-tag">الرؤية النقدية والواقعية | الشريحة 26</span>
+                <h2>⚠️ 6. عيوب وتحديات السحابة (Disadvantages) والحلول الأكاديمية</h2>
+                <p>على الرغم من مزايا السحابة المذهلة، فإن المهندس الناجح هو من يدرك المخاطر والتحديات ويضع لها الضوابط الاحترازية. سلطت المحاضرة الضوء في الشريحة 26 على ثلاثة تحديات رئيسية:</p>
+
+                <div class="info-box danger-box">
+                    <h4>🔒 1. القضايا والتحديات الأمنية (Security Issues)</h4>
+                    <p>خاصة عندما يتعلق الأمر بالسجلات الطبية الحساسة (<span class="term-en">Medical Records</span>) والمعلومات المالية والمصرفية. على الرغم من أن اللوائح الصارمة تلزم موفري السحابة بتعزيز الأمان، إلا أنها تظل مصدر قلق دائم. كما برز تحدي <strong>فقدان مفاتيح التشفير (<span class="term-en">Loss of Encryption keys</span>)</strong>، حيث أن فقدان المفتاح يعني فقدان البيانات المشفرة نهائياً أو تسريبها إن وقعت بيد طرف غير مصرح له.</p>
+                    <p><strong>💡 الحل الهندسي:</strong> استخدام منصات إدارة المفاتيح السحابية الموثوقة (<span class="term-en">KMS / HSM</span>)، وتطبيق نموذج انعدام الثقة (<span class="term-en">Zero Trust</span>)، وتشفير البيانات أثناء النقل وأثناء التخزين (<span class="term-en">In-Transit & At-Rest</span>).</p>
+                </div>
+
+                <div class="info-box warning-box">
+                    <h4>⚡ 2. أعطال الخوادم وتوقف الخدمات (Failures & Outages)</h4>
+                    <p>قد تتعرض خوادم السحابة لأعطال مفاجئة ناجمة عن كوارث طبيعية (زلازل، فيضانات)، أخطاء برمجية داخلية لدى المزود (<span class="term-en">Internal bugs</span>)، أو انقطاع في كابلات الإنترنت والتيار الكهربائي العملاقة.</p>
+                    <p><strong>💡 الحل الهندسي:</strong> نشر التطبيقات عبر مناطق توفر متعددة (<span class="term-en">Multi-Availability Zones</span>) وتفعيل التوزيع الجغرافي واستراتيجيات السحابة الهجينة أو المتعددة (<span class="term-en">Multi-Cloud Strategy</span>).</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>📈 3. منحنى التعلم والأخطاء البشرية (Learning Curve & Human Mistakes)</h4>
+                    <p>كما هو الحال مع أي تقنية حديثة، هناك منحنى تعلم للموظفين والمديرين لإتقان إدارة السحابة. ومع وصول أعداد هائلة من الأفراد والموظفين للبيانات وتعديلها عبر بوابة موحدة، يمكن لخطأ غير مقصود من مستخدم واحد غير مدرب أن ينتقل وينتشر عبر النظام بأكمله كالنار في الهشيم!</p>
+                    <p><strong>💡 الحل الهندسي:</strong> التدريب المستمر للكوادر، تطبيق مبدأ الصلاحيات الأدنى (<span class="term-en">Principle of Least Privilege</span>)، وتفعيل التدقيق والسجلات المتزامنة (<span class="term-en">Cloud Auditing & Logging</span>).</p>
+                </div>
+            </section>
+
+            <!-- Section 7: Characteristics of Cloud Computing -->
+            <section id="topic-7">
+                <span class="section-tag">الخصائص الجوهرية والمعايير | الشرائح 27 - 37</span>
+                <h2>⚙️ 7. الخصائص الجوهرية للحوسبة السحابية (Characteristics of Cloud Computing)</h2>
+                <p>وفقاً لمعيار NIST وسلايدات المحاضرة، تمتلك الحوسبة السحابية مجموعة من الخصائص الفريدة التي تميزها عن أي نموذج حوسبة تقليدي آخر. تم تفصيلها في الشرائح (28 إلى 37):</p>
+
+                <!-- Characteristics Detailed Cards -->
+                <div class="cards-grid">
+                    <div class="feature-card" style="border-top-color: #0284c7;">
+                        <h4>1. الوصول الشامل عبر الشبكة</h4>
+                        <p class="term-en">Universal Access / Broad Network Access</p>
+                        <p>تتوفر الإمكانات عبر الشبكة ويمكن الوصول إليها عبر آليات قياسية (<span class="term-en">Standard Mechanisms</span>) تشجع على استخدام منصات متنوعة وغير متجانسة (<span class="term-en">Heterogeneous</span>)، سواء كانت أجهزة رقيقة (<span class="term-en">Thin Clients</span> كالجوّال والمتصفح) أو سميكة (<span class="term-en">Thick Clients</span> كأجهزة الحاسوب والمحطات المتكاملة).</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #10b981;">
+                        <h4>2. كفاءة استخدام الموارد وتجميعها</h4>
+                        <p class="term-en">Resource Efficiency / Pooling</p>
+                        <p>يتم تجميع موارد الحوسبة والشبكات لخدمة عدة مستخدمين (<span class="term-en">Multi-tenant model</span>). ويتم تخصيص الموارد فيزيائياً وافتراضياً والتكيف معها ديناميكياً وفقاً لطلب واحتياج كل مستخدم دون شعور مستخدم بوجود الآخر.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #f59e0b;">
+                        <h4>3. المرونة اللحظية</h4>
+                        <p class="term-en">Elasticity</p>
+                        <p>القدرة الفائقة على توفير موارد الحوسبة بسرعة ومرونة لتوسيع نطاقها (<span class="term-en">Scale Up / Out</span>) وإطلاقها لتقليص حجمها (<span class="term-en">Scale Down / In</span>) تلقائياً استناداً إلى حجم الطلب اللحظي للعميل.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #6366f1;">
+                        <h4>4. خدمات قابلة للتطوير</h4>
+                        <p class="term-en">Scalable Services</p>
+                        <p>بنية تحتية سحابية مرنة للغاية للتوسع في العقد (<span class="term-en">Nodes</span>) وإضافة الخدمات البرمجية للعملاء مع نمو أعمالهم دون توقف الخدمة أو إعادة بناء المنظومة من الصفر.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #ec4899;">
+                        <h4>5. الخدمات الذاتية عند الطلب</h4>
+                        <p class="term-en">On-Demand Self-Services</p>
+                        <p>توفر للمستخدم القدرة على استهلاك موارد الحوسبة (وقت الخادم، سعة الشبكة، وحدات التخزين) تلقائياً وفورياً دون الحاجة لتفاعل بشري مع مسؤولي مزود الخدمة السحابية.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #14b8a6;">
+                        <h4>6. الدفع عن كل استخدام</h4>
+                        <p class="term-en">Pay-Per-Use</p>
+                        <p>الخدمات السحابية ليست مجانية؛ ولكن العميل يدفع حصراً ومباشرة مقابل ما يستخدمه فعلياً، مما يقضي تماماً على الهدر المالي والاستثمار غير المجدي في الموارد الفائضة.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #8b5cf6;">
+                        <h4>7. تمكين التعاون الجماعي</h4>
+                        <p class="term-en">Collaboration</p>
+                        <p>تسمح السحابة لفرق العمل والمؤسسات الفردية والمراكز البحثية بالتعاون والعمل معاً في بيئة موحدة متزامنة لإيجاد حلول للمشكلات المعقدة وإنجاز الأبحاث الأكاديمية المشتركة.</p>
+                    </div>
+
+                    <div class="feature-card" style="border-top-color: #06b6d4;">
+                        <h4>8. إمكانية الوصول والتوافرية العالية</h4>
+                        <p class="term-en">Accessible & Highly Available</p>
+                        <p>تتوفر الموارد السحابية في أي وقت ومن أي مكان في العالم عبر الشبكة، وتضمن اتفاقيات مستوى الخدمة (<span class="term-en">SLA</span>) توافرية شبه تامة تصل إلى 99.99% على مدار العام.</p>
+                    </div>
+                </div>
+
+                <!-- Slide 37: Other characteristics -->
+                <h3>✨ خصائص ومقومات تكميلية للسحابة (شريحة 37)</h3>
+                <div class="cards-grid">
+                    <div class="feature-card">
+                        <p>🛡️ <strong>الموثوقية (Reliability):</strong> ثبات النظام واستمراريته حتى في حال تعطل أحد السيرفرات الفيزيائية.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>🎨 <strong>التخصيص (Customization):</strong> إمكانية ضبط وتعديل بيئات التشغيل وفق احتياجات التطبيق المحددة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>📊 <strong>الخدمات المقاسة (Measured Services):</strong> أنظمة قياس ومراقبة دقيقة تراقب استهلاك المعالج، الذاكرة، والترافيك لضمان فوترة عادلة وشفافة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>🕹️ <strong>سهولة الإدارة (Management):</strong> واجهات تحكم موحدة وأدوات برمجية (APIs / CLI) لإدارة آلاف الموارد المؤتمتة.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p>🖥️ <strong>المحاكاة الافتراضية (Virtualization):</strong> التقنية الجوهرية والقلب النابض للسحابة، والتي تفصل البرمجيات عن العتاد الفيزيائي وتتيح تقسيم السيرفر الواحد لمئات الأجهزة الوهمية.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: Case Study -->
+            <section id="topic-8">
+                <span class="section-tag">التطبيق العملي الجامعي</span>
+                <h2>🏛️ 8. حالة دراسية تطبيقية: التحول السحابي لبوابة كلية المنار للعلوم والتكنولوجيا</h2>
+                <p>لربط المفاهيم النظرية بواقعنا العملي في كلية المنار للعلوم والتكنولوجيا، لنتخيل سيناريو حقيقي يواجه قسم التسجيل وشؤون الطلاب في كليتنا:</p>
+
+                <div class="info-box">
+                    <h4>سيناريو إعلان نتائج الامتحانات النهائية للفصل الدراسي</h4>
+                    <p>في الأيام العادية، يزور موقع الكلية ما بين 100 إلى 200 طالب يومياً لتصفح الجداول والمحاضرات. ولكن في يوم إعلان نتائج الترم، يتوافد أكثر من 3000 طالب في نفس الدقيقة لمعرفة نتائجهم ومعدلاتهم!</p>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المعيار</th>
+                                <th>السيناريو التقليدي (خادم محلي في الكلية)</th>
+                                <th>سيناريو السحابة (Cloud Elasticity & Auto-Scaling)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>يوم إعلان النتائج</strong></td>
+                                <td>توقف الخادم وانهيار الموقع تماماً (<span class="term-en">Server Crash - 503 Service Unavailable</span>) بسبب عجز المعالج والرام عن استيعاب 3000 طلب متزامن.</td>
+                                <td>تتفعل خاصية التوسع اللحظي (<span class="term-en">Auto-Scaling</span>)، ويقوم النظام بنسخ 5 خوادم إضافية تلقائياً في ثوانٍ، فيعمل الموقع بسلاسة مطلقة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>بعد انتهاء أسبوع النتائج</strong></td>
+                                <td>إذا اشترت الكلية سيرفرات عملاقة تحسباً لهذا اليوم، فإنها ستظل مهدرة وغير مستغلة طوال باقي شهور السنة مع استمرار استهلاك الكهرباء والتكييف.</td>
+                                <td>تنكمش السحابة تلقائياً (<span class="term-en">Scale Down</span>) وتعود لخادم صغير واحد فقط، وتدفع الكلية فقط ثمن ساعات الذروة التي حدثت في يوم النتائج!</td>
+                            </tr>
+                            <tr>
+                                <td><strong>النسخ الاحتياطي والأمان</strong></td>
+                                <td>مخاطرة تلف القرص الصلب في السيرفر المحلي وضياع درجات الطلاب نهائياً.</td>
+                                <td>نسخ احتياطي فوري ومؤتمت على <span class="term-en">Azure Backup</span> أو <span class="term-en">AWS S3</span> مع تشفير كامل.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 9: Interactive TCO Calculator -->
+            <section id="topic-9">
+                <span class="section-tag">مختبر المحاكاة المالية</span>
+                <h2>🧮 9. حاسبة مقارنة التكلفة التفاعلية (On-Premises vs Cloud TCO)</h2>
+                <p>جرب بنفسك احتساب التكاليف التقديرية لبناء مركز بيانات محلي (<span class="term-en">On-Premises</span>) مقارنة بالاعتماد على الحوسبة السحابية (<span class="term-en">Cloud Pay-Per-Use</span>) على مدار عام كامل:</p>
+
+                <div class="interactive-widget" id="tco-widget">
+                    <div class="widget-controls">
+                        <div class="control-group">
+                            <label>عدد الخوادم المطلوبة للمنشأة:</label>
+                            <select id="tco-servers" onchange="calcTCO()">
+                                <option value="2">خادمان (مشروع ناشئ / كلية صغيرة)</option>
+                                <option value="5" selected>5 خوادم (مؤسسة متوسطة الحجم)</option>
+                                <option value="15">15 خادماً (جامعة أو شركة كبرى)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>نسبة استخدام الذروة خلال العام (%):</label>
+                            <input type="range" id="tco-usage" min="20" max="100" value="40" oninput="calcTCO()">
+                            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.3rem;">معدل الاستهلاك الفعلي: <span id="tco-usage-val">40</span>%</div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; margin-top:1.5rem;">
+                        <div class="calc-card" style="background:white; padding:1.2rem; border-radius:8px; border:2px solid var(--danger);">
+                            <h4 style="color:var(--danger); margin-top:0;">🏢 التكلفة المحلية (On-Premises)</h4>
+                            <p style="font-size:0.88rem; margin-bottom:0.5rem;">شراء عتاد + تبريد + صيانة + كهرباء:</p>
+                            <div id="cost-onprem" style="font-size:1.8rem; font-weight:800; color:var(--danger);">$26,000</div>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">تدفع كاملة مقدماً بغض النظر عن الاستهلاك</span>
+                        </div>
+
+                        <div class="calc-card" style="background:white; padding:1.2rem; border-radius:8px; border:2px solid var(--success);">
+                            <h4 style="color:var(--success); margin-top:0;">☁️ التكلفة السحابية (Cloud Pay-Per-Use)</h4>
+                            <p style="font-size:0.88rem; margin-bottom:0.5rem;">دفع مقابل الاستخدام الفعلي والتشغيل:</p>
+                            <div id="cost-cloud" style="font-size:1.8rem; font-weight:800; color:var(--success);">$6,600</div>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">مرونة كاملة وبدون استثمار رأسمالي مبدئي</span>
+                        </div>
+
+                        <div class="calc-card" style="background:white; padding:1.2rem; border-radius:8px; border:2px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-top:0;">💵 نسبة الوفر المالي التقديري</h4>
+                            <p style="font-size:0.88rem; margin-bottom:0.5rem;">التوفير المالي الإجمالي المحقق:</p>
+                            <div id="cost-savings" style="font-size:1.8rem; font-weight:800; color:var(--primary);">75%</div>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">تحويل الميزانية نحو تطوير البرمجيات والابتكار</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10: Questions & Homework -->
+            <section id="topic-10">
+                <span class="section-tag">التقييم الأكاديمي والتحضير للامتحانات</span>
+                <h2>📚 10. الأسئلة الشاملة للمحاضرة والواجب المنزلي (30 درجة)</h2>
+                <p>تضم هذه الفقرة بنك الأسئلة المعتمد للمحاضرة الأولى وفق أسلوب الامتحانات الجامعية الأكاديمية (انقر على كل سؤال لإظهار إجابته النموذجية المفككة):</p>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س1: قارن بين تعريف المعهد الوطني للمعايير (NIST) وتعريف شركة مايكروسوفت للحوسبة السحابية.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        • <strong>تعريف NIST:</strong> يركز على الجانب <em>المعياري والهندسي</em> للنموذج: إتاحة وصول مريح عند الطلب عبر الشبكة لمجموعة مشتركة من الموارد القابلة للتهيئة والتي يمكن توفيرها وإطلاقها بسرعة وبأقل جهد إداري.<br>
+                        • <strong>تعريف Microsoft:</strong> يركز على الجانب <em>الصناعي وخدمات الأعمال</em>: تقديم حزمة واسعة من الخدمات (سيرفرات، تخزين، قواعد بيانات، ذكاء اصطناعي، وتحليلات) عبر الإنترنت لتحقيق أهداف تسريع الابتكار، الموارد المرنة، واقتصادات الحجم الكبير (<span class="term-en">Economies of scale</span>).
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س2: ما هو نموذج الأعمال "Pay-Per-Use" وكيف يختلف عن شراء الأجهزة التقليدية؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        نموذج "الدفع حسب الاستخدام" يعني أن العميل لا يدفع تكلفة شراء مسبقة لأي خادم أو قرص صلب، بل تتم محاسبته دورياً فقط عن مقدار الوقت أو السعة التي استهلكها فعلياً (مثل فاتورة الكهرباء). يختلف عن الشراء التقليدي بتحويل التكاليف من نفقات رأسمالية ضخمة (<span class="term-en">CapEx</span>) معرضة للتقادم والهدر إلى نفقات تشغيلية مرنة (<span class="term-en">OpEx</span>).
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س3: وضّح دور الحوسبة السحابية في قطاعات: التعليم الإلكتروني، وتخطيط موارد المؤسسات، والحوكمة الإلكترونية.</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        1. <strong>التعليم الإلكتروني:</strong> توفير الفصول الافتراضية، تسجيل المحاضرات، المعامل السحابية، والوصول للمحتوى من أي جهاز وفي أي وقت للطلاب والباحثين.<br>
+                        2. <strong>تخطيط موارد المؤسسات (ERP):</strong> توحيد وربط أنظمة إدارة الموظفين، سلسلة التوريد، المحاسبة والمخازن في قاعدة سحابية متكاملة لتقليل التكاليف التشغيلية للشركات.<br>
+                        3. <strong>الحوكمة الإلكترونية:</strong> بناء بوابات وطنية لتقديم الخدمات للمواطنين، أنظمة المدفوعات والضرائب، إدارة الشكاوى، والمحاكم والشرطة الرقمية بكفاءة وتكامل عالٍ.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س4: ما هي أبرز المخاطر والعيوب المرافقة للحوسبة السحابية، وكيف يمكن التخفيف منها؟</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        • <strong>المخاطر الأمنية وفقدان مفاتيح التشفير:</strong> التخفيف عبر التشفير ثنائي المراحل، إدارة المفاتيح السحابية الآمنة، وعزل البيئات.<br>
+                        • <strong>انقطاع الخوادم والكوارث:</strong> التخفيف من خلال توزيع الخدمات على عدة مناطق جغرافية (<span class="term-en">Multi-Region Redundancy</span>) والنسخ الاحتياطي المتكرر.<br>
+                        • <strong>منحنى التعلم والأخطاء غير المقصودة للموظفين:</strong> التخفيف عبر التدريب الصارم وتطبيق مبدأ الحد الأدنى من الصلاحيات والتدقيق الدوري للسجلات.
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span>س5: اشرح بالتفصيل خاصية "المرونة" (Elasticity) وخاصية "تجميع الموارد" (Resource Pooling).</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <strong>الإجابة النموذجية:</strong><br>
+                        • <strong>المرونة (Elasticity):</strong> القدرة اللحظية للنظام على التوسع بزيادة عدد أو طاقة السيرفرات عند زيادة الأحمال، والتقلص فوراً عند انخفاض الطلب لتجنب دفع تكاليف موارد غير مستغلة.<br>
+                        • <strong>تجميع الموارد (Resource Pooling):</strong> وضع العتاد الفيزيائي في مجمع مشترك يخدم العديد من العملاء في نفس الوقت مع إعادة توزيع الموارد ديناميكياً وعزل كل عميل برمجياً وافتراضياً عن الآخرين.
+                    </div>
+                </div>
+
+                <!-- Assignment Section -->
+                <div class="info-box" style="margin-top:2rem; border-right-color:var(--accent);">
+                    <h4 style="color:var(--accent);">📝 تكليف منزلي مقترح (Homework Assignment)</h4>
+                    <p><strong>المطلوب:</strong> اختر إحدى الشركات أو المستشفيات في محيطك، واكتب تقريراً من صفحتين يشمل:</p>
+                    <ol class="content-list">
+                        <li>تحديد تطبيقين سحابيين على الأقل يمكن للمنشأة استخدامهما (مثال: البريد السحابي أو النسخ الاحتياطي).</li>
+                        <li>تحليل 3 فوائد ملموسة ستحققها المنشأة من التحول للسحابة (مثل توفير التكاليف والمرونة).</li>
+                        <li>تحديد التحدي الأمني الأبرز وكيف يمكن للإدارة حماية مفاتيح التشفير والبيانات الحساسة.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Section 11: Glossary -->
+            <section id="topic-11">
+                <span class="section-tag">المعجم والمصطلحات الأكاديمية</span>
+                <h2>📖 11. قاموس مصطلحات المحاضرة والمراجع المعتمدة</h2>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المصطلح بالعربية</th>
+                                <th>المصطلح بالإنجليزية</th>
+                                <th>الشرح والدلالة العلمية</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>الحوسبة السحابية</td>
+                                <td><span class="term-en">Cloud Computing</span></td>
+                                <td>نموذج لتقديم موارد الحاسوب (سيرفرات، تخزين، برمجيات) عبر الإنترنت حسب الطلب.</td>
+                            </tr>
+                            <tr>
+                                <td>عند الطلب</td>
+                                <td><span class="term-en">On-Demand</span></td>
+                                <td>الحصول على المورد التقني فور طلبه مباشرة دون الحاجة لانتظار أو موافقات بشرية بطيئة.</td>
+                            </tr>
+                            <tr>
+                                <td>المرونة الفائقة</td>
+                                <td><span class="term-en">Elasticity</span></td>
+                                <td>قدرة النظام على التمدد والانكماش التلقائي مع تقلبات حجم العمل.</td>
+                            </tr>
+                            <tr>
+                                <td>قابلية التوسع</td>
+                                <td><span class="term-en">Scalability</span></td>
+                                <td>قدرة النظام على استيعاب نمو الأعمال المستمر بإضافة خوادم أو مكونات إضافية.</td>
+                            </tr>
+                            <tr>
+                                <td>تجميع الموارد</td>
+                                <td><span class="term-en">Resource Pooling</span></td>
+                                <td>تشارك العديد من العملاء لنفس العتاد الفيزيائي الضخم مع العزل المنطقي الكامل.</td>
+                            </tr>
+                            <tr>
+                                <td>الدفع حسب الاستخدام</td>
+                                <td><span class="term-en">Pay-Per-Use</span></td>
+                                <td>نموذج تسعير يعتمد على المحاسبة فقط عن الموارد المستهلكة فعلياً.</td>
+                            </tr>
+                            <tr>
+                                <td>الأنظمة خارج الموقع</td>
+                                <td><span class="term-en">Off-site Systems</span></td>
+                                <td>الخوادم والبنى التحتية المستضافة في مراكز بيانات خارجية عبر الإنترنت وليس محلياً.</td>
+                            </tr>
+                            <tr>
+                                <td>البرمجيات كخدمة</td>
+                                <td><span class="term-en">Software as a Service (SaaS)</span></td>
+                                <td>تقديم البرامج والتطبيقات للمستخدمين عبر المتصفح أو التطبيق دون الحاجة لتثبيتها محلياً.</td>
+                            </tr>
+                            <tr>
+                                <td>تخطيط موارد المؤسسات</td>
+                                <td><span class="term-en">ERP</span></td>
+                                <td>نظام برمجي متكامل يربط ويدير كافة العمليات المالية والإدارية والتشغيلية للشركة.</td>
+                            </tr>
+                            <tr>
+                                <td>المحاكاة الافتراضية</td>
+                                <td><span class="term-en">Virtualization</span></td>
+                                <td>إنشاء نسخ افتراضية من الخوادم والتخزين والشبكات على عتاد فيزيائي موحد.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success-box" style="margin-top:1.5rem;">
+                    <h4>📚 المراجع الأكاديمية المعتمدة للمحاضرة</h4>
+                    <ul class="content-list" style="margin-bottom:0;">
+                        <li><strong>سلايدات المقرر الجامعي:</strong> "Cloud Computing - Lecture 01" — إعداد وتقديم <strong>أ.د. عبده ناصر شويه (Prof. Abdo Nasser Shewia)</strong>، كلية المنار للعلوم والتكنولوجيا.</li>
+                        <li><strong>معيار المعهد الوطني للمعايير والتقنية الأمريكي:</strong> NIST Special Publication 800-145: <em>"The NIST Definition of Cloud Computing"</em> by Peter Mell and Timothy Grance.</li>
+                        <li><strong>توثيق مايكروسوفت الرسمي:</strong> Microsoft Azure Documentation: <em>"What is Cloud Computing? A Beginner’s Guide"</em>.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 12: Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">أداة المراجعة السريعة</span>
+                <h2>🗂️ 12. بطاقات الاستذكار التفاعلية (Flashcards)</h2>
+                <p>انقر على أي بطاقة لقلبها واختبار معلوماتك في التعريفات والمفاهيم الأساسية للمحاضرة:</p>
+
+                <div class="flashcards-container">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">🏛️</span>
+                                <h4>تعريف NIST للحوسبة السحابية</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>نموذج لتمكين الوصول المريح عند الطلب عبر الشبكة لمجموعة مشتركة من موارد الحوسبة القابلة للتهيئة والتي يمكن توفيرها وإطلاقها بسرعة بأقل جهد إداري.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">⚡</span>
+                                <h4>المرونة (Elasticity)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>القدرة على توسيع نطاق موارد الحوسبة (Scale Up) وإطلاقها لتقليص حجمها (Scale Down) بسرعة ومرونة فائقة بناءً على طلب واحتياج المستخدم اللحظي.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">💰</span>
+                                <h4>الدفع حسب الاستخدام (Pay-Per-Use)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>نموذج مالي يدفع فيه العميل فقط مقابل الموارد التي استهلكها فعلياً (كالكهرباء)، بدلاً من الشراء المسبق لأجهزة خوادم باهظة الثمن.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">🏊‍♂️</span>
+                                <h4>تجميع الموارد (Resource Pooling)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>تجميع موارد الحوسبة والشبكات لخدمة عدة عملاء (Multi-tenant) مع تخصيص الموارد وإعادة تكييفها ديناميكياً وبشكل آمن تماماً.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">📱</span>
+                                <h4>الوصول الشامل (Universal Access)</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>توفر الموارد السحابية عبر الشبكة والقدرة على الوصول إليها بآليات موحدة من مختلف المنصات كالهواتف، الأجهزة اللوحية، والمحمولة.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <span style="font-size:2rem; margin-bottom:0.5rem;">🔑</span>
+                                <h4>مخاطر فقدان مفاتيح التشفير</h4>
+                                <div class="flashcard-hint">انقر لقلب البطاقة ↺</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>أحد أبرز التحديات الأمنية في السحابة؛ حيث يؤدي فقدان المفتاح إلى استحالة فك تشفير البيانات وضياعها الدائم أو تعرضها للاختراق.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 13: Quiz -->
+            <section id="quiz">
+                <span class="section-tag">الكوز الذاتي التفاعلي</span>
+                <h2>✅ 13. اختبر فهمك (Quiz — 10 أسئلة شاملة ومحلولة)</h2>
+                <p>أجب عن الأسئلة العشرة التالية لتقييم مدى استيعابك للمحاضرة؛ ستحصل على تصحيح فوري لكل سؤال مع شرح تعليمي وافٍ وحفظ لنتيجتك النهائية:</p>
+
+                <div class="quiz-container" id="quiz-app">
+                    <!-- Loaded dynamically via JavaScript -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+function calcTCO() {
+            const servers = parseInt(document.getElementById('tco-servers').value);
+            const usagePct = parseInt(document.getElementById('tco-usage').value);
+            document.getElementById('tco-usage-val').innerText = usagePct;
+
+            // On-Premises: $4000 server purchase + $1200 power/space/maint per server per yr
+            const onPremCost = servers * (4000 + 1200);
+
+            // Cloud: Baseline $2800 per server/yr scaled by usage percentage + $200 storage
+            const cloudCost = Math.round(servers * 2800 * (usagePct / 100) + (servers * 200));
+
+            const savingsPct = Math.round(((onPremCost - cloudCost) / onPremCost) * 100);
+
+            document.getElementById('cost-onprem').innerText = '$' + onPremCost.toLocaleString();
+            document.getElementById('cost-cloud').innerText = '$' + cloudCost.toLocaleString();
+            document.getElementById('cost-savings').innerText = savingsPct + '%';
+        }
+        calcTCO();
+
+        // 5. Quiz Application Logic
+
+const quizData = [
+            {
+                question: "1. وفقاً لتعريف NIST، ما هي إحدى الخصائص الجوهرية للحوسبة السحابية؟",
+                options: [
+                    "شراء الأجهزة الفيزيائية والاحتفاظ بها محلياً في مكاتب الشركة",
+                    "الوصول المريح عند الطلب عبر الشبكة إلى مجموعة مشتركة من الموارد القابلة للتهيئة",
+                    "الاعتماد الكامل على تفاعل بشري مستمر مع موظفي الدعم الفني لمزود الخدمة",
+                    "تثبيت البرمجيات يدوياً على كل جهاز حاسوب داخل المؤسسة"
+                ],
+                correct: 1,
+                explanation: "تعريف NIST يركز نصاً على 'convenient, on-demand network access to a shared pool of configurable computing resources'."
+            },
+            {
+                question: "2. ماذا يرمز شق 'Cloud' وشق 'Computing' عند تفكيك المصطلح لغوياً ومعمارياً؟",
+                options: [
+                    "Cloud تعني خوادم التخزين، و Computing تعني كابلات الألياف الضوئية",
+                    "Cloud تعني الإنترنت والشبكة الممتدة، و Computing تعني البنية التحتية والأنظمة وقوة المعالجة",
+                    "Cloud تعني البرمجيات المجانية، و Computing تعني بيع العتاد",
+                    "Cloud تعني الطقس الافتراضي، و Computing تعني الشاشات الرقمية"
+                ],
+                correct: 1,
+                explanation: "كما ورد في الشريحة 7: كلمة Cloud تشير إلى الإنترنت (The Internet)، بينما Computing تشير إلى البنى التحتية والأنظمة التي تسمح للحاسوب بالتشغيل والبناء والتفاعل مع المعلومات."
+            },
+            {
+                question: "3. ما هو المبدأ الأساسي لنموذج الأعمال 'Pay-Per-Use' في السحابة؟",
+                options: [
+                    "دفع اشتراك سنوي ثابت وغير قابل للتغيير مهما قلّ استخدامك",
+                    "الخدمات السحابية مجانية تماماً لكافة الأفراد والشركات للأبد",
+                    "يدفع العملاء مقابل الوصول والاستخدام ولكن فقط مقابل ما يستهلكونه فعلياً",
+                    "شراء الخوادم مقدماً ودفع تكاليف الكهرباء والصيانة محلياً"
+                ],
+                correct: 2,
+                explanation: "المحاضرة توضح نصاً (شريحة 5 و 34): 'customers must pay for accessing and using the services but only for what they use'."
+            },
+            {
+                question: "4. أي من التطبيقات التالية يمثل خدمة سحابية لحفظ ومشاركة الملفات (Cloud Storage)؟",
+                options: [
+                    "Zoom",
+                    "Google Drive",
+                    "Shopify",
+                    "Microsoft Defender for Cloud"
+                ],
+                correct: 1,
+                explanation: "Google Drive هو المثال النموذجي للتخزين السحابي (Cloud Storage) لحفظ الملفات ومشاركتها عبر الإنترنت."
+            },
+            {
+                question: "5. ما الفائدة التي تجنيها المؤسسات من استخدام أنظمة تخطيط الموارد السحابية (Cloud ERP)؟",
+                options: [
+                    "زيادة تكاليف كشوف المرتبات والموارد البشرية",
+                    "ربط المحاسبة والمخزون والمشاريع وسلسلة التوريد في منصة موحدة بدلاً من تكاليف الأنظمة المحلية الباهظة",
+                    "إلغاء الحاجة لشبكة الإنترنت داخل الشركة",
+                    "منع الموظفين من الوصول لبيانات الشركة"
+                ],
+                correct: 1,
+                explanation: "أنظمة ERP السحابية تعالج مشكلة تعقيد وتكلفة إدارة شؤون الموظفين والمحاسبة والمخزون مع نمو الشركات."
+            },
+            {
+                question: "6. ما هي خاصية 'المرونة' (Elasticity) في الحوسبة السحابية؟",
+                options: [
+                    "القدرة على ثني كابلات الشبكة دون انقطاعها",
+                    "توفير الموارد بسرعة لتوسيع نطاقها (Scale up) وإطلاقها لتقليص حجمها (Scale down) وفقاً لطلب المستهلك",
+                    "تشغيل الخوادم على مدار 24 ساعة دون إمكانية إيقافها",
+                    "ثبات سعة السيرفر عند حد معين لا يمكن تجاوزه أبداً"
+                ],
+                correct: 1,
+                explanation: "المرونة (Elasticity) تعني زيادة الموارد تلقائياً عند زيادة الطلب وتحريرها فور انتهاء الحاجة لخفض التكلفة."
+            },
+            {
+                question: "7. ما هي خاصية 'تجميع الموارد' (Resource Pooling)؟",
+                options: [
+                    "تخصيص سيرفر فيزيائي كامل ومستقل لكل مستخدم بمفرده",
+                    "تجميع موارد الحوسبة والشبكة لخدمة عدة مستخدمين مع تخصيص الموارد ديناميكياً وفقاً للطلب",
+                    "تجميع أجهزة الحاسوب المعطلة وبيعها في المزاد",
+                    "حفظ البيانات في مجمع مائي مخصص للتبريد"
+                ],
+                correct: 1,
+                explanation: "Resource Pooling تعني مشاركة الموارد بين عدة مستخدمين (Multi-tenancy) مع إعادة توزيعها ديناميكياً وعزل كل مستخدم."
+            },
+            {
+                question: "8. أي من التالية يُعد من أبرز التحديات أو العيوب المرافقة للحوسبة السحابية؟",
+                options: [
+                    "انعدام سعة التخزين في السحابة",
+                    "القضايا الأمنية خاصة للبيانات الطبية والمالية وخطر فقدان مفاتيح التشفير (Loose of Encryption keys)",
+                    "صعوبة الوصول للملفات من الأجهزة المحمولة",
+                    "الحاجة لشراء مولدات كهربائية إضافية للمكاتب"
+                ],
+                correct: 1,
+                explanation: "شريحة 26 سلطت الضوء على القضايا الأمنية وحساسية السجلات الطبية والمالية وفقدان مفاتيح التشفير كأبرز العيوب."
+            },
+            {
+                question: "9. ما المقصود بخاصية 'الخدمات الذاتية عند الطلب' (On-Demand Self-Services)؟",
+                options: [
+                    "أن يقوم المستخدم بإصلاح السيرفر الفيزيائي بمفكه الخاص",
+                    "استهلاك موارد الحوسبة (كالخادم والشبكة والتخزين) تلقائياً دون الحاجة لتفاعل بشري مع موظفي المزود",
+                    "طلب السيرفر عن طريق البريد الورقي التقليدي",
+                    "إلزام العميل ببرمجة نظام التشغيل من الصفر"
+                ],
+                correct: 1,
+                explanation: "الخدمة الذاتية عند الطلب تعني حجز الموارد وتعديلها تلقائياً عبر واجهة الويب دون تدخل أي موظف بشري من الشركة المزودة."
+            },
+            {
+                question: "10. ما هي التقنية الجوهرية التي تسمح بتقسيم خادم فيزيائي واحد إلى عدة خوادم وبيئات تشغيلية معزولة في السحابة؟",
+                options: [
+                    "المحاكاة الافتراضية (Virtualization)",
+                    "البريد الإلكتروني (Email)",
+                    "الطباعة السحابية (Cloud Printing)",
+                    "محركات البحث (Search Engines)"
+                ],
+                correct: 0,
+                explanation: "المحاكاة الافتراضية (Virtualization - شريحة 37) هي حجر الأساس التقني لكافة خدمات ومفاهيم الحوسبة السحابية."
+            }
+        ];
+
+initLectureQuiz(quizData, 'quiz_cloud_lec01');
+    </script>
+</body>
+</html>
