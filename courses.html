@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل المقررات الدراسية | كلية المنار للعلوم والتكنولوجيا - المستوى الثالث</title>
-    
-    <!-- الخطوط العربية القياسية مع التوافقية الكاملة دون اتصال -->
+    <title>دليل المقررات الدراسية | SECOD — Cybersecurity & IT Learning Platform</title>
+    <meta name="description" content="دليل المقررات الدراسية التخصصية لمنصة SECOD في مجالي الأمن السيبراني وتقنية المعلومات مع إمكانية البحث والتصفية الفورية.">
+    <meta name="author" content="Bashar Zblh">
+
+    <!-- Open Graph / Meta Social -->
+    <meta property="og:title" content="دليل المقررات الدراسية | SECOD">
+    <meta property="og:description" content="تصفح وابحث في مقررات الأمن السيبراني وتقنية المعلومات على منصة SECOD — Understand. Learn. Apply.">
+    <meta property="og:image" content="assets/brand/social/og-image.png">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- الخطوط المعتمدة: IBM Plex Sans Arabic + Inter مع Cairo كبديل -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -20,12 +34,15 @@
     <nav class="site-navbar" id="mainNavbar">
         <div class="site-navbar-inner">
             
-            <!-- الهوية والشعار -->
-            <a href="index.html" class="brand-link" title="المنصة الأكاديمية - كلية المنار">
-                <div class="brand-logo-icon">🎓</div>
+            <!-- الهوية والشعار الرسمي -->
+            <a href="index.html" class="brand-link" title="SECOD — Cybersecurity & IT Learning Platform">
+                <img src="assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="brand-logo-img">
                 <div class="brand-text-col">
-                    <span class="brand-name">كلية المنار للعلوم والتكنولوجيا</span>
-                    <span class="brand-sub">دليل المقررات الأكاديمية • M.C.S.T</span>
+                    <div style="display:flex; align-items:center; gap:0.4rem;">
+                        <span class="brand-name">SECOD</span>
+                        <span class="brand-tagline-badge">EDU</span>
+                    </div>
+                    <span class="brand-sub">دليل المقررات الدراسية</span>
                 </div>
             </a>
 
@@ -33,17 +50,18 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
                 <li><a href="courses.html" class="nav-link active">📚 المقررات الدراسية</a></li>
-                <li><a href="index.html#departments" class="nav-link">🏛️ الأقسام الأكاديمية</a></li>
-                <li><a href="index.html#stats" class="nav-link">📊 الإحصائيات</a></li>
-                <li><a href="index.html#features" class="nav-link">⚡ مميزات المنصة</a></li>
+                <li><a href="index.html#about" class="nav-link">🌐 عن المنصة</a></li>
+                <li><a href="index.html#departments" class="nav-link">🏛️ المسارات</a></li>
+                <li><a href="index.html#founder" class="nav-link">👨‍💻 المؤسس</a></li>
+                <li><a href="index.html#independence" class="nav-link">🛡️ الاستقلالية</a></li>
             </ul>
 
             <!-- إجراءات شريط التنقل -->
             <div class="nav-actions">
-                <!-- شارة المشرف / الطالب -->
-                <div class="nav-user-badge" title="عضو اللجنة العلمية في القسمين">
+                <!-- شارة المؤسس والمطور -->
+                <div class="nav-user-badge" title="Bashar Zblh — Founder & Developer of SECOD">
                     <div class="user-avatar-circle">ب</div>
-                    <span>م. بشار زبله</span>
+                    <span>Bashar Zblh</span>
                 </div>
 
                 <!-- زر الوضع الليلي / النهاري -->
@@ -66,8 +84,8 @@
     <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
         <div class="mobile-drawer-header">
             <div class="brand-link">
-                <div class="brand-logo-icon" style="width:34px; height:34px; font-size:1.1rem;">🎓</div>
-                <span style="font-weight:800; font-size:0.95rem; color:var(--primary);">كلية المنار M.C.S.T</span>
+                <img src="assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" style="width:34px; height:34px; border-radius:6px; background:#001C32;">
+                <span style="font-weight:800; font-size:1.05rem; color:var(--primary);">SECOD</span>
             </div>
             <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
         </div>
@@ -75,18 +93,19 @@
         <ul class="mobile-nav-links">
             <li><a href="index.html"><span>🏠</span> الرئيسية</a></li>
             <li><a href="courses.html" class="active"><span>📚</span> دليل المقررات الدراسية</a></li>
-            <li><a href="index.html#departments"><span>🏛️</span> الأقسام والتخصصات</a></li>
-            <li><a href="index.html#stats"><span>📊</span> الإحصائيات الأكاديمية</a></li>
-            <li><a href="index.html#features"><span>⚡</span> مميزات المنصة الذكية</a></li>
+            <li><a href="index.html#about"><span>🌐</span> عن المنصة</a></li>
+            <li><a href="index.html#departments"><span>🏛️</span> المسارات والتخصصات</a></li>
+            <li><a href="index.html#founder"><span>👨‍💻</span> المؤسس والمطور</a></li>
+            <li><a href="index.html#independence"><span>🛡️</span> تنويه الاستقلالية</a></li>
         </ul>
 
         <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); display:flex; flex-direction:column; gap:var(--space-3);">
             <div class="nav-user-badge" style="justify-content:center;">
                 <div class="user-avatar-circle">ب</div>
-                <span>إعداد: م. بشار زبله</span>
+                <span>Bashar Zblh — Founder & Developer</span>
             </div>
             <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin:0;">
-                المستوى الثالث — الترم الثاني (2026)
+                SECOD • Understand. Learn. Apply.
             </p>
         </div>
     </aside>
@@ -94,26 +113,29 @@
     <!-- ==============================================================================
          رأس الصفحة الأكاديمي (Page Header & Breadcrumbs)
          ============================================================================== -->
-    <header class="page-header-modern">
+    <header class="page-header-modern" style="background: linear-gradient(135deg, #071A2B, #001C32); border-bottom: 3px solid var(--brand-cyan);">
         <div class="page-header-inner">
             
             <!-- مسار التنقل (Breadcrumbs) -->
             <nav class="breadcrumbs-trail" aria-label="مسار التنقل">
-                <a href="index.html">🏠 المنصة الرئيسية</a>
+                <a href="index.html" style="color:var(--brand-cyan);">🏠 المنصة الرئيسية</a>
                 <span class="breadcrumbs-sep">/</span>
-                <span class="breadcrumbs-current">دليل المقررات الدراسية</span>
+                <span class="breadcrumbs-current" style="color:#ffffff;">دليل المقررات الدراسية</span>
             </nav>
 
-            <h1 class="page-header-title">المقررات الدراسية المعتمدة</h1>
-            <p class="page-header-desc">
-                تصفح واستكشف جميع المقررات الأكاديمية المعتمدة لطلاب <strong>المستوى الثالث (الترم الثاني)</strong> لقسمي <strong>الأمن السيبراني والشبكات</strong> و<strong>تكنولوجيا المعلومات</strong>، مع إمكانية البحث الفوري والتصفية حسب التخصص، والترتيب متعدد المعايير.
+            <h1 class="page-header-title" style="color:#ffffff;">
+                المقررات الدراسية المعتمدة على <span style="color:var(--brand-cyan);">SECOD</span>
+            </h1>
+            
+            <p class="page-header-desc" style="color:#94A3B8;">
+                تصفح واستكشف جميع المقررات التقنية المتاحة لقسمي <strong>الأمن السيبراني والشبكات</strong> و<strong>تكنولوجيا المعلومات</strong>، مع إمكانية البحث الفوري والتصفية حسب التخصص والترتيب متعدد المعايير.
             </p>
 
             <div class="page-header-stats-row">
-                <span class="header-stat-chip">📚 6 مقررات معتمدة</span>
-                <span class="header-stat-chip">⚡ 13 محاضرة تفاعلية كاملة</span>
-                <span class="header-stat-chip">🏛️ قسمان أكاديميان</span>
-                <span class="header-stat-chip">🎯 كويزات ومختبرات فورية</span>
+                <span class="header-stat-chip" style="background:rgba(0,246,228,0.12); color:#00F6E4; border-color:rgba(0,246,228,0.3);">📚 6 مقررات تخصصية</span>
+                <span class="header-stat-chip" style="background:rgba(255,255,255,0.1); color:#ffffff;">⚡ 13 محاضرة تفاعلية كاملة</span>
+                <span class="header-stat-chip" style="background:rgba(255,255,255,0.1); color:#ffffff;">🛡️ الأمن السيبراني + تقنية المعلومات</span>
+                <span class="header-stat-chip" style="background:rgba(255,255,255,0.1); color:#ffffff;">🎯 كويزات ومختبرات فورية</span>
             </div>
 
         </div>
@@ -200,7 +222,7 @@
             <article class="course-card" data-course-id="sfd" data-dept="shared cyber it" data-lectures="2">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين المسارين</span>
                         <span class="card-lectures-badge">2 محاضرات متاحة</span>
                     </div>
                     <div class="card-cover-main">
@@ -220,13 +242,13 @@
                         الانتقال من كتابة الشيفرة إلى هندسة المنتجات البرمجية: إعداد بيئة التطوير الاحترافية، إدارة التبعيات والحزم، VS Code والطرفية والمصحح، إدارة الإصدارات (Git)، والشيفرة النظيفة والاختبارات وهندسة الأخطاء.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">بيئة التطوير</span>
-                        <span class="topic-chip">Git & GitHub</span>
-                        <span class="topic-chip">كود نظيف</span>
-                        <span class="topic-chip">كويز تفاعلي</span>
+                        <span class="topic-chip">بيئة التطوير والتنفيذ</span>
+                        <span class="topic-chip">إدارة الحزم والتبعيات</span>
+                        <span class="topic-chip">إدارة الإصدارات Git</span>
+                        <span class="topic-chip">جودة الشيفرة واختبارها</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="Software-Development-Fundamentals/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1a365d, #2563eb);">
+                        <a href="Software-Development-Fundamentals/index.html" class="course-card-btn btn-primary">
                             <span>استعراض بوابة المقرر (2 محاضرات)</span>
                             <span>←</span>
                         </a>
@@ -238,7 +260,7 @@
             <article class="course-card" data-course-id="security" data-dept="cyber" data-lectures="3">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge" style="background:rgba(124, 58, 237, 0.4);">🛡️ أمن سيبراني وشبكات</span>
+                        <span class="card-dept-badge" style="background:rgba(124, 58, 237, 0.4);">🛡️ تخصص الأمن السيبراني والشبكات</span>
                         <span class="card-lectures-badge">3 محاضرات متاحة</span>
                     </div>
                     <div class="card-cover-main">
@@ -255,16 +277,16 @@
                         <span>أستاذ المقرر: د. عبدالرزاق الأهدل</span>
                     </div>
                     <p class="course-card-desc">
-                        مبادئ الأمن بالاستناد إلى التصميم (Security by Design)، نمذجة التهديدات وفق منهجية STRIDE، حماية التطبيقات من الثغرات السيبرانية، وهندسة الأنظمة المنيعة والمشفرة والتحكم بالوصول.
+                        المبادئ المعمارية لتأمين البرمجيات، دورة حياة التطوير الآمن (SecDevOps)، نمذجة التهديدات وفق منهجية STRIDE، تطبيق مبادئ SOLID الخمسة، وكشف الروائح البرمجية والتحصين ضد الثغرات.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">Security by Design</span>
-                        <span class="topic-chip">STRIDE</span>
-                        <span class="topic-chip">تشفير وحماية</span>
-                        <span class="topic-chip">تحليل الثغرات</span>
+                        <span class="topic-chip">نمذجة التهديد STRIDE</span>
+                        <span class="topic-chip">مبادئ SOLID الخمسة</span>
+                        <span class="topic-chip">كاشف الروائح Code Smells</span>
+                        <span class="topic-chip">SecDevOps والتحصين</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="Security-Software-Design/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1e133d, #7c3aed);">
+                        <a href="Security-Software-Design/index.html" class="course-card-btn btn-primary">
                             <span>استعراض بوابة المقرر (3 محاضرات)</span>
                             <span>←</span>
                         </a>
@@ -276,14 +298,14 @@
             <article class="course-card" data-course-id="cloud" data-dept="shared cyber it" data-lectures="3">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين المسارين</span>
                         <span class="card-lectures-badge">3 محاضرات متاحة</span>
                     </div>
                     <div class="card-cover-main">
                         <div class="card-cover-icon">☁️</div>
                         <div class="card-cover-titles">
                             <h3 class="card-cover-title">الحوسبة السحابية</h3>
-                            <span class="card-cover-title-en">Cloud Computing</span>
+                            <span class="card-cover-title-en">Cloud Computing Architecture</span>
                         </div>
                     </div>
                 </div>
@@ -293,16 +315,16 @@
                         <span>أستاذ المقرر: أ.د. عبده ناصر شويه</span>
                     </div>
                     <p class="course-card-desc">
-                        نماذج الخدمة السحابية (IaaS, PaaS, SaaS)، تقنيات المحاكاة الافتراضية (Virtualization & Containers)، وبناء وإدارة البنية التحتية السحابية وحمايتها واقتصاديات الحوسبة الموزعة.
+                        المعمارية المعيارية للحوسبة السحابية وفق معايير NIST، نماذج النشر (Public, Private, Hybrid)، نماذج الخدمات (IaaS, PaaS, SaaS)، المحاكاة الافتراضية، التخزين وإدارة الشبكات السحابية، والتحديات الأمنية.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">IaaS & PaaS</span>
-                        <span class="topic-chip">Virtualization</span>
-                        <span class="topic-chip">Containers</span>
-                        <span class="topic-chip">أمن السحابة</span>
+                        <span class="topic-chip">معايير NIST والخصائص</span>
+                        <span class="topic-chip">نماذج IaaS / PaaS / SaaS</span>
+                        <span class="topic-chip">Virtualization & Hypervisors</span>
+                        <span class="topic-chip">تخزين وشبكات السحابة</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="Cloud-Computing/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #075985, #0284c7);">
+                        <a href="Cloud-Computing/index.html" class="course-card-btn btn-primary">
                             <span>استعراض بوابة المقرر (3 محاضرات)</span>
                             <span>←</span>
                         </a>
@@ -310,38 +332,38 @@
                 </div>
             </article>
 
-            <!-- 4. تحليل وتصميم نظم (مشترك) -->
-            <article class="course-card" data-course-id="sad" data-dept="shared cyber it" data-lectures="2">
+            <!-- 4. تحليل وتصميم النظم (مشترك) -->
+            <article class="course-card" data-course-id="sad" data-dept="shared cyber it" data-lectures="4">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
-                        <span class="card-lectures-badge">2 محاضرات متاحة</span>
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين المسارين</span>
+                        <span class="card-lectures-badge">4 محاضرات متاحة</span>
                     </div>
                     <div class="card-cover-main">
-                        <div class="card-cover-icon">📊</div>
+                        <div class="card-cover-icon">📐</div>
                         <div class="card-cover-titles">
-                            <h3 class="card-cover-title">تحليل وتصميم نظم</h3>
-                            <span class="card-cover-title-en">Systems Analysis & Design</span>
+                            <h3 class="card-cover-title">تحليل وتصميم النظم</h3>
+                            <span class="card-cover-title-en">Systems Analysis and Design</span>
                         </div>
                     </div>
                 </div>
                 <div class="course-card-body">
                     <div class="course-instructor-pill">
-                        <span>👩‍🏫</span>
+                        <span>👨‍🏫</span>
                         <span>أستاذ المقرر: أ. أفنان الشرفي</span>
                     </div>
                     <p class="course-card-desc">
-                        دراسة شاملة لمفاهيم النظم، أدوار محلل النظم، دورة حياة تطوير الأنظمة البرمجية (SDLC)، هندسة المتطلبات، وتصميم الحلول التقنية المتكاملة ومخططات تدفق البيانات.
+                        دراسة شاملة لمفاهيم النظم، أدوار محلل النظم، دورة حياة تطوير الأنظمة البرمجية (SDLC)، هندسة المتطلبات، وتصميم الحلول التقنية المتكاملة ومخططات تدفق البيانات DFD.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">SDLC</span>
+                        <span class="topic-chip">مراحل SDLC</span>
                         <span class="topic-chip">هندسة المتطلبات</span>
-                        <span class="topic-chip">DFD & UML</span>
-                        <span class="topic-chip">تصميم الحلول</span>
+                        <span class="topic-chip">مخططات DFD & UML</span>
+                        <span class="topic-chip">تصميم الحلول وقاموس البيانات</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="Systems-Analysis-and-Design/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #134e4a, #0d9488);">
-                            <span>استعراض بوابة المقرر (2 محاضرات)</span>
+                        <a href="Systems-Analysis-and-Design/index.html" class="course-card-btn btn-primary">
+                            <span>استعراض بوابة المقرر (4 محاضرات)</span>
                             <span>←</span>
                         </a>
                     </div>
@@ -352,7 +374,7 @@
             <article class="course-card" data-course-id="forensics" data-dept="shared cyber it" data-lectures="1">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge">🤝 مقرر مشترك بين القسمين</span>
+                        <span class="card-dept-badge">🤝 مقرر مشترك بين المسارين</span>
                         <span class="card-lectures-badge">1 محاضرة متاحة</span>
                     </div>
                     <div class="card-cover-main">
@@ -366,19 +388,19 @@
                 <div class="course-card-body">
                     <div class="course-instructor-pill">
                         <span>👨‍🏫</span>
-                        <span>أستاذ المقرر: د. ضياء الحق القدمي / أ. أفنان الشرفي</span>
+                        <span>أستاذ المقرر: أ. أفنان الشرفي</span>
                     </div>
                     <p class="course-card-desc">
                         منهجيات جمع وحفظ الأدلة الرقمية (Chain of Custody)، تحليل البيانات والأنظمة والشبكات، وأدوات استخراج الأدلة الجنائية من الوسائط وأنظمة التشغيل ومسرح الجريمة السيبراني.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">سلسلة الحيازة</span>
-                        <span class="topic-chip">الأدلة الرقمية</span>
-                        <span class="topic-chip">تحليل الذاكرة</span>
-                        <span class="topic-chip">سلامة الأدلة</span>
+                        <span class="topic-chip">سلسلة الحيازة الجنائية</span>
+                        <span class="topic-chip">تحريز الأدلة الرقمية</span>
+                        <span class="topic-chip">تحليل الذاكرة وأنظمة الملفات</span>
+                        <span class="topic-chip">سلامة الأدلة ومحاضر الضبط</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="Digital-Forensics/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #1e293b, #e11d48);">
+                        <a href="Digital-Forensics/index.html" class="course-card-btn btn-primary">
                             <span>استعراض بوابة المقرر (1 محاضرة)</span>
                             <span>←</span>
                         </a>
@@ -390,7 +412,7 @@
             <article class="course-card" data-course-id="itpm" data-dept="it" data-lectures="2">
                 <div class="course-card-cover">
                     <div class="card-cover-badges">
-                        <span class="card-dept-badge" style="background:rgba(5, 150, 105, 0.4);">💻 خاص بقسم تكنولوجيا المعلومات</span>
+                        <span class="card-dept-badge" style="background:rgba(22, 163, 74, 0.4);">💻 خاص بمسار تكنولوجيا المعلومات</span>
                         <span class="card-lectures-badge">2 محاضرات متاحة</span>
                     </div>
                     <div class="card-cover-main">
@@ -410,13 +432,13 @@
                         تخطيط وإدارة المشاريع التقنية، جدولة الموارد والميزانيات (WBS, Gantt)، إدارة المخاطر والجودة، وقيادة فرق العمل لإنجاز أنظمة تقنية المعلومات بنجاح والمنهجيات الرشيقة.
                     </p>
                     <div class="course-card-meta-tags">
-                        <span class="topic-chip">WBS & Gantt</span>
-                        <span class="topic-chip">إدارة المخاطر</span>
-                        <span class="topic-chip">منهجية Agile</span>
-                        <span class="topic-chip">ميزانية المشاريع</span>
+                        <span class="topic-chip">هيكل تجزئة العمل WBS</span>
+                        <span class="topic-chip">مخططات Gantt والجدولة</span>
+                        <span class="topic-chip">إدارة المخاطر التقنية</span>
+                        <span class="topic-chip">منهجية Agile وميزانية المشروع</span>
                     </div>
                     <div class="course-card-footer">
-                        <a href="IT-Project-Management/index.html" class="course-card-btn" style="background: linear-gradient(135deg, #14271d, #059669);">
+                        <a href="IT-Project-Management/index.html" class="course-card-btn btn-primary">
                             <span>استعراض بوابة المقرر (2 محاضرات)</span>
                             <span>←</span>
                         </a>

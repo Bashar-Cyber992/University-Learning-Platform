@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الرابعة: مرحلة التحليل وتحديد المتطلبات | تحليل وتصميم النظم | SECOD</title>
+    <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/lecture-header.css">
+    <link rel="stylesheet" href="../assets/css/lecture-widgets.css">
+</head>
+<body data-course="systems-analysis-and-design">
+
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
+
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>📐</span>
+                            <span>تحليل وتصميم النظم</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 04</span>
+                    </div>
+                    <span class="secod-nav-sticky-title">المحاضرة الرابعة: مرحلة التحليل وتحديد المتطلبات</span>
+                </div>
+
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <span>وضع القراءة</span>
+                    </button>
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span>
+                        <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+            <div class="secod-nav-progress" id="secodNavProgress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="secod-nav-progress-fill" id="secodProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="secod-lecture-hero" id="secodLectureHero">
+            <div class="secod-hero-container">
+                <div class="secod-hero-badge-row">
+                    <span class="badge badge-accent">SAD-204</span>
+                    <span class="badge badge-outline">المستوى الثالث — تخصص IT & Cybersecurity</span>
+                    <span class="badge badge-success">مكتملة ومحققة أكاديمياً</span>
+                </div>
+                <h1 class="secod-hero-title">المحاضرة الرابعة: مرحلة التحليل وتحديد المتطلبات</h1>
+                <p class="secod-hero-lead">
+                    تفكيك متطلبات النظام من الواقع الحالي (As-Is) إلى الرؤية المستقبلية (To-Be)، وإتقان تقنيات الاستنباط الخمس، ونمذجة استراتيجيات التحليل الثماني، وصياغة مقترح النظام الشامل وفق المعايير الدولية IIBA BABOK v3 و ISO/IEC/IEEE 29148.
+                </p>
+                <div class="secod-hero-meta-bar">
+                    <div class="secod-meta-item">
+                        <span class="secod-meta-icon">⏱️</span>
+                        <span>زمن القراءة المتوقع: <strong>45 دقيقة</strong></span>
+                    </div>
+                    <div class="secod-meta-item">
+                        <span class="secod-meta-icon">📊</span>
+                        <span>الشرائح المرجعية: <strong>32 شريحة مغطاة بالكامل</strong></span>
+                    </div>
+                    <div class="secod-meta-item">
+                        <span class="secod-meta-icon">🧪</span>
+                        <span>الاختبار النهائي: <strong>10 أسئلة قياسية</strong></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+        
+        <!-- تنويه الاستقلالية الأكاديمية الصارم -->
+        <aside class="alert alert-warning" style="margin-bottom: var(--space-8); border-right: 4px solid var(--warning-amber);">
+            <div style="display: flex; gap: var(--space-3); align-items: flex-start;">
+                <span style="font-size: var(--text-2xl);">🛡️</span>
+                <div>
+                    <strong style="color: var(--primary-navy); display: block; margin-bottom: var(--space-1);">تنويه الاستقلالية الأكاديمية الصارم (Institutional Independence Disclaimer):</strong>
+                    <p style="margin: 0; font-size: var(--text-sm); line-height: 1.7; color: var(--secondary-text);">
+                        <strong>SECOD منصة تعليمية مستقلة تماماً ومبادرة شخصية من تطوير بشار زبله (Bashar Zblh).</strong><br>
+                        المنصة لا تتبع كلية المنار ولا تمثلها رسمياً بأي شكل من الأشكال. لا توجد بين المنصة والكلية أي علاقة إدارية أو شراكة رسمية أو رعاية أكاديمية. يهدف هذا المحتوى إلى مساعدة الطلاب على الفهم العميق والتحليل الهندسي المنهجي.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحطة 1: المدخل والدافع الهندسي -->
+        <section class="card" id="module-1" style="margin-bottom: var(--space-8);">
+            <div class="card-header">
+                <span class="badge badge-accent">المحطة 01</span>
+                <h2>1. المدخل الاستراتيجي ومعضلة فشل البرمجيات الكبرى</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    أثبتت أدبيات هندسة البرمجيات أن أكثر من <strong>50% من تعثر وفشل مشاريع تطوير النظم</strong> لا يعود إلى أخطاء في كتابة الكود البرمجي، بل يرجع إلى <strong>الإخفاق في تحديد وفهم المتطلبات الصحيحة</strong> لأصحاب المصلحة والمستخدمين.
+                </p>
+
+                <!-- منحنى بوم لكلفة التغيير -->
+                <div class="widget-box" style="background: var(--surface-dark); color: #fff; padding: var(--space-6); border-radius: var(--radius-lg); margin: var(--space-6) 0;">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: var(--space-3);">📈 قانون بوم لكلفة التغيير (Boehm's Cost of Change Curve)</h3>
+                    <p style="color: #cbd5e1; font-size: var(--text-sm);">
+                        تتضاعف كلفة تصحيح المتطلب الخاطئ هندسياً كلما تأخر اكتشافه عبر دورة حياة النظام (SDLC):
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-3); text-align: center; margin-top: var(--space-4);">
+                        <div style="background: rgba(255,255,255,0.08); padding: var(--space-3); border-radius: var(--radius-md);">
+                            <div style="font-size: var(--text-xs); color: #94a3b8;">مرحلة التحليل</div>
+                            <div style="font-size: var(--text-xl); font-weight: 800; color: var(--accent-cyan);">1x</div>
+                            <div style="font-size: var(--text-xs); color: #64748b;">(معالجة فورية)</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: var(--space-3); border-radius: var(--radius-md);">
+                            <div style="font-size: var(--text-xs); color: #94a3b8;">مرحلة التصميم</div>
+                            <div style="font-size: var(--text-xl); font-weight: 800; color: #38bdf8;">10x</div>
+                            <div style="font-size: var(--text-xs); color: #64748b;">(تعديل النماذج)</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: var(--space-3); border-radius: var(--radius-md);">
+                            <div style="font-size: var(--text-xs); color: #94a3b8;">مرحلة البرمجة</div>
+                            <div style="font-size: var(--text-xl); font-weight: 800; color: var(--warning-amber);">25x</div>
+                            <div style="font-size: var(--text-xs); color: #64748b;">(إعادة كتابة الكود)</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.08); padding: var(--space-3); border-radius: var(--radius-md);">
+                            <div style="font-size: var(--text-xs); color: #94a3b8;">التشغيل والصيانة</div>
+                            <div style="font-size: var(--text-xl); font-weight: 800; color: var(--error-red);">100x - 200x</div>
+                            <div style="font-size: var(--text-xs); color: #64748b;">(خسائر تشغيلية كبرى)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المحطة 2: جوهر ومفهوم التحليل في SDLC -->
+        <section class="card" id="module-2" style="margin-bottom: var(--space-8);">
+            <div class="card-header">
+                <span class="badge badge-accent">المحطة 02</span>
+                <h2>2. التأصيل العلمي للتحليل وموقعه في دورة حياة النظم</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    <strong>التحليل (Analysis):</strong> يعني لغوياً ومنطقياً <strong>تفكيك الكل إلى أجزائه التي يتكون منها</strong> بقصد فهم طبيعة الأجزاء ووظيفتها وعلاقاتها المتبادلة (Decomposition)، بينما مرحلة التصميم اللاحقة هي إعادة تركيب وبناء (Synthesis).
+                </p>
+
+                <div class="grid grid-3" style="gap: var(--space-4); margin: var(--space-6) 0;">
+                    <div style="border: 1px solid var(--border-light); padding: var(--space-4); border-radius: var(--radius-md); background: var(--light-background);">
+                        <h4 style="color: var(--primary-navy);">1. فهم النظام الحالي (As-Is)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">تشخيص المدخلات، العمليات، قواعد البيانات، والضوابط الرقابية وتحديد المشكلات بدقة.</p>
+                    </div>
+                    <div style="border: 1px solid var(--border-light); padding: var(--space-4); border-radius: var(--radius-md); background: var(--light-background);">
+                        <h4 style="color: var(--primary-navy);">2. تحديد التحسينات (Improvements)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">هندسة الفجوة وتطبيق استراتيجيات التحليل لإلغاء الاختناقات وتطوير الأعمال.</p>
+                    </div>
+                    <div style="border: 1px solid var(--border-light); padding: var(--space-4); border-radius: var(--radius-md); background: var(--light-background);">
+                        <h4 style="color: var(--primary-navy);">3. صياغة النظام الجديد (To-Be)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">صياغة بيان تعريف المتطلبات التفصيلي ومقترح النظام الشامل (System Proposal).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المحطة 3: هندسة المتطلبات وثنائية FRs vs NFRs -->
+        <section class="card" id="module-3" style="margin-bottom: var(--space-8);">
+            <div class="card-header">
+                <span class="badge badge-accent">المحطة 03</span>
+                <h2>3. هندسة المتطلبات: المتطلبات الوظيفية مقابل غير الوظيفية</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    وفق معيار <strong>ISO/IEC/IEEE 29148:2018</strong> ودليل <strong>IIBA BABOK v3</strong>، ينقسم توصيف حل النظام إلى فئتين إلزاميتين:
+                </p>
+
+                <div class="table-responsive" style="margin: var(--space-4) 0;">
+                    <table class="table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: var(--surface-dark); color: #fff;">
+                                <th style="padding: var(--space-3); text-align: right;">وجه المقارنة</th>
+                                <th style="padding: var(--space-3); text-align: right;">المتطلبات الوظيفية (Functional Requirements)</th>
+                                <th style="padding: var(--space-3); text-align: right;">المتطلبات غير الوظيفية (Non-Functional Requirements - NFRs)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-light);">
+                                <td style="padding: var(--space-3); font-weight: bold;">سؤال الجوهر</td>
+                                <td style="padding: var(--space-3); color: var(--tech-blue);">ماذا سيفعل النظام؟ (What the system does)</td>
+                                <td style="padding: var(--space-3); color: var(--success-green);">كيف سيعمل النظام وما خصائص جودته؟ (How well it performs)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-light);">
+                                <td style="padding: var(--space-3); font-weight: bold;">طبيعة التوصيف</td>
+                                <td style="padding: var(--space-3);">الوظائف، العمليات الحسابية، والتعامل مع البيانات.</td>
+                                <td style="padding: var(--space-3);">خصائص الأداء، الأمان، التوفر، وسهولة الاستخدام.</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: var(--space-3); font-weight: bold;">أمثلة تطبيقية</td>
+                                <td style="padding: var(--space-3);">
+                                    • تسجيل حساب جديد للمستخدم.<br>
+                                    • حساب ضريبة القيمة المضافة 15%.<br>
+                                    • إرسال إشعار SMS بتأكيد الحجز.
+                                </td>
+                                <td style="padding: var(--space-3);">
+                                    • زمن الاستجابة أقل من ثانية واحدة (Performance).<br>
+                                    • تشفير كلمات المرور باستخدام Argon2id (Security).<br>
+                                    • نسبة التوفر والتشغيل 99.9% (Availability).
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- المحطة 4: تقنيات استنباط المتطلبات الخمس -->
+        <section class="card" id="module-4" style="margin-bottom: var(--space-8);">
+            <div class="card-header">
+                <span class="badge badge-accent">المحطة 04</span>
+                <h2>4. تقنيات استنباط المتطلبات الخمس (Elicitation Techniques)</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    تتكامل خمس تقنيات استقصائية لجمع واستنباط المتطلبات من أصحاب المصلحة:
+                </p>
+
+                <div class="grid grid-2" style="gap: var(--space-4); margin-bottom: var(--space-6);">
+                    <div style="border-right: 3px solid var(--accent-cyan); padding-right: var(--space-3);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">1. المقابلات الشخصية (Interviews)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">التقنية الأكثر استخداماً لجمع معلومات نوعية عميقة. تتطلب الالتزام بـ <strong>قاعدة الـ 48 ساعة</strong> لتوثيق ومصادقة تقرير المقابلة المعياري.</p>
+                    </div>
+                    <div style="border-right: 3px solid var(--tech-blue); padding-right: var(--space-3);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">2. جلسات التطوير المشترك (JAD)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">ورش عمل تفاعلية تجمع المستخدمين والمدراء والمطورين بإدارة منسق محايد (Facilitator) لتقليص وقت التحليل بنسبة 50% وبناء إجماع فوري.</p>
+                    </div>
+                    <div style="border-right: 3px solid var(--warning-amber); padding-right: var(--space-3);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">3. الاستبيانات (Questionnaires)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">أداة استطلاعية للوصول لآلاف المستخدمين المنتشرين جغرافياً بتكلفة منخفضة، مع الحذر من تدني معدل الاستجابة (< 30%).</p>
+                    </div>
+                    <div style="border-right: 3px solid var(--success-green); padding-right: var(--space-3);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">4. تحليل المستندات (Document Analysis)</h4>
+                        <p style="font-size: var(--text-sm); color: var(--secondary-text);">فحص النماذج والتقارير لفهم النظام الرسمي (Formal)، والبحث عن الملاحظات المكتوبة باليد لكشف النظام غير الرسمي (Informal).</p>
+                    </div>
+                </div>
+
+                <!-- الملاحظة الميدانية وتأثير هوثورن -->
+                <div class="alert alert-info" style="margin-bottom: var(--space-6);">
+                    <strong>👁️ تقنية الملاحظة الميدانية (Observation) وتأثير هوثورن (Hawthorne Effect):</strong><br>
+                    تتيح الملاحظة رؤية حقيقة الموقف المجردة وتجاوز ضعف الذاكرة البشرية في تقدير الأوقات. لكن يجب على المحلل الحذر من <strong>تأثير هوثورن</strong> (ميل الأفراد لتعديل وتجويد أدائهم لمجرد علمهم بأنهم تحت الملاحظة)، ويُعالج ذلك بإطالة فترة التواجد حتى يعتاد الموظفون وجود المحلل.
+                </div>
+
+                <!-- نموذج تقرير المقابلة المعياري المعتمد -->
+                <div style="border: 1px dashed var(--tech-blue); padding: var(--space-5); border-radius: var(--radius-lg); background: #f0fdf4;">
+                    <h4 style="color: #166534; margin-bottom: var(--space-2);">📋 نموذج تقرير المقابلة المعياري (SECOD Standard Interview Report)</h4>
+                    <p style="font-size: var(--text-xs); color: #15803d; margin-bottom: var(--space-3);">
+                        يغطي هذا النموذج الهيكل المعتمد عالمياً لتوثيق جلسات المقابلات وسد الفجوة البصرية للشريحة 22:
+                    </p>
+                    <div style="font-family: var(--font-code); font-size: var(--text-xs); line-height: 1.6; background: #fff; padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid #bbf7d0;">
+                        <strong>[INTERVIEWEE]:</strong> م. خالد المنصوري (مدير المستودعات)<br>
+                        <strong>[INTERVIEWER]:</strong> سارة الأحمد (محلل نظم أول) | <strong>[DATE]:</strong> 2026-11-16 (10:00 AM)<br>
+                        <strong>[PURPOSE]:</strong> تشخيص مشكلات جرد المستودعات والنظام الحالي As-Is.<br>
+                        <strong>[KEY POINTS]:</strong> التسجيل الورقي يسبب تأخيراً 4 أيام في الجرد السنوي؛ الحاجة لقارئات باركود لاسلكية.<br>
+                        <strong>[OPEN ISSUES]:</strong> هل تدعم قواعد بيانات الموردين الحالية بروتوكول الربط المباشر API؟<br>
+                        <strong>[ACTION ITEMS]:</strong> تزويد المحلل بعينة من استمارة الجرد الورقي خلال 48 ساعة للمصادقة.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المحطة 5: استراتيجيات التحليل الثماني والمحاكيات -->
+        <section class="card" id="module-5" style="margin-bottom: var(--space-8);">
+            <div class="card-header">
+                <span class="badge badge-accent">المحطة 05</span>
+                <h2>5. استراتيجيات تحليل المتطلبات الثماني والمحاكيات التفاعلية</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    يقود المحلل أصحاب المصلحة للتفكير النقدي عبر 8 استراتيجيات متدرجة في الأثر وعمق التغيير:
+                </p>
+
+                <!-- المحاكي 1: حاسبة كفاءة العمليات وقاعدة الـ 10 أضعاف -->
+                <div class="widget-box" style="border: 2px solid var(--tech-blue); padding: var(--space-6); border-radius: var(--radius-lg); margin-bottom: var(--space-6); background: var(--light-background);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--primary-navy); margin: 0;">⏱️ محاكي تحليل المدة وحاسبة كفاءة العمليات (PCE Calculator)</h3>
+                        <span class="badge badge-primary">محاكي تطبيقي تفاعلي</span>
+                    </div>
+                    <p style="font-size: var(--text-sm); color: var(--secondary-text); margin-bottom: var(--space-4);">
+                        اختبر قاعدة الـ 10 أضعاف تجريبياً؛ حرك أشرطة التمرير لمشاهدة كيف تؤدي طوابير الانتظار إلى انهيار كفاءة دورة العملية ($PCE$):
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); margin-bottom: var(--space-4);">
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: var(--space-1); font-size: var(--text-sm);">
+                                وقت العمل الفعلي ذو القيمة المضافة: <span id="valWorkTime" style="color: var(--tech-blue);">30</span> دقيقة
+                            </label>
+                            <input type="range" id="sliderWorkTime" min="10" max="120" value="30" step="5" style="width: 100%;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: bold; margin-bottom: var(--space-1); font-size: var(--text-sm);">
+                                وقت الانتظار والتسليم بين الإدارات: <span id="valWaitTime" style="color: var(--error-red);">270</span> دقيقة
+                            </label>
+                            <input type="range" id="sliderWaitTime" min="30" max="1200" value="270" step="15" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <!-- النتيجة الحسابية -->
+                    <div style="background: #fff; padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-light); display: flex; justify-content: space-around; align-items: center; text-align: center;">
+                        <div>
+                            <div style="font-size: var(--text-xs); color: var(--secondary-text);">الوقت الكلي للمعاملة ($T_{\text{total}}$)</div>
+                            <div id="resTotalTime" style="font-size: var(--text-xl); font-weight: 800; color: var(--primary-navy);">300 دقيقة</div>
+                        </div>
+                        <div>
+                            <div style="font-size: var(--text-xs); color: var(--secondary-text);">فجوة التضاعف (الانتظار ÷ العمل)</div>
+                            <div id="resRatio" style="font-size: var(--text-xl); font-weight: 800; color: var(--warning-amber);">9.0 أضعاف</div>
+                        </div>
+                        <div>
+                            <div style="font-size: var(--text-xs); color: var(--secondary-text);">كفاءة دورة العملية (PCE)</div>
+                            <div id="resPCE" style="font-size: var(--text-xl); font-weight: 800; color: var(--error-red);">10.0%</div>
+                        </div>
+                    </div>
+                    <div id="pceFeedback" style="margin-top: var(--space-3); font-size: var(--text-xs); padding: var(--space-2); border-radius: var(--radius-sm); text-align: center; background: #fef2f2; color: #991b1b; font-weight: 600;">
+                        ⚠️ تنبيه: العملية تعاني من فجوة الـ 10 أضعاف! 90% من الوقت ضائع في الانتظار. الحل الهندسي: دمج الإجرائيات (Case Worker) والتنفيذ على التوازي.
+                    </div>
+                </div>
+
+                <!-- استعراض دراسات الحالة الصناعية -->
+                <div class="grid grid-2" style="gap: var(--space-4); margin-bottom: var(--space-6);">
+                    <div style="background: var(--light-background); padding: var(--space-4); border-radius: var(--radius-md); border-right: 4px solid var(--success-green);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">🏢 دراسة حالة Progressive: تحليل النتائج (Outcome Analysis)</h4>
+                        <p style="font-size: var(--text-xs); color: var(--secondary-text); line-height: 1.6;">
+                            انتقلت الشركة من مجرد إصدار شيك التعويض (المخرج Output) إلى تقديم سيارة بديلة وإصلاح المركبة فوراً بموقع الحادث (النتيجة المنشودة Outcome)، مما قفز بها لصدارة قطاع التأمين عالمياً.
+                        </p>
+                    </div>
+                    <div style="background: var(--light-background); padding: var(--space-4); border-radius: var(--radius-md); border-right: 4px solid var(--tech-blue);">
+                        <h4 style="color: var(--primary-navy); margin-bottom: var(--space-1);">🛫 دراسة حالة Southwest: التقييم المقارن المبتكر (Benchmarking)</h4>
+                        <p style="font-size: var(--text-xs); color: var(--secondary-text); line-height: 1.6;">
+                            قامت الشركة بدراسة طواقم صيانة سيارات الفورمولا 1 (Indy Pit Crews) لتقليص وقت مكوث الطائرات بالبوابة من 45 دقيقة إلى أقل من 15 دقيقة عبر المهام المتوازية.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المحطة 6: الاختبار التفاعلي النهائي -->
+        <section class="card" id="module-6" style="margin-bottom: var(--space-12);">
+            <div class="card-header" style="background: var(--primary-navy); color: #fff;">
+                <span class="badge badge-accent">المحطة 06</span>
+                <h2 style="color: #fff;">6. بنك الاختبار النهائي التفاعلي (10 أسئلة قياسية)</h2>
+            </div>
+            <div class="card-body">
+                <p style="margin-bottom: var(--space-6);">
+                    اختبر استيعابك للمحاضرة عبر هذا الاختبار القياسي المكون من 10 أسئلة تغطي كافة المستويات المعرفية. يُمنح الطالب تفسيراً علمياً فورياً لكل إجابة مع تسجيل أفضل درجة محققة:
+                </p>
+                
+                <!-- حاوية الكويز المعتمدة -->
+                <div id="lectureQuizContainer" class="quiz-container"></div>
+            </div>
+        </section>
+
+        <!-- التنقل بين المحاضرات -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--border-light);">
+            <a href="Lecture-03.html" class="btn btn-outline" style="font-weight: 700;">
+                <span>→ المحاضرة السابقة (03: التخطيط والجدوى وإدارة المشروع)</span>
+            </a>
+            <a href="index.html" class="btn btn-primary" style="font-weight: 700;">
+                <span>📚 العودة لفهرس مقرر تحليل وتصميم النظم</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- التذييل الموحد للمنصة -->
+    <div id="site-footer"></div>
+
+    <!-- المحركات المشتركة للمنصة -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+
+    <!-- كود المحاكي التفاعلي وبنك الأسئلة -->
+    <script>
+        // محاكي كفاءة العمليات (Duration Analysis & PCE Calculator)
+        const sWork = document.getElementById('sliderWorkTime');
+        const sWait = document.getElementById('sliderWaitTime');
+        const vWork = document.getElementById('valWorkTime');
+        const vWait = document.getElementById('valWaitTime');
+        const rTotal = document.getElementById('resTotalTime');
+        const rRatio = document.getElementById('resRatio');
+        const rPCE = document.getElementById('resPCE');
+        const pceFb = document.getElementById('pceFeedback');
+
+        function updatePCE() {
+            const w = parseFloat(sWork.value);
+            const q = parseFloat(sWait.value);
+            const total = w + q;
+            const ratio = (q / w).toFixed(1);
+            const pce = ((w / total) * 100).toFixed(1);
+
+            vWork.textContent = w;
+            vWait.textContent = q;
+            rTotal.textContent = total + " دقيقة";
+            rRatio.textContent = ratio + " أضعاف";
+            rPCE.textContent = pce + "%";
+
+            if (pce < 12) {
+                pceFb.style.background = "#fef2f2";
+                pceFb.style.color = "#991b1b";
+                pceFb.innerHTML = "⚠️ متلازمة الـ 10 أضعاف: أكثر من 88% من الوقت ضائع في الانتظار والتسليم. الحل: دمج الإجرائيات (Case Worker) والتنفيذ على التوازي.";
+            } else if (pce < 25) {
+                pceFb.style.background = "#fffbeb";
+                pceFb.style.color = "#b45309";
+                pceFb.innerHTML = "⚡ كفاءة متوسطة: توجد فجوات انتظار يمكن معالجتها عبر أتمتة تدفق المعاملات الإلكترونية.";
+            } else {
+                pceFb.style.background = "#f0fdf4";
+                pceFb.style.color = "#15803d";
+                pceFb.innerHTML = "✅ عملية رشيقة وممتازة: نسبة الوقت ذو القيمة المضافة مرتفعة والهدر في حدوده الدنيا.";
+            }
+        }
+
+        if (sWork && sWait) {
+            sWork.addEventListener('input', updatePCE);
+            sWait.addEventListener('input', updatePCE);
+            updatePCE();
+        }
+
+        // كائن بنك الأسئلة النهائي القياسي (10 أسئلة)
+        const quizData = [
+            {
+                question: "1. وفقاً لمنحنى كلفة التغيير لباري بوم (Boehm)، كم تبلغ نسبة تكلفة تصحيح خطأ المتطلبات في مرحلة الصيانة مقارنة باكتشافه في مرحلة التحليل؟",
+                options: [
+                    "ضعفان إلى ثلاثة أضعاف (2x - 3x)",
+                    "عشرة أضعاف فقط (10x)",
+                    "مئة إلى مئتي ضعف (100x - 200x)",
+                    "نفس التكلفة طالما تم توفير أدوات الاختبار الآلي"
+                ],
+                correct: 2,
+                explanation: "تتضاعف كلفة تصحيح الخطأ أسّياً عبر دورة حياة النظام؛ حيث يكلف إصلاح المتطلب دولاراً واحداً في التحليل، بينما يقفز إلى 100-200 دولار إذا وصل إلى بيئة الإنتاج والصيانة لتأثيره على الكود وقواعد البيانات وتدريب المستخدمين."
+            },
+            {
+                question: "2. ما هو التعريف الدقيق للمتطلب (Requirement) من منظور مرحلة التحليل وفق المعيار الدولي ISO/IEC/IEEE 29148؟",
+                options: [
+                    "مواصفة تقنية تصف أسماء الجداول ومفاتيح قواعد البيانات وكود البرمجة (How)",
+                    "صياغة توضح ما يجب على النظام فعله والخصائص التي يتميز بها لتلبية حاجة العمل (What)",
+                    "قائمة باقتراحات المطورين لاختيار أطر العمل ولغات البرمجة المناسبة",
+                    "خطة زمنية تحدد تكلفة ورواتب فريق البرمجة ومواعيد التسليم"
+                ],
+                correct: 1,
+                explanation: "في مرحلة التحليل، يُصاغ المتطلب من منظور مستخدمي النظام والأعمال مركزاً على 'ماذا يجب أن يفعل النظام' (What the system must do)، بينما تركز مواصفات مرحلة التصميم على 'كيفية البناء التقني' (How)."
+            },
+            {
+                question: "3. أي من الخيارات التالية يمثل متطلباً غير وظيفي (Non-Functional Requirement - NFR)؟",
+                options: [
+                    "يجب أن يسمح النظام للعميل باسترجاع كلمة المرور عبر البريد الإلكتروني",
+                    "يجب أن يقوم النظام بحساب ضريبة القيمة المضافة بنسبة 15% على الفاتورة",
+                    "يجب ألا يتجاوز زمن استجابة النظام ثانيتين عند معالجة 5000 طلب متزامن",
+                    "يجب أن يتيح النظام لموظف الاستقبال تسجيل بيانات الزائر ورقم هاتفه"
+                ],
+                correct: 2,
+                explanation: "زمن الاستجابة هو خاصية جودة وأداء تشغيلي (Performance NFR)، بينما الخيارات الأخرى تمثل وظائف وسلوكيات وحسابات يؤديها النظام وتصنف كمتطلبات وظيفية (Functional Requirements)."
+            },
+            {
+                question: "4. ما هي الميزة الجوهرية لاستخدام تقنية جلسات التطوير المشترك (JAD) مقارنة بالمقابلات الفردية المنعزلة؟",
+                options: [
+                    "انعدام تكلفتها المادية تماماً وسهولة تنفيذها دون الحاجة لمنسق",
+                    "تقليص وقت جمع المتطلبات بنسبة تصل إلى 50% وبناء إجماع فوري بين مختلف الإدارات",
+                    "إمكانية الوصول لملايين العملاء حول العالم دفعة واحدة دون تنظيم مواعيد",
+                    "استغناؤها التام عن مشاركة الخبراء التقنيين ومديري الإدارات"
+                ],
+                correct: 1,
+                explanation: "تجمع جلسات JAD كافة الأطراف الفاعلة في غرفة واحدة بإدارة منسق محايد، مما يحل الصراعات البينية فوراً ويقلص زمن استنباط المتطلبات بنسبة تصل إلى النصف."
+            },
+            {
+                question: "5. عند فحص مستندات النظام الحالي، لماذا يحرص محلل النظم على البحث عن 'الملاحظات المكتوبة بخط اليد' (Handwritten Notes) في هوامش النماذج؟",
+                options: [
+                    "للتأكد من أن الموظفين يتمتعون بخط يد جميل ومقروء",
+                    "لأنها تكشف النظام غير الرسمي (Informal System) والمشكلات التي عجز النظام الرسمي عن حلها",
+                    "لإثبات مخالفة الموظفين لقواعد العمل وإحالتهم للتحقيق الإداري",
+                    "لأن النماذج المطبوعة القديمة تكون دائماً خالية من أي أخطاء وظيفية"
+                ],
+                correct: 1,
+                explanation: "الملاحظات اليدوية على الشاشات والاستمارات الورقية تمثل الحلول الالتفافية العفوية التي يبتكرها الموظفون للتعامل مع قصور النظام الحالي، وتعتبر كنزاً للمحلل لاكتشاف المتطلبات الحقيقية."
+            },
+            {
+                question: "6. ما هو 'تأثير هوثورن' (Hawthorne Effect) الذي يجب على محلل النظم الانتباه إليه أثناء تطبيق تقنية الملاحظة الميدانية؟",
+                options: [
+                    "توقف خوادم النظام عن العمل نتيجة كثرة استعلامات قاعدة البيانات",
+                    "ميل الأفراد لتعديل وتجويد سلوكهم وإنتاجيتهم بصورة مصطنعة لمجرد علمهم بأنهم تحت الملاحظة",
+                    "نسيان المدراء لكيفية توزيع أوقاتهم الأسبوعية عند سؤالهم في المقابلة",
+                    "انخفاض معدل استجابة المستخدمين للاستبيانات الإلكترونية الطويلة"
+                ],
+                correct: 1,
+                explanation: "تأثير هوثورن ظاهرة نفسية وسلوكية كلاسيكية تجعل الموظف يعمل بكفاءة والتزام غير معتاد حين يشعر بوجود مراقب، لذا يجب على المحلل إطالة فترة الملاحظة حتى يعتاد الجميع وجوده ويتصرفوا بطبيعتهم."
+            },
+            {
+                question: "7. في استراتيجية 'تحليل المدة' (Duration Analysis)، ما الذي تشير إليه قاعدة الـ 10 أضعاف التجريبية؟",
+                options: [
+                    "أن النظام الجديد سيكلف 10 أضعاف ميزانية النظام القديم",
+                    "أن الوقت الكلي لإنجاز المعاملة يبلغ في الغالب عشرة أضعاف مجموع أوقات العمل الفعلي للخطوات الفرعية",
+                    "أن عدد المستخدمين سيتضاعف عشر مرات بعد إطلاق النظام",
+                    "أن سرعة المعالجة الحاسوبية تتطلب 10 خوادم متوازية"
+                ],
+                correct: 1,
+                explanation: "تثبت الدراسات العملياتية أن 90% من وقت المعاملات الإدارية يضيع في طوابير الانتظار والتسليم بين المكاتب، ولا تتعدى خطوات العمل الفعلي ذات القيمة المضافة 10% من إجمالي الوقت المستغرق."
+            },
+            {
+                question: "8. ما هو الحل الهندسي الأمثل الموصى به لمعالجة فجوة الانتظار في تحليل المدة وتطبيق نموذج Case Worker؟",
+                options: [
+                    "إلغاء النظام المحوسب والعودة إلى النماذج الورقية الأرشيفية",
+                    "دمج الإجرائيات المتتالية لتكون من مسؤولية موظف واحد، وتشغيل المسارات المستقلة على التوازي",
+                    "زيادة عدد مديري التوقيعات والاعتمادات لمضاعفة الرقابة",
+                    "تأجيل إنجاز المعاملات إلى نهاية الأسبوع لتنفيذها دفعة واحدة (Batch Processing)"
+                ],
+                correct: 1,
+                explanation: "نصت الشريحة 28 صراحة على أن دمج الإجرائيات (Case Worker) يقلل عدد حلقات التسليم، كما أن تشغيل الخطوات المستقلة على التوازي يختصر الوقت الكلي للعملية."
+            },
+            {
+                question: "9. في استراتيجية 'تحليل النتائج' (Outcome Analysis)، ما الفرق الجوهري بين المخرج (Output) والنتيجة المنشودة (Outcome) في مثال شركة التأمين؟",
+                options: [
+                    "المخرج هو إصلاح السيارة، بينما النتيجة المنشودة هي إرسال شيك التعويض المالي",
+                    "المخرج هو إنجاز الإجراء الروتيني الداخلي (صرف الشيك)، بينما النتيجة المنشودة هي القيمة والأثر الفعلي للعميل (إصلاح السيارة)",
+                    "لا يوجد أي فرق بينهما والمصطلحان مترادفان لغوياً وتقنياً",
+                    "المخرج يحدده العميل، بينما النتيجة المنشودة يحددها المبرمج فقط"
+                ],
+                correct: 1,
+                explanation: "المخرج (Output) هو الناتج الإجرائي الداخلي كصرف الشيك، بينما النتيجة (Outcome) هي القيمة الحقيقية التي يطلبها العميل وهي عودة سيارته سليمة وجاهزة للاستخدام."
+            },
+            {
+                question: "10. ما هي الوثيقة الشاملة التي تتوج نهاية مرحلة التحليل وتُرفع إلى لجنة الموافقة (Approval Committee) لتقرير المضي قدماً في المشروع؟",
+                options: [
+                    "وثيقة طلب النظام الأولية (System Request)",
+                    "مقترح النظام الشامل (System Proposal)",
+                    "تقرير الجرد السنوي للمستودعات",
+                    "دليل استكشاف الأخطاء البرمجية (Debugging Manual)"
+                ],
+                correct: 1,
+                explanation: "مقترح النظام (System Proposal) هو الوثيقة الرسمية الجامعة التي تضم بيان تعريف المتطلبات، ونماذج العمليات، ونماذج البيانات، ودراسة الجدوى المنقحة، وتعرض على لجنة الموافقة للانتقال لمرحلة التصميم."
+            }
+        ];
+
+        // تهيئة الكويز
+        initLectureQuiz(quizData, 'quiz_sad_lec04');
+    </script>
+</body>
+</html>

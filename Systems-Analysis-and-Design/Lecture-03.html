@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة الثالثة: مرحلة التخطيط ودراسة الجدوى وإدارة المشروع | تحليل وتصميم النظم | SECOD</title>
+    <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-course="systems-analysis-and-design">
+
+    <!-- Top Navigation & Reading Progress -->
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         Component: Platform Navigation Layer + Editorial Hero + Cyber Visual + Action Bar
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        
+        <!-- Platform Navigation Spacer (Zero CLS on sticky scroll) -->
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
+
+        <!-- Layer A: Platform Navigation Layer (Sticky / Smart Scroll) -->
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <!-- Brand & Breadcrumb Navigation -->
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>📐</span>
+                            <span>تحليل وتصميم النظم</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 03</span>
+                    </div>
+                    <!-- Compact title shown while scrolling sticky -->
+                    <span class="secod-nav-sticky-title">المحاضرة الثالثة: مرحلة التخطيط ودراسة الجدوى وإدارة المشروع</span>
+                </div>
+
+                <!-- Lecture Action Bar & View Controls -->
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodShareBtn" data-tooltip="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>مشاركة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodFontBtn" data-tooltip="تكبير أو تصغير الخط" aria-label="تغيير حجم الخط">
+                        <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+                        <span>حجم الخط</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ المريح" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <span>وضع القراءة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-nav-btn-icon-only secod-tooltip" id="secodFullscreenBtn" data-tooltip="ملء الشاشة" aria-label="ملء الشاشة">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span>
+                        <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reading Progress Track -->
+            <div class="secod-reading-progress-track" aria-hidden="true">
+                <div class="secod-reading-progress-fill" id="secodReadingProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Layer B: Editorial Lecture Hero -->
+        <header class="secod-lecture-hero">
+            <div class="secod-hero-watermark" aria-hidden="true">03</div>
+            <div class="secod-hero-container">
+                <div class="secod-hero-info">
+                    <div class="secod-hero-badges">
+                        <span class="secod-badge-course">📐 SYSTEMS ANALYSIS AND DESIGN</span>
+                        <span class="secod-badge-lecture-num">LECTURE 03</span>
+                        <span class="secod-badge-verified">🛡️ معتمد أكاديمياً</span>
+                    </div>
+
+                    <h1 class="secod-hero-title-ar">المحاضرة الثالثة: مرحلة التخطيط ودراسة الجدوى وإدارة المشروع</h1>
+                    <div class="secod-hero-title-en">Planning Phase: Feasibility Analysis & Project Management</div>
+
+                    <p class="secod-hero-desc">تفكيك شامل للمرحلة الأولى في دورة حياة تطوير النظام (SDLC): خطوة إقلاع المشروع، صياغة وثيقة طلب النظام، دراسات الجدوى الثلاث (التقنية والاقتصادية والتنظيمية)، هندسة هيكل تجزئة العمل (WBS)، ومخططات جانت وبيرت لإدارة وتنفيذ المشروع بنجاح.</p>
+
+                    <div class="secod-academic-strip">
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👨‍🏫</span>
+                            <span class="secod-meta-label">أستاذ المقرر:</span>
+                            <span class="secod-meta-value">أ. أفنان الشرفي</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👥</span>
+                            <span class="secod-meta-label">الفئة المستهدفة:</span>
+                            <span class="secod-meta-value">طلبة الأمن السيبراني وتقنية المعلومات</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">📑</span>
+                            <span class="secod-meta-label">المصدر:</span>
+                            <span class="secod-meta-value">المصادر الأكاديمية المعتمدة + إعداد م. بشار زبله</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer C: Interactive Cyber Visual Column -->
+                <div class="secod-cyber-visual-col">
+                    <div class="secod-cyber-card" id="secodCyberCard">
+                        <div class="secod-cyber-ambient-glow" aria-hidden="true"></div>
+                        <svg class="secod-cyber-svg" viewBox="0 0 460 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="planGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#00F6E4" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#00F6E4" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <!-- Grid background -->
+                            <g opacity="0.12">
+                                <path d="M40 0V340M120 0V340M200 0V340M280 0V340M360 0V340M420 0V340" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+                                <path d="M0 60H460M0 130H460M0 200H460M0 270H460" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+                            </g>
+                            <circle cx="230" cy="160" r="115" fill="url(#planGlow)"/>
+
+                            <!-- Step 1: Initiation Card -->
+                            <rect x="25" y="45" width="125" height="75" rx="8" fill="rgba(16, 40, 59, 0.9)" stroke="#00F6E4" stroke-width="1.5"/>
+                            <text x="87" y="68" text-anchor="middle" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="9" font-weight="700">STEP 1: INITIATION</text>
+                            <text x="87" y="86" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8">System Request</text>
+                            <text x="87" y="102" text-anchor="middle" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="7">Project Sponsor</text>
+
+                            <!-- Pulse arrow to Feasibility -->
+                            <path class="secod-trace-pulse" d="M150 82H185" stroke="#00F6E4" stroke-width="2" fill="none"/>
+
+                            <!-- Central Feasibility Triangle -->
+                            <polygon points="230,45 285,125 175,125" fill="rgba(0, 28, 50, 0.95)" stroke="#2563EB" stroke-width="2"/>
+                            <text x="230" y="85" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8" font-weight="700">FEASIBILITY</text>
+                            <text x="230" y="98" text-anchor="middle" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="7">Tech / Econ / Org</text>
+                            <text x="230" y="112" text-anchor="middle" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="6.5">Go / No-Go Decision</text>
+
+                            <!-- Pulse arrow to Approval Committee -->
+                            <path class="secod-trace-pulse" d="M285 85H320" stroke="#00F6E4" stroke-width="2" fill="none"/>
+
+                            <!-- Steering Committee Badge -->
+                            <rect x="320" y="45" width="115" height="75" rx="8" fill="rgba(16, 40, 59, 0.9)" stroke="#16A34A" stroke-width="1.5"/>
+                            <text x="377" y="68" text-anchor="middle" fill="#16A34A" font-family="'Inter', sans-serif" font-size="8.5" font-weight="700">APPROVAL COMM.</text>
+                            <text x="377" y="86" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8">Project Selection</text>
+                            <text x="377" y="102" text-anchor="middle" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="7">Capital Rationing</text>
+
+                            <!-- Arrow down to Project Management -->
+                            <path class="secod-trace-pulse" d="M377 120V165H230" stroke="#00F6E4" stroke-width="2" fill="none"/>
+
+                            <!-- Step 2: Project Management & WBS -->
+                            <rect x="50" y="180" width="360" height="135" rx="10" fill="rgba(0, 28, 50, 0.92)" stroke="rgba(0, 246, 228, 0.4)" stroke-width="1.5"/>
+                            <text x="65" y="202" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="8.5" font-weight="700" letter-spacing="1">STEP 2: PROJECT MANAGEMENT (WORK PLAN & WBS)</text>
+
+                            <!-- Visual Gantt Bars -->
+                            <rect x="70" y="215" width="85" height="18" rx="4" fill="#00F6E4"/>
+                            <text x="112" y="227" text-anchor="middle" fill="#001C32" font-family="'Inter', sans-serif" font-size="7.5" font-weight="700">Planning (15%)</text>
+
+                            <rect x="160" y="238" width="95" height="18" rx="4" fill="#2563EB"/>
+                            <text x="207" y="250" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="7.5" font-weight="700">Analysis (20%)</text>
+
+                            <rect x="235" y="261" width="125" height="18" rx="4" fill="rgba(0, 246, 228, 0.6)"/>
+                            <text x="297" y="273" text-anchor="middle" fill="#001C32" font-family="'Inter', sans-serif" font-size="7.5" font-weight="700">Design (35%)</text>
+
+                            <rect x="300" y="284" width="95" height="18" rx="4" fill="#16A34A"/>
+                            <text x="347" y="296" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="7.5" font-weight="700">Implement (30%)</text>
+
+                            <!-- Baseline timeline -->
+                            <line x1="70" y1="306" x2="395" y2="306" stroke="rgba(148, 163, 184, 0.3)" stroke-width="1"/>
+                            <text x="70" y="314" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="6">W0</text>
+                            <text x="175" y="314" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="6">W10</text>
+                            <text x="280" y="314" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="6">W25</text>
+                            <text x="395" y="314" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="6">W40 (Launch)</text>
+                        </svg>
+                        <div class="secod-visual-status-pill">
+                            <span class="secod-live-dot"></span>
+                            <span>PROJECT LIFECYCLE // PLANNING & FEASIBILITY ENGINE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layer I: Lecture Navigation Strip -->
+        <div class="secod-lecture-nav-strip">
+            <div class="secod-lecture-nav-inner">
+                <a href="Lecture-02.html" class="secod-nav-step-link"><span>→ المحاضرة السابقة (02: محلل النظم و SDLC)</span></a>
+                <a href="index.html" class="secod-nav-step-link">
+                    <span>📚 فهرس مقرر تحليل وتصميم النظم</span>
+                </a>
+                <a href="Lecture-04.html" class="secod-nav-step-link"><span>المحاضرة التالية (04: مرحلة التحليل وتحديد المتطلبات) ←</span></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <!-- Sidebar Table of Contents -->
+        <aside class="sidebar">
+            <h3>📑 فهرس المحاضرة</h3>
+            <ul id="toc-list">
+                <li><a href="#intro">1. أهداف ومواضيع المحاضرة</a></li>
+                <li><a href="#planning-essence">2. جوهر مرحلة التخطيط والخطوتان الأساسيتان</a></li>
+                <li><a href="#system-origins">3. من أين تنبثق فكرة النظام؟ (حاجة العمل)</a></li>
+                <li><a href="#system-request">4. وثيقة طلب النظام (System Request) وعناصرها الـ 5</a></li>
+                <li><a href="#approval-committee">5. لجنة الموافقة واختيار المشروع (Project Selection)</a></li>
+                <li><a href="#feasibility-study">6. دراسة الجدوى الشاملة (الأبعاد الثلاثة)</a></li>
+                <li><a href="#feasibility-homework">7. تفكيك وبحث الجدوى (حل الواجب المنزلي)</a></li>
+                <li><a href="#optimal-size">8. فك لغز: الحجم الأمثل للمشروع التقني</a></li>
+                <li><a href="#project-management">9. الخطوة الثانية: إدارة المشروع (Project Management)</a></li>
+                <li><a href="#time-estimation">10. تقدير الإطار الزمني وقاعدة الـ 15% المعيارية</a></li>
+                <li><a href="#wbs-tasks">11. تحديد المهام وهيكل تجزئة العمل (WBS)</a></li>
+                <li><a href="#gantt-pert">12. التمثيل الرسومي: مخططات جانت (Gantt) وبيرت (PERT)</a></li>
+                <li><a href="#staffing-plan">13. خطة التوظيف والتحفيز (Staffing & Motivation)</a></li>
+                <li><a href="#work-plan-table">14. تشريح جدول خطة عمل المشروع (Work Plan)</a></li>
+                <li><a href="#transition-analysis">15. الانتهاء والانتقال إلى مرحلة التحليل</a></li>
+                <li><a href="#interactive-lab">16. المختبر التطبيقي التفاعلي</a></li>
+                <li><a href="#flashcards">17. بطاقات الاستذكار (Flashcards)</a></li>
+                <li><a href="#review-questions">18. أسئلة المراجعة والتفكير الناقد</a></li>
+                <li><a href="#quiz">19. الاختبار التقييمي النهائي</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Educational Content -->
+        <main class="content-area">
+
+            <!-- 1. مواضيع المحاضرة -->
+            <section id="intro">
+                <span class="section-tag">خارطة المحاضرة</span>
+                <h2>🎯 مواضيع ومخرجات التعلم للمحاضرة الثالثة</h2>
+                <p>مرحلة التخطيط هي <strong>حجر الزاوية</strong> في أي مشروع برمجي ناجح؛ فالمشاريع البرمجية لا تفشل عادة في مرحلة كتابة الكود، بل تفشل عندما تبدأ دون فهم حقيقي لمبررات إنشائها أو دون دراسة جدوى وافية وجدولة زمنية محكمة. بنهاية هذه المحاضرة ستكون قادراً على:</p>
+                <ul class="content-list">
+                    <li><strong>فهم مرحلة التخطيط (Planning Phase):</strong> إدراك موقعها وأهميتها في دورة حياة تطوير النظم (SDLC) والخطوتين الرئيسيتين المكونتين لها.</li>
+                    <li><strong>إتقان خطوة إقلاع المشروع (Project Initiation):</strong> تحديد الفائدة المرجوة بدقة وكيفية نقل الفكرة من هاجس ذهني إلى وثيقة رسمية.</li>
+                    <li><strong>صياغة وثيقة طلب النظام (System Request):</strong> إتقان العناصر الخمسة المحورية للوثيقة (الراعي، حاجة العمل، متطلبات العمل، قيمة العمل، والقضايا الخاصة).</li>
+                    <li><strong>إجراء دراسات الجدوى الثلاث (Feasibility Analysis):</strong> تفكيك الجدوى التقنية (Technical)، الاقتصادية (Economic)، والتنظيمية (Organizational) مع حل الواجب المنزلي المطلوب.</li>
+                    <li><strong>فهم آلية اختيار المشروع ولجنة الموافقة (Steering Committee):</strong> كيفية تقييم الأولويات وتوزيع الموارد الرأسمالية المحدودة (Capital Rationing).</li>
+                    <li><strong>وضع خطة عمل المشروع (Project Work Plan):</strong> هيكلة المهام باستخدام WBS، تقدير الأزمنة باستخدام القواعد المعيارية (قاعدة 15%)، ورسم مخططات جانت (Gantt) وبيرت (PERT).</li>
+                    <li><strong>إدارة القوى العاملة والتحفيز (Staffing & Motivation):</strong> تحديد الحجم الأمثل للفريق ومقاومة تراجع الهمة والحماس أثناء التنفيذ.</li>
+                </ul>
+
+                <div class="info-box academic-plus">
+                    <h4>💡 المعادلة الجوهرية لمرحلة التخطيط</h4>
+                    <p style="font-size:1.05rem; margin-bottom:0;">
+                        <strong>مرحلة التخطيط = إقلاع المشروع (لماذا نبني النظام؟) + إدارة المشروع (كيف سنبنيه ومن سينفذه ومتى؟)</strong>
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. جوهر مرحلة التخطيط -->
+            <section id="planning-essence">
+                <span class="section-tag">الأساس النظري</span>
+                <h2>📋 جوهر مرحلة التخطيط (Planning Phase) والخطوتان الأساسيتان</h2>
+                <p>تهدف مرحلة التخطيط إلى <strong>فهم المبررات</strong> التي تدعونا إلى بناء نظام معلومات، كما تحدد <strong>كيف سيسعى فريق المشروع إلى بنائه</strong>. تتألف هذه المرحلة من خطوتين أساسيتين متعاقبتين:</p>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box">
+                        <div class="pillar-num">1</div>
+                        <h3>الخطوة الأولى: إقلاع المشروع (Project Initiation)</h3>
+                        <p>تبدأ بظهور فكرة أو حاجة مؤسسية، صياغة وثيقة طلب النظام (System Request)، إجراء دراسة الجدوى التفصيلية (تقنية، اقتصادية، تنظيمية)، وتقديمها للجنة الموافقة لاختيار المشروع.</p>
+                        <div class="pillar-tag">المخرج: ميثاق المشروع + دراسة الجدوى</div>
+                    </div>
+
+                    <div class="pillar-box">
+                        <div class="pillar-num">2</div>
+                        <h3>الخطوة الثانية: إدارة المشروع (Project Management)</h3>
+                        <p>بمجرد الحصول على موافقة اللجنة، يتولى مدير المشروع تحديد منهجية التطوير، تقدير الوقت والموازنة، تجزئة العمل (WBS)، تعيين الفريق (Staffing)، وتوليد خطة العمل (Work Plan).</p>
+                        <div class="pillar-tag">المخرج: خطة عمل المشروع + مخططات جانت</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>🔍 لماذا لا نبدأ بالبرمجة فوراً؟ (تكلفة التراجع والتعديل)</h4>
+                    <p>أثبتت دراسات معهد هندسة البرمجيات (SEI) أن اكتشاف خطأ في فهم أهداف المشروع أو عدم جدواه أثناء مرحلة التخطيط يكلف <strong>1x</strong>، بينما يكلف إصلاح نفس الخطأ في مرحلة التصميم <strong>10x</strong>، ويقفز إلى <strong>100x</strong> في مرحلة التنفيذ والكتابة البرمجية، ويتجاوز <strong>1000x</strong> بعد نشر النظام في بيئة الإنتاج! التخطيط هو الدرع الحامي لاستثمارات المؤسسة.</p>
+                </div>
+            </section>
+
+            <!-- 3. من أين تنبثق فكرة النظام؟ -->
+            <section id="system-origins">
+                <span class="section-tag">شرارة البداية</span>
+                <h2>💡 من أين تأتي فكرة إنشاء نظام معلومات؟ (حاجة العمل Business Need)</h2>
+                <p>لا تنشأ نظم المعلومات من فراغ في قسم تقنية المعلومات، بل تنبع دائماً من <strong>حاجة عمل حقيقية (Business Need)</strong> تدفع الإدارة للاستثمار. تتجلى هذه الحاجة في ثلاثة سياقات رئيسية:</p>
+
+                <div class="reasons-grid">
+                    <div class="reason-card">
+                        <div class="reason-icon">⚠️</div>
+                        <h4>1. مشاكل داخلية تعاني منها المنظمة</h4>
+                        <p>عندما يشعر أحد المسؤولين بأن طريقة العمل التقليدية باتت عاجزة: مثل بطء خدمة العملاء، تأخر تقارير المبيعات، ضعف الحملات الترويجية، أو تراكم الأخطاء التشغيلية في المخازن والحسابات.</p>
+                    </div>
+
+                    <div class="reason-card">
+                        <div class="reason-icon">🚀</div>
+                        <h4>2. مراقبة التكنولوجيا الناشئة واستغلالها</h4>
+                        <p>اغتنام الابتكارات التقنية لتحقيق ميزة تنافسية فريدة: مثل تبني الحوسبة السحابية (Cloud Computing)، أو دمج خوارزميات الذكاء الاصطناعي (AI) للتنبؤ بسلوك المستهلكين وأتمتة العمليات.</p>
+                    </div>
+
+                    <div class="reason-card">
+                        <div class="reason-icon">🏢</div>
+                        <h4>3. تأسيس منشأة جديدة أو التحول المؤسسي</h4>
+                        <p>في حالة أن المؤسسة جديدة بالأصل وتحتاج إلى بنية معلوماتية رقمية من اليوم الأول لإدارة حساباتها وعملائها، أو الالتزام بمتطلبات تنظيمية وتشريعية جديدة فرضتها الدولة (كالفاتورة الإلكترونية).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. وثيقة طلب النظام -->
+            <section id="system-request">
+                <span class="section-tag">الوثيقة الأولى</span>
+                <h2>📄 وثيقة طلب النظام (System Request) وعناصرها الخمسة الحاكمة</h2>
+                <p><strong>طلب النظام:</strong> هو مستند رسمي موجز يصف الأسباب والمسوغات العملية لبناء النظام، والقيمة المرجوة التي سيجلبها للمؤسسة. يكتمل هذا النموذج عادة كجزء محوري من عملية اختيار المشروع، ويحتوي على <strong>خمسة عناصر رئيسية</strong>:</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>العنصر (العربي والإنجليزية)</th>
+                                <th>التعريف الأكاديمي الدقيق</th>
+                                <th>مثال تطبيقي عملي (نظام متجر إلكتروني)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1</strong></td>
+                                <td><strong>راعي المشروع<br><span class="term-en">Project Sponsor</span></strong></td>
+                                <td>الشخص أو الجهة القيادية التي تبدأ المشروع وتلعب الدور الأساسي في ربط فريق المشروع بالإدارة التنفيذية، وعادة ما يكون هو من أصدر طلب النظام وصاحب المصلحة الأكبر في نجاحه.</td>
+                                <td>نائب رئيس قطاع التسويق والمبيعات (VP of Marketing).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2</strong></td>
+                                <td><strong>حاجة العمل<br><span class="term-en">Business Need</span></strong></td>
+                                <td>المشكلة أو الفرصة التشغيلية والتجارية التي أدت إلى فكرة المشروع وتستدعي حلاً برمجياً.</td>
+                                <td>زيادة الوصول إلى عملاء التجزئة خارج نطاق الفروع الجغرافية وزيادة حصة الشركة السوقية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3</strong></td>
+                                <td><strong>متطلبات العمل<br><span class="term-en">Business Requirements</span></strong></td>
+                                <td>القدرات التجارية الجديدة أو المحسنة التي سيوفرها النظام للمستخدمين (ماذا سيمكّنهم النظام من فعله).</td>
+                                <td>توفير منصة ويب وتطبيق جوال يتيح استعراض المنتجات لحظياً، الدفع الإلكتروني عبر بطاقات وبوابات متعددة، وتتبع الشحنات المباشر.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4</strong></td>
+                                <td><strong>قيمة العمل<br><span class="term-en">Business Value</span></strong></td>
+                                <td>الفوائد والمكاسب الملموسة (Tangible) وغير الملموسة (Intangible) التي سيخلقها النظام للمؤسسة بعد تشغيله.</td>
+                                <td><strong>ملموسة:</strong> زيادة المبيعات السنوية بمقدار 2.5 مليون ريال، وخفض تكاليف خدمة العملاء الورقية 30%.<br><strong>غير ملموسة:</strong> تعزيز ولاء العملاء وبناء سمعة تقنية عصرية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5</strong></td>
+                                <td><strong>قضايا خاصة<br><span class="term-en">Special Issues</span></strong></td>
+                                <td>القيود والمحددات الإلزامية التي تؤثر في قرار لجنة الموافقة: مثل المواعيد النهائية الصارمة، الميزانية المقيدة، المتطلبات الأمنية، أو التوافق مع أنظمة قائمة.</td>
+                                <td>يجب إطلاق المنصة بالكامل قبل انطلاق موسم التخفيضات السنوي (خلال 6 أشهر)، مع توافق مشدد مع معايير أمن بطاقات الدفع PCI-DSS.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <h4>💎 تفكيك القيمة: ما الفرق بين الفوائد الملموسة وغير الملموسة؟</h4>
+                    <p><strong>الفوائد الملموسة (Tangible Benefits):</strong> هي التي يمكن قياسها وتحديد قيمتها المالية بدقة (مثل: تقليص النفقات، تخفيض عدد الموظفين المؤقتين، زيادة الإيرادات بنسبة محددة).<br>
+                    <strong>الفوائد غير الملموسة (Intangible Benefits):</strong> هي فوائد حقيقية للمنظمة ولكن يصعب وضع قيمة نقدية فورية لها في دفتر الحسابات (مثل: تحسين الروح المعنوية للموظفين، سرعة اتخاذ القرار، رضا العملاء، وتعزيز مكانة العلامة التجارية في السوق).</p>
+                </div>
+            </section>
+
+            <!-- 5. لجنة الموافقة واختيار المشروع -->
+            <section id="approval-committee">
+                <span class="section-tag">صنع القرار</span>
+                <h2>🏛️ لجنة الموافقة واختيار المشروع (Project Selection)</h2>
+                <p>بعد إعداد وثيقة طلب النظام، لا يبدأ العمل العشوائي؛ بل تُرفع الوثيقة إلى <strong>لجنة الموافقة (Approval Committee / Steering Committee)</strong> للنظر فيها والبت في استمراريتها. تتشكل هذه اللجنة عادة من:</p>
+                <ol class="content-list">
+                    <li><strong>لجنة توجيهية متخصصة:</strong> منبثقة عن مجلس إدارة المنظمة وتجتمع بانتظام لوضع أولويات واستراتيجيات نظم المعلومات (IT Steering Committee).</li>
+                    <li><strong>أحد كبار المسؤولين التنفيذيين:</strong> ممن لديهم سلطة اتخاذ القرار والسيطرة المباشرة على الموارد المالية والتنظيمية (مثل CIO أو CFO أو الرئيس التنفيذي CEO).</li>
+                    <li><strong>هيئة لصنع القرار المؤسسي:</strong> لها القدرة على تفويض الميزانيات واعتماد المشاريع الرأسمالية.</li>
+                </ol>
+
+                <div class="info-box academic-plus">
+                    <h4>⚖️ لغز التنافس الرأسمالي (Capital Rationing): لماذا تُرفض بعض المشاريع الناجحة؟</h4>
+                    <p>تواجه أي مؤسسة حقيقة اقتصادية قاطعة: <strong>الموارد الرأسمالية وميزانيات التطوير محدودة دائماً، بينما الأفكار والمشاريع المقترحة متعددة وتتنافس بشراسة على نفس وعاء التمويل</strong>. وبالتالي، حتى لو كان المشروع مربحاً ويحقق وفراً مالياً، فقد ترفضه لجنة الموافقة إذا وُجد مشروع آخر يحقق عائداً أعلى أو يتوافق بصورة أكبر مع الرؤية الاستراتيجية للشركة! لذلك، كلما زادت تكلفة المشروع المقترح، كلما طالبت اللجنة بدراسة جدوى أكثر صرامة وعمقاً.</p>
+                </div>
+
+                <p><strong>قرارات اللجنة المحتملة:</strong> إما <em>الموافقة المبدئية</em> للمرور إلى مرحلة دراسة الجدوى المفصلة، أو <em>طلب تعديلات</em> على النطاق والمتطلبات، أو <em>الرفض الصريح</em> وحفظ الموارد.</p>
+            </section>
+
+            <!-- 6. دراسة الجدوى الشاملة -->
+            <section id="feasibility-study">
+                <span class="section-tag">التحليل الثلاثي الأبعاد</span>
+                <h2>📊 دراسة جدوى المشروع (Feasibility Study): الأبعاد الثلاثة</h2>
+                <p><strong>الغرض الأساسي من دراسة الجدوى:</strong> تعريف المشكلة وتقييم حجمها بدقة، وتحديد ما إذا كان النظام الجديد بأقل تكلفة وأقصر وقت ممكنين يستطيع حل هذه المشكلة وتقديم قيمة تفوق تكاليفه. تتم دراسة الجدوى من <strong>ثلاثة جوانب متكاملة</strong>:</p>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box" style="border-top-color:#00F6E4;">
+                        <h3>1. الجدوى التقنية (Technical)</h3>
+                        <p style="font-weight:700; color:var(--primary); font-size:1.05rem;">"هل يمكننا بناء النظام؟ (Can we build it?)"</p>
+                        <p>تحليل وتقييم للمخاطر التكنولوجية والهندسية التي تحيط بالمشروع، ويقوم بإعدادها فريق تكنولوجيا المعلومات بالمنظمة.</p>
+                        <ul class="content-list" style="margin-bottom:0; font-size:0.9rem;">
+                            <li>الإلمام بمجال العمل (Functional Area).</li>
+                            <li>الإلمام بالتقنية واللغات المستخدمة.</li>
+                            <li>حجم المشروع (Project Size).</li>
+                            <li>التوافق مع الأنظمة القائمة (Compatibility).</li>
+                        </ul>
+                    </div>
+
+                    <div class="pillar-box" style="border-top-color:#2563EB;">
+                        <h3>2. الجدوى الاقتصادية (Economic)</h3>
+                        <p style="font-weight:700; color:var(--primary); font-size:1.05rem;">"هل يجب أن نبني النظام؟ (Should we build it?)"</p>
+                        <p>تسمى أيضاً <strong>تحليل التكاليف والفوائد (Cost-Benefit Analysis)</strong>، وتهدف لحساب التدفقات النقدية وقياس الجدارة المالية والمخاطر الاستثمارية.</p>
+                        <ul class="content-list" style="margin-bottom:0; font-size:0.9rem;">
+                            <li>تكاليف التطوير لمرة واحدة (Development).</li>
+                            <li>تكاليف التشغيل السنوية (Operational).</li>
+                            <li>الفوائد الملموسة وغير الملموسة.</li>
+                            <li>حسابات ROI و NPV وفترة الاسترداد.</li>
+                        </ul>
+                    </div>
+
+                    <div class="pillar-box" style="border-top-color:#16A34A;">
+                        <h3>3. الجدوى التنظيمية (Organizational)</h3>
+                        <p style="font-weight:700; color:var(--primary); font-size:1.05rem;">"إذا بنيناه، هل سيجري استخدامه؟ (Will they use it?)"</p>
+                        <p>مدى قبول النظام وإدماجه في العمليات اليومية من قِبل المستخدمين النهائيين وأصحاب المصلحة، وتعتبر <strong>الجدوى الأكثر صعوبة في التقييم</strong>.</p>
+                        <ul class="content-list" style="margin-bottom:0; font-size:0.9rem;">
+                            <li>مواءمة النظام مع ثقافة المنظمة.</li>
+                            <li>مستوى مقاومة التغيير المتوقع.</li>
+                            <li>التزام الإدارة العليا ورعاة المشروع.</li>
+                            <li>استعداد المستخدمين النهائيين للتبني.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. حل الواجب المنزلي -->
+            <section id="feasibility-homework">
+                <span class="section-tag">بحث تفصيلي ممتد</span>
+                <h2>🔬 تفكيك وبحث دراسات الجدوى الثلاث (حل الواجب المنزلي المطلوب)</h2>
+                <p>ورد في شريحة المحاضرة تكليف الطلاب بإجراء بحث عن <em>كيفية عمل دراسة الجدوى (التقنية، الاقتصادية، التنظيمية) بتفصيل كل منها</em>. فيما يلي الدليل التفكيكي المعمق والشامل لهذه الدراسات كما تمارس في أرقى بيئات هندسة النظم:</p>
+
+                <h3>أولاً: الجدوى التقنية (Technical Feasibility) وتفصيل أبعاد الخطر</h3>
+                <p>الجدوى التقنية هي في جوهرها <strong>إدارة مخاطر (Risk Management)</strong>. يقوم مهندسو ومحللو النظم بفحص أربعة أبعاد حاسمة للمخاطر:</p>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>بُعد الخطر</th>
+                                <th>تفسير مكمن الخطر</th>
+                                <th>استراتيجية التخفيف (Mitigation)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>عدم الإلمام بمجال العمل (Familiarity with Functional Area)</strong></td>
+                                <td>إذا كان المطورون لا يفهمون العمليات المحاسبية أو الطبية أو اللوجستية التي يخدمها النظام، ستكون احتمالية صياغة متطلبات مشوهة مرتفعة جداً.</td>
+                                <td>إشراك خبراء مجال (Subject Matter Experts - SMEs) كمستشارين متفرغين مع فريق التطوير، أو توظيف محلل أعمال متخصص بالمجال.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>عدم الإلمام بالتكنولوجيا (Familiarity with Technology)</strong></td>
+                                <td>استخدام تقنية جديدة كلياً على الفريق (مثل بنية السحاب Microservices أو الذكاء الاصطناعي) يزيد احتمالية الأخطاء والتأخير.</td>
+                                <td>تدريب الفريق، الاستعانة بمستشارين خارجيين مؤقتين، وبناء نماذج إثبات مفهوم (Proof of Concept - PoC) مصغرة قبل الانطلاق.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>حجم المشروع (Project Size)</strong></td>
+                                <td>كلما زاد عدد المبرمجين وطالت المدة الزمنية وارتفع عدد الواجهات وقواعد البيانات، كلما تعقد التواصل وتضاعفت احتمالات الفشل بشكل أُسّي.</td>
+                                <td>تفكيك المشروع الضخم إلى مشاريع فرعية وإصدارات مرحلية (Phased Releases) مع استخدام أطر عمل رشيقة (Agile/Scrum).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>التوافقية والاندماج (Compatibility)</strong></td>
+                                <td>صعوبة ربط النظام الجديد بالأنظمة القديمة القائمة داخل المؤسسة (Legacy Systems) أو قيود قواعد البيانات والشبكات الحالية.</td>
+                                <td>إجراء فحص معماري شامل للواجهات البرمجية (APIs) وهندسة طبقات وسيطة (Middleware) تضمن انسياب البيانات بأمان.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>ثانياً: الجدوى الاقتصادية (Economic Feasibility) والمقاييس المالية الثلاثة</h3>
+                <p>تعتمد الجدوى الاقتصادية على حساب الأرقام والتدفقات النقدية السنوية على مدار العمر المتوقع للنظام (عادة 3 إلى 5 سنوات)، وتستخدم ثلاثة مقاييس مالية قياسية:</p>
+                <ol class="content-list">
+                    <li>
+                        <strong>صافي القيمة الحالية (Net Present Value - NPV):</strong><br>
+                        يأخذ في الاعتبار <strong>القيمة الزمنية للنقود (Time Value of Money)</strong>؛ حيث إن الريال الذي نحصل عليه بعد 3 سنوات أقل قيمة من الريال الذي نملكه اليوم بسبب التضخم وتكلفة الفرصة البديلة. يتم خصم التدفقات النقدية المستقبلية بمعدل خصم سنوي معين ($r$). إذا كانت القيمة الإجمالية لـ NPV موجبة ($> 0$)، فالمشروع مجدٍ اقتصادياً.
+                    </li>
+                    <li>
+                        <strong>العائد على الاستثمار (Return on Investment - ROI):</strong><br>
+                        يقيس النسبة المئوية لصافي الأرباح مقارنة بإجمالي التكاليف المستثمرة وفق المعادلة:
+                        <div style="background:var(--surface); padding:0.8rem; border-radius:6px; font-family:'Inter', monospace; direction:ltr; text-align:center; margin:0.6rem 0; border:1px solid var(--border-color);">
+                            ROI = ((إجمالي الفوائد - إجمالي التكاليف) ÷ إجمالي التكاليف) × 100%
+                        </div>
+                    </li>
+                    <li>
+                        <strong>فترة استرداد رأس المال (Payback Period / Break-Even Point):</strong><br>
+                        تحدد النقطة الزمنية (بالسنوات والشهور) التي تتساوى عندها التدفقات النقدية التراكمية الداخلة مع إجمالي التكاليف التراكمية المنفقة، وتبدأ المنظمة بعدها في جني أرباح صافية حقيقية.
+                    </li>
+                </ol>
+
+                <h3>ثالثاً: الجدوى التنظيمية (Organizational Feasibility) ومصفوفة أصحاب المصلحة</h3>
+                <p>الجدوى التنظيمية هي تقييم <strong>البيئة السياسية والثقافية والبشرية</strong> داخل المؤسسة. لتحقيق هذه الجدوى، يجب تحليل مواقف الأطراف المعنية (Stakeholders):</p>
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>الطرف المعني (Stakeholder)</th>
+                                <th>دوره في نجاح النظام</th>
+                                <th>كيف نضمن تأييده ودعمه للنظام الجديد؟</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>راعي المشروع (Project Sponsor)</strong></td>
+                                <td>المحرك المالي والاستراتيجي للنظام.</td>
+                                <td>إبقاؤه على اطلاع مستمر بتقدم المشروع، وإبراز كيف يحقق النظام أهدافه التجارية التي أعلن عنها في طلب النظام.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الإدارة العليا والتنفيذية (Management)</strong></td>
+                                <td>توفير الموارد وحل النزاعات بين الأقسام وفرض السياسات الجديدة.</td>
+                                <td>إظهار محاذاة النظام للاستراتيجية العامة للمنظمة وتقديم تقارير جدوى مالية موثوقة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المستخدمون النهائيون (End Users)</strong></td>
+                                <td>الذين سيجلسون أمام الشاشات يومياً؛ رضاهم هو المقياس الحقيقي للنجاح.</td>
+                                <td>إشراكهم في صياغة المتطلبات من البداية، تصميم واجهات بديهية وسهلة، وتوفير برامج تدريب مريحة وحوافز تزيل مخاوفهم.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 8. فك لغز الحجم الأمثل للمشروع -->
+            <section id="optimal-size">
+                <span class="section-tag">تفكيك الغموض الأكاديمي</span>
+                <h2>🧩 فك لغز الشريحة 12: ما هو الحجم الأمثل للمشروع حتى يصبح واقعياً وذا جدوى؟</h2>
+                <div class="info-box warning-box">
+                    <h4>❓ التساؤل المثير للجدل في نص المحاضرة:</h4>
+                    <p><em>"في تقييم الجدوى التقنية للمشروع حاجة لتفسير بعض الشروط الأساسية، مثلاً: ما هو الحجم الأمثل لكبر المشروع حتى يصبح واقعياً وذو جدوى؟"</em></p>
+                </div>
+
+                <p>هذا التساؤل يلمس معضلة كبرى في هندسة النظم تُعرف باسم <strong>مفارقة الحجم والمخاطر (The Size-Risk Paradox)</strong>:</p>
+                <ul class="content-list">
+                    <li><strong>المشاريع الضخمة المتجانسة (Monolithic Megaprojects):</strong> عندما تسعى الشركة لبناء نظام واحد عملاق يحل جميع مشاكل المؤسسة ويستغرق تنفيذه 3 إلى 5 سنوات بفرق عمل تتجاوز 50 شخصاً، تكون نسبة الفشل أكثر من <strong>70%</strong>! السبب هو تغير متطلبات الأعمال وتغير التكنولوجيا ومغادرة أفراد الفريق قبل اكتمال المشروع.</li>
+                    <li><strong>الحجم الأمثل هندسياً وتنظيمياً (The Optimal Scope):</strong> لا يقاس الحجم بعدد أسطر الكود، بل بـ <em>القابلية للتسليم المرحلي</em>. الحجم الأمثل للمشروع هو الذي يحقق الشروط التالية:
+                        <ol style="margin-top:0.4rem; padding-right:1.2rem;">
+                            <li><strong>المدى الزمني:</strong> دورة تطوير لا تتجاوز <strong>3 إلى 9 أشهر</strong> لكل إصدار قابل للاستخدام في الإنتاج.</li>
+                            <li><strong>حجم الفريق:</strong> فريق رشيق لا يتجاوز <strong>5 إلى 9 أفراد</strong> (مبدأ Two-Pizza Team الذي تعتمده كبرى شركات التقنية)، لتفادي تعقيدات قنوات التواصل ($N(N-1)/2$).</li>
+                            <li><strong>النطاق المحدد بدقة (MVP - Minimum Viable Product):</strong> التركيز على الميزات الجوهرية الـ 20% التي تمنح 80% من القيمة (مبدأ باريتو)، وترك التحسينات للإصدارات اللاحقة.</li>
+                        </ol>
+                    </li>
+                </ul>
+
+                <div class="info-box academic-plus">
+                    <h4>💡 خلاصة القاعدة الهندسية</h4>
+                    <p style="margin-bottom:0;">إذا كان لديك مشروع مؤسسي ضخم، فإن "الجدوى التقنية" تفرض عليك <strong>تفكيك المشروع الضخم إلى عدة مشاريع متتابعة أو متوازية صغيرة الحجم</strong> بدلاً من خوض غمار مشروع عملاق واحد عالي المخاطر.</p>
+                </div>
+            </section>
+
+            <!-- 9. إدارة المشروع -->
+            <section id="project-management">
+                <span class="section-tag">الخطوة الثانية في التخطيط</span>
+                <h2>⚙️ الخطوة الثانية: إدارة المشروع (Project Management)</h2>
+                <p>بمجرد صدور قرار لجنة الموافقة بالمضي قدماً، تنتهي خطوة "إقلاع المشروع" وتبدأ خطوة <strong>إدارة المشروع</strong>. وتُعرّف إدارة المشروع بأنها:</p>
+                <div class="info-box">
+                    <p style="font-size:1.05rem; font-weight:600; margin-bottom:0;">
+                        "عملية التخطيط والسيطرة والتحكم على موارد النظام ومهامه لإنجازه ضمن أطر زمنية محددة وبكلف مقدرة وبفعالية وأداء عالي الجودة."
+                    </p>
+                </div>
+
+                <h3>المراحل الخمس لدورة حياة إدارة المشروع (PMLC):</h3>
+                <p>يتبع مدير المشروع مبادئ توجيهية عالمية تغطي المراحل الخمس التالية:</p>
+                <div class="pillars-grid">
+                    <div class="pillar-box">
+                        <div class="pillar-num">1</div>
+                        <h4>البدء (Initiation)</h4>
+                        <p>تثبيت نطاق المشروع وتحديد أصحاب المصلحة وتفويض مدير المشروع رسمياً.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-num">2</div>
+                        <h4>التخطيط (Planning)</h4>
+                        <p>تفكيك المهام (WBS)، تقدير الأوقات والموازنات، وإعداد خطة العمل وجداول جانت.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-num">3</div>
+                        <h4>التنفيذ (Execution)</h4>
+                        <p>توجيه وتنسيق الفريق للقيام بالأنشطة البرمجية والتحليلية والتصميمية المقررة.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-num">4</div>
+                        <h4>المراقبة والتحكم (Control)</h4>
+                        <p>قياس التقدم الفعلي مقابل المخطط، ومتابعة الانحرافات (Variance) وتعديل الخطط.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <div class="pillar-num">5</div>
+                        <h4>الإغلاق (Closing)</h4>
+                        <p>تسليم النظام النهائي للعميل، توثيق الدروس المستفادة، وحل فريق المشروع رسمياً.</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>👤 من يتولى دور مدير المشروع؟</h4>
+                    <p><strong>في المؤسسات الكبيرة والمشاريع الكبرى:</strong> يشغل هذا الدور أخصائي متفرغ معتمد في إدارة المشاريع (Project Manager / PMP) يركز كلياً على الجداول والموازنات والمخاطر.<br>
+                    <strong>في المؤسسات والشركات الأصغر حجماً:</strong> يرتدي <strong>محلل النظم (Systems Analyst)</strong> قبعة مدير المشروع، ويجمع بين التحليل الفني وإدارة الجدول الزمني وتنسيق أفراد الفريق.</p>
+                </div>
+            </section>
+
+            <!-- 10. تقدير الإطار الزمني وقاعدة الـ 15% -->
+            <section id="time-estimation">
+                <span class="section-tag">هندسة التقدير الرياضي</span>
+                <h2>⏱️ تقدير الإطار الزمني للمشروع (Time Estimation) وقاعدة الـ 15% المعيارية</h2>
+                <p>التقدير (Estimation) هو عملية تعيين وتحديد القيم المتوقعة للوقت والجهد والموارد اللازمة لإنجاز العمل. لا يبنى التقدير على التخمين العشوائي، بل يعتمد على <strong>البيانات التجريبية والخبرات التراكمية</strong>.</p>
+
+                <h3>مصادر الأرقام المستخدمة في التقدير الزمني:</h3>
+                <ul class="content-list">
+                    <li><strong>المنهجية المعتمدة:</strong> المنهجيات المعيارية تأتي مزودة بأدلة ونسب تقديرية للأنشطة المختلفة.</li>
+                    <li><strong>المشاريع السابقة المشابهة:</strong> الرجوع لأرشيف المؤسسة لمشاريع نفذت بنفس التقنيات وحجم العمل.</li>
+                    <li><strong>خبراء البرمجيات والاستشاريون:</strong> مطورون ذوو باع طويل نفذوا مثل هذه المشاريع عدة مرات.</li>
+                    <li><strong>برمجيات ونماذج التقدير الآلية:</strong> مثل برنامج Costar ونموذج COCOMO الشهير.</li>
+                </ul>
+
+                <div class="info-box academic-plus">
+                    <h4>🏢 ميزة الشركات الاستشارية في تقدير المشاريع</h4>
+                    <p>تمتلك الشركات الاستشارية المتخصصة في تقنية المعلومات ميزة تنافسية هائلة، وهي <strong>تكرار التجربة عبر عشرات المنظمات</strong>؛ مما يوفر لديهم قواعد بيانات ضخمة بالمقاييس الواقعية للمدد الزمنية وتكاليف المهام، مما يجعل تقديراتهم أدق بكثير من التقديرات المبنية على التخمين الفردي الداخلي.</p>
+                </div>
+
+                <h3>القاعدة الذهبية لتوزيع أوقات المراحل في دورة SDLC:</h3>
+                <p>أثبتت الدراسات المعيارية الميدانية في صناعة البرمجيات أن أي مشروع تقليدي يمر بالنسب الزمنية القياسية المتقاربة التالية عبر مراحله الأربع:</p>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box" style="text-align:center;">
+                        <span style="font-size:2rem; font-weight:800; color:#00F6E4;">15%</span>
+                        <h4>مرحلة التخطيط (Planning)</h4>
+                        <p>تحديد الأهداف، طلب النظام، دراسة الجدوى، وإنشاء خطة العمل.</p>
+                    </div>
+                    <div class="pillar-box" style="text-align:center;">
+                        <span style="font-size:2rem; font-weight:800; color:#2563EB;">20%</span>
+                        <h4>مرحلة التحليل (Analysis)</h4>
+                        <p>جمع المتطلبات، استراتيجية As-Is/To-Be، ونمذجة العمليات DFD.</p>
+                    </div>
+                    <div class="pillar-box" style="text-align:center;">
+                        <span style="font-size:2rem; font-weight:800; color:#805ad5;">35%</span>
+                        <h4>مرحلة التصميم (Design)</h4>
+                        <p>تصميم البنية، الواجهات، قواعد البيانات، وتوصيف البرامج.</p>
+                    </div>
+                    <div class="pillar-box" style="text-align:center;">
+                        <span style="font-size:2rem; font-weight:800; color:#16A34A;">30%</span>
+                        <h4>مرحلة التنفيذ (Implementation)</h4>
+                        <p>البرمجة، الاختبارات الشاملة، التثبيت، والتدريب والدعم.</p>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h4>🧮 كيف نحسب الوقت الكلي بالاستقراء من مرحلة التخطيط؟ (تفكيك الشريحة 21)</h4>
+                    <p>عندما ينتهي الفريق من مرحلة التخطيط ويسجل الوقت الفعلي الذي استغرقته، يمكنه التنبؤ بدقة بزمن المشروع الكلي وزمن كل مرحلة متبقية عبر المعادلة التالية:</p>
+                    <div style="background:var(--surface); padding:1rem; border-radius:8px; font-weight:700; text-align:center; margin:0.8rem 0; border:1px solid var(--border-color); color:var(--primary);">
+                        الزمن الكلي المقدر للمشروع = زمن مرحلة التخطيط الفعلي ÷ 0.15
+                    </div>
+                    <p><strong>مثال تطبيقي عملي:</strong><br>
+                    إذا استغرقت مرحلة التخطيط <strong>6 أسابيع</strong> كاملة:<br>
+                    • الزمن الكلي للمشروع = $6 \div 0.15 =$ <strong>40 أسبوعاً</strong>.<br>
+                    • زمن مرحلة التحليل المتوقع = $40 \times 20\% =$ <strong>8 أسابيع</strong>.<br>
+                    • زمن مرحلة التصميم المتوقع = $40 \times 35\% =$ <strong>14 أسبوعاً</strong>.<br>
+                    • زمن مرحلة التنفيذ المتوقع = $40 \times 30\% =$ <strong>12 أسبوعاً</strong>.<br>
+                    <em>التحقق من المجموع:</em> $6 + 8 + 14 + 12 = 40$ أسبوعاً تماماً!</p>
+                </div>
+            </section>
+
+            <!-- 11. هيكل تجزئة العمل WBS -->
+            <section id="wbs-tasks">
+                <span class="section-tag">العمود الفقري لخطة العمل</span>
+                <h2>🏗️ تحديد المهام وهيكل تجزئة العمل (Work Breakdown Structure - WBS)</h2>
+                <p>لا يمكن لمدير المشروع جدولة أعمال هلامية عامة مثل "بناء النظام". بل يتعين عليه استخدام <strong>المنهج الهيكلي من أعلى إلى أسفل (Top-Down Approach)</strong>، حيث يبدأ بتحديد المراحل الكبرى، ثم تجزئة كل مرحلة إلى مهام أصغر، وتجزئة كل مهمة وصولاً إلى <strong>حزم عمل صغرى غير قابلة للتجزئة (Work Packages)</strong>. يسمى هذا الإجراء: <strong>هيكل تجزئة العمل (WBS)</strong>، وهو العمود الفقري لخطة العمل.</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>المستوى الهرمي</th>
+                                <th>رمز WBS</th>
+                                <th>اسم المهمة</th>
+                                <th>المخرج المتوقع (Deliverable)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>المرحلة الكبرى</strong></td>
+                                <td><code>1.0</code></td>
+                                <td>مرحلة التصميم (Design Phase)</td>
+                                <td>وثيقة مواصفات التصميم المعتمدة</td>
+                            </tr>
+                            <tr>
+                                <td><strong>المهمة الفرعية</strong></td>
+                                <td><code>1.1</code></td>
+                                <td>تطوير وثيقة تصميم قواعد البيانات (Database Design Document)</td>
+                                <td>مخطط كيانات العلاقات ERD</td>
+                            </tr>
+                            <tr>
+                                <td><strong>حزمة العمل (Work Package)</strong></td>
+                                <td><code>1.1.1</code></td>
+                                <td>تصميم قاعدة البيانات المؤقتة (Staging Database Design)</td>
+                                <td>جداول تخزين البيانات الأولية</td>
+                            </tr>
+                            <tr>
+                                <td><strong>حزمة العمل (Work Package)</strong></td>
+                                <td><code>1.1.2</code></td>
+                                <td>تصميم قاعدة بيانات العمليات المعلقة (Suspense Database Design)</td>
+                                <td>جداول إدارة الأخطاء والمراجعات</td>
+                            </tr>
+                            <tr>
+                                <td><strong>مهمة فرعية تابعة</strong></td>
+                                <td><code>1.2</code></td>
+                                <td>تصميم محرك معالجة السجلات المرفوضة (Rejects Handling)</td>
+                                <td>وثيقة محرك الفلترة (معتمدة على 1.1.1 و 1.1.2)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box academic-plus">
+                    <h4>📏 قاعدة 8/80 في تجزئة المهام</h4>
+                    <p style="margin-bottom:0;">ينصح خبراء هندسة النظم بألا تكون المهمة أصغر من اللازم (أقل من 8 ساعات عمل، مما يسبب إفراطاً في الإدارة الدقيقة Micro-management)، وألا تكون أكبر من اللازم (أكثر من 80 ساعة عمل، مما يعيق المتابعة واكتشاف التأخير مبكراً). هذا هو المقياس الذهبي للمهام الصغرى.</p>
+                </div>
+            </section>
+
+            <!-- 12. مخططات جانت وبيرت -->
+            <section id="gantt-pert">
+                <span class="section-tag">التمثيل الرسومي للجدول</span>
+                <h2>📊 التمثيل الرسومي لخطة العمل: مخططات جانت (Gantt) وبيرت (PERT)</h2>
+                <p>بعد تحديد المهام ومددها، يحتاج مدير المشروع وفريقه وأصحاب المصلحة إلى وسيلة مرئية لمراقبة تسلسل وانسيابية وتطور المشروع. يتم ذلك عبر مخططين هندسيين رئيسيين:</p>
+
+                <div class="pillars-grid">
+                    <div class="pillar-box">
+                        <h3>1. مخططات جانت (GANTT Chart)</h3>
+                        <p>ابتكرها المهندس <strong>هنري جانت (Henry Gantt)</strong> عام 1917. وهي رسم بياني شريطي يمثل جدولاً زمنياً أفقياً، حيث:</p>
+                        <ul class="content-list" style="margin-bottom:0; font-size:0.9rem;">
+                            <li><strong>المحور الرأسي (Y):</strong> يسرد قائمة المهام والأنشطة المشتقة من WBS.</li>
+                            <li><strong>المحور الأفقي (X):</strong> يمثل التقويم الزمني (أيام، أسابيع، أو شهور).</li>
+                            <li><strong>طول الشريط:</strong> يمثل المدة الزمنية النسبية لإنجاز النشاط.</li>
+                            <li><strong>التظليل البصري:</strong> شريط مظلل بالكامل = أنجز كلياً، شريط فاتح = لم يبدأ، شريط مقسم = جارٍ تنفيذه بنسبة محددة.</li>
+                            <li><strong>الميزة الجوهرية:</strong> <strong>البساطة وسهولة القراءة</strong> وتوفير تواصل ممتاز مع الإدارة والمستخدمين غير التقنيين.</li>
+                        </ul>
+                    </div>
+
+                    <div class="pillar-box">
+                        <h3>2. مخططات بيرت (PERT Chart)</h3>
+                        <p>اختصار لـ <strong>(Program Evaluation and Review Technique)</strong>، وهي مخططات شبكية (Network Diagrams) تبرز العلاقات التبعية الحاكمة بين المهام، حيث:</p>
+                        <ul class="content-list" style="margin-bottom:0; font-size:0.9rem;">
+                            <li>تعرض الأنشطة كعقد (Nodes) والتبعيات كأسهم موجهة.</li>
+                            <li>تحدد بوضوح <strong>المسار الحرج (Critical Path)</strong>: وهو أطول مسار للمهام المترابطة، وأي تأخير في أي مهمة عليه يؤدي حتماً لتأخير موعد تسليم المشروع بالكامل.</li>
+                            <li>تساعد في تقدير الأزمنة بناءً على ثلاثة أوقات: الوقت المتفائل (Optimistic)، الأكثر احتمالاً (Most Likely)، والمتشائم (Pessimistic).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>وجه المقارنة</th>
+                                <th>مخطط جانت (Gantt Chart)</th>
+                                <th>مخطط بيرت (PERT Chart)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>طبيعة العرض</strong></td>
+                                <td>رسم بياني شريطي يعتمد على التقويم الزمني.</td>
+                                <td>رسم شبكي للتدفق يربط المهام بأسهم التبعية.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>أكبر ميزة</strong></td>
+                                <td>سهولة وبساطة تتبع التقدم الزمني ونسبة الإنجاز.</td>
+                                <td>إظهار التبعيات الدقيقة وحساب المسار الحرج (Critical Path).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>الجمهور المفضل</strong></td>
+                                <td>الإدارة العليا، رعاة المشروع، والمستخدمون.</td>
+                                <td>مدير المشروع، والمهندسون التقنيون المسؤولون عن الاعتماديات.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 13. خطة التوظيف والتحفيز -->
+            <section id="staffing-plan">
+                <span class="section-tag">إدارة رأس المال البشري</span>
+                <h2>👥 خطة التوظيف (Staffing Plan) والتحفيز المعنوي</h2>
+                <p>بعد تحديد قائمة المهام ومددها، يتعين على مدير المشروع وضع <strong>خطة التوظيف</strong> بتحديد تخصصات وأعداد الفريق المطلوب لإنجاز العمل، مع مراعاة العلاقة الدقيقة بين القوى العاملة وزمن المشروع:</p>
+
+                <div class="info-box warning-box">
+                    <h4>⚠️ فك الغموض: هل مضاعفة عدد المبرمجين تختصر الزمن إلى النصف؟ (قانون بروكس)</h4>
+                    <p>من الأخطاء الكارثية التي يقع فيها بعض المديرين الاعتقاد بأن <em>"إذا كانت مهمة تستغرق 10 أشهر لمطور واحد، فإن تعيين 10 مطورين سينجزها في شهر واحد!"</em> هذا غير صحيح إطلاقاً. وقد صاغ المهندس فريد بروكس قانونه الشهير (Brooks' Law):<br>
+                    <strong>"إضافة قوى عاملة جديدة إلى مشروع برمجي متأخر تزيده تأخيراً!"</strong><br>
+                    السبب: أن الأفراد الجدد يحتاجون وقتاً لتدريبهم من قِبل المطورين القدامى، كما تتضاعف قنوات التواصل والتنسيق بين الأفراد بشكل يلتهم ساعات العمل الفعلية.</p>
+                </div>
+
+                <h3>دور الحوافز وإدارة الروح المعنوية (Staff Motivation):</h3>
+                <p>أكدت المحاضرة على دور مدير المشروع في منح <strong>الحوافز للموظفين</strong>، فالقوى العاملة ليست آلات؛ ومع مرور الشهور وضغط العمل قد يتراجع الحماس ويتسرب الكسل. وتعمل الحوافز كـ <em>"قوة سحرية"</em> لتجديد الهمة والنشاط عبر:</p>
+                <ul class="content-list">
+                    <li><strong>حوافز مادية:</strong> مكافآت الإنجاز المبكر وبلوغ المحطات الرئيسية (Milestones).</li>
+                    <li><strong>حوافز معنوية وتقديرية:</strong> إبراز دور المتميزين، بيئة عمل مريحة ومرنة، وتفويض الصلاحيات.</li>
+                    <li><strong>أهداف واضحة وعادلة:</strong> توزيع أعباء العمل بدقة دون إرهاق مفرط (Avoid Burnout).</li>
+                </ul>
+            </section>
+
+            <!-- 14. تشريح جدول خطة عمل المشروع -->
+            <section id="work-plan-table">
+                <span class="section-tag">تطبيق واقعي متقدم</span>
+                <h2>📑 تشريح جدول خطة عمل المشروع (Project Work Plan Table)</h2>
+                <p>خطة عمل المشروع هي <strong>الأداة التنفيذية المركزية والديناميكية</strong> لمدير المشروع. يسرد هذا الجدول جميع المهام المشتقة من WBS مع تفاصيل المسؤوليات والتواريخ والانحرافات والتبعيات. الجدول التالي هو نموذج مطابق للمثال العالمي المعتمد المعروض في الشريحتين (31 و 32):</p>
+
+                <div class="table-responsive">
+                    <table class="academic-table" style="font-size:0.86rem;">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">معرف المهمة<br>(Task ID)</th>
+                                <th rowspan="2">اسم المهمة التفصيلية<br>(Task Name)</th>
+                                <th rowspan="2">المسؤول<br>(Assigned To)</th>
+                                <th colspan="3" style="text-align:center; background:rgba(0, 246, 228, 0.1);">التقدير المتوقع (Estimated)</th>
+                                <th colspan="3" style="text-align:center; background:rgba(37, 99, 235, 0.1);">التنفيذ الفعلي (Actual)</th>
+                                <th rowspan="2">التبعية<br>(Dependency)</th>
+                                <th rowspan="2">الحالة<br>(Status)</th>
+                            </tr>
+                            <tr>
+                                <th>المدة (أيام)</th>
+                                <th>تاريخ البدء</th>
+                                <th>تاريخ الانتهاء</th>
+                                <th>تاريخ البدء</th>
+                                <th>تاريخ الانتهاء</th>
+                                <th>انحراف المدة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:rgba(255,255,255,0.03); font-weight:700;">
+                                <td><code>1.0</code></td>
+                                <td>مرحلة التصميم (Design Phase)</td>
+                                <td>-</td>
+                                <td>31</td>
+                                <td>Mon 11/14</td>
+                                <td>Wed 12/28</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.1</code></td>
+                                <td>وثيقة تصميم قاعدة البيانات</td>
+                                <td>Megan</td>
+                                <td>9</td>
+                                <td>Mon 12/5</td>
+                                <td>Thurs 12/15</td>
+                                <td>Mon 12/5</td>
+                                <td>Thurs 12/15</td>
+                                <td>0</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.1.1</code></td>
+                                <td>تصميم قاعدة البيانات المؤقتة (Staging)</td>
+                                <td>Megan</td>
+                                <td>9</td>
+                                <td>Mon 12/5</td>
+                                <td>Thurs 12/15</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.1.2</code></td>
+                                <td>تصميم قاعدة بيانات المعلقات (Suspense)</td>
+                                <td>Megan</td>
+                                <td>9</td>
+                                <td>Mon 12/5</td>
+                                <td>Thurs 12/15</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.2</code></td>
+                                <td>تصميم معالجة السجلات المرفوضة</td>
+                                <td>Megan</td>
+                                <td>9</td>
+                                <td>Fri 12/16</td>
+                                <td>Wed 12/28</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><code>1.1.1, 1.1.2</code></td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.3</code></td>
+                                <td>تصميم وثيقة معالجة البيانات التحليلية OLAP</td>
+                                <td>Joachim</td>
+                                <td>9</td>
+                                <td>Fri 12/16</td>
+                                <td>Wed 12/28</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><code>1.1.1, 1.1.2</code></td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.4</code></td>
+                                <td>تصميم تقارير OLAP عالية الأولوية</td>
+                                <td>Kevin</td>
+                                <td>8</td>
+                                <td>Fri 12/9</td>
+                                <td>Tues 12/20</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.5</code></td>
+                                <td>تصميم تطبيق الصيانة الموحد GCCR</td>
+                                <td>Tomas</td>
+                                <td>9</td>
+                                <td>Fri 12/16</td>
+                                <td>Wed 12/28</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.6</code></td>
+                                <td>تصميم أدوات استخراج وتحويل البيانات ETL</td>
+                                <td>Joachim</td>
+                                <td>2</td>
+                                <td>Thu 12/29</td>
+                                <td>Fri 12/30</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.7</code></td>
+                                <td>تصميم واجهات إدخال الويب (UI Design)</td>
+                                <td>Mei-ling</td>
+                                <td>26</td>
+                                <td>Mon 11/14</td>
+                                <td>Tue 12/20</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                            <tr>
+                                <td><code>1.8.1.1</code></td>
+                                <td>تصميم وحدة المصادقة والتحقق (Authentication)</td>
+                                <td>Chantelle</td>
+                                <td>4</td>
+                                <td>Mon 12/12</td>
+                                <td>Thu 12/15</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="term" style="background:#22543d; color:#c6f6d5;">Open</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <h4>💡 تفكيك أعمدة الجدول وقراءتها الهندسية</h4>
+                    <p>
+                        • <strong>عمود التبعية (Dependency):</strong> لاحظ أن المهمة <code>1.2</code> والمهمة <code>1.3</code> كُتب أمامهما <code>1.1.1, 1.1.2</code>؛ هذا يعني هندسياً أنه <em>لا يمكن لميجان أو يواكيم البدء في هذه المهام حتى تكتمل قواعد البيانات المؤقتة والمعلقة بنسبة 100%</em>!<br>
+                        • <strong>عمود انحراف المدة (Duration Variance):</strong> يحسب الفارق بالمعادلة: (المدة الفعلية - المدة المقدرة). فإذا كان الناتج موجباً دلّ على تأخير في الإنجاز يقتضي تدخلاً عاجلاً، وإذا كان سالباً دلّ على إنجاز أسرع من المخطط.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 15. الانتهاء والانتقال إلى مرحلة التحليل -->
+            <section id="transition-analysis">
+                <span class="section-tag">خاتمة التخطيط وبوابة التحليل</span>
+                <h2>🚀 إنجاز مرحلة التخطيط والانتقال إلى مرحلة التحليل (Analysis Phase)</h2>
+                <p>بعد إنجاز هذه الخطوات الأكاديمية والتنظيمية بالكامل، تكون مرحلة التخطيط (Planning Phase) قد استوفت أهدافها بالكامل وسلّمت وثائقها المعيارية:</p>
+                
+                <div class="pillars-grid">
+                    <div class="pillar-box">
+                        <h4>وثيقة طلب النظام المعتمدة (System Request)</h4>
+                        <p>تثبت حاجة العمل وقيمته وموافقة اللجنة التوجيهية وتفويض راعي المشروع.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <h4>تقرير دراسة الجدوى المفصل (Feasibility Study)</h4>
+                        <p>يؤكد السلامة التقنية، الجدارة الاقتصادية، وقبول البيئة التنظيمية للنظام الجديد.</p>
+                    </div>
+                    <div class="pillar-box">
+                        <h4>خطة عمل المشروع المحكمة (Project Work Plan)</h4>
+                        <p>تحدد هيكل WBS، الجداول الزمنية لمخطط جانت، وتعيينات الفريق والموازنات المقررة.</p>
+                    </div>
+                </div>
+
+                <div class="info-box academic-plus">
+                    <h4>🔜 ما الذي ينتظرنا في المحاضرة الرابعة؟ (مرحلة التحليل Analysis Phase)</h4>
+                    <p style="margin-bottom:0;">
+                        تسلّم مخرجات التخطيط لتبدأ <strong>المرحلة الثانية: التحليل (Analysis)</strong>، حيث ينزل المحللون إلى الميدان لجمع المتطلبات التفصيلية من المستخدمين، دراسة النظام الحالي (As-Is)، رسم التصور المستقبلي (To-Be)، نمذجة تدفق البيانات باستخدام <strong>مخططات تدفق البيانات (DFD)</strong>، وبناء وثيقة <strong>مقترح النظام (System Proposal)</strong> تمهيداً لمرحلة التصميم التقني.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 16. المختبر التطبيقي التفاعلي -->
+            <section id="interactive-lab">
+                <span class="section-tag">مختبر المحاكاة العملي</span>
+                <h2>🧪 المختبر التطبيقي: اختبر مهاراتك في اتخاذ القرارات التخطيطية</h2>
+                <p>اقرأ الموقف العملي التالي وتقمص دور <strong>مدير المشروع أو عضو لجنة الموافقة</strong> لاختيار القرار السليم:</p>
+
+                <div class="simulator-box">
+                    <h4 id="sim-scenario-title" style="margin-top:0;">الموقف التطبيقي 1 من 4:</h4>
+                    <p id="sim-scenario-text" style="font-size:1.08rem; font-weight:600; color:var(--primary);">
+                        تقدم مدير المبيعات بطلب نظام جديد لرفع الإيرادات، لكن عند دراسة الفريق للجدوى وجدوا أن موظفي المبيعات الحاليين يرفضون بشدة إدخال البيانات رقمياً ويفضلون السجلات الورقية التقليدية. أي جانب من الجدوى يواجه أزمة حقيقية هنا؟
+                    </p>
+                    <div class="sim-options" id="sim-options-container">
+                        <!-- Injected by JS -->
+                    </div>
+                    <div id="sim-feedback" style="margin-top:1rem; padding:1rem; border-radius:8px; display:none;"></div>
+                    <button class="quiz-btn" id="sim-next-btn" style="display:none; margin-top:0.8rem;" onclick="nextSimScenario()">الموقف التالي ←</button>
+                </div>
+            </section>
+
+            <!-- 17. بطاقات الاستذكار Flashcards -->
+            <section id="flashcards">
+                <span class="section-tag">مراجعة المصطلحات السريعة</span>
+                <h2>🗂️ بطاقات الاستذكار (Flashcards)</h2>
+                <p>انقر على أي بطاقة لمراجعة التعريف الأكاديمي الدقيق للمصطلح وترسيخ المفهوم في ذهنك:</p>
+
+                <div class="flashcards-grid">
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                راعي المشروع (Project Sponsor)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                الشخص أو الجهة القيادية التي تبدأ المشروع وتصدر طلب النظام، وتلعب الدور الأساسي في ربط فريق المشروع بالإدارة التنفيذية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                وثيقة طلب النظام (System Request)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                مستند رسمي موجز يصف الأسباب والمسوغات العملية لبناء النظام والقيمة المرجوة منه، ويشتمل على 5 عناصر محورية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الجدوى التقنية (Technical Feasibility)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تجيب عن: "هل يمكننا بناء النظام؟" وتركز على تقييم مخاطر الألفة بمجال العمل، والخبرة بالتقنية، وحجم المشروع وتوافقيته.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                الجدوى التنظيمية (Organizational Feasibility)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                تجيب عن: "إذا بنيناه، هل سيجري استخدامه وتتبناه المنظمة؟" وتعتبر أصعب الجدوى تقييماً لارتباطها بالعامل البشري ومقاومة التغيير.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                التنافس على التمويل (Capital Rationing)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                ظاهرة اقتصادية تعني محدودية موارد المنظمة الرأسمالية وتنافس مشاريع متعددة على نفس الميزانية، مما يفرض مفاضلة صارمة.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                قاعدة الـ 15% المعيارية في SDLC
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                التخطيط = 15%، التحليل = 20%، التصميم = 35%، والتنفيذ = 30%. يُحسب وقت المشروع الكلي بقسمة وقت التخطيط الفعلي على 0.15.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                هيكل تجزئة العمل (WBS)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                أسلوب هرمي تنازلي (Top-Down) يبدأ بتجزئة المهام الكبيرة إلى مهام أصغر وصولاً إلى حزم عمل غير قابلة للتقسيم، وهو العمود الفقري لخطة العمل.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                مخطط جانت (Gantt Chart)
+                                <small>انقر لقلب البطاقة ↺</small>
+                            </div>
+                            <div class="flashcard-back">
+                                جدول شريطي وضعه هنري جانت 1917 يمثل المهام رأسياً والزمن أفقياً وميزته الأساسية البساطة وسهولة التواصل مع المستخدمين والإدارة.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 18. أسئلة المراجعة والتفكير الناقد -->
+            <section id="review-questions">
+                <span class="section-tag">بنك الأسئلة الشامل</span>
+                <h2>📝 أسئلة المراجعة والتفكير الناقد (مع الإجابات النموذجية)</h2>
+
+                <div class="table-responsive">
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th style="width:30%;">السؤال</th>
+                                <th>الإجابة النموذجية المفصلة والتفكيك الأكاديمي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>س1: ما هي الخطوتان الأساسيتان اللتان تتألف منهما مرحلة التخطيط؟ وما مخرج كل منهما؟</strong></td>
+                                <td>
+                                    <strong>الخطوة الأولى: إقلاع المشروع (Project Initiation):</strong> تهتم بفهم مسوغات المشروع وتحديد الفائدة وصياغة وثيقة طلب النظام ودراسة الجدوى (مخرجها: ميثاق المشروع ودراسة الجدوى المعتمدة).<br>
+                                    <strong>الخطوة الثانية: إدارة المشروع (Project Management):</strong> تهتم بوضع خطة العمل (Work Plan)، وتحديد المنهجية، وهيكلة المهام (WBS)، وحساب مدد المراحل وجداول جانت، وتعيين فريق العمل.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>س2: اذكر العناصر الخمسة التي تشتمل عليها وثيقة طلب النظام (System Request) مع توضيح الفارق بين قيمة العمل وقضايا خاصة.</strong></td>
+                                <td>
+                                    العناصر هي: (1) راعي المشروع Project Sponsor، (2) حاجة العمل Business Need، (3) متطلبات العمل Business Requirements، (4) قيمة العمل Business Value، و (5) قضايا خاصة Special Issues.<br>
+                                    <strong>الفارق:</strong> قيمة العمل تمثل <em>المكاسب والفوائد الملموسة وغير الملموسة</em> التي سيجنيها النظام للمنظمة (مثل زيادة الإيرادات بنسبة 20%)، بينما القضايا الخاصة تمثل <em>القيود والشروط الحتمية</em> التي تؤثر في القرار (مثل ضرورة التسليم قبل موسم الأعياد، أو الالتزام بمعيار تشفيري محدد).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>س3: إذا استغرقت مرحلة التخطيط في أحد مشاريع البرمجيات 9 أسابيع، فكم تتوقع أن تكون المدة الكلية للمشروع؟ وكم يستغرق التحليل والتصميم والتنفيذ وفق النسب المعيارية؟</strong></td>
+                                <td>
+                                    بما أن نسبة التخطيط تمثل 15% من الوقت الكلي:<br>
+                                    • <strong>المدة الكلية للمشروع</strong> = $9 \div 0.15 = 60$ أسبوعاً.<br>
+                                    • <strong>مرحلة التحليل (20%)</strong> = $60 \times 0.20 = 12$ أسبوعاً.<br>
+                                    • <strong>مرحلة التصميم (35%)</strong> = $60 \times 0.35 = 21$ أسبوعاً.<br>
+                                    • <strong>مرحلة التنفيذ (30%)</strong> = $60 \times 0.30 = 18$ أسبوعاً.<br>
+                                    <em>المجموع الكلي:</em> $9 + 12 + 21 + 18 = 60$ أسبوعاً.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>س4: لماذا تُعتبر الجدوى التنظيمية (Organizational Feasibility) أصعب الجدوى في التقييم مقارنة بالتقنية والاقتصادية؟</strong></td>
+                                <td>
+                                    لأنها تتعامل مع <strong>السلوك البشري والسياسات الداخلية والثقافة المؤسسية ومقاومة التغيير (Resistance to Change)</strong>. فالأرقام المالية والتجهيزات التقنية يمكن قياسها واختبارها مخبرياً، بينما لا يمكن التنبؤ بيقين مطلق بمدى رضا الموظفين وإقبالهم على النظام أو رفضهم له وتجاهله إذا شعروا بتهديد لأمانهم الوظيفي أو صعوبة في التعلم.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>س5: ما الفرق الجوهري بين مخطط جانت (Gantt) ومخطط بيرت (PERT)؟ ومتى نفضل كلاً منهما؟</strong></td>
+                                <td>
+                                    <strong>مخطط جانت:</strong> رسم بياني شريطي على تقويم زمني، ميزته البساطة وسهولة تتبع التقدم، وهو المفضل للتواصل مع الإدارة وأصحاب المصلحة.<br>
+                                    <strong>مخطط بيرت:</strong> شبكة تدفق تربط المهام بأسهم وتبرز المسار الحرج (Critical Path) والعلاقات التبعية الدقيقة وأزمنة الاحتمالات الثلاثة، ويفضله مدير المشروع والمهندسون لإدارة المخاطر والاعتماديات المعقدة.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 19. الاختبار التقييمي النهائي -->
+            <section id="quiz">
+                <span class="section-tag">التقييم الأكاديمي</span>
+                <h2>✅ الاختبار التقييمي للمحاضرة الثالثة</h2>
+                <p>أجب عن الأسئلة التالية لاختبار استيعابك لمفاهيم التخطيط ودراسة الجدوى وإدارة المشاريع:</p>
+
+                <div id="lecture-quiz-container">
+                    <!-- Injected via quiz.js -->
+                </div>
+            </section>
+
+            <!-- Footer Navigation -->
+            <div class="lecture-footer-nav">
+                <a href="Lecture-02.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">→ العودة للمحاضرة السابقة (02)</a>
+                <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0;">📚 العودة لفهرس المقرر</a>
+                <a href="Lecture-04.html" class="quiz-btn" style="text-decoration:none; margin:0; background:var(--course-theme, #0d9488);">الانتقال للمحاضرة التالية (04) ←</a>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="site-footer"></div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
+    <script src="../assets/js/quiz.js"></script>
+    <script>
+        // Interactive Practical Lab Simulator Data for Lecture 03
+        const simScenarios = [
+            {
+                text: "تقدم مدير المبيعات بطلب نظام جديد لرفع الإيرادات، لكن عند دراسة الفريق للجدوى وجدوا أن موظفي المبيعات الحاليين يرفضون بشدة إدخال البيانات رقمياً ويفضلون السجلات الورقية التقليدية خشية زيادة الرقابة. أي نوع من الجدوى يواجه مشكلة حرجة هنا؟",
+                options: [
+                    "الجدوى التقنية (Technical Feasibility)",
+                    "الجدوى الاقتصادية (Economic Feasibility)",
+                    "الجدوى التنظيمية (Organizational Feasibility)"
+                ],
+                correct: 2,
+                explanation: "الجدوى التنظيمية تجيب على السؤال: (في حال تم بناء النظام، هل سيجري استخدامه وتتبناه المنظمة؟). مقاومة الموظفين وثقافة العمل هي جوهر التحدي التنظيمي."
+            },
+            {
+                text: "يرغب بنك في بناء محرك للتداول اللحظي فائق السرعة، لكن فريق المطورين بالبنك لم يسبق له التعامل مع تقنيات قواعد البيانات الموزعة في الذاكرة (In-Memory Databases) ولا يفهمون بروتوكولاتها. ما البعد المعرض للخطر الأكبر هنا؟",
+                options: [
+                    "الجدوى التقنية - عدم الإلمام بالتكنولوجيا (Familiarity with Technology)",
+                    "الجدوى الاقتصادية - انخفاض العائد على الاستثمار ROI",
+                    "الجدوى التنظيمية - غياب راعي المشروع",
+                    "وثيقة طلب النظام - غياب حاجة العمل"
+                ],
+                correct: 0,
+                explanation: "عدم إلمام فريق العمل بالتقنيات والأدوات الجديدة المستخدمة في النظام يمثل مخاطرة تقنية مباشرة ضمن الجدوى التقنية تستدعي تدريباً أو استشارات خارجية."
+            },
+            {
+                text: "أنهى مدير المشروع مرحلة التخطيط في 3 أسابيع، ويريد الآن تقديم جدول زمني تقريبي للإدارة التنفيذية لكامل مدة المشروع بناءً على النسب المعيارية لصناعة البرمجيات (قاعدة 15%). كم سيكون الزمن الإجمالي للمشروع؟",
+                options: [
+                    "15 أسبوعاً",
+                    "20 أسبوعاً",
+                    "30 أسبوعاً",
+                    "45 أسبوعاً"
+                ],
+                correct: 1,
+                explanation: "بما أن مرحلة التخطيط تمثل 15% من الوقت الكلي، فإن الزمن الإجمالي = 3 أسابيع ÷ 0.15 = 20 أسبوعاً."
+            },
+            {
+                text: "قام مدير المشروع بتفكيك مهمة 'تصميم النظام' إلى مهام صغرى متدرجة حتى وصل إلى حزم عمل محددة (مثل: تصميم شاشة تسجيل الدخول، تصميم جدول العملاء). ما الأسلوب والأداة التي طبقها؟",
+                options: [
+                    "التحليل التصاعدي ومخطط بيرت",
+                    "المنهج الهيكلي التنازلي (Top-Down) وهيكل تجزئة العمل (WBS)",
+                    "التخمين الآلي عبر برنامج Costar",
+                    "حساب القيمة الزمنية للنقود عبر صافي القيمة الحالية NPV"
+                ],
+                correct: 1,
+                explanation: "تجزئة المهام من الأعلى للأسفل من المراحل الكبرى وصولاً إلى حزم العمل يسمى المنهج الهيكلي التنازلي وينتج هيكل تجزئة العمل (Work Breakdown Structure - WBS)."
+            }
+        ];
+
+        let currentSim = 0;
+        let simAnswered = false;
+
+        function loadSimScenario() {
+            const s = simScenarios[currentSim];
+            document.getElementById('sim-scenario-title').innerText = `الموقف التطبيقي ${currentSim + 1} من ${simScenarios.length}:`;
+            document.getElementById('sim-scenario-text').innerText = s.text;
+            const optsContainer = document.getElementById('sim-options-container');
+            optsContainer.innerHTML = s.options.map((opt, idx) => 
+                `<button class="sim-btn" onclick="checkSimAnswer(${idx})">${opt}</button>`
+            ).join('');
+            document.getElementById('sim-feedback').style.display = 'none';
+            document.getElementById('sim-next-btn').style.display = 'none';
+            simAnswered = false;
+        }
+
+        function checkSimAnswer(idx) {
+            if (simAnswered) return;
+            simAnswered = true;
+            const s = simScenarios[currentSim];
+            const fb = document.getElementById('sim-feedback');
+            if (idx === s.correct) {
+                fb.style.background = 'var(--success-bg)';
+                fb.style.border = '1px solid var(--success)';
+                fb.style.color = '#22543d';
+                fb.innerHTML = `✅ <strong>أحسنت! تحليل إداري وهندسي سليم.</strong> ${s.explanation}`;
+            } else {
+                fb.style.background = 'var(--danger-bg)';
+                fb.style.border = '1px solid var(--danger)';
+                fb.style.color = '#742a2a';
+                fb.innerHTML = `❌ <strong>غير دقيق.</strong> ${s.explanation}`;
+            }
+            fb.style.display = 'block';
+            if (currentSim < simScenarios.length - 1) {
+                document.getElementById('sim-next-btn').style.display = 'inline-block';
+            } else {
+                const btn = document.getElementById('sim-next-btn');
+                btn.innerText = 'إعادة المواقف التطبيقية ↺';
+                btn.style.display = 'inline-block';
+            }
+        }
+
+        function nextSimScenario() {
+            if (currentSim < simScenarios.length - 1) {
+                currentSim++;
+            } else {
+                currentSim = 0;
+            }
+            loadSimScenario();
+        }
+        loadSimScenario();
+
+        // Comprehensive Final Quiz Data for Lecture 03
+        const quizData = [
+            {
+                question: "1. تتألف مرحلة التخطيط (Planning Phase) في دورة حياة تطوير النظام (SDLC) من خطوتين أساسيتين هما:",
+                options: [
+                    "جمع المتطلبات ونمذجة العمليات",
+                    "إقلاع المشروع (Project Initiation) وإدارة المشروع (Project Management)",
+                    "تصميم الواجهات وكتابة الكود البرمجي",
+                    "تثبيت النظام وتدريب المستخدمين"
+                ],
+                correct: 1,
+                explanation: "تتألف مرحلة التخطيط صراحة من خطوتين: الخطوة الأولى إقلاع المشروع (Project Initiation) والخطوة الثانية إدارة المشروع (Project Management)."
+            },
+            {
+                question: "2. مَن هو «راعي المشروع (Project Sponsor)» وما دوره الأساسي في مرحلة إقلاع المشروع؟",
+                options: [
+                    "هو المبرمج الأقدم الذي يكتب كود النظام",
+                    "هو الشخص الذي صدر عنه طلب النظام ويبدأ المشروع ويلعب الدور الأساسي في ربط الفريق بإدارة المنظمة",
+                    "هو المستشار المالي الخارجي الذي يراجع فواتير الشركة",
+                    "هو موظف الدعم الفني المسؤول عن صيانة الأجهزة"
+                ],
+                correct: 1,
+                explanation: "راعي المشروع (Project Sponsor) هو صاحب المصلحة التنفيذي الذي يتقدم بطلب النظام ويربط فريق التطوير بالإدارة العليا ويوفر الرعاية للمشروع."
+            },
+            {
+                question: "3. أي من العناصر التالية ليس من العناصر الخمسة لوثيقة «طلب النظام (System Request)»؟",
+                options: [
+                    "حاجة العمل (Business Need)",
+                    "قيمة العمل (Business Value)",
+                    "قضايا خاصة (Special Issues)",
+                    "كود شاشات تسجيل الدخول (Source Code)"
+                ],
+                correct: 3,
+                explanation: "العناصر الخمسة لوثيقة طلب النظام هي: راعي المشروع، حاجة العمل، متطلبات العمل، قيمة العمل، وقضايا خاصة. كتابة الكود البرمجي لا تحدث إلا في مرحلة التنفيذ."
+            },
+            {
+                question: "4. تحاول دراسة «الجدوى التقنية (Technical Feasibility)» الإجابة على أي من الأسئلة التالية؟",
+                options: [
+                    "هل سيقدم النظام قيمة مضافة وأرباحاً تفوق التكاليف؟",
+                    "هل يمكننا بناء النظام؟ (Can we build it?)",
+                    "إذا بنينا النظام، هل سيجري استخدامه وتتبناه المنظمة؟",
+                    "كم تبلغ تكلفة رخص السحابة السنوية؟"
+                ],
+                correct: 1,
+                explanation: "الجدوى التقنية تسأل: هل يمكننا بناء النظام؟ بينما الاقتصادية تسأل (هل يجب أن نبنيه وكم سنربح؟) والتنظيمية تسأل (هل سيجري استخدامه؟)."
+            },
+            {
+                question: "5. ما الظاهرة التي تفسر سبب قيام لجنة الموافقة برفض بعض المشاريع المربحة تقنياً واقتصادياً أحياناً؟",
+                options: [
+                    "محدودية الموارد الرأسمالية وتنافس مشاريع متعددة على نفس وعاء التمويل (Capital Rationing)",
+                    "عدم توفر أجهزة حاسوب في السوق",
+                    "رفض المستخدمين لبرامج المحاسبة",
+                    "انتهاء دورة حياة إدارة المشروع"
+                ],
+                correct: 0,
+                explanation: "المنظمات تمتلك موارد رأسمالية محدودة، وتتنافس المشاريع على التمويل، فتختار اللجنة المشاريع الأكثر مواءمة للأهداف الاستراتيجية والأعلى عائداً."
+            },
+            {
+                question: "6. وفق الدراسات المعيارية المعتمدة في SDLC، إذا انتهت مرحلة التخطيط في 6 أسابيع (حيث تمثل 15%)، فكم تقدر مدة مرحلة التصميم (التي تمثل 35%)؟",
+                options: [
+                    "8 أسابيع",
+                    "12 أسبوعاً",
+                    "14 أسبوعاً",
+                    "20 أسبوعاً"
+                ],
+                correct: 2,
+                explanation: "الزمن الكلي للمشروع = 6 ÷ 0.15 = 40 أسبوعاً. إذن زمن مرحلة التصميم (35%) = 40 × 0.35 = 14 أسبوعاً."
+            },
+            {
+                question: "7. الأسلوب الهيكلي التنازلي الذي يقضي بالبدء بالمهام الكبيرة وتجزئتها لمهام أصغر وصولاً إلى حزم عمل غير قابلة للتقسيم يُسمى:",
+                options: [
+                    "تحليل التكاليف والفوائد (Cost-Benefit Analysis)",
+                    "هيكل تجزئة العمل (Work Breakdown Structure - WBS)",
+                    "مخطط بيرت الشبكي",
+                    "قانون بروكس لإدارة التوظيف"
+                ],
+                correct: 1,
+                explanation: "هيكل تجزئة العمل (WBS) هو الأسلوب الهرمي لتفكيك المهام الكبيرة إلى حزم عمل تفصيلية، ويمثل العمود الفقري لخطة العمل."
+            },
+            {
+                question: "8. ما هي الميزة الأساسية لمخططات جانت (GANTT Chart) التي ابتكرها هنري جانت عام 1917؟",
+                options: [
+                    "حساب المسار الحرج المعقد رياضياً",
+                    "البساطة وتأمين تواصل ممتاز وسهل الفهم مع المستخدمين والإدارة",
+                    "كتابة مواصفات واجهات برمجة التطبيقات APIs تلقائياً",
+                    "توزيع المكافآت المالية على المطورين"
+                ],
+                correct: 1,
+                explanation: "نصت المحاضرة صراحة على أن الميزة الأساسية لمخطط جانت هي البساطة، وأنه يؤمن تواصلاً ممتازاً مع المستخدمين والإدارة."
+            }
+        ];
+
+        initLectureQuiz(quizData, 'quiz_sad_lec03');
+    </script>
+</body>
+</html>
