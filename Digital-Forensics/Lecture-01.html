@@ -3,46 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية | التحقيق الجنائي الرقمي</title>
+    <title>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية | التحقيق الجنائي الرقمي | SECOD</title>
+        <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-course="digital-forensics">
 
-    <!-- Top Navigation Bar -->
-    <div class="top-bar">
-        <div class="breadcrumb-nav">
-            <div class="breadcrumb-links">
-                <a href="../index.html">🏠 المنصة الجامعية</a>
-                <span>←</span>
-                <a href="index.html">🔎 التحقيق الجنائي الرقمي</a>
-                <span>←</span>
-                <span>المحاضرة 01: مقدمة علم الأدلة الجنائية الرقمية</span>
-            </div>
-            <div class="top-controls">
-                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
-                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
-                </button>
-            </div>
-        </div>
-        <div class="reading-progress-container">
-            <div class="reading-progress-bar" id="reading-progress"></div>
-        </div>
-    </div>
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         Component: Platform Navigation Layer + Editorial Hero + Cyber Visual + Action Bar
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        
+        <!-- Platform Navigation Spacer (Zero CLS on sticky scroll) -->
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
 
-    <!-- Header Section -->
-    <header class="lecture-header">
-        <div class="header-badge">كلية المنار للعلوم والتكنولوجيا | المستوى الثالث (الترم الثاني)</div>
-        <h1>المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية</h1>
-        <p>التأسيس الأكاديمي والعملي لعلم الأدلة الجنائية الرقمية (Digital Forensics)، سلسلة الحفظ (Chain of Custody)، استخلاص البيانات المتقلبة، النسخ الجنائي الدقيق (Bitstream Copy)، خوارزميات التجزئة المشفرة (Hashing)، ديناميكية الأدلة وتجنب الأخطاء القاتلة في مسرح الجريمة.</p>
-        <div class="header-meta-box">
-            <div class="header-meta-item">👨‍🏫 <strong>أستاذ المقرر:</strong> د. ضياء الحق القدمي (Dr. Dheya Al-Haq Al-Qadami)</div>
-            <div class="header-meta-item">👥 <strong>القسم:</strong> الأمن السيبراني وشبكات & تقنية المعلومات</div>
-            <div class="header-meta-item">📑 <strong>المصدر المعتمد:</strong> السلايدات الرسمية (31 شريحة) + إعداد م. بشار زبله</div>
+        <!-- Layer A: Platform Navigation Layer (Sticky / Smart Scroll) -->
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <!-- Brand & Breadcrumb Navigation -->
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>🔎</span>
+                            <span>التحقيق الجنائي الرقمي</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 01</span>
+                    </div>
+                    <!-- Compact title shown while scrolling sticky -->
+                    <span class="secod-nav-sticky-title">المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية</span>
+                </div>
+
+                <!-- Lecture Action Bar & View Controls -->
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodShareBtn" data-tooltip="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>مشاركة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodFontBtn" data-tooltip="تكبير أو تصغير الخط" aria-label="تغيير حجم الخط">
+                        <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+                        <span>الخط</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ المريح" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>قراءة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-nav-btn-icon-only secod-tooltip" id="secodFullscreenBtn" data-tooltip="ملء الشاشة" aria-label="ملء الشاشة">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                    <!-- Theme Toggle Compatible with Platform Engine -->
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layer G: Reading Progress System (Content-Aware) -->
+            <div class="secod-reading-progress-track" aria-hidden="true">
+                <div class="secod-reading-progress-fill" id="secodReadingProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Layer B: Interactive Lecture Hero (Editorial Layout) -->
+        <header class="secod-lecture-hero">
+            <!-- Subtle Watermark Numeral -->
+            <div class="secod-hero-watermark" aria-hidden="true">01</div>
+
+            <div class="secod-hero-container">
+                <!-- Information Column (Right in RTL) -->
+                <div class="secod-hero-info">
+                    <!-- Badges -->
+                    <div class="secod-hero-badges">
+                        <span class="secod-badge-course">🔎 DIGITAL FORENSICS</span>
+                        <span class="secod-badge-lecture-num">LECTURE 01</span>
+                        <span class="secod-badge-verified">🛡️ معتمد أكاديمياً</span>
+                    </div>
+
+                    <!-- Main Arabic Title -->
+                    <h1 class="secod-hero-title-ar">المحاضرة الأولى: مقدمة علم الأدلة الجنائية الرقمية</h1>
+
+                    <!-- Technical English Title -->
+                    <div class="secod-hero-title-en">Introduction to Digital Forensics, Chain of Custody & Evidence Science</div>
+
+                    <!-- Editorial Description -->
+                    <p class="secod-hero-desc">التأسيس الأكاديمي والعملي لعلم الأدلة الجنائية الرقمية (Digital Forensics)، سلسلة الحفظ (Chain of Custody)، استخلاص البيانات المتقلبة، النسخ الجنائي الدقيق (Bitstream Copy)، خوارزميات التجزئة المشفرة (Hashing)، وتجنب الأخطاء القاتلة في مسرح الجريمة.</p>
+
+                    <!-- Layer D: Academic Context Layer -->
+                    <div class="secod-academic-strip">
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👨‍🏫</span>
+                            <span class="secod-meta-label">أستاذ المقرر:</span>
+                            <span class="secod-meta-value">د. ضياء الحق القدمي (Dr. Dheya Al-Haq Al-Qadami)</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👥</span>
+                            <span class="secod-meta-label">القسم:</span>
+                            <span class="secod-meta-value">الأمن السيبراني وشبكات • تقنية المعلومات</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">📑</span>
+                            <span class="secod-meta-label">المصدر:</span>
+                            <span class="secod-meta-value">السلايدات الرسمية (31 شريحة) + إعداد م. بشار زبله</span>
+                        </div>
+                    </div>
+                    <!-- Layer E: Key Concept Experience (Core Insight Accordion) -->
+                    <div class="secod-key-concept-container">
+                        <div class="secod-key-concept-card">
+                            <button type="button" class="secod-key-concept-header" aria-expanded="false" aria-controls="keyConceptBody-01">
+                                <span class="secod-key-concept-badge">⚡ KEY CONCEPT</span>
+                                <span class="secod-key-concept-title">قدسية الدليل الرقمي وسلسلة الحفظ: «الدليل الرقمي حساس كبصمة الإصبع.. أي لمسة خاطئة تدمره للأبد. العمل دائماً ع...»</span>
+                                <span class="secod-key-concept-trigger">
+                                    <span>تفاصيل</span>
+                                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                                </span>
+                            </button>
+                            <div class="secod-key-concept-body" id="keyConceptBody-01">
+                                «الدليل الرقمي حساس كبصمة الإصبع.. أي لمسة خاطئة تدمره للأبد. العمل دائماً على نسخة مطابقة تماماً (Bitstream Copy)، واستخدام أدوات معتمدة تقنياً، وتوثيق سلسلة الحفظ (Chain of Custody) بدقة مطلقة لضمان قبوله أمام المحاكم والجهات القضائية.»
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer C: Interactive Cyber Visual Column -->
+                <div class="secod-cyber-visual-col">
+                    <div class="secod-cyber-card" id="secodCyberCard">
+                        <div class="secod-cyber-ambient-glow" aria-hidden="true"></div>
+                        <svg class="secod-cyber-svg" viewBox="0 0 460 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="forensicsGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00F6E4" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00F6E4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g opacity="0.12">
+    <path d="M40 0V340M120 0V340M200 0V340M280 0V340M360 0V340M420 0V340" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+    <path d="M0 60H460M0 130H460M0 200H460M0 270H460" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+  </g>
+  <circle cx="230" cy="160" r="105" fill="url(#forensicsGlow)"/>
+  <circle cx="230" cy="160" r="90" stroke="rgba(0, 246, 228, 0.25)" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <circle cx="230" cy="160" r="65" stroke="#00F6E4" stroke-width="2" stroke-opacity="0.6"/>
+  <circle cx="230" cy="160" r="35" stroke="#2563EB" stroke-width="1.5"/>
+  <line x1="230" y1="40" x2="230" y2="280" stroke="#00F6E4" stroke-width="1.2" stroke-dasharray="8 6" opacity="0.6"/>
+  <line x1="110" y1="160" x2="350" y2="160" stroke="#00F6E4" stroke-width="1.2" stroke-dasharray="8 6" opacity="0.6"/>
+  <g class="secod-radar-sweep">
+    <line x1="230" y1="160" x2="315" y2="85" stroke="#00F6E4" stroke-width="2"/>
+    <polygon points="230,160 315,85 330,115" fill="rgba(0, 246, 228, 0.12)"/>
+  </g>
+  <g font-family="'Inter', monospace" font-size="8" fill="rgba(0, 246, 228, 0.5)">
+    <text x="65" y="90">0x7F 0x45 0x4C 0x46</text>
+    <text x="65" y="105">SHA256: 9f86d081...</text>
+    <text x="315" y="90">EVIDENCE_IMG.E01</text>
+    <text x="315" y="105">BITSTREAM: VERIFIED</text>
+  </g>
+  <rect x="195" y="142" width="70" height="36" rx="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+  <text x="230" y="157" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', monospace" font-size="9" font-weight="800">SHA-256</text>
+  <text x="230" y="170" text-anchor="middle" fill="#00F6E4" font-family="'Inter', monospace" font-size="8">EVIDENCE OK</text>
+  <circle cx="140" cy="220" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5" class="secod-node-glow"/>
+  <circle cx="320" cy="220" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5" class="secod-node-glow"/>
+  <path class="secod-trace-pulse" d="M140 220H200L230 250H290L320 220" stroke="#00F6E4" stroke-width="1.5" fill="none"/>
+</svg>
+                        <div class="secod-visual-status-pill">
+                            <span class="secod-live-dot"></span>
+                            <span>EVIDENCE ACQUISITION // HASH: SHA-256</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layer I: Lecture Navigation Strip -->
+        <div class="secod-lecture-nav-strip">
+            <div class="secod-lecture-nav-inner">
+                <span class="secod-nav-step-link disabled" aria-disabled="true"><span>← المحاضرة السابقة</span></span>
+                <a href="index.html" class="secod-nav-step-link">
+                    <span>📚 فهرس مقرر التحقيق الجنائي الرقمي</span>
+                </a>
+                <span class="secod-nav-step-link disabled" aria-disabled="true"><span>المحاضرة التالية →</span></span>
+            </div>
         </div>
-        <div class="header-golden-rule">
-            ⭐ القاعدة الذهبية للأدلة الرقمية: «الدليل الرقمي حساس كبصمة الإصبع.. أي لمسة خاطئة تدمره للأبد. العمل دائماً على نسخة، واستخدام أدوات معتمدة، والحفاظ على كل ذرة من البيانات الأصلية».
-        </div>
-    </header>
+
+    </div>
 
     <!-- Main Container -->
     <div class="container">
@@ -726,6 +886,7 @@
     <!-- JavaScript Application Logic -->
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
     <script src="../assets/js/quiz.js"></script>
     <script>
 async function sha256(str) {

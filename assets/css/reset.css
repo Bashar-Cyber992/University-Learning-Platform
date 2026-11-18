@@ -1,6 +1,7 @@
 /**
  * ==============================================================================
- * MANAR UNIVERSITY LEARNING PLATFORM - CSS RESET & BASE STYLES (reset.css)
+ * SECOD DESIGN SYSTEM - CSS RESET & BASE STYLES (reset.css)
+ * Typography Hierarchy, Bi-directional (RTL/LTR) Handling & Baseline Standards
  * ==============================================================================
  */
 
@@ -19,38 +20,51 @@ html {
 body {
     background-color: var(--bg-light);
     color: var(--text-dark);
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
+    font-family: var(--font-arabic);
+    font-size: var(--body-size);
     line-height: var(--leading-relaxed);
     direction: rtl;
     text-align: right;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color var(--transition-base), color var(--transition-base);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography Defaults */
+/* Typography Hierarchy */
 h1, h2, h3, h4, h5, h6 {
     color: var(--primary);
-    font-weight: 700;
+    font-family: var(--font-arabic);
+    font-weight: var(--font-bold);
     line-height: var(--leading-tight);
 }
 
-h1 { font-size: var(--text-4xl); margin-bottom: var(--space-3); }
-h2 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
-h3 { font-size: var(--text-xl);  margin-bottom: var(--space-3); }
-h4 { font-size: var(--text-lg);  margin-bottom: var(--space-2); }
+h1 { font-size: var(--h1-size); margin-bottom: var(--space-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--h2-size); margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+h3 { font-size: var(--h3-size); margin-bottom: var(--space-3); }
+h4 { font-size: var(--text-xl); margin-bottom: var(--space-2); }
+h5 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
+h6 { font-size: var(--text-base); margin-bottom: var(--space-1); }
+
+/* Responsive Heading Adjustments */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem !important; }      /* 32px */
+    h2 { font-size: 1.625rem !important; }  /* 26px */
+    h3 { font-size: 1.3125rem !important; } /* 21px */
+    body { font-size: 1rem !important; }    /* 16px */
+}
 
 p {
     margin-bottom: var(--space-4);
-    text-align: justify;
+    line-height: var(--leading-relaxed);
 }
 
 a {
     color: var(--secondary);
     text-decoration: none;
-    transition: color 0.2s ease, text-decoration 0.2s ease;
+    transition: color var(--transition-fast), text-decoration var(--transition-fast);
 }
 
 a:hover {
@@ -58,6 +72,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Media Elements */
 img, svg {
     display: inline-block;
     max-width: 100%;
@@ -73,13 +88,22 @@ li {
     margin-bottom: var(--space-2);
 }
 
-code, kbd, samp, pre {
+/* LTR Handling for Code & Technical Terms */
+code, kbd, samp, pre, .en, .term-en, .code-text {
     font-family: var(--font-mono);
-    font-size: 0.9em;
+    direction: ltr;
+    text-align: left;
+    display: inline-block;
 }
 
+pre code {
+    display: block;
+}
+
+/* Form Controls Baseline */
 button, input, select, textarea {
-    font: inherit;
+    font-family: inherit;
+    font-size: inherit;
     color: inherit;
 }
 
@@ -87,4 +111,10 @@ button {
     cursor: pointer;
     background: none;
     border: none;
+}
+
+/* Accessible Focus States */
+:focus-visible {
+    outline: 2px solid var(--brand-cyan);
+    outline-offset: 3px;
 }

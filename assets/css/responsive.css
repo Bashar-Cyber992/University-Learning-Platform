@@ -449,11 +449,13 @@ html, body {
         font-size: 0.85rem;
     }
 
-    .brand-sub {
+    .brand-sub,
+    .brand-tagline-badge {
         display: none;
     }
 
-    .brand-logo-icon {
+    .brand-logo-icon,
+    .brand-logo-img {
         width: 32px;
         height: 32px;
         font-size: 1rem;

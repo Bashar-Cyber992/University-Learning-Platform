@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عن المنصة | SECOD — Cybersecurity & IT Learning Platform</title>
+    <meta name="description" content="عن منصة SECOD — منصة تعليمية أكاديمية تابعة للجنة العلمية لقسمي الأمن السيبراني وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.">
+    <meta name="author" content="اللجنة العلمية — كلية المنار للعلوم والتكنولوجيا">
+    
+    <!-- Open Graph / Meta Social -->
+    <meta property="og:title" content="عن المنصة | SECOD Platform">
+    <meta property="og:description" content="منصة تعليمية أكاديمية تابعة للجنة العلمية لقسمي الأمن السيبراني وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.">
+    <meta property="og:image" content="assets/brand/social/og-image.png">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- الخطوط المعتمدة: IBM Plex Sans Arabic + Inter مع JetBrains Mono و Cairo كبدائل -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <style>
+        .about-page-header {
+            background: linear-gradient(180deg, #001C32 0%, #071A2B 100%);
+            color: #ffffff;
+            padding: 3.5rem 1.25rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 246, 228, 0.18);
+        }
+
+        .about-header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #00F6E4;
+            background: rgba(0, 246, 228, 0.08);
+            border: 1px solid rgba(0, 246, 228, 0.25);
+            padding: 0.3rem 0.85rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        .about-title {
+            font-size: clamp(1.85rem, 3.5vw, 2.4rem);
+            font-weight: 800;
+            margin: 0 0 0.75rem;
+            color: #ffffff;
+        }
+
+        .about-subtitle {
+            font-size: 1.05rem;
+            color: #94A3B8;
+            line-height: 1.7;
+            margin: 0 auto;
+            max-width: 650px;
+        }
+
+        .about-content-container {
+            max-width: 900px;
+            margin: 2.5rem auto 4rem;
+            padding: 0 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--surface, #ffffff);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.04));
+            transition: border-color 0.2s ease;
+        }
+
+        .about-card:hover {
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+
+        .about-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
+        }
+
+        .about-card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--secondary, #2563EB);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .about-card-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary, #001C32);
+        }
+
+        .about-card-p {
+            font-size: 0.96rem;
+            color: var(--text-main, #1e293b);
+            line-height: 1.85;
+            margin: 0 0 1rem;
+        }
+
+        .about-card-p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Profile & Leadership Cards */
+        .person-profile-box {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: rgba(0, 28, 50, 0.02);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .person-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #001C32, #071A2B);
+            color: #00F6E4;
+            border: 2px solid #00F6E4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .person-info h4 {
+            margin: 0 0 0.25rem;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary, #001C32);
+        }
+
+        .person-info .person-role {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--secondary, #2563EB);
+            margin-bottom: 0.35rem;
+        }
+
+        .person-info p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--text-muted, #64748B);
+            line-height: 1.65;
+        }
+
+        /* Affiliation Meta Table */
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.92rem;
+        }
+
+        .meta-table tr {
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
+        }
+
+        .meta-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .meta-table td {
+            padding: 0.75rem 0.5rem;
+            vertical-align: top;
+        }
+
+        .meta-table td.meta-key {
+            width: 35%;
+            font-weight: 700;
+            color: var(--primary, #001C32);
+        }
+
+        .meta-table td.meta-val {
+            color: var(--text-main, #1e293b);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body data-course="root">
+
+    <!-- ==============================================================================
+         شريط التنقل العلوي الموحد (Sticky Navigation Bar)
+         ============================================================================== -->
+    <nav class="site-navbar" id="mainNavbar">
+        <div class="site-navbar-inner">
+            
+            <!-- الهوية والشعار الرسمي -->
+            <a href="index.html" class="brand-link" title="SECOD — Cybersecurity & IT Learning Platform">
+                <img src="assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="brand-logo-img">
+                <div class="brand-text-col">
+                    <div style="display:flex; align-items:center; gap:0.4rem;">
+                        <span class="brand-name">SECOD</span>
+                        <span class="brand-tagline-badge">EDU</span>
+                    </div>
+                    <span class="brand-sub">Cybersecurity & IT Platform</span>
+                </div>
+            </a>
+
+            <!-- روابط التنقل الرئيسية (سطح المكتب) -->
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="courses.html" class="nav-link">المقررات</a></li>
+                <li><a href="about.html" class="nav-link active">عن المنصة</a></li>
+            </ul>
+
+            <!-- إجراءات شريط التنقل -->
+            <div class="nav-actions">
+                <a href="courses.html" class="btn btn-outline btn-sm nav-search-btn" title="دليل المقررات الشامل">
+                    <span>📚</span>
+                    <span style="font-size:0.82rem;">دليل المقررات</span>
+                </a>
+
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="تبديل المظهر">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">المظهر</span>
+                </button>
+
+                <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="فتح القائمة الرئيسية" aria-expanded="false">
+                    ☰
+                </button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- القائمة الجانبية للأجهزة الذكية (Mobile Off-canvas Drawer) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="قائمة التنقل للهواتف">
+        <div class="mobile-drawer-header">
+            <div class="brand-link">
+                <img src="assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" style="width:34px; height:34px; border-radius:6px; background:#001C32;">
+                <span style="font-weight:800; font-size:1.05rem; color:var(--primary);">SECOD</span>
+            </div>
+            <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="إغلاق القائمة">✕</button>
+        </div>
+
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><span>🏠</span> الرئيسية</a></li>
+            <li><a href="courses.html"><span>📚</span> دليل المقررات الدراسية</a></li>
+            <li><a href="about.html" class="active"><span>ℹ️</span> عن المنصة</a></li>
+        </ul>
+
+        <div style="margin-top:auto; padding-top:var(--space-4); border-top:1px solid var(--border-color); text-align:center;">
+            <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+                اللجنة العلمية – المستوى الثالث
+            </p>
+            <p style="font-size:0.75rem; color:var(--secondary); font-weight:700; margin:0.25rem 0 0;">
+                كلية المنار للعلوم والتكنولوجيا
+            </p>
+        </div>
+    </aside>
+
+    <!-- رأس الصفحة -->
+    <header class="about-page-header">
+        <div class="about-header-inner">
+            <div class="about-badge">
+                <span>🏛️</span>
+                <span>التعريف المؤسسي والأكاديمي</span>
+            </div>
+            <h1 class="about-title">عن منصة SECOD</h1>
+            <p class="about-subtitle">
+                المنصة التعليمية الرقمية التابعة للجنة العلمية لقسمي الأمن السيبراني وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.
+            </p>
+        </div>
+    </header>
+
+    <!-- المحتوى الأكاديمي الرئيسي -->
+    <main class="about-content-container">
+
+        <!-- 1. نبذة عن المنصة -->
+        <section class="about-card">
+            <div class="about-card-header">
+                <div class="about-card-icon">📚</div>
+                <h2 class="about-card-title">1. نبذة عن المنصة</h2>
+            </div>
+            <p class="about-card-p">
+                منصة تعليمية أكاديمية أُنشئت لخدمة طلاب المستوى الثالث في قسمي الأمن السيبراني وتقنية المعلومات بكلية المنار للعلوم والتكنولوجيا.
+            </p>
+            <p class="about-card-p">
+                تهدف إلى تنظيم وتقديم المحتوى التعليمي للمقررات الدراسية ضمن بيئة رقمية متكاملة، وتوفير شروحات تعليمية تفصيلية وتطبيقات عملية وأمثلة تفاعلية تسهم في تبسيط المفاهيم العلمية وتعزيز مهارات التحليل والفهم والتطبيق لدى الطلاب.
+            </p>
+        </section>
+
+        <!-- 2. التبعية والإشراف الأكاديمي -->
+        <section class="about-card">
+            <div class="about-card-header">
+                <div class="about-card-icon">🏛️</div>
+                <h2 class="about-card-title">2. التبعية والإشراف الأكاديمي</h2>
+            </div>
+            <p class="about-card-p">
+                تتبع المنصة اللجنة العلمية لقسمي الأمن السيبراني وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.
+            </p>
+            <p class="about-card-p">
+                وتعمل تحت إشراف اللجنة العلمية برئاسة:
+            </p>
+            
+            <div class="person-profile-box">
+                <div class="person-avatar">ع</div>
+                <div class="person-info">
+                    <h4>عرفات الكامل</h4>
+                    <span class="person-role">رئيس اللجنة العلمية</span>
+                    <p>الإشراف الأكاديمي والمتابعة العلمية لمحتوى المنصة ومقرراتها التخصصية.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. الإعداد والتطوير والإدارة -->
+        <section class="about-card">
+            <div class="about-card-header">
+                <div class="about-card-icon">💻</div>
+                <h2 class="about-card-title">3. الإعداد والتطوير والإدارة</h2>
+            </div>
+            <div class="person-profile-box" style="margin-top:0;">
+                <div class="person-avatar">ب</div>
+                <div class="person-info">
+                    <h4>بشار زبله</h4>
+                    <span class="person-role">عضو اللجنة العلمية</span>
+                    <p>
+                        قام بإعداد وتطوير المنصة، والإشراف على تنفيذها وإدارتها، والعمل على بناء بيئتها التعليمية الرقمية وتنظيم محتواها ومكوناتها التقنية.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. الرؤية التعليمية -->
+        <section class="about-card">
+            <div class="about-card-header">
+                <div class="about-card-icon">🎯</div>
+                <h2 class="about-card-title">4. الرؤية التعليمية</h2>
+            </div>
+            <p class="about-card-p">
+                الإسهام في تطوير تجربة التعلم الأكاديمي من خلال توظيف التقنيات الرقمية والوسائل التفاعلية، وربط المعرفة النظرية بالتطبيق العملي، وتوفير محتوى تعليمي منظم يسهل الوصول إليه والاستفادة منه.
+            </p>
+        </section>
+
+        <!-- 5. بيانات الانتماء المؤسسي -->
+        <section class="about-card">
+            <div class="about-card-header">
+                <div class="about-card-icon">📋</div>
+                <h2 class="about-card-title">5. بيانات الانتماء المؤسسي</h2>
+            </div>
+            
+            <table class="meta-table">
+                <tbody>
+                    <tr>
+                        <td class="meta-key">🏛️ الجهة الأكاديمية:</td>
+                        <td class="meta-val">كلية المنار للعلوم والتكنولوجيا</td>
+                    </tr>
+                    <tr>
+                        <td class="meta-key">👥 الأقسام:</td>
+                        <td class="meta-val">الأمن السيبراني وتقنية المعلومات</td>
+                    </tr>
+                    <tr>
+                        <td class="meta-key">🎓 المستوى الدراسي:</td>
+                        <td class="meta-val">المستوى الثالث</td>
+                    </tr>
+                    <tr>
+                        <td class="meta-key">🛡️ الجهة المشرفة:</td>
+                        <td class="meta-val">اللجنة العلمية</td>
+                    </tr>
+                    <tr>
+                        <td class="meta-key">👨‍🏫 رئيس اللجنة العلمية:</td>
+                        <td class="meta-val"><strong>عرفات الكامل</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="meta-key">💻 إعداد وتطوير وإدارة المنصة:</td>
+                        <td class="meta-val"><strong>بشار زبله</strong> – عضو اللجنة العلمية</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <!-- التذييل الموحد المركزي -->
+    <div id="site-footer"></div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/components.js"></script>
+</body>
+</html>

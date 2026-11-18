@@ -3,39 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية | تصميم البرمجيات الآمنة</title>
+    <title>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية | تصميم البرمجيات الآمنة | SECOD</title>
+        <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-course="security-software-design">
 
     <!-- الشريط العلوي ومسار التنقل -->
-    <div class="top-bar">
-        <div class="breadcrumb-nav">
-            <div class="breadcrumb-links">
-                <a href="../index.html">🏠 المنصة الرئيسية</a>
-                <span>/</span>
-                <a href="index.html">🛡️ فهرس تصميم البرمجيات الآمنة</a>
-                <span>/</span>
-                <span>المحاضرة الثانية</span>
-            </div>
-            <div class="lecture-nav-btns">
-                <a href="Lecture-01.html" class="nav-pill">→ المحاضرة السابقة (1)</a>
-                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
-                <a href="#quiz" class="nav-pill">الاختبار التقييمي 🎯</a>
-            </div>
-        </div>
-        <div class="reading-progress-container">
-            <div class="reading-progress-bar" id="reading-progress"></div>
-        </div>
-    </div>
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         Component: Platform Navigation Layer + Editorial Hero + Cyber Visual + Action Bar
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        
+        <!-- Platform Navigation Spacer (Zero CLS on sticky scroll) -->
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
 
-    <!-- ترويسة المحاضرة -->
-    <header class="lecture-header">
-        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | قسم الأمن السيبراني وشبكات (المستوى الثالث - الترم الثاني)</div>
-        <h1>المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية</h1>
-        <p>Security Architecture: Principles and Guidelines | إعداد: <strong>د. عبدالرزاق الأهدل</strong> & <strong>أ. وليد الشراعي</strong></p>
-        <div class="header-Golden-rule">🌟 الجملة الذهبية: «المعمارية الأمنية الجيدة تعني أن نصمم النظام بحيث يحصل كل مستخدم ومكون على ما يحتاجه فقط، وتكون كل الاتصالات والعمليات محمية، وتوجد طبقات متعددة تمنع تحول خطأ واحد إلى اختراق شامل»</div>
-    </header>
+        <!-- Layer A: Platform Navigation Layer (Sticky / Smart Scroll) -->
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <!-- Brand & Breadcrumb Navigation -->
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>🛡️</span>
+                            <span>تصميم البرمجيات الآمنة</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 02</span>
+                    </div>
+                    <!-- Compact title shown while scrolling sticky -->
+                    <span class="secod-nav-sticky-title">المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية</span>
+                </div>
+
+                <!-- Lecture Action Bar & View Controls -->
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodShareBtn" data-tooltip="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>مشاركة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodFontBtn" data-tooltip="تكبير أو تصغير الخط" aria-label="تغيير حجم الخط">
+                        <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+                        <span>الخط</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ المريح" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>قراءة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-nav-btn-icon-only secod-tooltip" id="secodFullscreenBtn" data-tooltip="ملء الشاشة" aria-label="ملء الشاشة">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                    <!-- Theme Toggle Compatible with Platform Engine -->
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layer G: Reading Progress System (Content-Aware) -->
+            <div class="secod-reading-progress-track" aria-hidden="true">
+                <div class="secod-reading-progress-fill" id="secodReadingProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Layer B: Interactive Lecture Hero (Editorial Layout) -->
+        <header class="secod-lecture-hero">
+            <!-- Subtle Watermark Numeral -->
+            <div class="secod-hero-watermark" aria-hidden="true">02</div>
+
+            <div class="secod-hero-container">
+                <!-- Information Column (Right in RTL) -->
+                <div class="secod-hero-info">
+                    <!-- Badges -->
+                    <div class="secod-hero-badges">
+                        <span class="secod-badge-course">🛡️ SECURITY SOFTWARE DESIGN</span>
+                        <span class="secod-badge-lecture-num">LECTURE 02</span>
+                        <span class="secod-badge-verified">🛡️ معتمد أكاديمياً</span>
+                    </div>
+
+                    <!-- Main Arabic Title -->
+                    <h1 class="secod-hero-title-ar">المحاضرة الثانية: مبادئ وإرشادات المعمارية الأمنية</h1>
+
+                    <!-- Technical English Title -->
+                    <div class="secod-hero-title-en">Security Architecture: Principles, Guidelines & Defense-in-Depth</div>
+
+                    <!-- Editorial Description -->
+                    <p class="secod-hero-desc">دراسة المبادئ المعمارية الـ 12 للأمان البرمجي: أقل الامتيازات (Least Privilege)، الدفاع في العمق (Defense in Depth)، الفصل بين المهام، وتأمين نقاط الاتصال والحدود.</p>
+
+                    <!-- Layer D: Academic Context Layer -->
+                    <div class="secod-academic-strip">
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👨‍🏫</span>
+                            <span class="secod-meta-label">أستاذ المقرر:</span>
+                            <span class="secod-meta-value">د. عبدالرزاق الأهدل & أ. وليد الشراعي</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👥</span>
+                            <span class="secod-meta-label">القسم:</span>
+                            <span class="secod-meta-value">الأمن السيبراني والشبكات</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">📑</span>
+                            <span class="secod-meta-label">المصدر:</span>
+                            <span class="secod-meta-value">المصادر الأكاديمية المعتمدة + إعداد م. بشار زبله</span>
+                        </div>
+                    </div>
+                    <!-- Layer E: Key Concept Experience (Core Insight Accordion) -->
+                    <div class="secod-key-concept-container">
+                        <div class="secod-key-concept-card">
+                            <button type="button" class="secod-key-concept-header" aria-expanded="false" aria-controls="keyConceptBody-02">
+                                <span class="secod-key-concept-badge">⚡ KEY CONCEPT</span>
+                                <span class="secod-key-concept-title">المعمارية الأمنية متعددة الطبقات: «المعمارية الأمنية الجيدة تضمن عدم تحول خطأ برمجي واحد إلى اختراق شامل للنظا...»</span>
+                                <span class="secod-key-concept-trigger">
+                                    <span>تفاصيل</span>
+                                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                                </span>
+                            </button>
+                            <div class="secod-key-concept-body" id="keyConceptBody-02">
+                                «المعمارية الأمنية الجيدة تعني أن نصمم النظام بحيث يحصل كل مستخدم ومكون برمجي على ما يحتاجه فقط (Least Privilege)، وتكون كل الاتصالات والعمليات محمية وموثقة، وتوجد طبقات دفاعية متعددة (Defense-in-Depth) تمنع تحول خطأ واحد إلى اختراق شامل لكامل المنظومة.»
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer C: Interactive Cyber Visual Column -->
+                <div class="secod-cyber-visual-col">
+                    <div class="secod-cyber-card" id="secodCyberCard">
+                        <div class="secod-cyber-ambient-glow" aria-hidden="true"></div>
+                        <svg class="secod-cyber-svg" viewBox="0 0 460 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="secGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00F6E4" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00F6E4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F6E4"/>
+      <stop offset="50%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#001C32"/>
+    </linearGradient>
+  </defs>
+  <g opacity="0.12">
+    <path d="M40 0V340M120 0V340M200 0V340M280 0V340M360 0V340M420 0V340" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+    <path d="M0 60H460M0 130H460M0 200H460M0 270H460" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+  </g>
+  <circle cx="230" cy="160" r="115" fill="url(#secGlow)"/>
+  <circle cx="230" cy="160" r="120" stroke="rgba(0, 246, 228, 0.2)" stroke-width="1" stroke-dasharray="8 6"/>
+  <circle cx="230" cy="160" r="95" stroke="rgba(37, 99, 235, 0.35)" stroke-width="1.5" stroke-dasharray="12 4"/>
+  <g class="secod-radar-sweep">
+    <line x1="230" y1="160" x2="140" y2="70" stroke="#00F6E4" stroke-width="2"/>
+    <polygon points="230,160 140,70 120,95" fill="rgba(0, 246, 228, 0.14)"/>
+  </g>
+  <path d="M230 75L295 105V170C295 215 265 248 230 262C195 248 165 215 165 170V105L230 75Z" fill="url(#shieldGrad)" fill-opacity="0.35" stroke="#00F6E4" stroke-width="2.5"/>
+  <rect x="214" y="150" width="32" height="26" rx="4" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+  <path d="M220 150V141C220 137.5 224.5 134 230 134C235.5 134 240 137.5 240 141V150" stroke="#00F6E4" stroke-width="2" fill="none"/>
+  <circle cx="230" cy="160" r="3" fill="#00F6E4"/>
+  <line x1="230" y1="163" x2="230" y2="169" stroke="#00F6E4" stroke-width="2"/>
+  <g class="secod-node-glow">
+    <circle cx="105" cy="120" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+    <circle cx="355" cy="120" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+    <circle cx="105" cy="205" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+    <circle cx="355" cy="205" r="6" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+  </g>
+  <path class="secod-trace-pulse" d="M105 120H170L195 145" stroke="#00F6E4" stroke-width="1.5" fill="none"/>
+  <path class="secod-trace-pulse-reverse" d="M355 120H290L265 145" stroke="#00F6E4" stroke-width="1.5" fill="none"/>
+</svg>
+                        <div class="secod-visual-status-pill">
+                            <span class="secod-live-dot"></span>
+                            <span>DEFENSE IN DEPTH // ZERO TRUST ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layer I: Lecture Navigation Strip -->
+        <div class="secod-lecture-nav-strip">
+            <div class="secod-lecture-nav-inner">
+                <a href="Lecture-01.html" class="secod-nav-step-link"><span>→ المحاضرة السابقة (01)</span></a>
+                <a href="index.html" class="secod-nav-step-link">
+                    <span>📚 فهرس مقرر تصميم البرمجيات الآمنة</span>
+                </a>
+                <a href="Lecture-03.html" class="secod-nav-step-link"><span>المحاضرة التالية (03) ←</span></a>
+            </div>
+        </div>
+
+    </div>
 
     <div class="container">
         <!-- الفهرس الجانبي -->
@@ -767,6 +938,7 @@
 
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
     <script src="../assets/js/quiz.js"></script>
     <script>
 const layersData = [

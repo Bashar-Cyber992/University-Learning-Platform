@@ -1,7 +1,22 @@
 /**
  * ==============================================================================
- * MANAR UNIVERSITY LEARNING PLATFORM - SHARED FOOTER COMPONENT (footer.js)
- * Single Source of Truth for Platform Footer Content & Layout
+ * SECOD PLATFORM - SHARED FOOTER COMPONENT (footer.js)
+ * Minimalist Academic Design System
+ * 
+ * 1. قسم الهوية الأكاديمية:
+ *    - اسم المنصة وشعارها.
+ *    - وصف مختصر: منصة تعليمية أكاديمية تابعة للجنة العلمية لقسمي الأمن السيبراني
+ *      وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.
+ * 2. قسم التنقل:
+ *    - الرئيسية.
+ *    - المقررات الدراسية.
+ *    - عن المنصة.
+ * 3. قسم الانتماء المؤسسي:
+ *    - اللجنة العلمية.
+ *    - قسما الأمن السيبراني وتقنية المعلومات.
+ *    - كلية المنار للعلوم والتكنولوجيا.
+ * 4. الشريط السفلي:
+ *    - © 2026 جميع الحقوق محفوظة.
  * ==============================================================================
  */
 
@@ -9,33 +24,12 @@
     "use strict";
 
     const FOOTER_DATA = {
-        college: "كلية المنار للعلوم والتكنولوجيا (M.C.S.T)",
-        departments: "قسم الأمن السيبراني والشبكات & قسم تكنولوجيا المعلومات — المستوى الثالث (الترم الثاني)",
-        committee: "إعداد عضو اللجنة العلمية في القسمين م. بشار زبله",
-        year: 2026,
-        links: [
-            { label: "🏠 المنصة الرئيسية", path: "index.html" },
-            { label: "📚 دليل المقررات الدراسية", path: "courses.html" },
-            { label: "💻 أساسيات تطوير البرمجيات", path: "Software-Development-Fundamentals/index.html" },
-            { label: "🛡️ تصميم البرمجيات الآمنة", path: "Security-Software-Design/index.html" },
-            { label: "☁️ الحوسبة السحابية", path: "Cloud-Computing/index.html" },
-            { label: "📊 إدارة مشاريع IT", path: "IT-Project-Management/index.html" },
-            { label: "🔎 التحقيق الجنائي الرقمي", path: "Digital-Forensics/index.html" },
-            { label: "📐 تحليل وتصميم النظم", path: "Systems-Analysis-and-Design/index.html" }
-        ],
-        instructors: {
-            "software-development-fundamentals": "أستاذ المقرر: د. عبدالرزاق الأهدل & أ. وليد الشراعي",
-            "security-software-design": "أستاذ المقرر: د. عبدالرزاق الأهدل",
-            "cloud-computing": "أستاذ المقرر: أ.د. عبده ناصر شويه",
-            "it-project-management": "أستاذ المقرر: أ.د. عبده ناصر شويه",
-            "digital-forensics": "أستاذ المقرر: أ. أفنان الشرفي",
-            "systems-analysis-and-design": "أستاذ المقرر: أ. أفنان الشرفي"
-        }
+        brand: "SECOD",
+        tagline: "Understand. Learn. Apply.",
+        academicDescription: "منصة تعليمية أكاديمية تابعة للجنة العلمية لقسمي الأمن السيبراني وتقنية المعلومات – المستوى الثالث، بكلية المنار للعلوم والتكنولوجيا.",
+        year: 2026
     };
 
-    /**
-     * Determines whether the current page is inside a course subfolder or at root
-     */
     function isSubdirectory() {
         const course = (document.body.getAttribute("data-course") || 
                         document.documentElement.getAttribute("data-course") || "").toLowerCase().trim();
@@ -46,9 +40,6 @@
         return /[\/\\](Software-Development-Fundamentals|Security-Software-Design|Cloud-Computing|IT-Project-Management|Digital-Forensics|Systems-Analysis-and-Design)[\/\\]/i.test(path);
     }
 
-    /**
-     * Resolves a root-relative path into the correct relative path for the current page
-     */
     function resolveRelativeUrl(targetPath) {
         const cleanPath = targetPath.startsWith("/") ? targetPath.substring(1) : targetPath;
         if (isSubdirectory()) {
@@ -57,9 +48,6 @@
         return cleanPath;
     }
 
-    /**
-     * Renders the single source of truth Footer HTML
-     */
     function renderFooter() {
         let mountPoint = document.getElementById("site-footer") || 
                          document.querySelector("footer.site-footer") || 
@@ -75,54 +63,71 @@
             mountPoint.className = "site-footer";
         }
 
-        const courseAttr = (document.body.getAttribute("data-course") || 
-                            document.documentElement.getAttribute("data-course") || 
-                            window.location.pathname).toLowerCase();
-
-        let instructorText = "";
-        for (const [key, instructor] of Object.entries(FOOTER_DATA.instructors)) {
-            if (courseAttr.includes(key)) {
-                instructorText = instructor;
-                break;
-            }
-        }
-
-        const instructorHtml = instructorText 
-            ? `<p class="footer-instructor" style="margin-bottom:0.4rem; color:var(--primary); font-weight:700;">${instructorText}</p>`
-            : "";
+        const logoPath = resolveRelativeUrl("assets/brand/logo/secod-logo-dark.png");
+        const homeUrl = resolveRelativeUrl("index.html");
+        const coursesUrl = resolveRelativeUrl("courses.html");
+        const aboutUrl = resolveRelativeUrl("about.html");
 
         mountPoint.innerHTML = `
-            <div class="footer-inner" style="max-width:var(--max-w-container); margin:0 auto; padding:0 var(--space-4);">
-                <p style="font-weight:700; color:var(--primary); font-size:1.02rem; margin-bottom:0.4rem;">
-                    🏛️ ${FOOTER_DATA.college}
-                </p>
-                <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:0.4rem;">
-                    ${FOOTER_DATA.departments}
-                </p>
-                ${instructorHtml}
-                <p style="color:var(--secondary); font-weight:800; font-size:0.98rem; margin:0.6rem 0;">
-                    ${FOOTER_DATA.committee}
-                </p>
-                <div class="footer-links-row" style="display:flex; justify-content:center; flex-wrap:wrap; gap:0.8rem; margin:0.8rem 0; font-size:0.85rem;">
-                    <a href="${resolveRelativeUrl('index.html')}" style="color:var(--text-muted); text-decoration:none;">🏠 المنصة الرئيسية</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('courses.html')}" style="color:var(--text-muted); text-decoration:none;">📚 دليل المقررات</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('Software-Development-Fundamentals/index.html')}" style="color:var(--text-muted); text-decoration:none;">أساسيات تطوير البرمجيات</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('Security-Software-Design/index.html')}" style="color:var(--text-muted); text-decoration:none;">تصميم البرمجيات الآمنة</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('Cloud-Computing/index.html')}" style="color:var(--text-muted); text-decoration:none;">الحوسبة السحابية</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('IT-Project-Management/index.html')}" style="color:var(--text-muted); text-decoration:none;">إدارة مشاريع IT</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('Digital-Forensics/index.html')}" style="color:var(--text-muted); text-decoration:none;">التحقيق الجنائي الرقمي</a>
-                    <span style="color:var(--border-color);">•</span>
-                    <a href="${resolveRelativeUrl('Systems-Analysis-and-Design/index.html')}" style="color:var(--text-muted); text-decoration:none;">تحليل وتصميم النظم</a>
+            <div class="footer-inner">
+                <div class="footer-academic-grid">
+                    
+                    <!-- 1. قسم الهوية الأكاديمية -->
+                    <div class="footer-identity-col">
+                        <div style="display:inline-flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+                            <img src="${logoPath}" alt="SECOD Logo" style="width:36px; height:36px; border-radius:8px; border:1px solid rgba(0,246,228,0.35); background:#001C32; object-fit:contain; padding:2px;">
+                            <div>
+                                <h3 class="footer-brand-title">${FOOTER_DATA.brand}</h3>
+                                <span class="footer-brand-tagline">${FOOTER_DATA.tagline}</span>
+                            </div>
+                        </div>
+                        <p class="footer-desc-text">
+                            ${FOOTER_DATA.academicDescription}
+                        </p>
+                    </div>
+
+                    <!-- 2. قسم التنقل -->
+                    <div class="footer-nav-col">
+                        <h4 class="footer-col-header">
+                            <span class="footer-col-icon">🧭</span>
+                            <span>التنقل السريع</span>
+                        </h4>
+                        <ul class="footer-nav-list">
+                            <li><a href="${homeUrl}"><span>🏠</span> الرئيسية</a></li>
+                            <li><a href="${coursesUrl}"><span>📚</span> المقررات الدراسية</a></li>
+                            <li><a href="${aboutUrl}"><span>ℹ️</span> عن المنصة</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. قسم الانتماء المؤسسي -->
+                    <div class="footer-institutional-col">
+                        <h4 class="footer-col-header">
+                            <span class="footer-col-icon">🏛️</span>
+                            <span>الانتماء المؤسسي</span>
+                        </h4>
+                        <ul class="footer-institutional-list">
+                            <li>
+                                <span>👥</span>
+                                <span><strong>الجهة المشرفة:</strong> اللجنة العلمية</span>
+                            </li>
+                            <li>
+                                <span>💻</span>
+                                <span><strong>الأقسام:</strong> الأمن السيبراني وتقنية المعلومات</span>
+                            </li>
+                            <li>
+                                <span>🎓</span>
+                                <span><strong>المؤسسة الأكاديمية:</strong> كلية المنار للعلوم والتكنولوجيا</span>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
-                <p style="margin-top:0.8rem; font-size:0.8rem; color:var(--text-muted); opacity:0.85;">
-                    © ${FOOTER_DATA.year} جميع الحقوق محفوظة — المنصة الأكاديمية التفاعلية للتعلم الذاتي
-                </p>
+
+                <!-- 4. الشريط السفلي -->
+                <div class="footer-bottom-bar">
+                    <p>© ${FOOTER_DATA.year} جميع الحقوق محفوظة.</p>
+                    <p style="font-size:0.78rem; opacity:0.85;">SECOD Academic Platform • صُمم وفق المعايير الأكاديمية الحديثة</p>
+                </div>
             </div>
         `;
     }

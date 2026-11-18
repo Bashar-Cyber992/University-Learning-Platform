@@ -3,37 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحاضرة الأولى: أساسيات تحليل وتصميم النظم ونظم المعلومات | تحليل وتصميم النظم</title>
+    <title>المحاضرة الأولى: أساسيات تحليل وتصميم النظم ونظم المعلومات | تحليل وتصميم النظم | SECOD</title>
+        <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-course="systems-analysis-and-design">
 
     <!-- Top Navigation & Reading Progress -->
-    <div class="top-bar">
-        <div class="breadcrumb-nav">
-            <div class="breadcrumb-links">
-                <a href="../index.html">🏠 المنصة الرئيسية</a>
-                <span>/</span>
-                <a href="index.html">📚 فهرس تحليل وتصميم النظم</a>
-                <span>/</span>
-                <span>المحاضرة الأولى</span>
-            </div>
-            <div class="lecture-nav-btns">
-                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
-                <a href="Lecture-02.html" class="nav-pill">المحاضرة التالية (2) ←</a>
-            </div>
-        </div>
-        <div class="reading-progress-container">
-            <div class="reading-progress-bar" id="reading-progress"></div>
-        </div>
-    </div>
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         Component: Platform Navigation Layer + Editorial Hero + Cyber Visual + Action Bar
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        
+        <!-- Platform Navigation Spacer (Zero CLS on sticky scroll) -->
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
 
-    <!-- Lecture Header -->
-    <header class="lecture-header">
-        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | تحليل وتصميم نظم (المستوى الثالث - الترم الثاني) | أ. أفنان الشرفي</div>
-        <h1>المحاضرة الأولى: أساسيات ونظم المعلومات</h1>
-        <p>مدخل تأسيسي شامل لمفهوم النظام، عناصره وحدوده وبيئته، النموذج العام للأنظمة، النظم الفرعية، تصنيفات النظم، ومكونات وغايات نظم المعلومات المحوسبة.</p>
-    </header>
+        <!-- Layer A: Platform Navigation Layer (Sticky / Smart Scroll) -->
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <!-- Brand & Breadcrumb Navigation -->
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>📐</span>
+                            <span>تحليل وتصميم النظم</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 01</span>
+                    </div>
+                    <!-- Compact title shown while scrolling sticky -->
+                    <span class="secod-nav-sticky-title">المحاضرة الأولى: أساسيات ونظم المعلومات</span>
+                </div>
+
+                <!-- Lecture Action Bar & View Controls -->
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodShareBtn" data-tooltip="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>مشاركة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodFontBtn" data-tooltip="تكبير أو تصغير الخط" aria-label="تغيير حجم الخط">
+                        <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+                        <span>الخط</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ المريح" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>قراءة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-nav-btn-icon-only secod-tooltip" id="secodFullscreenBtn" data-tooltip="ملء الشاشة" aria-label="ملء الشاشة">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                    <!-- Theme Toggle Compatible with Platform Engine -->
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layer G: Reading Progress System (Content-Aware) -->
+            <div class="secod-reading-progress-track" aria-hidden="true">
+                <div class="secod-reading-progress-fill" id="secodReadingProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Layer B: Interactive Lecture Hero (Editorial Layout) -->
+        <header class="secod-lecture-hero">
+            <!-- Subtle Watermark Numeral -->
+            <div class="secod-hero-watermark" aria-hidden="true">01</div>
+
+            <div class="secod-hero-container">
+                <!-- Information Column (Right in RTL) -->
+                <div class="secod-hero-info">
+                    <!-- Badges -->
+                    <div class="secod-hero-badges">
+                        <span class="secod-badge-course">📐 SYSTEMS ANALYSIS AND DESIGN</span>
+                        <span class="secod-badge-lecture-num">LECTURE 01</span>
+                        <span class="secod-badge-verified">🛡️ معتمد أكاديمياً</span>
+                    </div>
+
+                    <!-- Main Arabic Title -->
+                    <h1 class="secod-hero-title-ar">المحاضرة الأولى: أساسيات ونظم المعلومات</h1>
+
+                    <!-- Technical English Title -->
+                    <div class="secod-hero-title-en">Fundamentals of Systems & Computer-Based Information Systems</div>
+
+                    <!-- Editorial Description -->
+                    <p class="secod-hero-desc">مدخل تأسيسي شامل لمفهوم النظام، عناصره وحدوده وبيئته، النموذج العام للأنظمة، النظم الفرعية، تصنيفات النظم، ومكونات وغايات نظم المعلومات المحوسبة.</p>
+
+                    <!-- Layer D: Academic Context Layer -->
+                    <div class="secod-academic-strip">
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👨‍🏫</span>
+                            <span class="secod-meta-label">أستاذ المقرر:</span>
+                            <span class="secod-meta-value">أ. أفنان الشرفي</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👥</span>
+                            <span class="secod-meta-label">القسم:</span>
+                            <span class="secod-meta-value">تكنولوجيا المعلومات • الأمن السيبراني والشبكات</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">📑</span>
+                            <span class="secod-meta-label">المصدر:</span>
+                            <span class="secod-meta-value">المصادر الأكاديمية المعتمدة + إعداد م. بشار زبله</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer C: Interactive Cyber Visual Column -->
+                <div class="secod-cyber-visual-col">
+                    <div class="secod-cyber-card" id="secodCyberCard">
+                        <div class="secod-cyber-ambient-glow" aria-hidden="true"></div>
+                        <svg class="secod-cyber-svg" viewBox="0 0 460 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="sadGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00F6E4" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#00F6E4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g opacity="0.12">
+    <path d="M40 0V340M120 0V340M200 0V340M280 0V340M360 0V340M420 0V340" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+    <path d="M0 60H460M0 130H460M0 200H460M0 270H460" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+  </g>
+  <circle cx="230" cy="160" r="110" fill="url(#sadGlow)"/>
+  <rect x="90" y="55" width="280" height="210" rx="12" fill="none" stroke="rgba(0, 246, 228, 0.3)" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="105" y="75" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="8" font-weight="700" letter-spacing="1">SYSTEM BOUNDARY</text>
+  <rect x="25" y="135" width="55" height="45" rx="4" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+  <text x="52" y="157" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8" font-weight="700">ENTITY</text>
+  <text x="52" y="169" text-anchor="middle" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="7">SOURCE</text>
+  <path class="secod-trace-pulse" d="M80 157H135" stroke="#00F6E4" stroke-width="2" fill="none"/>
+  <circle cx="175" cy="157" r="38" fill="rgba(16, 40, 59, 0.9)" stroke="#00F6E4" stroke-width="2"/>
+  <line x1="140" y1="140" x2="210" y2="140" stroke="rgba(0,246,228,0.4)" stroke-width="1"/>
+  <text x="175" y="133" text-anchor="middle" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="8" font-weight="700">1.0</text>
+  <text x="175" y="155" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8" font-weight="700">PROCESS</text>
+  <text x="175" y="167" text-anchor="middle" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="7">DATA FLOW</text>
+  <path class="secod-trace-pulse" d="M213 157H267" stroke="#00F6E4" stroke-width="2" fill="none"/>
+  <circle cx="305" cy="157" r="38" fill="rgba(16, 40, 59, 0.9)" stroke="#2563EB" stroke-width="2"/>
+  <line x1="270" y1="140" x2="340" y2="140" stroke="rgba(37,99,235,0.4)" stroke-width="1"/>
+  <text x="305" y="133" text-anchor="middle" fill="#2563EB" font-family="'Inter', sans-serif" font-size="8" font-weight="700">2.0</text>
+  <text x="305" y="155" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8" font-weight="700">SUBSYSTEM</text>
+  <text x="305" y="167" text-anchor="middle" fill="#94A3B8" font-family="'Inter', sans-serif" font-size="7">ANALYST</text>
+  <path class="secod-trace-pulse" d="M343 157H380" stroke="#00F6E4" stroke-width="2" fill="none"/>
+  <rect x="380" y="135" width="55" height="45" rx="4" fill="#001C32" stroke="#00F6E4" stroke-width="1.5"/>
+  <text x="407" y="157" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8" font-weight="700">ENTITY</text>
+  <text x="407" y="169" text-anchor="middle" fill="#16A34A" font-family="'Inter', sans-serif" font-size="7">SINK</text>
+  <path d="M190 225H290M190 245H290M190 225V245" stroke="#00F6E4" stroke-width="1.5" fill="none"/>
+  <text x="240" y="238" text-anchor="middle" fill="#00F6E4" font-family="'Inter', sans-serif" font-size="8" font-weight="700">D1 | DATA STORE</text>
+  <path d="M240 195V225" stroke="#00F6E4" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>
+                        <div class="secod-visual-status-pill">
+                            <span class="secod-live-dot"></span>
+                            <span>SYSTEM ARCHITECTURE // DFD LEVEL-0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layer I: Lecture Navigation Strip -->
+        <div class="secod-lecture-nav-strip">
+            <div class="secod-lecture-nav-inner">
+                <span class="secod-nav-step-link disabled" aria-disabled="true"><span>← المحاضرة السابقة</span></span>
+                <a href="index.html" class="secod-nav-step-link">
+                    <span>📚 فهرس مقرر تحليل وتصميم النظم</span>
+                </a>
+                <a href="Lecture-02.html" class="secod-nav-step-link"><span>المحاضرة التالية (02) ←</span></a>
+            </div>
+        </div>
+
+    </div>
 
     <div class="container">
         <!-- Sidebar Table of Contents -->
@@ -848,6 +1005,7 @@
 
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
     <script src="../assets/js/quiz.js"></script>
     <script>
 const uniDetails = [

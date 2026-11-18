@@ -3,42 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة | أساسيات تطوير البرمجيات</title>
+    <title>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة | أساسيات تطوير البرمجيات | SECOD</title>
+        <!-- Favicon Suite -->
+    <link rel="icon" type="image/x-icon" href="../assets/brand/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/brand/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/brand/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/brand/favicon/apple-touch-icon.png">
+
+    <!-- Fonts: IBM Plex Sans Arabic + Inter with Cairo Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body data-course="software-development-fundamentals">
 
     <!-- الشريط العلوي ومسار التنقل -->
-    <div class="top-bar">
-        <div class="breadcrumb-nav">
-            <div class="breadcrumb-links">
-                <a href="../index.html">🏠 المنصة الرئيسية</a>
-                <span>/</span>
-                <a href="index.html">💻 بوابة أساسيات تطوير البرمجيات</a>
-                <span>/</span>
-                <span>المحاضرة الثانية</span>
-            </div>
-            <div class="lecture-nav-btns">
-                <a href="Lecture-01.html" class="nav-pill">المحاضرة السابقة (1)</a>
-                <a href="index.html" class="nav-pill">قائمة المحاضرات</a>
-                <a href="#quiz" class="nav-pill">الكوز التقييمي 🎯</a>
-                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">
-                    <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
-                </button>
-            </div>
-        </div>
-        <div class="reading-progress-container">
-            <div class="reading-progress-bar" id="reading-progress"></div>
-        </div>
-    </div>
+    <!-- ==============================================================================
+         SECOD INTERACTIVE LECTURE HEADER EXPERIENCE
+         Brand: SECOD — Understand. Learn. Apply.
+         Component: Platform Navigation Layer + Editorial Hero + Cyber Visual + Action Bar
+         ============================================================================== -->
+    <div class="secod-lecture-experience" id="secodLectureExperience">
+        
+        <!-- Platform Navigation Spacer (Zero CLS on sticky scroll) -->
+        <div class="secod-platform-nav-spacer" id="secodNavSpacer"></div>
 
-    <!-- ترويسة المحاضرة -->
-    <header class="lecture-header">
-        <div class="header-badge">🏛️ كلية المنار للعلوم والتكنولوجيا | قسمي الأمن السيبراني وشبكات &amp; تكنولوجيا المعلومات (المستوى الثالث - الترم الثاني)</div>
-        <h1>المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة</h1>
-        <p>كتابة شيفرة مقروءة ومعيارية وتحسين بنيتها دون إفساد سلوكها (<span style="font-family:monospace;">Clean Code &amp; Refactoring</span>) | إعداد: <strong>د. عبدالرزاق الأهدل</strong> &amp; <strong>أ. وليد الشراعي</strong></p>
-        <div class="header-golden-rule">💡 القاعدة الذهبية: «أي مطور يستطيع كتابة شيفرة يفهمها الحاسوب، لكن المطور المحترف يكتب شيفرة يفهمها البشر!»</div>
-    </header>
+        <!-- Layer A: Platform Navigation Layer (Sticky / Smart Scroll) -->
+        <nav class="secod-platform-nav" id="secodPlatformNav" aria-label="شريط تنقل المنصة والمحاضرة">
+            <div class="secod-platform-nav-inner">
+                <!-- Brand & Breadcrumb Navigation -->
+                <div class="secod-nav-identity">
+                    <a href="../index.html" class="secod-nav-brand" title="الرئيسية | SECOD Platform">
+                        <img src="../assets/brand/logo/secod-logo-dark.png" alt="SECOD Logo" class="secod-nav-logo">
+                        <span>SECOD</span>
+                    </a>
+                    <span class="secod-nav-sep">/</span>
+                    <div class="secod-nav-breadcrumbs">
+                        <a href="index.html" class="secod-nav-course-link">
+                            <span>💻</span>
+                            <span>أساسيات تطوير البرمجيات</span>
+                        </a>
+                        <span class="secod-nav-sep">/</span>
+                        <span class="secod-nav-current">المحاضرة 02</span>
+                    </div>
+                    <!-- Compact title shown while scrolling sticky -->
+                    <span class="secod-nav-sticky-title">المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة</span>
+                </div>
+
+                <!-- Lecture Action Bar & View Controls -->
+                <div class="secod-nav-actions">
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodBookmarkBtn" data-tooltip="حفظ المحاضرة في المفضلة" aria-label="حفظ في المفضلة">
+                        <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span>حفظ</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodShareBtn" data-tooltip="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+                        <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        <span>مشاركة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodFontBtn" data-tooltip="تكبير أو تصغير الخط" aria-label="تغيير حجم الخط">
+                        <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+                        <span>الخط</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-tooltip" id="secodReadingBtn" data-tooltip="وضع القراءة الهادئ المريح" aria-label="وضع القراءة">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>قراءة</span>
+                    </button>
+                    <button type="button" class="secod-nav-btn secod-nav-btn-icon-only secod-tooltip" id="secodFullscreenBtn" data-tooltip="ملء الشاشة" aria-label="ملء الشاشة">
+                        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                    </button>
+                    <!-- Theme Toggle Compatible with Platform Engine -->
+                    <button type="button" class="theme-toggle-btn secod-nav-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="تبديل مظهر المنصة">
+                        <span id="themeIcon">🌙</span> <span id="themeText">الوضع الليلي</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layer G: Reading Progress System (Content-Aware) -->
+            <div class="secod-reading-progress-track" aria-hidden="true">
+                <div class="secod-reading-progress-fill" id="secodReadingProgressFill"></div>
+            </div>
+        </nav>
+
+        <!-- Layer B: Interactive Lecture Hero (Editorial Layout) -->
+        <header class="secod-lecture-hero">
+            <!-- Subtle Watermark Numeral -->
+            <div class="secod-hero-watermark" aria-hidden="true">02</div>
+
+            <div class="secod-hero-container">
+                <!-- Information Column (Right in RTL) -->
+                <div class="secod-hero-info">
+                    <!-- Badges -->
+                    <div class="secod-hero-badges">
+                        <span class="secod-badge-course">💻 SOFTWARE DEVELOPMENT FUNDAMENTALS</span>
+                        <span class="secod-badge-lecture-num">LECTURE 02</span>
+                        <span class="secod-badge-verified">🛡️ معتمد أكاديمياً</span>
+                    </div>
+
+                    <!-- Main Arabic Title -->
+                    <h1 class="secod-hero-title-ar">المحاضرة الثانية: الشيفرة النظيفة وإعادة الهيكلة</h1>
+
+                    <!-- Technical English Title -->
+                    <div class="secod-hero-title-en">Clean Code, Refactoring Principles & Human-Readable Code</div>
+
+                    <!-- Editorial Description -->
+                    <p class="secod-hero-desc">كتابة شيفرة مقروءة ومعيارية وتحسين بنيتها دون إفساد سلوكها (Clean Code & Refactoring)، قواعد تسمية الدوال والمتغيرات، وتبسيط البنى الشرطية لتسهيل الصيانة.</p>
+
+                    <!-- Layer D: Academic Context Layer -->
+                    <div class="secod-academic-strip">
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👨‍🏫</span>
+                            <span class="secod-meta-label">أستاذ المقرر:</span>
+                            <span class="secod-meta-value">د. عبدالرزاق الأهدل</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">👥</span>
+                            <span class="secod-meta-label">القسم:</span>
+                            <span class="secod-meta-value">الأمن السيبراني والشبكات • تكنولوجيا المعلومات</span>
+                        </div>
+                        <div class="secod-meta-card">
+                            <span class="secod-meta-icon">📑</span>
+                            <span class="secod-meta-label">المصدر:</span>
+                            <span class="secod-meta-value">المصادر الأكاديمية المعتمدة + إعداد م. بشار زبله</span>
+                        </div>
+                    </div>
+                    <!-- Layer E: Key Concept Experience (Core Insight Accordion) -->
+                    <div class="secod-key-concept-container">
+                        <div class="secod-key-concept-card">
+                            <button type="button" class="secod-key-concept-header" aria-expanded="false" aria-controls="keyConceptBody-02">
+                                <span class="secod-key-concept-badge">⚡ KEY CONCEPT</span>
+                                <span class="secod-key-concept-title">البرمجة للبشر أولاً: «أي مطور يستطيع كتابة شيفرة يفهمها الحاسوب، لكن المطور المحترف يكتب شيفرة يف...»</span>
+                                <span class="secod-key-concept-trigger">
+                                    <span>تفاصيل</span>
+                                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                                </span>
+                            </button>
+                            <div class="secod-key-concept-body" id="keyConceptBody-02">
+                                «أي مطور مبتدئ يستطيع كتابة شيفرة يفهمها الحاسوب وينفذها، لكن المطور المحترف والمهندس الحقيقي يكتب شيفرة نظيفة، معيارية، وسهلة الفهم والصيانة للبشر الذين سيعملون على تطويرها لاحقاً!»
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer C: Interactive Cyber Visual Column -->
+                <div class="secod-cyber-visual-col">
+                    <div class="secod-cyber-card" id="secodCyberCard">
+                        <div class="secod-cyber-ambient-glow" aria-hidden="true"></div>
+                        <svg class="secod-cyber-svg" viewBox="0 0 460 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="codeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00F6E4" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#00F6E4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g opacity="0.12">
+    <path d="M40 0V340M120 0V340M200 0V340M280 0V340M360 0V340M420 0V340" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+    <path d="M0 60H460M0 130H460M0 200H460M0 270H460" stroke="#00F6E4" stroke-width="1" stroke-dasharray="4 6"/>
+  </g>
+  <circle cx="230" cy="160" r="110" fill="url(#codeGlow)"/>
+  <rect x="80" y="65" width="300" height="195" rx="10" fill="rgba(7, 26, 43, 0.9)" stroke="#00F6E4" stroke-width="1.5"/>
+  <path d="M80 75C80 69.5 84.5 65 90 65H370C375.5 65 380 69.5 380 75V95H80V75Z" fill="#001C32"/>
+  <circle cx="98" cy="80" r="4" fill="#DC2626"/>
+  <circle cx="112" cy="80" r="4" fill="#F59E0B"/>
+  <circle cx="126" cy="80" r="4" fill="#16A34A"/>
+  <text x="230" y="83" text-anchor="middle" fill="#94A3B8" font-family="'Inter', monospace" font-size="8.5" font-weight="600">secod-engine.ts — Clean Architecture</text>
+  <g font-family="'JetBrains Mono', 'Inter', monospace" font-size="9.5">
+    <text x="100" y="118" fill="#00F6E4" font-weight="700">class</text>
+    <text x="140" y="118" fill="#FFFFFF" font-weight="700">SecureModule</text>
+    <text x="235" y="118" fill="#00F6E4">{</text>
+    <text x="120" y="140" fill="#94A3B8">// Clean Code &amp; SOLID Principles</text>
+    <text x="120" y="162" fill="#2563EB" font-weight="700">readonly</text>
+    <text x="180" y="162" fill="#E2E8F0">architecture = </text>
+    <text x="275" y="162" fill="#4ade80">"MODULAR"</text>
+    <text x="350" y="162" fill="#E2E8F0">;</text>
+    <text x="120" y="184" fill="#00F6E4" font-weight="700">execute</text>
+    <text x="175" y="184" fill="#E2E8F0">(): </text>
+    <text x="195" y="184" fill="#2563EB">Promise</text>
+    <text x="245" y="184" fill="#E2E8F0">&lt;void&gt; {</text>
+    <text x="140" y="206" fill="#00F6E4">return</text>
+    <text x="185" y="206" fill="#E2E8F0">buildHumanReadableCode();</text>
+    <text x="120" y="228" fill="#00F6E4">}</text>
+    <text x="100" y="246" fill="#00F6E4">}</text>
+  </g>
+  <path class="secod-trace-pulse" d="M60 285H180L210 310H300L330 285H400" stroke="#00F6E4" stroke-width="2" fill="none"/>
+  <circle cx="180" cy="285" r="5" fill="#001C32" stroke="#00F6E4" stroke-width="2"/>
+  <circle cx="210" cy="310" r="5" fill="#001C32" stroke="#2563EB" stroke-width="2"/>
+  <circle cx="300" cy="310" r="5" fill="#001C32" stroke="#2563EB" stroke-width="2"/>
+  <circle cx="330" cy="285" r="5" fill="#001C32" stroke="#16A34A" stroke-width="2"/>
+</svg>
+                        <div class="secod-visual-status-pill">
+                            <span class="secod-live-dot"></span>
+                            <span>CODE REPOSITORY // BUILD: PASSING</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Layer I: Lecture Navigation Strip -->
+        <div class="secod-lecture-nav-strip">
+            <div class="secod-lecture-nav-inner">
+                <a href="Lecture-01.html" class="secod-nav-step-link"><span>→ المحاضرة السابقة (01)</span></a>
+                <a href="index.html" class="secod-nav-step-link">
+                    <span>📚 فهرس مقرر أساسيات تطوير البرمجيات</span>
+                </a>
+                <a href="Lecture-03.html" class="secod-nav-step-link"><span>المحاضرة التالية: 03 مبادئ SOLID والتصميم المعياري ←</span></a>
+            </div>
+        </div>
+
+    </div>
 
     <div class="container">
         <!-- الفهرس الجانبي -->
@@ -1185,6 +1358,7 @@ console.log(<span class="code-str">"Result:"</span>, determineResult(average)); 
             <div class="lecture-footer-nav">
                 <a href="Lecture-01.html" class="quiz-btn" style="text-decoration:none; margin:0; background:#4a5568;">👉 المحاضرة السابقة: 01 بيئة التطوير الاحترافية</a>
                 <a href="index.html" class="quiz-btn" style="text-decoration:none; margin:0; background:var(--secondary);">📚 العودة لفهرس مقرر أساسيات تطوير البرمجيات</a>
+                <a href="Lecture-03.html" class="quiz-btn" style="text-decoration:none; margin:0; background:var(--primary);">المحاضرة التالية: 03 مبادئ SOLID والتصميم المعياري 👈</a>
                 <a href="../index.html" class="quiz-btn" style="text-decoration:none; margin:0;">🏠 البوابة الرئيسية للمنصة</a>
             </div>
 
@@ -1195,6 +1369,7 @@ console.log(<span class="code-str">"Result:"</span>, determineResult(average)); 
 
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/components.js"></script>
+    <script src="../assets/js/lecture-header.js"></script>
     <script src="../assets/js/quiz.js"></script>
     <script>
 const lifecycleStages = [

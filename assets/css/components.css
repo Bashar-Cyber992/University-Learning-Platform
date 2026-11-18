@@ -41,15 +41,44 @@
 .btn-primary {
     background: linear-gradient(135deg, var(--brand-deep), var(--brand-mid));
     color: #ffffff;
-    border-color: transparent;
+    border: 1px solid rgba(0, 246, 228, 0.3);
     box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, var(--brand-mid), var(--secondary-light));
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--brand-mid), #0b2840);
+    color: var(--brand-cyan);
+    border-color: var(--brand-cyan);
     transform: translateY(-1px);
-    box-shadow: var(--card-shadow);
+    box-shadow: 0 4px 14px rgba(0, 28, 50, 0.25), 0 0 12px rgba(0, 246, 228, 0.25);
+}
+
+[data-theme="dark"] .btn-primary {
+    background: linear-gradient(135deg, #071A2B, #001C32);
+    color: #00F6E4;
+    border: 1px solid rgba(0, 246, 228, 0.45);
+}
+
+[data-theme="dark"] .btn-primary:hover {
+    background: #00F6E4;
+    color: #001C32;
+    box-shadow: 0 0 18px rgba(0, 246, 228, 0.5);
+}
+
+.btn-accent {
+    background: var(--brand-cyan);
+    color: #001C32 !important;
+    border: 1px solid var(--brand-cyan);
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0, 246, 228, 0.25);
+}
+
+.btn-accent:hover {
+    background: #ffffff;
+    color: #001C32 !important;
+    border-color: #ffffff;
+    box-shadow: 0 0 16px rgba(0, 246, 228, 0.5);
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -1502,37 +1531,39 @@ table.academic-table tr:hover {
     filter: brightness(1.08);
 }
 
-/* Course Card Themes */
-.course-card[data-course-id="sfd"] {
-    --card-theme-deep: #1a365d;
-    --card-theme-mid: #2563eb;
-    border-top-color: #2563eb;
+/* Course Card Unified SECOD Theme */
+.course-card {
+    --card-theme-deep: #071A2B;
+    --card-theme-mid: #001C32;
+    border-top: 4px solid var(--brand-cyan);
+    border-radius: var(--radius-xl);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
-.course-card[data-course-id="security"] {
-    --card-theme-deep: #1e133d;
-    --card-theme-mid: #7c3aed;
-    border-top-color: #7c3aed;
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0, 28, 50, 0.16), 0 0 16px rgba(0, 246, 228, 0.2);
+    border-color: rgba(0, 246, 228, 0.5);
 }
-.course-card[data-course-id="cloud"] {
-    --card-theme-deep: #075985;
-    --card-theme-mid: #0284c7;
-    border-top-color: #0284c7;
+
+[data-theme="dark"] .course-card {
+    background: #001C32;
+    border: 1px solid #1A3852;
+    border-top: 4px solid var(--brand-cyan);
 }
-.course-card[data-course-id="forensics"] {
-    --card-theme-deep: #1e293b;
-    --card-theme-mid: #e11d48;
-    border-top-color: #e11d48;
+
+[data-theme="dark"] .course-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 246, 228, 0.25);
+    border-color: var(--brand-cyan);
 }
-.course-card[data-course-id="itpm"] {
-    --card-theme-deep: #14271d;
-    --card-theme-mid: #059669;
-    border-top-color: #059669;
-}
-.course-card[data-course-id="sad"] {
-    --card-theme-deep: #134e4a;
-    --card-theme-mid: #0d9488;
-    border-top-color: #0d9488;
-}
+
+/* Subtle Course Topic Identifiers for Badges */
+.course-card[data-course-id="sfd"] { --course-topic-color: #2563EB; }
+.course-card[data-course-id="security"] { --course-topic-color: #7C3AED; }
+.course-card[data-course-id="cloud"] { --course-topic-color: #0284C7; }
+.course-card[data-course-id="forensics"] { --course-topic-color: #E11D48; }
+.course-card[data-course-id="itpm"] { --course-topic-color: #16A34A; }
+.course-card[data-course-id="sad"] { --course-topic-color: #0D9488; }
 
 /* ==============================================================================
  * 16. ACADEMIC STATISTICS GRID & CARDS

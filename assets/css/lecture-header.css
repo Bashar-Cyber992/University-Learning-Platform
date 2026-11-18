@@ -1,0 +1,1035 @@
+/**
+ * ==============================================================================
+ * SECOD DESIGN SYSTEM - INTERACTIVE LECTURE HEADER (lecture-header.css)
+ * Component: SECOD Interactive Lecture Header
+ * Vision: Premium Academic Experience meets Modern Cybersecurity SaaS
+ * Brand: SECOD — Understand. Learn. Apply.
+ * Author: SECOD Design & Engineering Team (Bashar Zblh)
+ * ==============================================================================
+ */
+
+:root {
+    --secod-navy: #001C32;
+    --secod-cyan: #00F6E4;
+    --secod-deep: #071A2B;
+    --secod-surface: #10283B;
+    --secod-surface-glass: rgba(16, 40, 59, 0.78);
+    --secod-surface-elevated: rgba(22, 53, 77, 0.85);
+    --secod-border-cyan: rgba(0, 246, 228, 0.22);
+    --secod-border-subtle: rgba(255, 255, 255, 0.12);
+    --secod-text-primary: #FFFFFF;
+    --secod-text-secondary: #94A3B8;
+    --secod-text-light: #E2E8F0;
+    --secod-glow-cyan: 0 0 20px rgba(0, 246, 228, 0.35);
+    --secod-glow-subtle: 0 0 10px rgba(0, 246, 228, 0.18);
+    --secod-nav-height: 64px;
+    --secod-font-scale: 1;
+}
+
+/* ==============================================================================
+ * 1. HEADER WRAPPER & CONTAINER ARCHITECTURE
+ * ============================================================================== */
+
+.secod-lecture-experience {
+    position: relative;
+    width: 100%;
+    background-color: var(--secod-deep);
+    color: var(--secod-text-primary);
+    overflow: visible;
+    font-family: var(--font-arabic, "IBM Plex Sans Arabic", "Cairo", sans-serif);
+}
+
+/* ==============================================================================
+ * 2. PLATFORM NAVIGATION LAYER (Sticky / Smart Scroll)
+ * ============================================================================== */
+
+.secod-platform-nav-spacer {
+    height: 0;
+    transition: height 0.25s ease;
+}
+
+.secod-platform-nav-spacer.active {
+    height: var(--secod-nav-height);
+}
+
+.secod-platform-nav {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(7, 26, 43, 0.92);
+    border-bottom: 1px solid var(--secod-border-subtle);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.secod-platform-nav.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(7, 26, 43, 0.96);
+    border-bottom: 1px solid var(--secod-border-cyan);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    animation: secodNavSlideDown 0.3s ease-out;
+}
+
+@keyframes secodNavSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.secod-platform-nav-inner {
+    max-width: var(--max-w-container, 1400px);
+    margin: 0 auto;
+    padding: 0.65rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: var(--secod-nav-height);
+}
+
+/* Breadcrumb & Identity */
+.secod-nav-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.secod-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--secod-text-primary);
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+}
+
+.secod-nav-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--secod-navy);
+    border: 1px solid rgba(0, 246, 228, 0.4);
+    box-shadow: var(--secod-glow-subtle);
+    object-fit: contain;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.secod-nav-brand:hover .secod-nav-logo {
+    transform: scale(1.06);
+    box-shadow: var(--secod-glow-cyan);
+}
+
+.secod-nav-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--secod-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.secod-nav-sep {
+    opacity: 0.5;
+    font-size: 0.75rem;
+}
+
+.secod-nav-course-link {
+    color: var(--secod-text-light);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.secod-nav-course-link:hover {
+    color: var(--secod-cyan);
+    background: rgba(0, 246, 228, 0.08);
+}
+
+.secod-nav-sticky-title {
+    color: var(--secod-cyan);
+    font-weight: 700;
+    font-size: 0.88rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 320px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.secod-platform-nav.is-sticky .secod-nav-sticky-title {
+    opacity: 1;
+    transform: translateX(0);
+    display: inline-block;
+}
+
+/* Action Controls & Toolbar */
+.secod-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.secod-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    height: 36px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--secod-text-light);
+    background: rgba(16, 40, 59, 0.75);
+    border: 1px solid var(--secod-border-subtle);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    user-select: none;
+    font-family: inherit;
+}
+
+.secod-nav-btn:hover {
+    background: rgba(22, 53, 77, 0.9);
+    border-color: var(--secod-border-cyan);
+    color: var(--secod-cyan);
+    transform: translateY(-1px);
+    box-shadow: var(--secod-glow-subtle);
+}
+
+.secod-nav-btn:active {
+    transform: translateY(0);
+}
+
+.secod-nav-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.secod-nav-btn.active {
+    background: rgba(0, 246, 228, 0.15);
+    border-color: var(--secod-cyan);
+    color: var(--secod-cyan);
+}
+
+.secod-nav-btn-icon-only {
+    width: 36px;
+    padding: 0;
+}
+
+/* Tooltip */
+.secod-tooltip {
+    position: relative;
+}
+
+.secod-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--secod-navy);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid var(--secod-border-cyan);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.18s ease;
+    z-index: 1010;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.secod-tooltip:hover::after,
+.secod-tooltip:focus-visible::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Reading Progress Bar */
+.secod-reading-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    width: 100%;
+    overflow: hidden;
+}
+
+.secod-reading-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2563EB 0%, #00F6E4 100%);
+    box-shadow: 0 0 10px rgba(0, 246, 228, 0.65);
+    transition: width 0.1s linear;
+}
+
+/* ==============================================================================
+ * 3. INTERACTIVE LECTURE HERO (EDITORIAL LAYOUT)
+ * ============================================================================== */
+
+.secod-lecture-hero {
+    position: relative;
+    padding: 2.75rem 1.25rem 3rem;
+    background: radial-gradient(circle at 85% 15%, rgba(0, 246, 228, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(37, 99, 235, 0.12) 0%, transparent 50%),
+                linear-gradient(135deg, #071A2B 0%, #001C32 50%, #0c2336 100%);
+    border-bottom: 2px solid var(--secod-border-cyan);
+    overflow: hidden;
+}
+
+/* Cyber Matrix Background Grid */
+.secod-lecture-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(to right, rgba(0, 246, 228, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 246, 228, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 80%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Subtle Large Backdrop Numeral */
+.secod-hero-watermark {
+    position: absolute;
+    top: 0.5rem;
+    left: 2.5rem;
+    font-size: clamp(6.5rem, 15vw, 12rem);
+    font-weight: 900;
+    color: rgba(0, 246, 228, 0.038);
+    font-family: var(--font-english, "Inter", sans-serif);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+.secod-hero-container {
+    max-width: var(--max-w-container, 1400px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.18fr 0.82fr;
+    gap: 2.5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* ==============================================================================
+ * 4. HERO INFORMATION COLUMN (TYPOGRAPHY & METADATA)
+ * ============================================================================== */
+
+.secod-hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+/* Badge Row */
+.secod-hero-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.secod-badge-course {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.85rem;
+    background: rgba(0, 246, 228, 0.08);
+    border: 1px solid rgba(0, 246, 228, 0.35);
+    border-radius: 9999px;
+    color: var(--secod-cyan);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: var(--font-english, "Inter", sans-serif);
+    box-shadow: 0 0 12px rgba(0, 246, 228, 0.15);
+}
+
+.secod-badge-lecture-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(16, 40, 59, 0.85);
+    border: 1px solid var(--secod-border-subtle);
+    border-radius: 9999px;
+    color: var(--secod-text-light);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-family: var(--font-english, "Inter", sans-serif);
+}
+
+.secod-badge-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    background: rgba(22, 163, 74, 0.12);
+    border: 1px solid rgba(22, 163, 74, 0.35);
+    border-radius: 9999px;
+    color: #4ade80;
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+/* Arabic Main Title */
+.secod-hero-title-ar {
+    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    font-weight: 800;
+    color: var(--secod-text-primary);
+    line-height: 1.32;
+    margin: 0.25rem 0;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* English Technical Title */
+.secod-hero-title-en {
+    font-family: var(--font-english, "Inter", system-ui, sans-serif);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    font-weight: 600;
+    color: var(--secod-cyan);
+    line-height: 1.45;
+    direction: ltr;
+    text-align: right;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.015em;
+    text-shadow: 0 0 16px rgba(0, 246, 228, 0.25);
+}
+
+/* Editorial Description */
+.secod-hero-desc {
+    font-size: 1.025rem;
+    line-height: 1.75;
+    color: #CBD5E1;
+    margin: 0.25rem 0 0.75rem;
+    max-width: 68ch;
+    font-weight: 400;
+}
+
+/* Academic Metadata Strip */
+.secod-academic-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.5rem;
+}
+
+.secod-meta-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 0.85rem;
+    background: rgba(16, 40, 59, 0.7);
+    border: 1px solid rgba(0, 246, 228, 0.18);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--secod-text-light);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.secod-meta-card:hover {
+    border-color: var(--secod-cyan);
+    background: rgba(16, 40, 59, 0.9);
+}
+
+.secod-meta-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.secod-meta-label {
+    color: var(--secod-text-secondary);
+    font-weight: 500;
+}
+
+.secod-meta-value {
+    color: var(--secod-text-primary);
+    font-weight: 700;
+}
+
+/* ==============================================================================
+ * 5. KEY CONCEPT EXPERIENCE (CORE INSIGHT ACCORDION)
+ * ============================================================================== */
+
+.secod-key-concept-container {
+    margin-top: 1.25rem;
+}
+
+.secod-key-concept-card {
+    background: linear-gradient(135deg, rgba(0, 246, 228, 0.06) 0%, rgba(16, 40, 59, 0.85) 100%);
+    border: 1px solid rgba(0, 246, 228, 0.32);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 28, 50, 0.35), inset 0 0 16px rgba(0, 246, 228, 0.04);
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.secod-key-concept-card:hover {
+    border-color: var(--secod-cyan);
+    box-shadow: 0 8px 24px rgba(0, 28, 50, 0.45), var(--secod-glow-subtle);
+}
+
+.secod-key-concept-header {
+    padding: 0.95rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: right;
+    font-family: inherit;
+    color: inherit;
+}
+
+.secod-key-concept-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.65rem;
+    background: linear-gradient(90deg, #00F6E4, #2563EB);
+    color: #001C32;
+    font-weight: 800;
+    font-size: 0.72rem;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    font-family: var(--font-english, "Inter", sans-serif);
+    flex-shrink: 0;
+}
+
+.secod-key-concept-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--secod-text-primary);
+    flex-grow: 1;
+}
+
+.secod-key-concept-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--secod-cyan);
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    background: rgba(0, 246, 228, 0.08);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.secod-key-concept-trigger svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.secod-key-concept-card.is-expanded .secod-key-concept-trigger svg {
+    transform: rotate(180deg);
+}
+
+.secod-key-concept-body {
+    padding: 0 1.25rem 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #F1F5F9;
+    border-top: 1px dashed rgba(0, 246, 228, 0.2);
+    margin-top: 0.25rem;
+    padding-top: 0.95rem;
+    display: none;
+    animation: secodFadeIn 0.25s ease-out;
+}
+
+.secod-key-concept-card.is-expanded .secod-key-concept-body {
+    display: block;
+}
+
+@keyframes secodFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================================================================
+ * 6. INTERACTIVE CYBER VISUAL (BESPOKE VECTOR SYSTEM)
+ * ============================================================================== */
+
+.secod-cyber-visual-col {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secod-cyber-card {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 4 / 3;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(16, 40, 59, 0.75) 0%, rgba(7, 26, 43, 0.9) 100%);
+    border: 1px solid var(--secod-border-cyan);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), var(--secod-glow-subtle);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.2s ease;
+    perspective: 1000px;
+}
+
+.secod-cyber-card:hover {
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), var(--secod-glow-cyan);
+}
+
+.secod-cyber-ambient-glow {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 246, 228, 0.22) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(var(--glow-x, 0px), var(--glow-y, 0px));
+    transition: transform 0.15s ease-out;
+    filter: blur(20px);
+    z-index: 1;
+}
+
+.secod-cyber-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+/* SVG Cyber Animations */
+.secod-trace-pulse {
+    stroke-dasharray: 8 16;
+    animation: secodDashFlow 2.8s linear infinite;
+}
+
+.secod-trace-pulse-reverse {
+    stroke-dasharray: 8 16;
+    animation: secodDashFlowReverse 3.2s linear infinite;
+}
+
+@keyframes secodDashFlow {
+    from {
+        stroke-dashoffset: 48;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes secodDashFlowReverse {
+    from {
+        stroke-dashoffset: 0;
+    }
+    to {
+        stroke-dashoffset: 48;
+    }
+}
+
+.secod-node-glow {
+    animation: secodNodePulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes secodNodePulse {
+    0% {
+        opacity: 0.5;
+        r: 3.5;
+    }
+    100% {
+        opacity: 1;
+        r: 5.5;
+        filter: drop-shadow(0 0 6px #00F6E4);
+    }
+}
+
+.secod-radar-sweep {
+    transform-origin: center;
+    animation: secodRotateSweep 8s linear infinite;
+}
+
+@keyframes secodRotateSweep {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Course Specific Status Pill on the Visual */
+.secod-visual-status-pill {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    background: rgba(7, 26, 43, 0.85);
+    border: 1px solid var(--secod-border-cyan);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--secod-cyan);
+    font-family: var(--font-english, "Inter", monospace);
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(8px);
+    z-index: 3;
+}
+
+.secod-live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00F6E4;
+    box-shadow: 0 0 8px #00F6E4;
+    animation: secodLiveBlink 1.8s ease-in-out infinite;
+}
+
+@keyframes secodLiveBlink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.85); }
+}
+
+/* ==============================================================================
+ * 7. LECTURE NAVIGATION STRIP (PREV / INDEX / NEXT)
+ * ============================================================================== */
+
+.secod-lecture-nav-strip {
+    background: rgba(16, 40, 59, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.65rem 1.25rem;
+}
+
+.secod-lecture-nav-inner {
+    max-width: var(--max-w-container, 1400px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.secod-nav-step-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--secod-text-light);
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    background: rgba(16, 40, 59, 0.65);
+    border: 1px solid var(--secod-border-subtle);
+    transition: all 0.2s ease;
+}
+
+.secod-nav-step-link:hover {
+    background: rgba(22, 53, 77, 0.9);
+    border-color: var(--secod-border-cyan);
+    color: var(--secod-cyan);
+    transform: translateY(-1px);
+}
+
+.secod-nav-step-link.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: default;
+}
+
+/* ==============================================================================
+ * 8. READING MODE (FOCUSED READING EXPERIENCE)
+ * ============================================================================== */
+
+body.secod-reading-mode {
+    background-color: #0b1a26 !important;
+}
+
+body.secod-reading-mode .sidebar {
+    display: none !important;
+}
+
+body.secod-reading-mode .content-area {
+    max-width: 820px !important;
+    margin: 0 auto !important;
+    font-size: 1.12rem !important;
+    line-height: 1.85 !important;
+}
+
+body.secod-reading-mode .secod-cyber-visual-col {
+    display: none !important;
+}
+
+body.secod-reading-mode .secod-hero-container {
+    grid-template-columns: 1fr !important;
+    max-width: 820px !important;
+}
+
+/* Floating Exit Reading Mode Pill */
+.secod-reading-exit-pill {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #001C32;
+    border: 2px solid #00F6E4;
+    color: #FFFFFF;
+    padding: 0.65rem 1.4rem;
+    border-radius: 9999px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), var(--secod-glow-cyan);
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: none;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    z-index: 10000;
+    animation: secodPillPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+body.secod-reading-mode .secod-reading-exit-pill {
+    display: inline-flex;
+}
+
+@keyframes secodPillPop {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+/* ==============================================================================
+ * 9. TOAST NOTIFICATION SYSTEM
+ * ============================================================================== */
+
+.secod-toast {
+    position: fixed;
+    bottom: 24px;
+    inset-inline-end: 24px;
+    background: rgba(7, 26, 43, 0.95);
+    border: 1px solid var(--secod-cyan);
+    color: #FFFFFF;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--secod-glow-subtle);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    z-index: 10050;
+    transform: translateY(40px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(12px);
+}
+
+.secod-toast.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.secod-toast-icon {
+    font-size: 1.15rem;
+    color: var(--secod-cyan);
+}
+
+/* ==============================================================================
+ * 10. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+ * ============================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .secod-trace-pulse,
+    .secod-trace-pulse-reverse,
+    .secod-radar-sweep,
+    .secod-node-glow,
+    .secod-live-dot {
+        animation: none !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--secod-cyan) !important;
+    outline-offset: 2px !important;
+}
+
+/* ==============================================================================
+ * 11. RESPONSIVE BREAKPOINTS (MOBILE FIRST)
+ * ============================================================================== */
+
+/* Tablet & Smaller Desktops (<= 1024px) */
+@media (max-width: 1024px) {
+    .secod-hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .secod-cyber-visual-col {
+        order: -1;
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .secod-hero-watermark {
+        display: none;
+    }
+}
+
+/* Mobile Devices (<= 768px) */
+@media (max-width: 768px) {
+    .secod-platform-nav-inner {
+        padding: 0.5rem 0.85rem;
+        gap: 0.5rem;
+    }
+
+    .secod-nav-breadcrumbs {
+        display: none;
+    }
+
+    .secod-nav-btn span {
+        display: none;
+    }
+
+    .secod-nav-btn {
+        padding: 0 0.55rem;
+    }
+
+    .secod-lecture-hero {
+        padding: 1.75rem 0.85rem 2rem;
+    }
+
+    .secod-hero-title-ar {
+        font-size: 1.65rem;
+        line-height: 1.35;
+    }
+
+    .secod-hero-title-en {
+        font-size: 0.95rem;
+    }
+
+    .secod-hero-desc {
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .secod-academic-strip {
+        gap: 0.45rem;
+    }
+
+    .secod-meta-card {
+        padding: 0.4rem 0.65rem;
+        font-size: 0.76rem;
+    }
+
+    .secod-lecture-nav-inner {
+        justify-content: center;
+    }
+
+    .secod-nav-step-link {
+        font-size: 0.78rem;
+        padding: 0.35rem 0.65rem;
+    }
+}
+
+/* Smallest Mobile (<= 430px) */
+@media (max-width: 430px) {
+    .secod-hero-title-ar {
+        font-size: 1.45rem;
+    }
+
+    .secod-cyber-card {
+        aspect-ratio: 16 / 10;
+    }
+
+    .secod-key-concept-header {
+        padding: 0.75rem 0.95rem;
+    }
+
+    .secod-key-concept-title {
+        font-size: 0.88rem;
+    }
+}
